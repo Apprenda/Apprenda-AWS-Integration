@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<addonManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://schemas.apprenda.com/AddonManifest"
+               xsi:schemaLocation="http://schemas.apprenda.com/AddonManifest http://apprenda.com/schemas/platform/5.0/AddonManifest.xsd"
+               name="Amazon Redshift"
+               description="Amazon Redshift is a fully managed, easily scalable petabyte-scale data warehouse service that works with your existing business intelligence tools. It delivers fast query performance by using columnar storage technology and by parallelizing queries across multiple nodes."
+               deploymentNotes="Updated to reflect changes in Amazon SDK, configured to work on .NET 4.5 runtime, and updated for work in Apprenda 5.0."
+               developerHelp="contact cdutra@apprenda.com for assistance."
+               vendor="Apprenda"
+               author="Chris Dutra"
+               version="0.1.0"
+               provisioningUsername=""
+               provisioningPassword=""
+               provisioningLocation="">
+  <properties>
+    
+    <property key="requireDevCredentials" displayName="Require Developer Credentials" description="If set to true, each developer will need to provide their own Amazon credentials, otherwise the default creds will be used to provision Redshift instances." value="true"  />
+    
+  </properties>
+</addonManifest>

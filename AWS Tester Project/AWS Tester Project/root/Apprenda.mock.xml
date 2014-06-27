@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  This file defines the executing context for the application. This replicates 
+  information that would otherwise be available in Apprenda if you were connected
+  to the live environment.
+
+  In this file you can define different tenants that you can use for testing 
+  purposes as well as the current executing tenant.
+
+  The following is a sample definition that you can use to get started. It is
+  advisable that you customize it to fit your organizational needs. The Apprenda
+  Mocker can be used to assist in editing this file.
+
+  The apprendaLocal tag defines the ID's of the application provider, the
+  application's unique identifier, and the particular version of the application.
+  These values are assigned automatically by Apprenda. There is no need to 
+  adjust these values as the ones already supplied here are only used for simulation.
+-->
+<apprendaLocal xmlns="http://schemas.apprenda.com/LocalConfig"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://schemas.apprenda.com/LocalConfig http://apprenda.com/schemas/platform/5.0/LocalApprendaConfig.xsd"
+               applicationId="1389AB65-76F6-49bb-BE01-96FD62124653"
+               versionId="B7AAA6C5-AB65-4b7b-BF83-0CF7AADBBB22"
+               providerId="C80D19C1-5FA1-48f7-B5D3-C4ADE90C8748">
+
+  <!--
+  The tenants tag encapsulates all of the tenants that you wish to define in the 
+  system. Under this section is where you would define information for your 
+  supposed customers. Remember that Apprenda runs in a tenant aware context so by
+  defining all of your tenants in the following tag, you can test execution as
+  if you were any of the defined tenants. This is useful to see how your customers
+  experience the application.
+  -->
+  <tenants>
+
+    <!--
+    First Tenant: The first tenant (also known as a customer) is Contoso. Here we
+    define a tenant id, alias, company name, administrator and address. Notice
+    how the administrator and the address are simply ID's. These are ID's of users
+    and contact sections defined later on inside this tenant's definition.
+    -->
+    <tenant id="9446478A-6E7E-4d08-AC09-2C3C0285F307"
+            alias="contoso"
+            name="Contoso Inc."
+            administrator="895c85e6-9c85-49a7-95e8-fb40340d2327"
+            primaryContactSection="28B3962C-AF39-416f-955A-3BBDABC0B659">
+
+      <!--
+      The contactSections tag encapsulates all of the contact sections for this
+      tenant. There must be at least one contact section with the same ID as
+      the primaryContactSection attribute specified for the tenant.
+      -->
+      <contactSections>
+        <contactSection id="28B3962C-AF39-416f-955A-3BBDABC0B659" label="Headquarters">
+          <location address="123 American Boulevard"
+                    city="Albany"
+                    state="New York"
+                    country="United States of America"
+                    zip="12203"/>
+          <details>
+            <detail id="E89D5049-9402-44e3-9094-009E93E0180C" name="Phone" type="Customer Service" value="555-555-5555" />
+          </details>
+        </contactSection>
+      </contactSections>
+
+      <!--
+      The users tag encapsulates all of the users for the current tenant. Each user
+      will have an ID that you can use to reference this user in the future. One of
+      your defined users needs to be set as the administrator for the tenant by 
+      assigning the user ID as the administrator in the tenant tag definition.
+      -->
+      <users>
+
+        <!-- First User (also specified as Administrator) -->
+        <user id="895c85e6-9c85-49a7-95e8-fb40340d2327"
+              email="bsmith@tenant1.com"
+              firstName="Bob"
+              lastName="Smith"
+              primaryContactSection="8FA459CB-9F03-4146-87E0-65F07A8AF158">
+          <contactSections>
+            <contactSection id="8FA459CB-9F03-4146-87E0-65F07A8AF158" label="Office">
+              <location address="123 American Boulevard"
+                        city="Albany"
+                        state="New York"
+                        country="United States of America"
+                        zip="12203"/>
+              <details>
+                <detail id="297E8B14-2D4D-4b84-AB13-D4122E2A9611" name="Phone" type="Office" value="555-123-4567" />
+              </details>
+            </contactSection>
+          </contactSections>
+        </user>
+
+        <!-- Second User -->
+        <user id="FC99D9E3-612A-48ad-A62B-E314923417A5"
+              email="mjones@tenant1.com"
+              firstName="Mary"
+              lastName="Jones"/>
+
+        <!-- Third User -->
+        <user id="D0D353F2-4C71-4bd5-9021-7FBCD9A6AB99"
+              email="jlopes@tenant1.com"
+              firstName="Joe"
+              lastName="Lopez"/>
+
+      </users>
+
+      <!--
+      The roles tag allows for definition of specific access. In this section
+      is where you can define different organizational roles as well as to
+      give access to different securables to use throughout the application.
+      -->
+      <roles>
+        <!-- Manager's role, including the first and third users -->
+        <role id="F7B58397-EC59-4e4e-9FF6-2D0B12A25258" name="Managers">
+          <userMembers>
+            <userMember>895c85e6-9c85-49a7-95e8-fb40340d2327</userMember>
+            <userMember>FC99D9E3-612A-48ad-A62B-E314923417A5</userMember>
+          </userMembers>
+          <securables>
+            <securable name="GenerateReports" />
+            <securable name="DeleteRecords" />
+          </securables>
+        </role>
+
+        <!-- Programmer's role, including the second user only -->
+        <role id="76872DF5-14DF-4b1b-9E15-AF86FD9E18C6" name="Programmers">
+          <userMembers>
+            <userMember>D0D353F2-4C71-4bd5-9021-7FBCD9A6AB99</userMember>
+          </userMembers>
+          <securables>
+            <securable name="GenerateReports" />
+          </securables>
+        </role>
+      </roles>
+    </tenant>
+
+  </tenants>
+
+  <!--
+  The execution context is where you specify which user login is simulated when
+  running the application locally. All information defined for the user and tenant
+  is used when making API calls. Additionally the role membership information is
+  loaded as well. Set the tenantId and userId attributes to that of a user 
+  and tenant defined above.
+  -->
+  <executionContext tenantId="9446478A-6E7E-4d08-AC09-2C3C0285F307"
+                    userId="895c85e6-9c85-49a7-95e8-fb40340d2327"
+                    subscriptionId="D1956834-5AD3-4a18-81B8-D43EF2E7B6DE"
+                    sessionId="01A55496-EBBD-4694-8FC9-4712EE7334A9" >
+
+  </executionContext>
+</apprendaLocal>

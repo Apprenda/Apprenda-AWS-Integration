@@ -1,0 +1,15 @@
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon S3 AddOn\Amazon S3 AddOn\bin\Release\Amazon S3 AddOn.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon S3 AddOn\Amazon S3 AddOn\bin\Release\Amazon S3 AddOn.pdb
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon S3 AddOn\Amazon S3 AddOn\bin\Release\AWSSDK.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon S3 AddOn\Amazon S3 AddOn\bin\Release\SaaSGrid.API.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon S3 AddOn\Amazon S3 AddOn\bin\Release\Apprenda.Utils.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon S3 AddOn\Amazon S3 AddOn\bin\Release\Apprenda.Logging.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon S3 AddOn\Amazon S3 AddOn\bin\Release\Apprenda.Utils.Ext.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon S3 AddOn\Amazon S3 AddOn\bin\Release\Apprenda.Configuration.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon S3 AddOn\Amazon S3 AddOn\bin\Release\AWSSDK.xml
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon S3 AddOn\Amazon S3 AddOn\bin\Release\SaaSGrid.API.xml
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon S3 AddOn\Amazon S3 AddOn\bin\Release\Apprenda.Logging.xml
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon S3 AddOn\Amazon S3 AddOn\obj\Release\Amazon S3 AddOn.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon S3 AddOn\Amazon S3 AddOn\obj\Release\Amazon S3 AddOn.pdb
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon S3 AddOn\Amazon S3 AddOn\bin\Release\AddonManifest.xml
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon S3 AddOn\Amazon S3 AddOn\bin\Release\icon.png

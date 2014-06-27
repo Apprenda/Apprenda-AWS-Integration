@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appManifest xmlns="http://schemas.apprenda.com/DeploymentManifest"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://schemas.apprenda.com/DeploymentManifest http://apprenda.com/schemas/platform/5.0/DeploymentManifest.xsd" >
+
+  <!--Valid values for applicationServices level: "None", "Authentication", "Authorization", "Multitenancy", "Billing"-->
+  <applicationServices level="Multitenancy" />
+
+  <!--Valid values for presentation strategy: "CommingledAppRoot", "CommingledRootApp", "IsolatedAppTenantRoot", "IsolatedRootAppTenant"-->
+  <!--Valid values for presentation pipelineMode: "Classic", "Integrated"-->
+  <presentation strategy="IsolatedAppTenantRoot" pipelineMode="Integrated" />
+
+  <!--Valid values for presentation strategy: "IsolatedDB", "Commingled"-->
+  <persistence strategy="Commingled" defaultSchema="dbo">
+    <tableOptions>
+      <tableOption name="ExampleTableName" schema="dbo" option="AllTenants" />
+    </tableOptions>
+  </persistence>
+
+  <features>
+    <boundary name="Example Boundary Feature" />
+    <block name="Example Block Feature" />
+    <limiter name="Example Limiter Feature" />
+    <toggle name="Example Toggle Feature"/>
+  </features>
+
+  <executionSecurables>
+    <securable name="Example Securable" />
+  </executionSecurables>
+
+  <customProperties>
+    <customProperty name="AWSComponents">
+      <values>
+        <propertyValue value="Redshift"/>
+      </values>
+    </customProperty>
+    <customProperty name="RDS Options">
+      <values>
+        <propertyValue value="dbname=dutra"/>
+        <propertyValue value="dblogin=sysadmin"/>
+        <propertyValue value="dbpassword=cyrixm2r"/>
+        <propertyValue value="size=10GB"/>
+        <propertyValue value="server=m3.medium"/>
+        <propertyValue value=""/>
+      </values>
+    </customProperty>
+    <customProperty name="SnapshotBetweenStages">
+      <values>
+        <propertyValue value="RDS" />
+        <propertyValue value="RedShift"/>
+      </values>
+    </customProperty>
+  </customProperties>
+  
+  
+  
+</appManifest>

@@ -1,0 +1,16 @@
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon EMR AddOn\Amazon EMR AddOn\bin\Release\AddonManifest.xml
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon EMR AddOn\Amazon EMR AddOn\bin\Release\icon.png
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon EMR AddOn\Amazon EMR AddOn\bin\Release\Amazon EMR AddOn.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon EMR AddOn\Amazon EMR AddOn\bin\Release\Amazon EMR AddOn.pdb
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon EMR AddOn\Amazon EMR AddOn\bin\Release\AWSSDK.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon EMR AddOn\Amazon EMR AddOn\bin\Release\SaaSGrid.API.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon EMR AddOn\Amazon EMR AddOn\bin\Release\Apprenda.Utils.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon EMR AddOn\Amazon EMR AddOn\bin\Release\Apprenda.Logging.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon EMR AddOn\Amazon EMR AddOn\bin\Release\Apprenda.Utils.Ext.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon EMR AddOn\Amazon EMR AddOn\bin\Release\Apprenda.Configuration.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon EMR AddOn\Amazon EMR AddOn\bin\Release\AWSSDK.xml
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon EMR AddOn\Amazon EMR AddOn\bin\Release\SaaSGrid.API.xml
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon EMR AddOn\Amazon EMR AddOn\bin\Release\Apprenda.Logging.xml
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon EMR AddOn\Amazon EMR AddOn\obj\Release\Amazon EMR AddOn.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon EMR AddOn\Amazon EMR AddOn\obj\Release\Amazon EMR AddOn.pdb
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon EMR AddOn\Amazon EMR AddOn\obj\Release\Amazon EMR AddOn.csprojResolveAssemblyReference.cache
