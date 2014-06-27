@@ -1,0 +1,31 @@
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\AddonManifest.xml
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\icon.png
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\Amazon RDS AddOn.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\Amazon RDS AddOn.pdb
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\AWSSDK.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\SaaSGrid.API.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\Apprenda.Utils.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\Apprenda.Logging.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\Apprenda.Utils.Ext.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\Apprenda.Configuration.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\AWSSDK.xml
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\SaaSGrid.API.xml
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\Apprenda.Logging.xml
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\Amazon RDS AddOn\obj\Release\Amazon RDS AddOn.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\Amazon RDS AddOn\obj\Release\Amazon RDS AddOn.pdb
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS AddOn\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\AddonManifest.xml
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS AddOn\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\icon.png
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS AddOn\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\Amazon RDS AddOn.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS AddOn\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\Amazon RDS AddOn.pdb
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS AddOn\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\AWSSDK.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS AddOn\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\SaaSGrid.API.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS AddOn\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\Apprenda.Utils.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS AddOn\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\Apprenda.Logging.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS AddOn\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\Apprenda.Utils.Ext.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS AddOn\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\Apprenda.Configuration.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS AddOn\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\AWSSDK.xml
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS AddOn\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\SaaSGrid.API.xml
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS AddOn\Amazon RDS AddOn\Amazon RDS AddOn\bin\Release\Apprenda.Logging.xml
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS AddOn\Amazon RDS AddOn\Amazon RDS AddOn\obj\Release\Amazon RDS AddOn.csprojResolveAssemblyReference.cache
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS AddOn\Amazon RDS AddOn\Amazon RDS AddOn\obj\Release\Amazon RDS AddOn.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS AddOn\Amazon RDS AddOn\Amazon RDS AddOn\obj\Release\Amazon RDS AddOn.pdb

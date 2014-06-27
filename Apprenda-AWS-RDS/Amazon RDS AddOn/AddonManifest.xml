@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<addonManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://schemas.apprenda.com/AddonManifest"
+               xsi:schemaLocation="http://schemas.apprenda.com/AddonManifest http://apprenda.com/schemas/platform/5.0/AddonManifest.xsd"
+               name="Amazon RDS"
+               description="Amazon RDS is a service that allows you to set up, operate and scale a dedicated MySQL database server on top of EC2. In addition to standard MySQL features, RDS offers the following functionality: - Automated backups -Point-in-time recovery -Seamless vertical scaling between instance types. The Amazon RDS add-on lets you connect your app to an RDS instance and seamlessly use it in place of the standard, provided SQL database"
+               deploymentNotes="Updated to reflect changes in Amazon SDK, configured to work on .NET 4.5 runtime, and updated for work in Apprenda 5.0."
+               developerHelp="contact cdutra@apprenda.com for assistance."
+               vendor="Apprenda"
+               author="Abraham Sultan, Modifed by Chris Dutra"
+               version="1.1.0"
+               provisioningUsername=""
+               provisioningPassword=""
+               provisioningLocation="">
+  <properties>
+    <property key="requireDevCredentials" displayName="Require Developer Credentials" description="If set to true, each developer will need to provide their own Amazon credentials, otherwise the default creds will be used to provision RDS instances." value="false"  />
+    <property key="AccessKey" displayName="AWS Access Key" description="Provide your AWS Access Key here." value="AKIAIJE2KFF2MPGKAGPA" />
+    <property key="SecretAccessKey" displayName="AWS Secret Access Key" description="Provide your Secret AWS Access Key here." value="Ej8gj1FSC28jV+ZK+94GqRI7FHA+DUZKGLP2F1NI"/>
+    <property key="AllocatedStorage" displayName="RDS Allocated Storage" description="Amount of storage space requested." value="10" />
+    <property key="AutoMinorVersionUpgrade" displayName="Auto Minor Version Upgrade" description="This indicates whether you wish to allow for automatic minor version upgrades on your RDS instace." value="true"/>
+    <property key="AvailabilityZone" displayName="" description="" value=""/>
+    <property key="DBInstanceClass" displayName="" description="" value=""/>
+    <property key="DBName" displayName="" description="" value=""/>
+    <property key="DBInstanceIdentifier" displayName="" description="" value=""/>
+    <property key="Engine" displayName="" description="" value=""/>
+    <property key="MultiAZ" displayName="" description="" value=""/>
+    <property key="EngineVersion" displayName="" description="" value=""/>
+    <property key="OptionGroupName" displayName="" description="" value=""/>
+    <property key="Port" displayName="" description="" value=""/>
+    <property key="BackupRetentionPeriod" displayName="" description="" value=""/>
+  </properties>
+</addonManifest>

@@ -1,0 +1,21 @@
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tester\bin\Debug\AddOn Tester.exe.config
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tester\obj\Debug\AddOn Tester.csprojResolveAssemblyReference.cache
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tester\bin\Debug\AddonManifest.xml
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tester\bin\Debug\icon.png
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tester\bin\Debug\AddOn Tester.exe
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tester\bin\Debug\AddOn Tester.pdb
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tester\bin\Debug\Amazon RDS AddOn.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tester\bin\Debug\nunit.framework.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tester\bin\Debug\SaaSGrid.API.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tester\bin\Debug\AWSSDK.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tester\bin\Debug\Apprenda.Utils.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tester\bin\Debug\Apprenda.Logging.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tester\bin\Debug\Apprenda.Utils.Ext.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tester\bin\Debug\Apprenda.Configuration.dll
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tester\bin\Debug\Amazon RDS AddOn.pdb
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tester\bin\Debug\nunit.framework.xml
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tester\bin\Debug\SaaSGrid.API.xml
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tester\bin\Debug\AWSSDK.xml
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tester\bin\Debug\Apprenda.Logging.xml
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tester\obj\Debug\AddOn Tester.exe
+C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tester\obj\Debug\AddOn Tester.pdb
