@@ -3,15 +3,15 @@
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xmlns="http://schemas.apprenda.com/AddonManifest"
                xsi:schemaLocation="http://schemas.apprenda.com/AddonManifest http://apprenda.com/schemas/platform/4.5/AddonManifest.xsd"
-               name="Amazon EMR"
-               description="Amazon EMR is a service that allows you to set up, operate and scale Hadoop MapReduce jobs."
-               deploymentNotes=""
-               developerHelp=""
+               name="Amazon DataPipeline"
+               description="Amazon DataPipeline is a web service that helps you reliably process and move data between different AWS compute and storage services as well as on-premise data sources at specified intervals."
+               deploymentNotes="Updated to reflect .Net 4.5, and Apprenda 5.0.x"
+               developerHelp="Developer Options: "
                vendor="Apprenda"
-               author="Abraham Sultan and Daniel Domkowski"
+               author="Chris Dutra"
                version="1.0.0"
-               provisioningUsername=""
-               provisioningPassword=""
+               provisioningUsername="chris@dutronlabs.com"
+               provisioningPassword="cyrixm2r"
                provisioningLocation="RegionEndpoint.USEast1">
   <properties>
 
