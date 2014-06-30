@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Amazon_Media_Transcoder_AddOn
+namespace Amazon_Kinesis_AddOn
 {
-    public class Class1
+    public class KinesisAddOn
     {
     }
 }

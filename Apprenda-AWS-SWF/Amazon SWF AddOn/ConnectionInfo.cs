@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Amazon_RDS_AddOn
+namespace Amazon_SWF_AddOn
 {
     public class ConnectionInfo
     {

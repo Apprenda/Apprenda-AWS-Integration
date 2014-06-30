@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Amazon_DynamoDB_AddOn
+namespace Amazon_EBS_AddOn
 {
-    public class Class1
+    public class EBSAddOn
     {
     }
 }

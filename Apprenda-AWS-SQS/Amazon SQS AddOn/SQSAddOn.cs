@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Amazon_SQS_AddOn
 {
-    public class Class1
+    public class SQSAddOn
     {
     }
 }

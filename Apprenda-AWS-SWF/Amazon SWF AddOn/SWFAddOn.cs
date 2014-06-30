@@ -1,18 +1,17 @@
-﻿using Amazon.RDS.Model;
-using Apprenda.SaaSGrid.Addons;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Amazon.RDS;
+using System.Text;
+using System.Threading.Tasks;
+using Apprenda.SaaSGrid.Addons;
+using Amazon.SimpleWorkflow;
+using Amazon.SimpleWorkflow.Model;
 using System.Threading;
 
-namespace Amazon_RDS_AddOn
+namespace Amazon_SWF_AddOn
 {
-    public class Addon : AddonBase
+    public class SWFAddOn : AddonBase
     {
-        // Deprovision RDS Instance
-        // Input: AddonDeprovisionRequest request
-        // Output: OperationResult
         public override OperationResult Deprovision(AddonDeprovisionRequest request)
         {
             string connectionData = request.ConnectionData;
@@ -20,10 +19,10 @@ namespace Amazon_RDS_AddOn
             var deprovisionResult = new ProvisionAddOnResult(connectionData);
             AddonManifest manifest = request.Manifest;
             string devOptions = request.DeveloperOptions;
-            
+
             try
             {
-                AmazonRDSClient client;
+                AmazonSimpleWorkflowClient client;
                 var conInfo = ConnectionInfo.Parse(connectionData);
                 var developerOptions = DeveloperOptions.Parse(devOptions);
 
@@ -35,22 +34,34 @@ namespace Amazon_RDS_AddOn
                 }
 
                 var response =
-                    client.DeleteDBInstance(new DeleteDBInstanceRequest()
-                        {
-                            DBInstanceIdentifier = conInfo.DbInstanceIdentifier,
-                            SkipFinalSnapshot = true
-                        });
+                    client.TerminateWorkflowExecution(new TerminateWorkflowExecutionRequest()
+                    {
+                      ChildPolicy = "childpolicy",
+                      Details = "details",
+                      Domain = "domain",
+                      Reason = "reason",
+                      RunId = "runid",
+                      WorkflowId = "workflowid"
+                    }
+                );
                 // 5/22/14 fixing amazon aws deprecation
-                if (response.DBInstance != null)
+                if (response.HttpStatusCode == System.Net.HttpStatusCode.OK)
                 {
                     do
                     {
-                        var verificationResponse = client.DescribeDBInstances(new DescribeDBInstancesRequest()
+                        var verificationResponse = client.ListOpenWorkflowExecutions(new ListOpenWorkflowExecutionsRequest()
                             {
-                                DBInstanceIdentifier = conInfo.DbInstanceIdentifier
+                                Domain = "domain",
+                                ExecutionFilter = new WorkflowExecutionFilter() { WorkflowId = "workflowid" },
+                                MaximumPageSize = 0,
+                                NextPageToken = "nextpagetoken",
+                                ReverseOrder = false,
+                                StartTimeFilter = new ExecutionTimeFilter() { LatestDate = new DateTime(2014,1,1), OldestDate = new DateTime(2013,1,1)},
+                                TagFilter = new TagFilter() { Tag ="tag"},
+                                TypeFilter = new WorkflowTypeFilter() { Name="name", Version="version"}
                             });
                         // 5/22/14 fixing amazaon aws deprecration
-                        if (!verificationResponse.DBInstances.Any())
+                        if (verificationResponse.WorkflowExecutionInfos.ExecutionInfos.Count > 0)
                         {
                             deprovisionResult.IsSuccess = true;
                             break;
@@ -59,10 +70,6 @@ namespace Amazon_RDS_AddOn
 
                     } while (true);
                 }
-            }
-            catch (DBInstanceNotFoundException)
-            {
-                deprovisionResult.IsSuccess = true;
             }
             catch (Exception e)
             {
@@ -84,7 +91,7 @@ namespace Amazon_RDS_AddOn
 
             try
             {
-                AmazonRDSClient client;
+                AmazonSimpleWorkflowClient client;
                 DeveloperOptions devOptions;
 
                 var parseOptionsResult = ParseDevOptions(developerOptions, out devOptions);
@@ -101,9 +108,9 @@ namespace Amazon_RDS_AddOn
                     return provisionResult;
                 }
 
-                var response = client.CreateDBInstance(CreateDbInstanceRequest(devOptions));
+                var response = client.RegisterDomain(CreateDomainRequest(devOptions));
                 // fix 5/22/14 resolves amazon aws deprecation
-                if (response.DBInstance != null)
+                if (response.ResponseMetadata != null)
                 {
                     //var conInfo = new ConnectionInfo()
                     //{
@@ -115,27 +122,37 @@ namespace Amazon_RDS_AddOn
 
                     do
                     {
-                        var verificationResponse = client.DescribeDBInstances(new DescribeDBInstancesRequest()
-                            {
-                                DBInstanceIdentifier = devOptions.DbInstanceIdentifier
-                            });
-                        // fix on next few lines 5/22/14 resolve amazon aws deprecation.
-                        if (verificationResponse.DBInstances.Any() && verificationResponse.DBInstances[0].DBInstanceStatus == "available")
+                        String domain = "domain";
+                        WorkflowExecution w = new WorkflowExecution()
                         {
-                            var dbInstance = verificationResponse.DBInstances[0];
+                            RunId = Guid.NewGuid().ToString(),
+                            WorkflowId = Guid.NewGuid().ToString()
+                        };
+                        var verificationResponse = client.ListOpenWorkflowExecutions(new ListOpenWorkflowExecutionsRequest()
+                        {
+                            Domain = "domain",
+                            ExecutionFilter = new WorkflowExecutionFilter() { WorkflowId = "workflowid" },
+                            MaximumPageSize = 0,
+                            NextPageToken = "nextpagetoken",
+                            ReverseOrder = false,
+                            StartTimeFilter = new ExecutionTimeFilter() { LatestDate = new DateTime(2014, 1, 1), OldestDate = new DateTime(2013, 1, 1) },
+                            TagFilter = new TagFilter() { Tag = "tag" },
+                            TypeFilter = new WorkflowTypeFilter() { Name = "name", Version = "version" }
+                        });
+                        // fix on next few lines 5/22/14 resolve amazon aws deprecation.
+                        if (verificationResponse.WorkflowExecutionInfos.ExecutionInfos.Count > 0)
+                        {
                             var conInfo = new ConnectionInfo()
-                                {
-                                    DbInstanceIdentifier = devOptions.DbInstanceIdentifier,
-                                    EndpointAddress = dbInstance.Endpoint.Address,
-                                    EndpointPort = dbInstance.Endpoint.Port
-                                };
+                            {
+                                // put swf connection information here.
+                            };
                             provisionResult.IsSuccess = true;
                             provisionResult.ConnectionData = conInfo.ToString();
                             break;
                         }
                         Thread.Sleep(TimeSpan.FromSeconds(10d));
 
-                    } while (true); 
+                    } while (true);
                 }
             }
             catch (Exception e)
@@ -146,6 +163,11 @@ namespace Amazon_RDS_AddOn
             return provisionResult;
         }
 
+        private RegisterDomainRequest CreateDomainRequest(DeveloperOptions devOptions)
+        {
+            throw new NotImplementedException();
+        }
+
         // Testing Instance
         // Input: AddonTestRequest request
         // Output: OperationResult
@@ -153,7 +175,7 @@ namespace Amazon_RDS_AddOn
         {
             AddonManifest manifest = request.Manifest;
             string developerOptions = request.DeveloperOptions;
-            var testResult = new OperationResult {IsSuccess = false};
+            var testResult = new OperationResult { IsSuccess = false };
             var testProgress = "";
 
             if (manifest.Properties != null && manifest.Properties.Any())
@@ -170,21 +192,32 @@ namespace Amazon_RDS_AddOn
                 if (!parseOptionsResult.IsSuccess)
                 {
                     return parseOptionsResult;
-                } 
+                }
                 testProgress += parseOptionsResult.EndUserMessage;
 
                 try
                 {
                     testProgress += "Establishing connection to AWS...\n";
-                    AmazonRDSClient client; 
+                    AmazonSimpleWorkflowClient client;
                     var establishClientResult = EstablishClient(manifest, devOptions, out client);
                     if (!establishClientResult.IsSuccess)
                     {
                         return establishClientResult;
                     }
                     testProgress += establishClientResult.EndUserMessage;
+
+                    // this is a sample workflow execution
+                    WorkflowExecution w = new WorkflowExecution()
+                    {
+                        RunId = "aoinfdosaifdna",
+                        WorkflowId = Guid.NewGuid().ToString()
+                    };
                     
-                    client.DescribeDBInstances();
+                    // this will go find it.
+                    client.DescribeWorkflowExecution(new DescribeWorkflowExecutionRequest() {
+                      Domain = "domain",
+                      Execution = w
+                    });
                     testProgress += "Successfully passed all testing criteria!";
                     testResult.IsSuccess = true;
                     testResult.EndUserMessage = testProgress;
@@ -206,7 +239,7 @@ namespace Amazon_RDS_AddOn
 
         private bool ValidateManifest(AddonManifest manifest, out OperationResult testResult)
         {
-            testResult = new OperationResult(); 
+            testResult = new OperationResult();
 
             var prop =
                     manifest.Properties.FirstOrDefault(
@@ -239,7 +272,7 @@ namespace Amazon_RDS_AddOn
         private OperationResult ParseDevOptions(string developerOptions, out DeveloperOptions devOptions)
         {
             devOptions = null;
-            var result = new OperationResult(){IsSuccess = false};
+            var result = new OperationResult() { IsSuccess = false };
             var progress = "";
 
             try
@@ -258,14 +291,14 @@ namespace Amazon_RDS_AddOn
             return result;
         }
 
-        private OperationResult EstablishClient(AddonManifest manifest, DeveloperOptions devOptions, out AmazonRDSClient client)
+        private OperationResult EstablishClient(AddonManifest manifest, DeveloperOptions devOptions, out AmazonSimpleWorkflowClient client)
         {
             OperationResult result;
-            
+
             bool requireCreds;
             var accessKey = manifest.ProvisioningUsername;
             var secretAccessKey = manifest.ProvisioningPassword;
-            
+
             var prop =
                 manifest.Properties.First(
                     p => p.Key.Equals("requireDevCredentials", StringComparison.InvariantCultureIgnoreCase));
@@ -287,62 +320,24 @@ namespace Amazon_RDS_AddOn
                 accessKey = devOptions.AccessKey;
                 secretAccessKey = devOptions.SecretAccessKey;
             }
-            
-            client = new AmazonRDSClient(accessKey, secretAccessKey);
+
+            client = new AmazonSimpleWorkflowClient(accessKey, secretAccessKey);
             result = new OperationResult { IsSuccess = true };
             return result;
         }
 
-        private CreateDBInstanceRequest CreateDbInstanceRequest(DeveloperOptions devOptions)
+        private WorkflowExecutionConfiguration CreateSWFInstanceRequest(DeveloperOptions devOptions)
         {
-            var request = new CreateDBInstanceRequest()
+            var request = new WorkflowExecutionConfiguration()
             {
                 // TODO - need to determine where defaults are used, and then not create the constructor where value is null (to use default)
-                
+
                 // These are required values.
-                BackupRetentionPeriod = devOptions.BackupRetentionPeriod,
-                DBParameterGroupName = devOptions.DBParameterGroupName,
-                DBSecurityGroups = devOptions.DBSecurityGroups,
-                DBSubnetGroupName = devOptions.SubnetGroupName,
-                DBInstanceClass = devOptions.DbInstanceClass,
-                DBInstanceIdentifier = devOptions.DbInstanceIdentifier,
-                DBName = devOptions.DbName,
-                Engine = devOptions.Engine,
-                EngineVersion = devOptions.EngineVersion,
-                LicenseModel = devOptions.LicenseModel,
-                MasterUsername = devOptions.DBAUsername,
-                MasterUserPassword = devOptions.DBAPassword,
-                Iops = devOptions.ProvisionedIOPs,
-                MultiAZ = devOptions.MultiAZ,
-                OptionGroupName = devOptions.OptionGroup,
-                Port = devOptions.Port,
-                PreferredBackupWindow = devOptions.PreferredBackupWindow,
-                PreferredMaintenanceWindow = devOptions.PreferredMXWindow,
-                PubliclyAccessible = devOptions.PubliclyAccessible,
-                Tags = devOptions.Tags,
-                VpcSecurityGroupIds = devOptions.VPCSecurityGroupIds
+                
             };
 
-            if(!devOptions.MultiAZ)
-            {
-                request.AvailabilityZone = devOptions.AvailabilityZone;
-            }
+            // optional info is here.
 
-            // Oracle DB only parameter
-            if(request.Engine.Equals("Oracle") && devOptions.CharacterSet != null)
-            {
-                request.CharacterSetName = devOptions.CharacterSet;
-            }
-
-            if (devOptions.AllocatedStorage != null)
-            {
-                request.AllocatedStorage = devOptions.AllocatedStorage;
-            }
-
-            if (devOptions.AutoMinorVersionUpgrade != null)
-            {
-                request.AutoMinorVersionUpgrade = devOptions.AutoMinorVersionUpgrade;
-            }
             return request;
         }
     }

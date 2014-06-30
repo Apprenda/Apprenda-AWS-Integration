@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace AWS_DataPipeLine_AddOn
 {
-    public class DataPipeLineAddon : AddonBase
+    public class DataPipeLineAddOn : AddonBase
     {
         public override OperationResult Deprovision(AddonDeprovisionRequest request)
         {

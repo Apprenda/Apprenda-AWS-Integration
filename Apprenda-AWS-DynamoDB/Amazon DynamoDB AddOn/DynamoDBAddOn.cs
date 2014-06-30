@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Amazon_SNS_AddOn
+namespace Amazon_DynamoDB_AddOn
 {
-    public class Class1
+    public class DynamoDBAddOn
     {
     }
 }

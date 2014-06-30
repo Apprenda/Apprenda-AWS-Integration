@@ -1,31 +1,31 @@
-﻿using Amazon.Redshift.Model;
+﻿using Amazon.RDS.Model;
 using Apprenda.SaaSGrid.Addons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Amazon.Redshift;
+using Amazon.RDS;
 using System.Threading;
 
-namespace Amazon_Redshift_Addon
+namespace Amazon_RDS_AddOn
 {
-    public class RedhsiftAddOn : Addon
+    public class RDSAddOn : AddonBase
     {
-        // Deprovision Redshift Instance
+        // Deprovision RDS Instance
         // Input: AddonDeprovisionRequest request
         // Output: OperationResult
         public override OperationResult Deprovision(AddonDeprovisionRequest request)
         {
             string connectionData = request.ConnectionData;
+            // changing to overloaded constructor - 5/22/14
             var deprovisionResult = new ProvisionAddOnResult(connectionData);
             AddonManifest manifest = request.Manifest;
-            
             string devOptions = request.DeveloperOptions;
-
+            
             try
             {
-                AmazonRedshiftClient client;
+                AmazonRDSClient client;
                 var conInfo = ConnectionInfo.Parse(connectionData);
-                var developerOptions = RedshiftDeveloperOptions.Parse(devOptions);
+                var developerOptions = DeveloperOptions.Parse(devOptions);
 
                 var establishClientResult = EstablishClient(manifest, developerOptions, out client);
                 if (!establishClientResult.IsSuccess)
@@ -35,22 +35,22 @@ namespace Amazon_Redshift_Addon
                 }
 
                 var response =
-                    client.DeleteCluster(new DeleteClusterRequest()
-                    {
-                        ClusterIdentifier = conInfo.ClusterIdentifier,
-                        //SkipFinalSnapshot = true
-                    });
-                // modified 5/22/14 to fix deprecation in Amazon AWS SDK
-                if (response.Cluster != null)
+                    client.DeleteDBInstance(new DeleteDBInstanceRequest()
+                        {
+                            DBInstanceIdentifier = conInfo.DbInstanceIdentifier,
+                            SkipFinalSnapshot = true
+                        });
+                // 5/22/14 fixing amazon aws deprecation
+                if (response.DBInstance != null)
                 {
                     do
                     {
-                        var verificationResponse = client.DescribeClusters(new DescribeClustersRequest()
-                        {
-                            ClusterIdentifier = conInfo.ClusterIdentifier
-                        });
-                        // modified 5/22/14 to fix deprecation in Amazon AWS SDK
-                        if (!verificationResponse.Clusters.Any())
+                        var verificationResponse = client.DescribeDBInstances(new DescribeDBInstancesRequest()
+                            {
+                                DBInstanceIdentifier = conInfo.DbInstanceIdentifier
+                            });
+                        // 5/22/14 fixing amazaon aws deprecration
+                        if (!verificationResponse.DBInstances.Any())
                         {
                             deprovisionResult.IsSuccess = true;
                             break;
@@ -60,7 +60,7 @@ namespace Amazon_Redshift_Addon
                     } while (true);
                 }
             }
-            catch (ClusterNotFoundException)
+            catch (DBInstanceNotFoundException)
             {
                 deprovisionResult.IsSuccess = true;
             }
@@ -72,19 +72,20 @@ namespace Amazon_Redshift_Addon
             return deprovisionResult;
         }
 
-        // Provision Redshift Instance
+        // Provision RDS Instance
         // Input: AddonDeprovisionRequest request
         // Output: ProvisionAddOnResult
         public override ProvisionAddOnResult Provision(AddonProvisionRequest request)
         {
-            var provisionResult = new ProvisionAddOnResult("") { IsSuccess = false };
+            // i think this is a bug. but I'm going to throw an empty string to it to clear the warning.
+            var provisionResult = new ProvisionAddOnResult("");
             AddonManifest manifest = request.Manifest;
             string developerOptions = request.DeveloperOptions;
 
             try
             {
-                AmazonRedshiftClient client;
-                RedshiftDeveloperOptions devOptions;
+                AmazonRDSClient client;
+                DeveloperOptions devOptions;
 
                 var parseOptionsResult = ParseDevOptions(developerOptions, out devOptions);
                 if (!parseOptionsResult.IsSuccess)
@@ -93,16 +94,16 @@ namespace Amazon_Redshift_Addon
                     return provisionResult;
                 }
 
-                var establishClientResult = EstablishClient(manifest, RedshiftDeveloperOptions.Parse(developerOptions), out client);
+                var establishClientResult = EstablishClient(manifest, DeveloperOptions.Parse(developerOptions), out client);
                 if (!establishClientResult.IsSuccess)
                 {
                     provisionResult.EndUserMessage = establishClientResult.EndUserMessage;
                     return provisionResult;
                 }
 
-                var response = client.CreateCluster(CreateClusterRequest(devOptions));
-                // modified 5/22/14 to fix amazon aws deprecation
-                if (response.Cluster != null)
+                var response = client.CreateDBInstance(CreateDbInstanceRequest(devOptions));
+                // fix 5/22/14 resolves amazon aws deprecation
+                if (response.DBInstance != null)
                 {
                     //var conInfo = new ConnectionInfo()
                     //{
@@ -114,27 +115,27 @@ namespace Amazon_Redshift_Addon
 
                     do
                     {
-                        var verificationResponse = client.DescribeClusters(new DescribeClustersRequest()
-                        {
-                            ClusterIdentifier = devOptions.ClusterIdentifier
-                        });
-                        // next few lines fixed 5/22/14 to resolve amazon aws deprecation
-                        if (verificationResponse.Clusters.Any() && verificationResponse.Clusters[0].ClusterStatus == "available")
-                        {
-                            var dbInstance = verificationResponse.Clusters[0];
-                            var conInfo = new ConnectionInfo()
+                        var verificationResponse = client.DescribeDBInstances(new DescribeDBInstancesRequest()
                             {
-                                ClusterIdentifier = devOptions.ClusterIdentifier,
-                                EndpointAddress = dbInstance.Endpoint.Address,
-                                EndpointPort = dbInstance.Endpoint.Port
-                            };
+                                DBInstanceIdentifier = devOptions.DbInstanceIdentifier
+                            });
+                        // fix on next few lines 5/22/14 resolve amazon aws deprecation.
+                        if (verificationResponse.DBInstances.Any() && verificationResponse.DBInstances[0].DBInstanceStatus == "available")
+                        {
+                            var dbInstance = verificationResponse.DBInstances[0];
+                            var conInfo = new ConnectionInfo()
+                                {
+                                    DbInstanceIdentifier = devOptions.DbInstanceIdentifier,
+                                    EndpointAddress = dbInstance.Endpoint.Address,
+                                    EndpointPort = dbInstance.Endpoint.Port
+                                };
                             provisionResult.IsSuccess = true;
                             provisionResult.ConnectionData = conInfo.ToString();
                             break;
                         }
                         Thread.Sleep(TimeSpan.FromSeconds(10d));
 
-                    } while (true);
+                    } while (true); 
                 }
             }
             catch (Exception e)
@@ -152,12 +153,12 @@ namespace Amazon_Redshift_Addon
         {
             AddonManifest manifest = request.Manifest;
             string developerOptions = request.DeveloperOptions;
-            var testResult = new OperationResult { IsSuccess = false };
+            var testResult = new OperationResult {IsSuccess = false};
             var testProgress = "";
 
             if (manifest.Properties != null && manifest.Properties.Any())
             {
-                RedshiftDeveloperOptions devOptions;
+                DeveloperOptions devOptions;
 
                 testProgress += "Evaluating required manifest properties...\n";
                 if (!ValidateManifest(manifest, out testResult))
@@ -169,21 +170,21 @@ namespace Amazon_Redshift_Addon
                 if (!parseOptionsResult.IsSuccess)
                 {
                     return parseOptionsResult;
-                }
+                } 
                 testProgress += parseOptionsResult.EndUserMessage;
 
                 try
                 {
                     testProgress += "Establishing connection to AWS...\n";
-                    AmazonRedshiftClient client;
+                    AmazonRDSClient client; 
                     var establishClientResult = EstablishClient(manifest, devOptions, out client);
                     if (!establishClientResult.IsSuccess)
                     {
                         return establishClientResult;
                     }
                     testProgress += establishClientResult.EndUserMessage;
-
-                    client.DescribeClusters();
+                    
+                    client.DescribeDBInstances();
                     testProgress += "Successfully passed all testing criteria!";
                     testResult.IsSuccess = true;
                     testResult.EndUserMessage = testProgress;
@@ -203,24 +204,48 @@ namespace Amazon_Redshift_Addon
 
         /* Begin private methods */
 
-        
+        private bool ValidateManifest(AddonManifest manifest, out OperationResult testResult)
+        {
+            testResult = new OperationResult(); 
+
+            var prop =
+                    manifest.Properties.FirstOrDefault(
+                        p => p.Key.Equals("requireDevCredentials", StringComparison.InvariantCultureIgnoreCase));
+
+            if (prop == null || !prop.HasValue)
+            {
+                testResult.IsSuccess = false;
+                testResult.EndUserMessage = "Missing required property 'requireDevCredentials'. This property needs to be provided as part of the manifest";
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(manifest.ProvisioningUsername) ||
+                string.IsNullOrWhiteSpace(manifest.ProvisioningPassword))
+            {
+                testResult.IsSuccess = false;
+                testResult.EndUserMessage = "Missing credentials 'provisioningUsername' & 'provisioningPassword' . These values needs to be provided as part of the manifest";
+                return false;
+            }
+
+            return true;
+        }
 
         // TODO: We might be able to extend this. 
-        private bool ValidateDevCreds(RedshiftDeveloperOptions devOptions)
+        private bool ValidateDevCreds(DeveloperOptions devOptions)
         {
             return !(string.IsNullOrWhiteSpace(devOptions.AccessKey) || string.IsNullOrWhiteSpace(devOptions.SecretAccessKey));
         }
 
-        private OperationResult ParseDevOptions(string developerOptions, out RedshiftDeveloperOptions devOptions)
+        private OperationResult ParseDevOptions(string developerOptions, out DeveloperOptions devOptions)
         {
             devOptions = null;
-            var result = new OperationResult() { IsSuccess = false };
+            var result = new OperationResult(){IsSuccess = false};
             var progress = "";
 
             try
             {
                 progress += "Parsing developer options...\n";
-                devOptions = RedshiftDeveloperOptions.Parse(developerOptions);
+                devOptions = DeveloperOptions.Parse(developerOptions);
             }
             catch (ArgumentException e)
             {
@@ -233,14 +258,14 @@ namespace Amazon_Redshift_Addon
             return result;
         }
 
-        private OperationResult EstablishClient(AddonManifest manifest, RedshiftDeveloperOptions devOptions, out AmazonRedshiftClient client)
+        private OperationResult EstablishClient(AddonManifest manifest, DeveloperOptions devOptions, out AmazonRDSClient client)
         {
             OperationResult result;
-
+            
             bool requireCreds;
             var accessKey = manifest.ProvisioningUsername;
             var secretAccessKey = manifest.ProvisioningPassword;
-
+            
             var prop =
                 manifest.Properties.First(
                     p => p.Key.Equals("requireDevCredentials", StringComparison.InvariantCultureIgnoreCase));
@@ -262,39 +287,62 @@ namespace Amazon_Redshift_Addon
                 accessKey = devOptions.AccessKey;
                 secretAccessKey = devOptions.SecretAccessKey;
             }
-
-            client = new AmazonRedshiftClient(accessKey, secretAccessKey);
+            
+            client = new AmazonRDSClient(accessKey, secretAccessKey);
             result = new OperationResult { IsSuccess = true };
             return result;
         }
 
-        private CreateClusterRequest CreateClusterRequest(RedshiftDeveloperOptions devOptions)
+        private CreateDBInstanceRequest CreateDbInstanceRequest(DeveloperOptions devOptions)
         {
-            var request = new CreateClusterRequest()
+            var request = new CreateDBInstanceRequest()
             {
-                AllowVersionUpgrade = devOptions.AllowVersionUpgrade, 
-                AutomatedSnapshotRetentionPeriod = devOptions.AutomatedSnapshotRetentionPeriod,
-                AvailabilityZone = devOptions.AvailabilityZone,
-                ClusterIdentifier = devOptions.ClusterIdentifier,
-                ClusterParameterGroupName = devOptions.ClusterParameterGroupName,
-                ClusterSecurityGroups = devOptions.ClusterSecurityGroups,
-                ClusterSubnetGroupName = devOptions.ClusterSubnetGroupName,
-                ClusterType = devOptions.ClusterType,
-                ClusterVersion = devOptions.ClusterVersion,
-                DBName = devOptions.DBName,
-                ElasticIp = devOptions.ElasticIp,
-                Encrypted = devOptions.Encrypted,
-                HsmClientCertificateIdentifier = devOptions.HSMClientCertificateIdentifier,
-                HsmConfigurationIdentifier = devOptions.HSMClientConfigurationIdentifier,
-                MasterUsername = devOptions.MasterUserName,
-                MasterUserPassword = devOptions.MasterPassword,
-                NodeType = devOptions.NodeType,
-                NumberOfNodes = devOptions.NumberOfNodes,
+                // TODO - need to determine where defaults are used, and then not create the constructor where value is null (to use default)
+                
+                // These are required values.
+                BackupRetentionPeriod = devOptions.BackupRetentionPeriod,
+                DBParameterGroupName = devOptions.DBParameterGroupName,
+                DBSecurityGroups = devOptions.DBSecurityGroups,
+                DBSubnetGroupName = devOptions.SubnetGroupName,
+                DBInstanceClass = devOptions.DbInstanceClass,
+                DBInstanceIdentifier = devOptions.DbInstanceIdentifier,
+                DBName = devOptions.DbName,
+                Engine = devOptions.Engine,
+                EngineVersion = devOptions.EngineVersion,
+                LicenseModel = devOptions.LicenseModel,
+                MasterUsername = devOptions.DBAUsername,
+                MasterUserPassword = devOptions.DBAPassword,
+                Iops = devOptions.ProvisionedIOPs,
+                MultiAZ = devOptions.MultiAZ,
+                OptionGroupName = devOptions.OptionGroup,
                 Port = devOptions.Port,
-                PreferredMaintenanceWindow = devOptions.PreferredMaintenanceWindow,
+                PreferredBackupWindow = devOptions.PreferredBackupWindow,
+                PreferredMaintenanceWindow = devOptions.PreferredMXWindow,
                 PubliclyAccessible = devOptions.PubliclyAccessible,
-                VpcSecurityGroupIds = devOptions.VpcSecurityGroupIds
+                Tags = devOptions.Tags,
+                VpcSecurityGroupIds = devOptions.VPCSecurityGroupIds
             };
+
+            if(!devOptions.MultiAZ)
+            {
+                request.AvailabilityZone = devOptions.AvailabilityZone;
+            }
+
+            // Oracle DB only parameter
+            if(request.Engine.Equals("Oracle") && devOptions.CharacterSet != null)
+            {
+                request.CharacterSetName = devOptions.CharacterSet;
+            }
+
+            if (devOptions.AllocatedStorage != null)
+            {
+                request.AllocatedStorage = devOptions.AllocatedStorage;
+            }
+
+            if (devOptions.AutoMinorVersionUpgrade != null)
+            {
+                request.AutoMinorVersionUpgrade = devOptions.AutoMinorVersionUpgrade;
+            }
             return request;
         }
     }

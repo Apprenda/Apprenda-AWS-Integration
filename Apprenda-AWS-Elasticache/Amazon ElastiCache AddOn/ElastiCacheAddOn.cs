@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Amazon_SWF_AddOn
+namespace Amazon_ElastiCache_AddOn
 {
-    public class Class1
+    public class ElastiCacheAddOn
     {
     }
 }

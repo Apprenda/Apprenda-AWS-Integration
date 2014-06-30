@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Amazon_IAM_AddOn
+namespace Amazon_AppStream_AddOn
 {
-    public class Class1
+    public class AppStreamAddOn
     {
     }
 }
