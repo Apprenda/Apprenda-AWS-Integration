@@ -1,40 +1,63 @@
 ﻿using System;
-using System.Collections.Generic;
 
 
-/* This class is currently WIP, as I will work towards abstracting out reusable components for all amazon components 
- * 
- * Author: Chris Dutra
- */
-
-namespace Amazon_Base_Addon
+namespace AWS_EMR_AddOn
 {
-    public abstract class DeveloperOptions
+    public class DeveloperOptions
     {
-        // will be used in all amazon calls
-        // Amazon Credentials. Required for IAM. 
         public string AccessKey { get; set; }
-        public string SecretAccessKey { get; set; }
+        public string SecretKey { get; set; }
+        public string AvailabilityZone { get; set; }
+        //public string JobFlowId { get; set; }
 
-        // Method takes in a string and parses it into a DeveloperOptions class.
+        public static DeveloperOptions Parse(string developerOptions)
+        {
+            DeveloperOptions options = new DeveloperOptions();
 
-        //  public abstract DeveloperOptions Parse(string developerOptions);
+            if (!string.IsNullOrWhiteSpace(developerOptions))
+            {
+                var optionPairs = developerOptions.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var optionPair in optionPairs)
+                {
+                    var optionPairParts = optionPair.Split(new[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (optionPairParts.Length == 2)
+                    {
+                        MapToOption(options, optionPairParts[0].Trim().ToLowerInvariant(), optionPairParts[1].Trim());
+                    }
+                    else
+                    {
+                        throw new ArgumentException(
+                            string.Format(
+                                "Unable to parse developer options which should be in the form of 'option=value&nextOption=nextValue'. The option '{0}' was not properly constructed",
+                                optionPair));
+                    }
+                }
+            }
 
-        // -----------------------------------------------------------------------
+            return options;
+        }
 
-        // Use this method to map all collections to their proper places.
-        // Usage here is to confirm that the subsequent key is the same as the preceding key. 
-        // This forces that the REST call ensure all collection parameters are grouped together.
-        // Ex. This is good: (key1=value&key1=value2)
-        // Ex. This is bad: (key1=value&key2=value2)
-        // Ex. This is bad: (key1=value&key2=value2&key1=value3)
+        private static void MapToOption(DeveloperOptions existingOptions, string key, string value)
+        {
+            if ("accesskey".Equals(key))
+            {
+                existingOptions.AccessKey = value;
+                return;
+            }
 
-        //public abstract void MapToOptionWithCollection(DeveloperOptions existingOptions, string key, string value, string lastKey);
+            if ("secretkey".Equals(key))
+            {
+                existingOptions.SecretKey = value;
+                return;
+            }
 
-        // ------------------------------------------------------------------------
-        
-        // Interior method takes in instance of DeveloperOptions (aptly named existingOptions) and maps them to the proper value. In essence, a setter method.
-        
-        //public abstract void MapToOption(DeveloperOptions existingOptions, string key, string value);
+            /*if ("availabilityzone".Equals(key))
+            {
+                existingOptions.AvailabilityZone = value;
+                return;
+            }*/
+
+            throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", key));
+        }
     }
 }

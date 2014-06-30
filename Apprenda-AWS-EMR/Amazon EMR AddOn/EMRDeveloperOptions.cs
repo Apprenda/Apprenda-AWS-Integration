@@ -5,10 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Amazon_Base_Addon;
 
-namespace Amazon_EMR_AddOn
+namespace AWS_EMR_AddOn
 {
-    class EMRDeveloperOptions : DeveloperOptions
+    // this base class idea was a poor one.
+    class EMRDeveloperOptions
     {
+        public string AccessKey { get; set; }
+        public string SecretAccessKey { get; set; }
         public string Ec2KeyName { get; set; }
         public int InstanceCount { get; set; }
         public bool KeepJobFlowaliveWhenNoSteps { get; set; }

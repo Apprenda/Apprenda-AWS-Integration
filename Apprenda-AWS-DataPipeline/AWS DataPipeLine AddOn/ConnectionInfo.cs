@@ -1,13 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
+using Amazon.DataPipeline.Model;
 
-namespace Amazon_RDS_AddOn
+namespace AWS_DataPipeLine_AddOn
 {
     public class ConnectionInfo
     {
-        public string DbInstanceIdentifier { get; set; }
+        public string PipelineId { get; set; }
         public string EndpointAddress { get; set; }
-        public int? EndpointPort { get; set; }
+        public int EndpointPort { get; set; }
+        public string PipelineName { get; set; }
+
+
+        public ConnectionInfo()
+        {
+        }
 
         public static ConnectionInfo Parse(string connectionInfo)
         {
@@ -36,11 +44,20 @@ namespace Amazon_RDS_AddOn
             return info;
         }
 
+        public static void MapToProperty(ConnectionInfo existingInfo, List<Field> fields)
+        {
+            foreach(var f in fields)
+            {
+                MapToProperty(existingInfo, f.Key, f.StringValue);
+            }
+        }
+
+
         public static void MapToProperty(ConnectionInfo existingInfo, string key, string value)
         {
             if ("dbinstanceidentifier".Equals(key))
             {
-                existingInfo.DbInstanceIdentifier = value;
+                existingInfo.PipelineId = value;
                 return;
             }
 
@@ -68,13 +85,13 @@ namespace Amazon_RDS_AddOn
         {
             var builder = new StringBuilder();
 
-            if (DbInstanceIdentifier != null)
-                builder.AppendFormat("DbInstanceIdentifier={0}&", DbInstanceIdentifier);
+            if (PipelineId != null)
+                builder.AppendFormat("DbInstanceIdentifier={0}&", PipelineId);
 
             if (EndpointAddress != null)
                 builder.AppendFormat("EndpointAddress={0}&", EndpointAddress);
 
-            if (EndpointPort.HasValue)
+            if (EndpointPort != null)
                 builder.AppendFormat("EndpointPort={0}&", EndpointPort);
 
             return builder.ToString(0, builder.Length - 1);
