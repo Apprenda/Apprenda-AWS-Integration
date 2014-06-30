@@ -3,15 +3,15 @@
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xmlns="http://schemas.apprenda.com/AddonManifest"
                xsi:schemaLocation="http://schemas.apprenda.com/AddonManifest http://apprenda.com/schemas/platform/4.5/AddonManifest.xsd"
-               name="Amazon EMR"
-               description="Amazon EMR is a service that allows you to set up, operate and scale Hadoop MapReduce jobs."
+               name="Amazon Elasticache"
+               description="Amazon ElastiCache is a web service that makes it easy to deploy, operate, and scale an in-memory cache in the cloud."
                deploymentNotes=""
                developerHelp=""
                vendor="Apprenda"
-               author="Abraham Sultan and Daniel Domkowski"
+               author="Chris Dutra"
                version="1.0.0"
-               provisioningUsername=""
-               provisioningPassword=""
+               provisioningUsername="chris@dutronlabs.com"
+               provisioningPassword="cyrixm2r"
                provisioningLocation="RegionEndpoint.USEast1">
   <properties>
 
