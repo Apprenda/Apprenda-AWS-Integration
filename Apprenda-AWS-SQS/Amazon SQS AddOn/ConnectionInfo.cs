@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Text;
 
-namespace Amazon_RDS_AddOn
+namespace Amazon_SQS_AddOn
 {
     public class ConnectionInfo
     {
-        public string DbInstanceIdentifier { get; set; }
-        public string EndpointAddress { get; set; }
-        public int? EndpointPort { get; set; }
+        public String queueName { get; set; }
+        public String queueURL { get; set; }
 
         public static ConnectionInfo Parse(string connectionInfo)
         {

@@ -14,4 +14,4 @@ C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacie
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\bin\Debug\Apprenda.Logging.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\obj\Debug\Amazon Glacier AddOn.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\obj\Debug\Amazon Glacier AddOn.pdb
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\obj\Debug\Amazon Glacier AddOn.csprojResolveAssemblyReference.cache
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\bin\Debug\icon.png

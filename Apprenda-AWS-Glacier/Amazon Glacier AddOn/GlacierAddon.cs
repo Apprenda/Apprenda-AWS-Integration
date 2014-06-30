@@ -66,7 +66,7 @@ namespace Amazon_Glacier_AddOn
                     } while (true);
                 }
             }
-            catch (ResourceNotFoundException e)
+            catch (ResourceNotFoundException)
             {
                 deprovisionResult.IsSuccess = true;
             }

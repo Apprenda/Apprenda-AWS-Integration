@@ -27,7 +27,6 @@ C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Redshift\Amazon Redsh
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Redshift\Amazon Redshift Addon\bin\Debug\Apprenda.Logging.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Redshift\Amazon Redshift Addon\bin\Debug\Apprenda.Utils.Ext.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Redshift\Amazon Redshift Addon\bin\Debug\Apprenda.Configuration.dll
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Redshift\Amazon Redshift Addon\bin\Debug\AWSSDK.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Redshift\Amazon Redshift Addon\bin\Debug\SaaSGrid.API.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Redshift\Amazon Redshift Addon\bin\Debug\Apprenda.Logging.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Redshift\Amazon Redshift Addon\obj\Debug\Amazon Redshift Addon.csprojResolveAssemblyReference.cache

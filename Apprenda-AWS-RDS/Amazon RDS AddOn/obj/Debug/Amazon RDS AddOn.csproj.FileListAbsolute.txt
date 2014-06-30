@@ -27,6 +27,7 @@ C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-RDS\Amazon RDS AddOn\
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-RDS\Amazon RDS AddOn\bin\Debug\AWSSDK.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-RDS\Amazon RDS AddOn\bin\Debug\SaaSGrid.API.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-RDS\Amazon RDS AddOn\bin\Debug\Apprenda.Logging.xml
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-RDS\Amazon RDS AddOn\obj\Debug\Amazon RDS AddOn.csprojResolveAssemblyReference.cache
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-RDS\Amazon RDS AddOn\obj\Debug\Amazon RDS AddOn.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-RDS\Amazon RDS AddOn\obj\Debug\Amazon RDS AddOn.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-RDS\Amazon RDS AddOn\bin\Debug\Amazon RDS AddOn.dll.CodeAnalysisLog.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-RDS\Amazon RDS AddOn\bin\Debug\Amazon RDS AddOn.dll.lastcodeanalysissucceeded

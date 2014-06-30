@@ -14,3 +14,5 @@ C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\bin\Debug\Apprenda.Logging.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\obj\Debug\Amazon SNS AddOn.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\obj\Debug\Amazon SNS AddOn.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\bin\Debug\Amazon SNS AddOn.dll.CodeAnalysisLog.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\bin\Debug\Amazon SNS AddOn.dll.lastcodeanalysissucceeded

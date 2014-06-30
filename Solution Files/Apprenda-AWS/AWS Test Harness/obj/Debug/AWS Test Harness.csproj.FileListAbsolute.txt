@@ -30,3 +30,5 @@ C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Te
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\obj\Debug\AWS Test Harness.csprojResolveAssemblyReference.cache
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\obj\Debug\AWS Test Harness.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\obj\Debug\AWS Test Harness.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\AWS Test Harness.dll.CodeAnalysisLog.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\AWS Test Harness.dll.lastcodeanalysissucceeded

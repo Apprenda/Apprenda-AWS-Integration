@@ -2,12 +2,13 @@
 using System.ServiceModel.Web;
 using System.Text;
 using Apprenda.SaaSGrid.Extensions;
+using Apprenda.SaaSGrid.Extensions.DTO;
 
 namespace Service
 {
     public class AWSService : IDeveloperPortalExtensionService
     {
-        public void OnDemotingVersion(Apprenda.SaaSGrid.Extensions.DTO.ReadOnlyVersionDataDTO version, Apprenda.SaaSGrid.Extensions.DTO.ApplicationVersionStageDTO proposedStage)
+        public void OnDemotingVersion(ReadOnlyVersionDataDTO version, ApplicationVersionStageDTO proposedStage)
         {
             // ok, so on demotion: 
             // 1) we check to see if we *have* any running cloud services for this application, and whether or not to destroy them.
@@ -20,7 +21,6 @@ namespace Service
 
             }
             
-
         }
 
         private bool CheckIfWeNeedToDestroy()
@@ -33,7 +33,18 @@ namespace Service
             throw new System.NotImplementedException();
         }
 
-        public void OnPromotingVersion(Apprenda.SaaSGrid.Extensions.DTO.ReadOnlyVersionDataDTO version, Apprenda.SaaSGrid.Extensions.DTO.ApplicationVersionStageDTO proposedStage)
+        public void OnPromotingVersion(ReadOnlyVersionDataDTO version, ApplicationVersionStageDTO proposedStage)
+        {
+            throw new System.NotImplementedException();
+        }
+
+
+        public void OnVersionDemoted(ReadOnlyVersionDataDTO version, ApplicationVersionStageDTO previousStage, ApplicationVersionStageDTO proposedStage, PublishReportCardDataDTO reportCard)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void OnVersionPromoted(ReadOnlyVersionDataDTO version, ApplicationVersionStageDTO previousStage, ApplicationVersionStageDTO proposedStage, PublishReportCardDataDTO reportCard)
         {
             throw new System.NotImplementedException();
         }

@@ -1,1 +1,18 @@
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DataPipeline\AWS DataPipeLine AddOn\obj\Debug\Amazon DataPipeLine AddOn.csprojResolveAssemblyReference.cache
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DataPipeline\AWS DataPipeLine AddOn\bin\Debug\AddonManifest.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DataPipeline\AWS DataPipeLine AddOn\bin\Debug\AWS DataPipeLine AddOn.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DataPipeline\AWS DataPipeLine AddOn\bin\Debug\AWS DataPipeLine AddOn.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DataPipeline\AWS DataPipeLine AddOn\bin\Debug\AWSSDK.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DataPipeline\AWS DataPipeLine AddOn\bin\Debug\SaaSGrid.API.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DataPipeline\AWS DataPipeLine AddOn\bin\Debug\SaaSGrid.API.Remote.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DataPipeline\AWS DataPipeLine AddOn\bin\Debug\Apprenda.Utils.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DataPipeline\AWS DataPipeLine AddOn\bin\Debug\Apprenda.Logging.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DataPipeline\AWS DataPipeLine AddOn\bin\Debug\SaaSGrid.Contracts.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DataPipeline\AWS DataPipeLine AddOn\bin\Debug\Apprenda.Configuration.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DataPipeline\AWS DataPipeLine AddOn\bin\Debug\Apprenda.Utils.Ext.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DataPipeline\AWS DataPipeLine AddOn\bin\Debug\AWSSDK.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DataPipeline\AWS DataPipeLine AddOn\bin\Debug\SaaSGrid.API.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DataPipeline\AWS DataPipeLine AddOn\bin\Debug\Apprenda.Logging.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DataPipeline\AWS DataPipeLine AddOn\obj\Debug\AWS DataPipeLine AddOn.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DataPipeline\AWS DataPipeLine AddOn\obj\Debug\AWS DataPipeLine AddOn.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DataPipeline\AWS DataPipeLine AddOn\bin\Debug\AWS DataPipeLine AddOn.dll.CodeAnalysisLog.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DataPipeline\AWS DataPipeLine AddOn\bin\Debug\AWS DataPipeLine AddOn.dll.lastcodeanalysissucceeded

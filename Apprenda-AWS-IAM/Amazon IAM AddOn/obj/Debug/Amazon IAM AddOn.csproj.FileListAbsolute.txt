@@ -14,3 +14,5 @@ C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-IAM\Amazon IAM AddOn\
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-IAM\Amazon IAM AddOn\bin\Debug\Apprenda.Logging.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-IAM\Amazon IAM AddOn\obj\Debug\Amazon IAM AddOn.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-IAM\Amazon IAM AddOn\obj\Debug\Amazon IAM AddOn.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-IAM\Amazon IAM AddOn\bin\Debug\Amazon IAM AddOn.dll.CodeAnalysisLog.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-IAM\Amazon IAM AddOn\bin\Debug\Amazon IAM AddOn.dll.lastcodeanalysissucceeded

@@ -12,6 +12,7 @@ C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EBS\Amazon EBS AddOn\
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EBS\Amazon EBS AddOn\bin\Debug\AWSSDK.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EBS\Amazon EBS AddOn\bin\Debug\SaaSGrid.API.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EBS\Amazon EBS AddOn\bin\Debug\Apprenda.Logging.xml
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EBS\Amazon EBS AddOn\obj\Debug\Amazon EBS AddOn.csprojResolveAssemblyReference.cache
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EBS\Amazon EBS AddOn\obj\Debug\Amazon EBS AddOn.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EBS\Amazon EBS AddOn\obj\Debug\Amazon EBS AddOn.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EBS\Amazon EBS AddOn\bin\Debug\Amazon EBS AddOn.dll.CodeAnalysisLog.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EBS\Amazon EBS AddOn\bin\Debug\Amazon EBS AddOn.dll.lastcodeanalysissucceeded

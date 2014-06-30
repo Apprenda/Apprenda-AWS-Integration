@@ -12,6 +12,7 @@ C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon Dynam
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\bin\Debug\AWSSDK.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\bin\Debug\SaaSGrid.API.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\bin\Debug\Apprenda.Logging.xml
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\obj\Debug\Amazon DynamoDB AddOn.csprojResolveAssemblyReference.cache
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\obj\Debug\Amazon DynamoDB AddOn.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\obj\Debug\Amazon DynamoDB AddOn.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\bin\Debug\Amazon DynamoDB AddOn.dll.CodeAnalysisLog.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\bin\Debug\Amazon DynamoDB AddOn.dll.lastcodeanalysissucceeded
