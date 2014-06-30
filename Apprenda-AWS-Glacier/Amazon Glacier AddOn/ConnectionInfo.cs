@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Text;
 
-namespace Amazon_RDS_AddOn
+namespace Amazon_Glacier_AddOn
 {
     public class ConnectionInfo
     {
-        public string DbInstanceIdentifier { get; set; }
-        public string EndpointAddress { get; set; }
-        public int? EndpointPort { get; set; }
+        public string AccountId { get; set; }
+        public string VaultName { get; set; }
+        public string Location { get; set; }
+
 
         public static ConnectionInfo Parse(string connectionInfo)
         {
@@ -38,26 +39,21 @@ namespace Amazon_RDS_AddOn
 
         public static void MapToProperty(ConnectionInfo existingInfo, string key, string value)
         {
-            if ("dbinstanceidentifier".Equals(key))
+            if ("accountid".Equals(key))
             {
-                existingInfo.DbInstanceIdentifier = value;
+                existingInfo.AccountId = value;
                 return;
             }
 
-            if ("endpointaddress".Equals(key))
+            if ("vaultname".Equals(key))
             {
-                existingInfo.EndpointAddress = value;
+                existingInfo.VaultName = value;
                 return;
             }
 
-            if ("endpointport".Equals(key))
+            if ("location".Equals(key))
             {
-                int result;
-                if (!int.TryParse(value, out result))
-                {
-                    throw new ArgumentException(string.Format("The connection info property '{0}' can only have an integer value but '{1}' was used instead.", key, value));
-                }
-                existingInfo.EndpointPort = result;
+                existingInfo.Location = value;
                 return;
             }
 
@@ -68,16 +64,18 @@ namespace Amazon_RDS_AddOn
         {
             var builder = new StringBuilder();
 
-            if (DbInstanceIdentifier != null)
-                builder.AppendFormat("DbInstanceIdentifier={0}&", DbInstanceIdentifier);
+            if (AccountId != null)
+                builder.AppendFormat("DbInstanceIdentifier={0}&", AccountId);
 
-            if (EndpointAddress != null)
-                builder.AppendFormat("EndpointAddress={0}&", EndpointAddress);
+            if (VaultName != null)
+                builder.AppendFormat("EndpointAddress={0}&", VaultName);
 
-            if (EndpointPort.HasValue)
-                builder.AppendFormat("EndpointPort={0}&", EndpointPort);
+            if (Location != null)
+                builder.AppendFormat("EndpointPort={0}&", Location);
 
             return builder.ToString(0, builder.Length - 1);
         }
+
+        
     }
 }
