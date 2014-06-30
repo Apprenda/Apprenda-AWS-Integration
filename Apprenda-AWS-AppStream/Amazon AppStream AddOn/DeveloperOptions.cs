@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Amazon_RDS_AddOn
+namespace Amazon_AppStream_AddOn
 {
     public class DeveloperOptions
     {

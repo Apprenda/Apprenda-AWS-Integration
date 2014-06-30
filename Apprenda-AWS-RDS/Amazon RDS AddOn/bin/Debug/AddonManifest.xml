@@ -14,8 +14,20 @@
                provisioningPassword=""
                provisioningLocation="">
   <properties>
-    
-    <property key="requireDevCredentials" displayName="Require Developer Credentials" description="If set to true, each developer will need to provide their own Amazon credentials, otherwise the default creds will be used to provision RDS instances." value="true"  />
-    
+    <property key="requireDevCredentials" displayName="Require Developer Credentials" description="If set to true, each developer will need to provide their own Amazon credentials, otherwise the default creds will be used to provision RDS instances." value="false"  />
+    <property key="AccessKey" displayName="AWS Access Key" description="Provide your AWS Access Key here." value="AKIAIJE2KFF2MPGKAGPA" />
+    <property key="SecretAccessKey" displayName="AWS Secret Access Key" description="Provide your Secret AWS Access Key here." value="Ej8gj1FSC28jV+ZK+94GqRI7FHA+DUZKGLP2F1NI"/>
+    <property key="AllocatedStorage" displayName="RDS Allocated Storage" description="Amount of storage space requested." value="10" />
+    <property key="AutoMinorVersionUpgrade" displayName="Auto Minor Version Upgrade" description="This indicates whether you wish to allow for automatic minor version upgrades on your RDS instace." value="true"/>
+    <property key="AvailabilityZone" displayName="" description="" value=""/>
+    <property key="DBInstanceClass" displayName="" description="" value=""/>
+    <property key="DBName" displayName="" description="" value=""/>
+    <property key="DBInstanceIdentifier" displayName="" description="" value=""/>
+    <property key="Engine" displayName="" description="" value=""/>
+    <property key="MultiAZ" displayName="" description="" value=""/>
+    <property key="EngineVersion" displayName="" description="" value=""/>
+    <property key="OptionGroupName" displayName="" description="" value=""/>
+    <property key="Port" displayName="" description="" value=""/>
+    <property key="BackupRetentionPeriod" displayName="" description="" value=""/>
   </properties>
 </addonManifest>

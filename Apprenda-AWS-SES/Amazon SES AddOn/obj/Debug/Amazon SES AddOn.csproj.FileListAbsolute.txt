@@ -1,0 +1,16 @@
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Debug\AddonManifest.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Debug\Amazon SES AddOn.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Debug\Amazon SES AddOn.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Debug\AWSSDK.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Debug\SaaSGrid.API.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Debug\SaaSGrid.API.Remote.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Debug\Apprenda.Utils.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Debug\Apprenda.Logging.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Debug\SaaSGrid.Contracts.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Debug\Apprenda.Configuration.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Debug\Apprenda.Utils.Ext.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Debug\AWSSDK.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Debug\SaaSGrid.API.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Debug\Apprenda.Logging.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\obj\Debug\Amazon SES AddOn.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\obj\Debug\Amazon SES AddOn.pdb

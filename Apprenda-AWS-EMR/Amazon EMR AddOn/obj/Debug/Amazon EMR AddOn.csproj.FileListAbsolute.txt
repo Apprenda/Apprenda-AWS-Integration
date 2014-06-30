@@ -15,3 +15,18 @@ C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon EMR AddOn\Amazon EMR AddOn\obj
 C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon EMR AddOn\Amazon EMR AddOn\obj\Debug\Amazon EMR AddOn.pdb
 C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon EMR AddOn\Amazon EMR AddOn\bin\Debug\Amazon EMR AddOn.dll.CodeAnalysisLog.xml
 C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon EMR AddOn\Amazon EMR AddOn\bin\Debug\Amazon EMR AddOn.dll.lastcodeanalysissucceeded
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\bin\Debug\AddonManifest.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\bin\Debug\icon.png
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\bin\Debug\Amazon EMR AddOn.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\bin\Debug\Amazon EMR AddOn.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\bin\Debug\SaaSGrid.API.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\bin\Debug\Apprenda.Utils.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\bin\Debug\Apprenda.Logging.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\bin\Debug\Apprenda.Utils.Ext.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\bin\Debug\Apprenda.Configuration.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\bin\Debug\AWSSDK.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\bin\Debug\SaaSGrid.API.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\bin\Debug\Apprenda.Logging.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\obj\Debug\Amazon EMR AddOn.csprojResolveAssemblyReference.cache
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\obj\Debug\Amazon EMR AddOn.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\obj\Debug\Amazon EMR AddOn.pdb

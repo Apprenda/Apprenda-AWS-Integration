@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Amazon.DataPipeline.Model;
 
-namespace AWS_DataPipeLine_AddOn
+namespace AWS.Core
 {
     public class ConnectionInfo
     {

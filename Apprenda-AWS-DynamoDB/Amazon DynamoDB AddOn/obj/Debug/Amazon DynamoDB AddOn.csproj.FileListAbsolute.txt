@@ -1,0 +1,17 @@
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\bin\Debug\AddonManifest.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\bin\Debug\Amazon DynamoDB AddOn.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\bin\Debug\Amazon DynamoDB AddOn.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\bin\Debug\AWSSDK.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\bin\Debug\SaaSGrid.API.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\bin\Debug\SaaSGrid.API.Remote.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\bin\Debug\Apprenda.Utils.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\bin\Debug\Apprenda.Logging.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\bin\Debug\SaaSGrid.Contracts.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\bin\Debug\Apprenda.Configuration.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\bin\Debug\Apprenda.Utils.Ext.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\bin\Debug\AWSSDK.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\bin\Debug\SaaSGrid.API.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\bin\Debug\Apprenda.Logging.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\obj\Debug\Amazon DynamoDB AddOn.csprojResolveAssemblyReference.cache
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\obj\Debug\Amazon DynamoDB AddOn.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DynamoDB\Amazon DynamoDB AddOn\obj\Debug\Amazon DynamoDB AddOn.pdb

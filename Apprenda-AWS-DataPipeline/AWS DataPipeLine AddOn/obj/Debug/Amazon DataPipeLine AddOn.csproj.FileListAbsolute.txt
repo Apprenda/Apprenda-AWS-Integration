@@ -1,0 +1,1 @@
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-DataPipeline\AWS DataPipeLine AddOn\obj\Debug\Amazon DataPipeLine AddOn.csprojResolveAssemblyReference.cache

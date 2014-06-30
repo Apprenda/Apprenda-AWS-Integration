@@ -1,0 +1,1 @@
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Extensions\AWSExtension\Service\obj\Debug\Apprenda AWS Dev Portal Service.csprojResolveAssemblyReference.cache

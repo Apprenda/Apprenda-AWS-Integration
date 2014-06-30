@@ -8,6 +8,7 @@ using Amazon.DataPipeline;
 using Amazon.DataPipeline.Model;
 using Amazon.Runtime;
 using System.Threading;
+using AWS.Core;
 
 namespace AWS_DataPipeLine_AddOn
 {
@@ -24,6 +25,13 @@ namespace AWS_DataPipeLine_AddOn
             // ----------------------------------------------------
             string accessKey = "", secretKey = "";
             AWSCredentials  creds = new BasicAWSCredentials(accessKey, secretKey);
+            PipelineOptions options = PipelineOptions.Parse(request.DeveloperOptions);
+            AddonManifest manifest = request.Manifest;
+
+            ProvisionAddOnResult result = new ProvisionAddOnResult()
+            {
+                s
+            }
             AmazonDataPipelineConfig config = new AmazonDataPipelineConfig()
             {
                 
@@ -31,8 +39,8 @@ namespace AWS_DataPipeLine_AddOn
             AmazonDataPipelineClient datapipelineclient = new AmazonDataPipelineClient(creds, config);
             CreatePipelineRequest pipelinerequest = new CreatePipelineRequest()
             {
-                Name = name,
-                Description = description,
+                Name = options.PipelineName,
+                Description = options.PipelineDesc,
                 UniqueId = "apprenda-" + Guid.NewGuid().ToString()
             };
             CreatePipelineResponse pipelineresponse = datapipelineclient.CreatePipeline(pipelinerequest);
@@ -63,6 +71,7 @@ namespace AWS_DataPipeLine_AddOn
             };
 
             ConnectionInfo.MapToProperty(info, properties);
+            
         }
 
         public override OperationResult Test(AddonTestRequest request)

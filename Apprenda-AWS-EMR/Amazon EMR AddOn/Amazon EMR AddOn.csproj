@@ -46,10 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Addon.cs" />
+    <Compile Include="AddOn.cs" />
     <Compile Include="ConnectionInfo.cs" />
-    <Compile Include="EMRAddon.cs" />
     <Compile Include="DeveloperOptions.cs" />
+    <Compile Include="EMRAddon.cs" />
     <Compile Include="EMRDeveloperOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
