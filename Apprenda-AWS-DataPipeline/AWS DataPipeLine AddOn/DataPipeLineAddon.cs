@@ -16,7 +16,55 @@ namespace AWS_DataPipeLine_AddOn
     {
         public override OperationResult Deprovision(AddonDeprovisionRequest request)
         {
-            throw new NotImplementedException();
+            string connectionData = request.ConnectionData;
+            // changing to overloaded constructor - 5/22/14
+            var deprovisionResult = new ProvisionAddOnResult(connectionData);
+            AddonManifest manifest = request.Manifest;
+            string devOptions = request.DeveloperOptions;
+
+            try
+            {
+                
+                var conInfo = ConnectionInfo.Parse(connectionData);
+                var developerOptions = PipelineOptions.Parse(devOptions, manifest);
+                AmazonDataPipelineConfig config = createPipelineConfig(developerOptions);
+                AmazonDataPipelineClient client = new AmazonDataPipelineClient(developerOptions.AccessKey, developerOptions.SecretAccessKey, config);
+
+                var response =
+                    client.DeletePipeline(new DeletePipelineRequest()
+                    {
+                        PipelineId = conInfo.PipelineId
+                    });
+                // 5/22/14 fixing amazon aws deprecation
+                if (response.HttpStatusCode != null)
+                {
+                    do
+                    {
+                        var verificationResponse = client.DescribePipelines(new DescribePipelinesRequest()
+                        {
+                            PipelineIds = new List<String>() { conInfo.PipelineId }
+                        });
+                        // 5/22/14 fixing amazaon aws deprecration
+                        if (!verificationResponse.PipelineDescriptionList.Any())
+                        {
+                            deprovisionResult.IsSuccess = true;
+                            break;
+                        }
+                        Thread.Sleep(TimeSpan.FromSeconds(10d));
+
+                    } while (true);
+                }
+            }
+            catch (PipelineNotFoundException)
+            {
+                deprovisionResult.IsSuccess = true;
+            }
+            catch (Exception e)
+            {
+                deprovisionResult.EndUserMessage = e.Message;
+            }
+
+            return deprovisionResult;
         }
 
         public override ProvisionAddOnResult Provision(AddonProvisionRequest request)
@@ -25,17 +73,14 @@ namespace AWS_DataPipeLine_AddOn
             // ----------------------------------------------------
             string accessKey = "", secretKey = "";
             AWSCredentials  creds = new BasicAWSCredentials(accessKey, secretKey);
-            PipelineOptions options = PipelineOptions.Parse(request.DeveloperOptions);
+            PipelineOptions options = PipelineOptions.Parse(request.DeveloperOptions, request.Manifest);
             AddonManifest manifest = request.Manifest;
 
             ProvisionAddOnResult result = new ProvisionAddOnResult()
             {
-                s
-            }
-            AmazonDataPipelineConfig config = new AmazonDataPipelineConfig()
-            {
-                
+                IsSuccess = false
             };
+            AmazonDataPipelineConfig config = createPipelineConfig(options);
             AmazonDataPipelineClient datapipelineclient = new AmazonDataPipelineClient(creds, config);
             CreatePipelineRequest pipelinerequest = new CreatePipelineRequest()
             {
@@ -70,13 +115,50 @@ namespace AWS_DataPipeLine_AddOn
                 PipelineName = getpipelineresponse.PipelineObjects[0].Name
             };
 
-            ConnectionInfo.MapToProperty(info, properties);
-            
+            ConnectionInfo.MapToProperty(info, properties, out info);
+            result.ConnectionData = info.ToString();
+            result.IsSuccess = true;
+            result.EndUserMessage = "Successfully provisioned.";
+            return result;
         }
 
         public override OperationResult Test(AddonTestRequest request)
         {
+            OperationResult testresult = new OperationResult();
+            testresult.IsSuccess = false;
+            testresult.EndUserMessage = "Staring testing... \n";
             // datapipeline --list-pipelines
+            AddonManifest manifest = request.Manifest;
+            PipelineOptions options = PipelineOptions.Parse(request.DeveloperOptions, manifest);
+            // Provision Request will be used for both actions
+            AddonProvisionRequest addonrequest = new AddonProvisionRequest()
+                {
+                    DeveloperOptions = request.DeveloperOptions,
+                    Manifest = request.Manifest
+                };
+            ProvisionAddOnResult provisionresult = Provision(addonrequest);
+            if(!provisionresult.IsSuccess)
+            {
+                // stop test.
+                testresult.EndUserMessage += @"Provision failed. Check your settings and try again. \n";
+                return testresult;
+            }
+            AddonDeprovisionRequest deprovrequest = new AddonDeprovisionRequest()
+            {
+                ConnectionData = provisionresult.ConnectionData,
+                DeveloperOptions = request.DeveloperOptions,
+                Manifest = request.Manifest
+            };
+            OperationResult deprovsionResult = Deprovision(deprovrequest);
+            if(!deprovsionResult.IsSuccess)
+            {
+                testresult.EndUserMessage += @"Deprovision failed. Manually remove your provisioned resource via the AWS console, fix your code, and try again. \n";
+                return testresult;
+            }
+
+            testresult.EndUserMessage += @"Test successful!";
+            testresult.IsSuccess = true;
+            return testresult;
         }
 
 

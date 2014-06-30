@@ -29,7 +29,7 @@ namespace AWS.Core
                     var optionPairParts = propertyPair.Split(new[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
                     if (optionPairParts.Length == 2)
                     {
-                        MapToProperty(info, optionPairParts[0].Trim().ToLowerInvariant(), optionPairParts[1].Trim());
+                        MapToProperty(info, optionPairParts[0].Trim().ToLowerInvariant(), optionPairParts[1].Trim(), out info);
                     }
                     else
                     {
@@ -44,26 +44,28 @@ namespace AWS.Core
             return info;
         }
 
-        public static void MapToProperty(ConnectionInfo existingInfo, List<Field> fields)
+        public static void MapToProperty(ConnectionInfo existingInfo, List<Field> fields, out ConnectionInfo outInfo)
         {
+            outInfo = existingInfo;
             foreach(var f in fields)
             {
-                MapToProperty(existingInfo, f.Key, f.StringValue);
+                MapToProperty(outInfo, f.Key, f.StringValue, out outInfo);
             }
         }
 
 
-        public static void MapToProperty(ConnectionInfo existingInfo, string key, string value)
+        public static void MapToProperty(ConnectionInfo existingInfo, string key, string value, out ConnectionInfo outInfo)
         {
+            outInfo = existingInfo;
             if ("dbinstanceidentifier".Equals(key))
             {
-                existingInfo.PipelineId = value;
+                outInfo.PipelineId = value;
                 return;
             }
 
             if ("endpointaddress".Equals(key))
             {
-                existingInfo.EndpointAddress = value;
+                outInfo.EndpointAddress = value;
                 return;
             }
 
@@ -74,7 +76,7 @@ namespace AWS.Core
                 {
                     throw new ArgumentException(string.Format("The connection info property '{0}' can only have an integer value but '{1}' was used instead.", key, value));
                 }
-                existingInfo.EndpointPort = result;
+                outInfo.EndpointPort = result;
                 return;
             }
 

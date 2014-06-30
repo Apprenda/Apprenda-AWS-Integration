@@ -8,6 +8,7 @@ using Amazon.DataPipeline.Model;
 using Amazon;
 using Amazon.Runtime;
 using System.Net;
+using Apprenda.SaaSGrid.Addons;
 
 namespace AWS_DataPipeLine_AddOn
 {
@@ -61,7 +62,7 @@ namespace AWS_DataPipeLine_AddOn
 
         public string useragent { get; set; }
 
-        public static PipelineOptions Parse(string developerOptions)
+        public static PipelineOptions Parse(string developerOptions, AddonManifest manifest)
         {
             PipelineOptions options = new PipelineOptions();
 
@@ -88,7 +89,7 @@ namespace AWS_DataPipeLine_AddOn
         }
 
             // Interior method takes in instance of DeveloperOptions (aptly named existingOptions) and maps them to the proper value. In essence, a setter method.
-        private static void MapToOption(DeveloperOptions existingOptions, string key, string value)
+        private static void MapToOption(PipelineOptions existingOptions, string key, string value)
         {
             
             throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", key));
