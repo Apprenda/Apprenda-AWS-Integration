@@ -26,5 +26,6 @@ C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\bin\Debug\Apprenda.Configuration.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\bin\Debug\SaaSGrid.API.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\bin\Debug\Apprenda.Logging.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\obj\Debug\Amazon EMR AddOn.csprojResolveAssemblyReference.cache
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\obj\Debug\Amazon EMR AddOn.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\obj\Debug\Amazon EMR AddOn.pdb

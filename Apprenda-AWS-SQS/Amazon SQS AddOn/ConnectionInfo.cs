@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Amazon_SQS_AddOn
+namespace Apprenda.SaaSGrid.Addons.AWS.SQS
 {
     public class ConnectionInfo
     {
@@ -37,45 +37,28 @@ namespace Amazon_SQS_AddOn
 
         public static void MapToProperty(ConnectionInfo existingInfo, string key, string value)
         {
-            if ("dbinstanceidentifier".Equals(key))
+            if ("queueName".Equals(key))
             {
-                existingInfo.DbInstanceIdentifier = value;
+                existingInfo.queueName = value;
                 return;
             }
 
-            if ("endpointaddress".Equals(key))
+            if ("queueURL".Equals(key))
             {
-                existingInfo.EndpointAddress = value;
+                existingInfo.queueURL = value;
                 return;
             }
-
-            if ("endpointport".Equals(key))
-            {
-                int result;
-                if (!int.TryParse(value, out result))
-                {
-                    throw new ArgumentException(string.Format("The connection info property '{0}' can only have an integer value but '{1}' was used instead.", key, value));
-                }
-                existingInfo.EndpointPort = result;
-                return;
-            }
-
             throw new ArgumentException(string.Format("The connection info '{0}' was not expected and is not understood.", key));
         }
 
         public override string ToString()
         {
             var builder = new StringBuilder();
+            if (queueName != null)
+                builder.AppendFormat("DbInstanceIdentifier={0}&", queueName);
 
-            if (DbInstanceIdentifier != null)
-                builder.AppendFormat("DbInstanceIdentifier={0}&", DbInstanceIdentifier);
-
-            if (EndpointAddress != null)
-                builder.AppendFormat("EndpointAddress={0}&", EndpointAddress);
-
-            if (EndpointPort.HasValue)
-                builder.AppendFormat("EndpointPort={0}&", EndpointPort);
-
+            if (queueURL != null)
+                builder.AppendFormat("EndpointAddress={0}&", queueURL);
             return builder.ToString(0, builder.Length - 1);
         }
     }

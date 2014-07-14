@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Amazon SQS AddOn")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Apprenda.SaaSGrid.Addons.AWS.SQS")]
+[assembly: AssemblyDescription("Provisioning Addon for Amazon AWS SQS")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Amazon SQS AddOn")]
+[assembly: AssemblyCompany("Apprenda Inc.")]
+[assembly: AssemblyProduct("Apprenda.SaaSGrid.Addons.AWS.SQS")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

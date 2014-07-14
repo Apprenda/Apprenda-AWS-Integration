@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Amazon RDS AddOn")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Apprends.SaaSGrid.Addons.AWS.RDS")]
+[assembly: AssemblyDescription("Provisioning Addon for Amazon AWS RDS")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Amazon RDS AddOn")]
+[assembly: AssemblyCompany("Apprenda Inc.")]
+[assembly: AssemblyProduct("Apprenda.SaaSGrid.Addons.AWS.RDS")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

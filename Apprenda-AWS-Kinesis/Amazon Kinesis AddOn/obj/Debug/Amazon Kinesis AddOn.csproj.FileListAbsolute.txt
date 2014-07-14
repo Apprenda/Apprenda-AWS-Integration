@@ -14,5 +14,3 @@ C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Kinesis\Amazon Kinesi
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Kinesis\Amazon Kinesis AddOn\bin\Debug\Apprenda.Logging.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Kinesis\Amazon Kinesis AddOn\obj\Debug\Amazon Kinesis AddOn.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Kinesis\Amazon Kinesis AddOn\obj\Debug\Amazon Kinesis AddOn.pdb
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Kinesis\Amazon Kinesis AddOn\bin\Debug\Amazon Kinesis AddOn.dll.CodeAnalysisLog.xml
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Kinesis\Amazon Kinesis AddOn\bin\Debug\Amazon Kinesis AddOn.dll.lastcodeanalysissucceeded

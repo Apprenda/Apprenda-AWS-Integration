@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<addonManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://schemas.apprenda.com/AddonManifest"
+               xsi:schemaLocation="http://schemas.apprenda.com/AddonManifest http://apprenda.com/schemas/platform/4.5/AddonManifest.xsd"
+               name="Amazon SES"
+               description="Amazon Simple Email Service (Amazon SES) is a cost-effective outbound-only email-sending service built on the reliable and scalable infrastructure that Amazon.com has developed to serve its own customer base."
+               deploymentNotes=""
+               developerHelp=""
+               vendor="Apprenda"
+               author="Chris Dutra"
+               version="1.0.0"
+               provisioningUsername="chris@dutronlabs.com"
+               provisioningPassword="cyrixm2r"
+               provisioningLocation="RegionEndpoint.USEast1">
+  <properties>
+
+    <property key="requireDevCredentials" displayName="Require Developer Credentials" description="If set to true, each developer will need to provide their own Amazon credentials." value="true"  />
+
+  </properties>
+</addonManifest>

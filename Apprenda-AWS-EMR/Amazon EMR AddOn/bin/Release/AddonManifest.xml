@@ -1,21 +1,21 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <addonManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xmlns="http://schemas.apprenda.com/AddonManifest"
-               xsi:schemaLocation="http://schemas.apprenda.com/AddonManifest http://apprenda.com/schemas/platform/5.0/AddonManifest.xsd"
+               xsi:schemaLocation="http://schemas.apprenda.com/AddonManifest http://apprenda.com/schemas/platform/4.5/AddonManifest.xsd"
                name="Amazon EMR"
-               description="Amazon Elastic MapReduce (Amazon EMR) is a web service that makes it easy to quickly and cost-effectively process vast amounts of data."
-               deploymentNotes="Updated to reflect changes in Amazon SDK, configured to work on .NET 4.5 runtime, and updated for work in Apprenda 5.0."
-               developerHelp="contact cdutra@apprenda.com for assistance."
+               description="Amazon EMR is a service that allows you to set up, operate and scale Hadoop MapReduce jobs."
+               deploymentNotes=""
+               developerHelp=""
                vendor="Apprenda"
-               author="Chris Dutra"
-               version="0.1.1"
+               author="Abraham Sultan and Daniel Domkowski"
+               version="1.0.0"
                provisioningUsername=""
                provisioningPassword=""
-               provisioningLocation="">
+               provisioningLocation="RegionEndpoint.USEast1">
   <properties>
-    
-    <property key="requireDevCredentials" displayName="Require Developer Credentials" description="If set to true, each developer will need to provide their own Amazon credentials, otherwise the default creds will be used to provision Redshift instances." value="true"  />
-    
+
+    <property key="requireDevCredentials" displayName="Require Developer Credentials" description="If set to true, each developer will need to provide their own Amazon credentials." value="true"  />
+
   </properties>
 </addonManifest>

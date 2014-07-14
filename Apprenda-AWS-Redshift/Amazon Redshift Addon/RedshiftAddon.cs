@@ -6,9 +6,9 @@ using System.Linq;
 using Amazon.Redshift;
 using System.Threading;
 
-namespace Amazon_Redshift_Addon
+namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
 {
-    public class RedhsiftAddOn : Addon
+    public class RedhsiftAddOn : AddonBase
     {
         // Deprovision Redshift Instance
         // Input: AddonDeprovisionRequest request
@@ -296,6 +296,32 @@ namespace Amazon_Redshift_Addon
                 VpcSecurityGroupIds = devOptions.VpcSecurityGroupIds
             };
             return request;
+        }
+
+        private bool ValidateManifest(AddonManifest manifest, out OperationResult testResult)
+        {
+            testResult = new OperationResult();
+
+            var prop =
+                    manifest.Properties.FirstOrDefault(
+                        p => p.Key.Equals("requireDevCredentials", StringComparison.InvariantCultureIgnoreCase));
+
+            if (prop == null || !prop.HasValue)
+            {
+                testResult.IsSuccess = false;
+                testResult.EndUserMessage = "Missing required property 'requireDevCredentials'. This property needs to be provided as part of the manifest";
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(manifest.ProvisioningUsername) ||
+                string.IsNullOrWhiteSpace(manifest.ProvisioningPassword))
+            {
+                testResult.IsSuccess = false;
+                testResult.EndUserMessage = "Missing credentials 'provisioningUsername' & 'provisioningPassword' . These values needs to be provided as part of the manifest";
+                return false;
+            }
+
+            return true;
         }
     }
 }

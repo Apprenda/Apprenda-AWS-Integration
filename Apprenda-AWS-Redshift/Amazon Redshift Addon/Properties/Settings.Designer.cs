@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Amazon_Redshift_Addon.Properties {
+namespace Apprenda.SaaSGrid.Addons.AWS.Redshift.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

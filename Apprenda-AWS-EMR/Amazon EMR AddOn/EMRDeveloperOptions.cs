@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Amazon_Base_Addon;
 
-namespace AWS_EMR_AddOn
+namespace Apprenda.SaaSGrid.Addons.AWS.EMR
 {
     // this base class idea was a poor one.
     class EMRDeveloperOptions

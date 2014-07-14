@@ -1,0 +1,25 @@
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\bin\Release\AddonManifest.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\bin\Release\icon.png
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\bin\Release\Amazon Glacier AddOn.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\bin\Release\Amazon Glacier AddOn.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\bin\Release\AWSSDK.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\bin\Release\SaaSGrid.API.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\bin\Release\SaaSGrid.API.Remote.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\bin\Release\Apprenda.Utils.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\bin\Release\Apprenda.Logging.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\bin\Release\SaaSGrid.Contracts.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\bin\Release\Apprenda.Configuration.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\bin\Release\Apprenda.Utils.Ext.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\bin\Release\AWSSDK.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\bin\Release\SaaSGrid.API.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\bin\Release\Apprenda.Logging.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\AddonManifest.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\icon.png
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Amazon Glacier AddOn.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Amazon Glacier AddOn.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Glacier\AddonManifest.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Glacier\icon.png
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Glacier\Amazon Glacier AddOn.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Glacier\Amazon Glacier AddOn.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\obj\Release\Amazon Glacier AddOn.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\obj\Release\Amazon Glacier AddOn.pdb

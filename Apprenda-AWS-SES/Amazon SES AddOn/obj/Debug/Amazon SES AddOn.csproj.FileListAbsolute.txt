@@ -14,5 +14,3 @@ C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Debug\Apprenda.Logging.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\obj\Debug\Amazon SES AddOn.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\obj\Debug\Amazon SES AddOn.pdb
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Debug\Amazon SES AddOn.dll.CodeAnalysisLog.xml
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Debug\Amazon SES AddOn.dll.lastcodeanalysissucceeded

@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Text;
 
-namespace Amazon_SNS_AddOn
+namespace Apprenda.SaaSGrid.Addons.AWS.SNS
 {
     public class ConnectionInfo
     {
-        public string DbInstanceIdentifier { get; set; }
-        public string EndpointAddress { get; set; }
-        public int? EndpointPort { get; set; }
-
+        public string TopicArn { get; set; }
+        public string QueueName { get; set; }
         public static ConnectionInfo Parse(string connectionInfo)
         {
             ConnectionInfo info = new ConnectionInfo();
@@ -38,29 +36,17 @@ namespace Amazon_SNS_AddOn
 
         public static void MapToProperty(ConnectionInfo existingInfo, string key, string value)
         {
-            if ("dbinstanceidentifier".Equals(key))
+            if ("TopicArn".Equals(key))
             {
-                existingInfo.DbInstanceIdentifier = value;
+                existingInfo.TopicArn = value;
                 return;
             }
 
-            if ("endpointaddress".Equals(key))
+            if ("QueueName".Equals(key))
             {
-                existingInfo.EndpointAddress = value;
+                existingInfo.QueueName = value;
                 return;
             }
-
-            if ("endpointport".Equals(key))
-            {
-                int result;
-                if (!int.TryParse(value, out result))
-                {
-                    throw new ArgumentException(string.Format("The connection info property '{0}' can only have an integer value but '{1}' was used instead.", key, value));
-                }
-                existingInfo.EndpointPort = result;
-                return;
-            }
-
             throw new ArgumentException(string.Format("The connection info '{0}' was not expected and is not understood.", key));
         }
 
@@ -68,16 +54,15 @@ namespace Amazon_SNS_AddOn
         {
             var builder = new StringBuilder();
 
-            if (DbInstanceIdentifier != null)
-                builder.AppendFormat("DbInstanceIdentifier={0}&", DbInstanceIdentifier);
+            if (TopicArn != null)
+                builder.AppendFormat("DbInstanceIdentifier={0}&", TopicArn);
 
-            if (EndpointAddress != null)
-                builder.AppendFormat("EndpointAddress={0}&", EndpointAddress);
-
-            if (EndpointPort.HasValue)
-                builder.AppendFormat("EndpointPort={0}&", EndpointPort);
+            if (QueueName != null)
+                builder.AppendFormat("EndpointAddress={0}&", QueueName);
 
             return builder.ToString(0, builder.Length - 1);
         }
+
+        
     }
 }

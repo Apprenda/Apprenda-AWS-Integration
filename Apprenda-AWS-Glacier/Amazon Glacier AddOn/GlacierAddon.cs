@@ -9,7 +9,7 @@ using Amazon.Glacier.Model;
 using Amazon.Glacier.Transfer;
 using System.Threading;
 
-namespace Amazon_Glacier_AddOn
+namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
 {
     public class GlacierAddon : AddonBase 
     {
@@ -36,10 +36,7 @@ namespace Amazon_Glacier_AddOn
                     deprovisionResult.EndUserMessage = establishClientResult.EndUserMessage;
                     return deprovisionResult;
                 }
-                // so this sucks... i don't know if we ever want to delete a vault, but we can provide the functionality to do so.
-
                 var getArchivesInVault = client.DescribeVault(new DescribeVaultRequest() { AccountId = conInfo.AccountId, VaultName = conInfo.VaultName });
-
                 var response =
                     client.DeleteVault(new DeleteVaultRequest()
                     {

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Amazon Redshift Addon")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Apprenda.SaaSGrid.Addons.AWS.Redshift")]
+[assembly: AssemblyDescription("Provisioning Addon for Amazon AWS Redshift")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Amazon Redshift Addon")]
+[assembly: AssemblyCompany("Apprenda Inc.")]
+[assembly: AssemblyProduct("Apprenda.SaaSGrid.Addons.AWS.Redshift")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

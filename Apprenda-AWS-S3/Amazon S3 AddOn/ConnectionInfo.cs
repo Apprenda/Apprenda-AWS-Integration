@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Amazon_Base_Addon
+namespace Apprenda.SaaSGrid.Addons.AWS.S3
 {
     public class ConnectionInfo
     {
-        public string ClusterIdentifier { get; set; }
-        public string EndpointAddress { get; set; }
-        public int? EndpointPort { get; set; }
+        public String BucketName { get; set; }
 
         public static ConnectionInfo Parse(string connectionInfo)
         {
@@ -41,29 +39,13 @@ namespace Amazon_Base_Addon
 
         public static void MapToProperty(ConnectionInfo existingInfo, string key, string value)
         {
-            if ("dbinstanceidentifier".Equals(key))
+            if ("BucketName".Equals(key))
             {
-                existingInfo.ClusterIdentifier = value;
+                existingInfo.BucketName = value;
                 return;
             }
 
-            if ("endpointaddress".Equals(key))
-            {
-                existingInfo.EndpointAddress = value;
-                return;
-            }
-
-            if ("endpointport".Equals(key))
-            {
-                int result;
-                if (!int.TryParse(value, out result))
-                {
-                    throw new ArgumentException(string.Format("The connection info property '{0}' can only have an integer value but '{1}' was used instead.", key, value));
-                }
-                existingInfo.EndpointPort = result;
-                return;
-            }
-
+            
             throw new ArgumentException(string.Format("The connection info '{0}' was not expected and is not understood.", key));
         }
 
@@ -71,14 +53,8 @@ namespace Amazon_Base_Addon
         {
             var builder = new StringBuilder();
 
-            if (ClusterIdentifier != null)
-                builder.AppendFormat("DbInstanceIdentifier={0}&", ClusterIdentifier);
-
-            if (EndpointAddress != null)
-                builder.AppendFormat("EndpointAddress={0}&", EndpointAddress);
-
-            if (EndpointPort.HasValue)
-                builder.AppendFormat("EndpointPort={0}&", EndpointPort);
+            if (BucketName != null)
+                builder.AppendFormat("DbInstanceIdentifier={0}&", BucketName);
 
             return builder.ToString(0, builder.Length - 1);
         }

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Amazon Glacier AddOn")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Apprenda.SaaSGrid.Addons.AWS.Glacier")]
+[assembly: AssemblyDescription("Provisioning Addons for Amazon AWS Glacier")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Amazon Glacier AddOn")]
+[assembly: AssemblyCompany("Apprenda Inc.")]
+[assembly: AssemblyProduct("Apprenda.SaaSGrid.Addons.AWS.Glacier")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

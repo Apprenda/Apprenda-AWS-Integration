@@ -1,0 +1,32 @@
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\AWS Test Harness.dll.config
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\AWS Test Harness.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\AWS Test Harness.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\Antlr3.Runtime.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\Newtonsoft.Json.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\System.Net.Http.Formatting.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\System.Web.Helpers.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\System.Web.Http.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\System.Web.Http.WebHost.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\System.Web.Mvc.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\System.Web.Optimization.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\System.Web.Razor.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\System.Web.WebPages.Deployment.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\System.Web.WebPages.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\System.Web.WebPages.Razor.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\WebGrease.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\Newtonsoft.Json.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\System.Net.Http.Formatting.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\System.Web.Helpers.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\System.Web.Http.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\System.Web.Http.WebHost.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\System.Web.Mvc.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\System.Web.Optimization.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\System.Web.Razor.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\System.Web.WebPages.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\System.Web.WebPages.Deployment.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\System.Web.WebPages.Razor.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\bin\Antlr3.Runtime.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\obj\Release\AWS Test Harness.csprojResolveAssemblyReference.cache
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\obj\Release\AWS Test Harness.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Test Harness\obj\Release\AWS Test Harness.pdb

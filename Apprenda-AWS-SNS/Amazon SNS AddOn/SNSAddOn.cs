@@ -8,7 +8,7 @@ using Amazon.SimpleNotificationService;
 using Amazon.SimpleNotificationService.Model;
 using System.Threading;
 
-namespace Amazon_SNS_AddOn
+namespace Apprenda.SaaSGrid.Addons.AWS.SNS
 {
     public class SNSAddOn : AddonBase
     {
@@ -19,59 +19,58 @@ namespace Amazon_SNS_AddOn
             var deprovisionResult = new ProvisionAddOnResult(connectionData);
             AddonManifest manifest = request.Manifest;
             string devOptions = request.DeveloperOptions;
-
             try
             {
-                AmazonRDSClient client;
+                AmazonSimpleNotificationServiceClient client;
                 var conInfo = ConnectionInfo.Parse(connectionData);
                 var developerOptions = DeveloperOptions.Parse(devOptions);
-
                 var establishClientResult = EstablishClient(manifest, developerOptions, out client);
                 if (!establishClientResult.IsSuccess)
                 {
                     deprovisionResult.EndUserMessage = establishClientResult.EndUserMessage;
                     return deprovisionResult;
                 }
-
                 var response =
-                    client.DeleteDBInstance(new DeleteDBInstanceRequest()
+                    client.DeleteTopic(new DeleteTopicRequest()
                     {
-                        DBInstanceIdentifier = conInfo.DbInstanceIdentifier,
-                        SkipFinalSnapshot = true
+                        TopicArn = conInfo.TopicArn
                     });
-                // 5/22/14 fixing amazon aws deprecation
-                if (response.DBInstance != null)
+                if (response.HttpStatusCode != null)
                 {
                     do
                     {
-                        var verificationResponse = client.DescribeDBInstances(new DescribeDBInstancesRequest()
-                        {
-                            DBInstanceIdentifier = conInfo.DbInstanceIdentifier
-                        });
-                        // 5/22/14 fixing amazaon aws deprecration
-                        if (!verificationResponse.DBInstances.Any())
+                        // ok, to verify deletion, we need to list all of the topics and search for the one we just deleted.
+                        // if it's still there, its probably in queue to be deleted, we'll sleep the thread and give it a minute.
+                        // once its gone, we'll return true.
+                        // if after an intolerable amount of time the queue is still there, throw an error.
+                        var verificationResponse = client.ListTopics(new ListTopicsRequest());
+                        // if there are no topics, ok!
+                        if (verificationResponse.Topics.Count == 0)
                         {
                             deprovisionResult.IsSuccess = true;
                             break;
                         }
+                        // if there are existing topics, search for the one we just deleted.
+                        if(verificationResponse.Topics.Find(m => m.TopicArn.Equals(conInfo.TopicArn)) == null)
+                        {
+                            deprovisionResult.IsSuccess = true;
+                            break;
+                        }
+                        // otherwise, the topic still exists and we need to wait a little longer.
                         Thread.Sleep(TimeSpan.FromSeconds(10d));
 
                     } while (true);
                 }
             }
-            catch (DBInstanceNotFoundException)
-            {
-                deprovisionResult.IsSuccess = true;
-            }
             catch (Exception e)
             {
-                deprovisionResult.EndUserMessage = e.Message;
+                deprovisionResult.EndUserMessage += "An error occurred during deletion. Your SNS queue may be deleted, but we were unable to verify. Please check your AWS Console."; 
+                deprovisionResult.EndUserMessage += e.Message;
             }
-
             return deprovisionResult;
         }
 
-        // Provision RDS Instance
+        // Provision SNS Topic
         // Input: AddonDeprovisionRequest request
         // Output: ProvisionAddOnResult
         public override ProvisionAddOnResult Provision(AddonProvisionRequest request)
@@ -80,47 +79,45 @@ namespace Amazon_SNS_AddOn
             var provisionResult = new ProvisionAddOnResult("");
             AddonManifest manifest = request.Manifest;
             string developerOptions = request.DeveloperOptions;
-
             try
             {
                 AmazonSimpleNotificationServiceClient client;
                 DeveloperOptions devOptions;
-
                 var parseOptionsResult = ParseDevOptions(developerOptions, out devOptions);
                 if (!parseOptionsResult.IsSuccess)
                 {
                     provisionResult.EndUserMessage = parseOptionsResult.EndUserMessage;
                     return provisionResult;
                 }
-
                 var establishClientResult = EstablishClient(manifest, DeveloperOptions.Parse(developerOptions), out client);
                 if (!establishClientResult.IsSuccess)
                 {
                     provisionResult.EndUserMessage = establishClientResult.EndUserMessage;
                     return provisionResult;
                 }
-
                 var response = client.CreateTopic(CreateTopicRequest(devOptions));
-                // fix 5/22/14 resolves amazon aws deprecation
-                if (response.TopicArn != null)
-                {
-                    //var conInfo = new ConnectionInfo()
-                    //{
-                    //    DbInstanceIdentifier = devOptions.DbInstanceIndentifier
-                    //};
-                    //provisionResult.IsSuccess = true;
-                    //provisionResult.ConnectionData = conInfo.ToString();
-                    //Thread.Sleep(TimeSpan.FromMinutes(6));
-
-                    do
+                do
                     {
-                        var verificationResponse = client.ListTopics(new ListTopicsRequest());
-                        // fix on next few lines 5/22/14 resolve amazon aws deprecation.
-                        if (verificationResponse.Topics.Any())
+                        var verificationResponse = client.GetTopicAttributes(new GetTopicAttributesRequest()
+                            {
+                                TopicArn = response.TopicArn
+                            });
+                        // ok so the attributes works as follows:
+                        // attributes[0] - topicarn
+                        // attributes[1] - owner
+                        // attributes[2] - policy
+                        // attributes[3] - displayname
+                        // attributes[4] - subscriptionspending
+                        // attributes[5] - subscriptionsconfirmed
+                        // attributes[6] - subscriptionsdeleted
+                        // attributes[7] - deliverypolicy
+                        // attributes[8] - effectivedeliverypolicy
+                        if (verificationResponse.Attributes["TopicArn"].Equals(response.TopicArn))
                         {
-                            var dbInstance = verificationResponse.DBInstances[0];
                             var conInfo = new ConnectionInfo()
                             {
+                                TopicArn = verificationResponse.Attributes["TopicArn"],
+                                QueueName = verificationResponse.Attributes["DisplayName"]
                                 
                             };
                             provisionResult.IsSuccess = true;
@@ -128,9 +125,8 @@ namespace Amazon_SNS_AddOn
                             break;
                         }
                         Thread.Sleep(TimeSpan.FromSeconds(10d));
-
                     } while (true);
-                }
+                
             }
             catch (Exception e)
             {

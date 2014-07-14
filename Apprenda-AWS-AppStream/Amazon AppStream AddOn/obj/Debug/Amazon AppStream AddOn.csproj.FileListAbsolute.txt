@@ -12,7 +12,6 @@ C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-AppStream\Amazon AppS
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-AppStream\Amazon AppStream AddOn\bin\Debug\AWSSDK.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-AppStream\Amazon AppStream AddOn\bin\Debug\SaaSGrid.API.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-AppStream\Amazon AppStream AddOn\bin\Debug\Apprenda.Logging.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-AppStream\Amazon AppStream AddOn\obj\Debug\Amazon AppStream AddOn.csprojResolveAssemblyReference.cache
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-AppStream\Amazon AppStream AddOn\obj\Debug\Amazon AppStream AddOn.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-AppStream\Amazon AppStream AddOn\obj\Debug\Amazon AppStream AddOn.pdb
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-AppStream\Amazon AppStream AddOn\bin\Debug\Amazon AppStream AddOn.dll.CodeAnalysisLog.xml
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-AppStream\Amazon AppStream AddOn\bin\Debug\Amazon AppStream AddOn.dll.lastcodeanalysissucceeded

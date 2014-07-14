@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Amazon S3 AddOn")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Apprenda.SaaSGrid.Addons.AWS.S3")]
+[assembly: AssemblyDescription("Provisioning Addon for Amazon AWS S3")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Amazon S3 AddOn")]
+[assembly: AssemblyCompany("Apprenda Inc.")]
+[assembly: AssemblyProduct("Apprenda.SaaSGrid.Addons.AWS.S3")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -14,5 +14,3 @@ C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-MediaTranscoder\Amazo
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-MediaTranscoder\Amazon Media Transcoder AddOn\bin\Debug\Apprenda.Logging.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-MediaTranscoder\Amazon Media Transcoder AddOn\obj\Debug\Amazon Media Transcoder AddOn.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-MediaTranscoder\Amazon Media Transcoder AddOn\obj\Debug\Amazon Media Transcoder AddOn.pdb
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-MediaTranscoder\Amazon Media Transcoder AddOn\bin\Debug\Amazon Media Transcoder AddOn.dll.CodeAnalysisLog.xml
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-MediaTranscoder\Amazon Media Transcoder AddOn\bin\Debug\Amazon Media Transcoder AddOn.dll.lastcodeanalysissucceeded

@@ -1,0 +1,6 @@
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\S3\AddonManifest.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\S3\icon.png
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\S3\Apprenda.SaasGrid.Addons.AWS.S3.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\S3\Apprenda.SaasGrid.Addons.AWS.S3.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-S3\Amazon S3 AddOn\obj\Release\Apprenda.SaasGrid.Addons.AWS.S3.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-S3\Amazon S3 AddOn\obj\Release\Apprenda.SaasGrid.Addons.AWS.S3.pdb

@@ -1,0 +1,9 @@
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Redshift\AddonManifest.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Redshift\icon.png
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Redshift\Apprenda.SaaSGrid.Addons.AWS.Redshift.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Redshift\Apprenda.SaaSGrid.Addons.AWS.Redshift.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Redshift\Amazon Redshift Addon\obj\Release\Apprenda.SaaSGrid.Addons.AWS.Redshift.csprojResolveAssemblyReference.cache
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Redshift\Amazon Redshift Addon\obj\Release\Apprenda.SaaSGrid.Addons.AWS.Redshift.Properties.Resources.resources
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Redshift\Amazon Redshift Addon\obj\Release\Apprenda.SaaSGrid.Addons.AWS.Redshift.csproj.GenerateResource.Cache
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Redshift\Amazon Redshift Addon\obj\Release\Apprenda.SaaSGrid.Addons.AWS.Redshift.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Redshift\Amazon Redshift Addon\obj\Release\Apprenda.SaaSGrid.Addons.AWS.Redshift.pdb

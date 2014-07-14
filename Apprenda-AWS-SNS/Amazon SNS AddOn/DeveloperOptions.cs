@@ -1,15 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Amazon_SNS_AddOn
+namespace Apprenda.SaaSGrid.Addons.AWS.SNS
 {
     public class DeveloperOptions
     {
         // Amazon Credentials. Required for IAM. 
         public string AccessKey { get; set; }
         public string SecretAccessKey { get; set; }
+        public string TopicName { get; set; }
 
-        
+        public string PlatformApplicationName { get; set; }
+
+        // we'll handle this in 1.1. just topic creation for now.
+        public Dictionary<string, string> PlatformAttributes { get; set; }
+
+        public string MessagingPlatform { get; set; }
+
+        public string PlatformApplicationArn { get; set; }
+
+        public string CustomUserData { get; set; }
+
+        public string Token { get; set; }
+
+        public Dictionary<string, string> EndpointAttributes { get; set; }
+
         // Method takes in a string and parses it into a DeveloperOptions class.
         public static DeveloperOptions Parse(string developerOptions)
         {
@@ -53,7 +68,35 @@ namespace Amazon_SNS_AddOn
                 return;
             }
 
+            if("topicname".Equals(key))
+            {
+                existingOptions.TopicName = value;
+                return;
+            }
+
+            if ("platformapplicationname".Equals(key))
+            {
+                existingOptions.PlatformApplicationName = value;
+                return;
+            }
+            if ("platformapplicationarn".Equals(key))
+            {
+                existingOptions.PlatformApplicationArn = value;
+                return;
+            }
+            if ("existingoptions".Equals(key))
+            {
+                existingOptions.Token = value;
+                return;
+            }
+            if ("customuserdata".Equals(key))
+            {
+                existingOptions.CustomUserData = value;
+                return;
+            }
             throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", key));
         }
+
+        
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Amazon_Glacier_AddOn
+namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
 {
     public class DeveloperOptions
     {

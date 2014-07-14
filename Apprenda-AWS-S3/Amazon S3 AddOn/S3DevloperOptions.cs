@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Amazon_Base_Addon;
 
-namespace Amazon_S3_AddOn
+namespace Apprenda.SaaSGrid.Addons.AWS.S3
 {
-    public class S3DeveloperOptions : DeveloperOptions
+    public class S3DeveloperOptions
     {
         public String BucketName { get; set; }
         public String BucketRegion { get; set; }
@@ -15,7 +14,9 @@ namespace Amazon_S3_AddOn
         public String CannedACL { get; set; }
         public List<String> Grants { get; set; }
         public bool UseClientRegion { get; set; }
-
+        public String RegionEndpont { get; set; }
+        public string AccessKey { get; set; }
+        public string SecretAccessKey { get; set; }
 
         public static S3DeveloperOptions Parse(string devOptions)
         {
@@ -95,6 +96,10 @@ namespace Amazon_S3_AddOn
             {
                 existingOptions.Grants.Add(value);
                 return;
+            }
+            if("regionendpoint".Equals(key))
+            {
+                existingOptions.RegionEndpont = value;
             }
             // else option is not found, throw exception
             throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", key));

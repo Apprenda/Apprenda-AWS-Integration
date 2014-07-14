@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Amazon_RDS_AddOn
+namespace Apprenda.SaaSGrid.Addons.AWS.RDS
 {
     public class ConnectionInfo
     {

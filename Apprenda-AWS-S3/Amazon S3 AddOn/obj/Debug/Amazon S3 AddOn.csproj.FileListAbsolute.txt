@@ -13,5 +13,3 @@ C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-S3\Amazon S3 AddOn\bi
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-S3\Amazon S3 AddOn\bin\Debug\Apprenda.Logging.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-S3\Amazon S3 AddOn\obj\Debug\Amazon S3 AddOn.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-S3\Amazon S3 AddOn\obj\Debug\Amazon S3 AddOn.pdb
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-S3\Amazon S3 AddOn\bin\Debug\Amazon S3 AddOn.dll.CodeAnalysisLog.xml
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-S3\Amazon S3 AddOn\bin\Debug\Amazon S3 AddOn.dll.lastcodeanalysissucceeded

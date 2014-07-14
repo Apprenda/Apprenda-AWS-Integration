@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Amazon_Base_Addon
+namespace Apprenda.SaaSGrid.Addons.AWS.EMR
 {
     public class ConnectionInfo
     {

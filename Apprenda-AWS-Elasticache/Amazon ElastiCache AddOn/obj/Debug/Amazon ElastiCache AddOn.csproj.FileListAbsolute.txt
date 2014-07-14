@@ -14,5 +14,3 @@ C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Elasticache\Amazon El
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Elasticache\Amazon ElastiCache AddOn\bin\Debug\Apprenda.Logging.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Elasticache\Amazon ElastiCache AddOn\obj\Debug\Amazon ElastiCache AddOn.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Elasticache\Amazon ElastiCache AddOn\obj\Debug\Amazon ElastiCache AddOn.pdb
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Elasticache\Amazon ElastiCache AddOn\bin\Debug\Amazon ElastiCache AddOn.dll.CodeAnalysisLog.xml
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Elasticache\Amazon ElastiCache AddOn\bin\Debug\Amazon ElastiCache AddOn.dll.lastcodeanalysissucceeded

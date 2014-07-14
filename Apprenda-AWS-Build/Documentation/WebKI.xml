@@ -1,0 +1,543 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HelpKI>
+  <HelpKINode Title="AccessKey property">
+    <HelpKINode Title="DeveloperOptions.AccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_AccessKey.htm" />
+    <HelpKINode Title="DeveloperOptions.AccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_AccessKey.htm" />
+    <HelpKINode Title="DeveloperOptions.AccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions_AccessKey.htm" />
+    <HelpKINode Title="DeveloperOptions.AccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions_AccessKey.htm" />
+    <HelpKINode Title="RedshiftDeveloperOptions.AccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_AccessKey.htm" />
+    <HelpKINode Title="S3DeveloperOptions.AccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_AccessKey.htm" />
+  </HelpKINode>
+  <HelpKINode Title="AccountId property">
+    <HelpKINode Title="ConnectionInfo.AccountId Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo_AccountId.htm" />
+    <HelpKINode Title="DeveloperOptions.AccountId Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions_AccountId.htm" />
+  </HelpKINode>
+  <HelpKINode Title="AddOn class">
+    <HelpKINode Title="AddOn Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_EMR_AddOn.htm" />
+    <HelpKINode Title="about AddOn class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_EMR_AddOn.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_EMR_AddOn__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_EMR_AddOn.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_EMR_AddOn.htm" />
+  </HelpKINode>
+  <HelpKINode Title="AddOn.AddOn constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_EMR_AddOn__ctor.htm" />
+  <HelpKINode Title="AddOn.Deprovision method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_EMR_AddOn_Deprovision.htm" />
+  <HelpKINode Title="AddOn.EndUserMessage property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_EMR_AddOn_EndUserMessage.htm" />
+  <HelpKINode Title="AddOn.Provision method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_EMR_AddOn_Provision.htm" />
+  <HelpKINode Title="AddOn.Test method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_EMR_AddOn_Test.htm" />
+  <HelpKINode Title="AllocatedStorage property">
+    <HelpKINode Title="DeveloperOptions.AllocatedStorage Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_AllocatedStorage.htm" />
+    <HelpKINode Title="RedshiftDeveloperOptions.AllocatedStorage Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_AllocatedStorage.htm" />
+  </HelpKINode>
+  <HelpKINode Title="AllowVersionUpgrade property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_AllowVersionUpgrade.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.EMR namespace" Url="html/N_Apprenda_SaaSGrid_Addons_AWS_EMR.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.EMR.AddOn class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_EMR_AddOn.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.EMR.ConnectionInfo class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.Glacier namespace" Url="html/N_Apprenda_SaaSGrid_Addons_AWS_Glacier.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.Glacier.ConnectionInfo class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.Glacier.DeveloperOptions class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.Glacier.GlacierAddon class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_Glacier_GlacierAddon.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.RDS namespace" Url="html/N_Apprenda_SaaSGrid_Addons_AWS_RDS.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.RDS.ConnectionInfo class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.RDS.DeveloperOptions class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.RDS.RDSAddOn class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_RDS_RDSAddOn.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.Redshift namespace" Url="html/N_Apprenda_SaaSGrid_Addons_AWS_Redshift.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.Redshift.ConnectionInfo class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.Redshift.RedhsiftAddOn class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedhsiftAddOn.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.Redshift.RedshiftDeveloperOptions class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.S3 namespace" Url="html/N_Apprenda_SaaSGrid_Addons_AWS_S3.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.S3.ConnectionInfo class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_S3_ConnectionInfo.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.S3.S3Addon class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_S3_S3Addon.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.S3.S3DeveloperOptions class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.SNS namespace" Url="html/N_Apprenda_SaaSGrid_Addons_AWS_SNS.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.SNS.ConnectionInfo class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.SNS.DeveloperOptions class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.SNS.SNSAddOn class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_SNS_SNSAddOn.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.SQS namespace" Url="html/N_Apprenda_SaaSGrid_Addons_AWS_SQS.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.SQS.ConnectionInfo class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.SQS.DeveloperOptions class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions.htm" />
+  <HelpKINode Title="Apprenda.SaaSGrid.Addons.AWS.SQS.SQSAddOn class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_SQS_SQSAddOn.htm" />
+  <HelpKINode Title="Attributes property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions_Attributes.htm" />
+  <HelpKINode Title="AutomatedSnapshotRetentionPeriod property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_AutomatedSnapshotRetentionPeriod.htm" />
+  <HelpKINode Title="AutoMinorVersionUpgrade property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_AutoMinorVersionUpgrade.htm" />
+  <HelpKINode Title="AvailabilityZone property">
+    <HelpKINode Title="DeveloperOptions.AvailabilityZone Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_AvailabilityZone.htm" />
+    <HelpKINode Title="RedshiftDeveloperOptions.AvailabilityZone Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_AvailabilityZone.htm" />
+  </HelpKINode>
+  <HelpKINode Title="BackupRetentionPeriod property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_BackupRetentionPeriod.htm" />
+  <HelpKINode Title="BucketName property">
+    <HelpKINode Title="ConnectionInfo.BucketName Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_ConnectionInfo_BucketName.htm" />
+    <HelpKINode Title="S3DeveloperOptions.BucketName Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_BucketName.htm" />
+  </HelpKINode>
+  <HelpKINode Title="BucketRegion property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_BucketRegion.htm" />
+  <HelpKINode Title="BucketRegionName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_BucketRegionName.htm" />
+  <HelpKINode Title="CannedACL property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_CannedACL.htm" />
+  <HelpKINode Title="CharacterSet property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_CharacterSet.htm" />
+  <HelpKINode Title="ClusterIdentifier property">
+    <HelpKINode Title="ConnectionInfo.ClusterIdentifier Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo_ClusterIdentifier.htm" />
+    <HelpKINode Title="ConnectionInfo.ClusterIdentifier Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo_ClusterIdentifier.htm" />
+    <HelpKINode Title="RedshiftDeveloperOptions.ClusterIdentifier Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_ClusterIdentifier.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ClusterParameterGroupName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_ClusterParameterGroupName.htm" />
+  <HelpKINode Title="ClusterSecurityGroups property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_ClusterSecurityGroups.htm" />
+  <HelpKINode Title="ClusterSubnetGroupName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_ClusterSubnetGroupName.htm" />
+  <HelpKINode Title="ClusterType property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_ClusterType.htm" />
+  <HelpKINode Title="ClusterVersion property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_ClusterVersion.htm" />
+  <HelpKINode Title="ConnectionInfo class">
+    <HelpKINode Title="ConnectionInfo Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo.htm" />
+    <HelpKINode Title="ConnectionInfo Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo.htm" />
+    <HelpKINode Title="ConnectionInfo Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_S3_ConnectionInfo.htm" />
+    <HelpKINode Title="ConnectionInfo Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo.htm" />
+    <HelpKINode Title="ConnectionInfo Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo.htm" />
+    <HelpKINode Title="ConnectionInfo Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo.htm" />
+    <HelpKINode Title="ConnectionInfo Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo.htm" />
+    <HelpKINode Title="about ConnectionInfo class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo.htm" />
+    <HelpKINode Title="about ConnectionInfo class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo.htm" />
+    <HelpKINode Title="about ConnectionInfo class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_S3_ConnectionInfo.htm" />
+    <HelpKINode Title="about ConnectionInfo class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo.htm" />
+    <HelpKINode Title="about ConnectionInfo class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo.htm" />
+    <HelpKINode Title="about ConnectionInfo class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo.htm" />
+    <HelpKINode Title="about ConnectionInfo class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo__ctor.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo__ctor.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo__ctor.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo__ctor.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_ConnectionInfo__ctor.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo__ctor.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_S3_ConnectionInfo.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_S3_ConnectionInfo.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ConnectionInfo.AccountId property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo_AccountId.htm" />
+  <HelpKINode Title="ConnectionInfo.BucketName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_ConnectionInfo_BucketName.htm" />
+  <HelpKINode Title="ConnectionInfo.ClusterIdentifier property">
+    <HelpKINode Title="ConnectionInfo.ClusterIdentifier Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo_ClusterIdentifier.htm" />
+    <HelpKINode Title="ConnectionInfo.ClusterIdentifier Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo_ClusterIdentifier.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ConnectionInfo.ConnectionInfo constructor">
+    <HelpKINode Title="ConnectionInfo Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_ConnectionInfo__ctor.htm" />
+    <HelpKINode Title="ConnectionInfo Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo__ctor.htm" />
+    <HelpKINode Title="ConnectionInfo Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo__ctor.htm" />
+    <HelpKINode Title="ConnectionInfo Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo__ctor.htm" />
+    <HelpKINode Title="ConnectionInfo Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo__ctor.htm" />
+    <HelpKINode Title="ConnectionInfo Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo__ctor.htm" />
+    <HelpKINode Title="ConnectionInfo Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo__ctor.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ConnectionInfo.DbInstanceIdentifier property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo_DbInstanceIdentifier.htm" />
+  <HelpKINode Title="ConnectionInfo.EndpointAddress property">
+    <HelpKINode Title="ConnectionInfo.EndpointAddress Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo_EndpointAddress.htm" />
+    <HelpKINode Title="ConnectionInfo.EndpointAddress Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo_EndpointAddress.htm" />
+    <HelpKINode Title="ConnectionInfo.EndpointAddress Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo_EndpointAddress.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ConnectionInfo.EndpointPort property">
+    <HelpKINode Title="ConnectionInfo.EndpointPort Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo_EndpointPort.htm" />
+    <HelpKINode Title="ConnectionInfo.EndpointPort Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo_EndpointPort.htm" />
+    <HelpKINode Title="ConnectionInfo.EndpointPort Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo_EndpointPort.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ConnectionInfo.Location property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo_Location.htm" />
+  <HelpKINode Title="ConnectionInfo.MapToProperty method">
+    <HelpKINode Title="ConnectionInfo.MapToProperty Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo_MapToProperty.htm" />
+    <HelpKINode Title="ConnectionInfo.MapToProperty Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo_MapToProperty.htm" />
+    <HelpKINode Title="ConnectionInfo.MapToProperty Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo_MapToProperty.htm" />
+    <HelpKINode Title="ConnectionInfo.MapToProperty Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_ConnectionInfo_MapToProperty.htm" />
+    <HelpKINode Title="ConnectionInfo.MapToProperty Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo_MapToProperty.htm" />
+    <HelpKINode Title="ConnectionInfo.MapToProperty Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo_MapToProperty.htm" />
+    <HelpKINode Title="ConnectionInfo.MapToProperty Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo_MapToProperty.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ConnectionInfo.Parse method">
+    <HelpKINode Title="ConnectionInfo.Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo_Parse.htm" />
+    <HelpKINode Title="ConnectionInfo.Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo_Parse.htm" />
+    <HelpKINode Title="ConnectionInfo.Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo_Parse.htm" />
+    <HelpKINode Title="ConnectionInfo.Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_ConnectionInfo_Parse.htm" />
+    <HelpKINode Title="ConnectionInfo.Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo_Parse.htm" />
+    <HelpKINode Title="ConnectionInfo.Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo_Parse.htm" />
+    <HelpKINode Title="ConnectionInfo.Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo_Parse.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ConnectionInfo.queueName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo_queueName.htm" />
+  <HelpKINode Title="ConnectionInfo.QueueName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo_QueueName.htm" />
+  <HelpKINode Title="ConnectionInfo.queueURL property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo_queueURL.htm" />
+  <HelpKINode Title="ConnectionInfo.TopicArn property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo_TopicArn.htm" />
+  <HelpKINode Title="ConnectionInfo.ToString method">
+    <HelpKINode Title="ConnectionInfo.ToString Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo_ToString.htm" />
+    <HelpKINode Title="ConnectionInfo.ToString Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo_ToString.htm" />
+    <HelpKINode Title="ConnectionInfo.ToString Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo_ToString.htm" />
+    <HelpKINode Title="ConnectionInfo.ToString Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo_ToString.htm" />
+    <HelpKINode Title="ConnectionInfo.ToString Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo_ToString.htm" />
+    <HelpKINode Title="ConnectionInfo.ToString Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo_ToString.htm" />
+    <HelpKINode Title="ConnectionInfo.ToString Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_ConnectionInfo_ToString.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ConnectionInfo.VaultName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo_VaultName.htm" />
+  <HelpKINode Title="CustomUserData property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_CustomUserData.htm" />
+  <HelpKINode Title="DBAPassword property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_DBAPassword.htm" />
+  <HelpKINode Title="DBAUsername property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_DBAUsername.htm" />
+  <HelpKINode Title="DbInstanceClass property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_DbInstanceClass.htm" />
+  <HelpKINode Title="DbInstanceIdentifier property">
+    <HelpKINode Title="ConnectionInfo.DbInstanceIdentifier Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo_DbInstanceIdentifier.htm" />
+    <HelpKINode Title="DeveloperOptions.DbInstanceIdentifier Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_DbInstanceIdentifier.htm" />
+  </HelpKINode>
+  <HelpKINode Title="DBName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_DBName.htm" />
+  <HelpKINode Title="DbName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_DbName.htm" />
+  <HelpKINode Title="DBParameterGroupName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_DBParameterGroupName.htm" />
+  <HelpKINode Title="DBSecurityGroups property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_DBSecurityGroups.htm" />
+  <HelpKINode Title="Deprovision method">
+    <HelpKINode Title="AddOn.Deprovision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_EMR_AddOn_Deprovision.htm" />
+    <HelpKINode Title="GlacierAddon.Deprovision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_GlacierAddon_Deprovision.htm" />
+    <HelpKINode Title="RDSAddOn.Deprovision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_RDSAddOn_Deprovision.htm" />
+    <HelpKINode Title="RedhsiftAddOn.Deprovision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedhsiftAddOn_Deprovision.htm" />
+    <HelpKINode Title="S3Addon.Deprovision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3Addon_Deprovision.htm" />
+    <HelpKINode Title="SNSAddOn.Deprovision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_SNSAddOn_Deprovision.htm" />
+    <HelpKINode Title="SQSAddOn.Deprovision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_SQSAddOn_Deprovision.htm" />
+  </HelpKINode>
+  <HelpKINode Title="DeveloperOptions class">
+    <HelpKINode Title="DeveloperOptions Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions.htm" />
+    <HelpKINode Title="DeveloperOptions Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions.htm" />
+    <HelpKINode Title="DeveloperOptions Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions.htm" />
+    <HelpKINode Title="DeveloperOptions Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions.htm" />
+    <HelpKINode Title="about DeveloperOptions class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions.htm" />
+    <HelpKINode Title="about DeveloperOptions class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions.htm" />
+    <HelpKINode Title="about DeveloperOptions class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions.htm" />
+    <HelpKINode Title="about DeveloperOptions class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions__ctor.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions__ctor.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions__ctor.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions.htm" />
+  </HelpKINode>
+  <HelpKINode Title="DeveloperOptions.AccessKey property">
+    <HelpKINode Title="DeveloperOptions.AccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_AccessKey.htm" />
+    <HelpKINode Title="DeveloperOptions.AccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions_AccessKey.htm" />
+    <HelpKINode Title="DeveloperOptions.AccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_AccessKey.htm" />
+    <HelpKINode Title="DeveloperOptions.AccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions_AccessKey.htm" />
+  </HelpKINode>
+  <HelpKINode Title="DeveloperOptions.AccountId property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions_AccountId.htm" />
+  <HelpKINode Title="DeveloperOptions.AllocatedStorage property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_AllocatedStorage.htm" />
+  <HelpKINode Title="DeveloperOptions.Attributes property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions_Attributes.htm" />
+  <HelpKINode Title="DeveloperOptions.AutoMinorVersionUpgrade property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_AutoMinorVersionUpgrade.htm" />
+  <HelpKINode Title="DeveloperOptions.AvailabilityZone property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_AvailabilityZone.htm" />
+  <HelpKINode Title="DeveloperOptions.BackupRetentionPeriod property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_BackupRetentionPeriod.htm" />
+  <HelpKINode Title="DeveloperOptions.CharacterSet property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_CharacterSet.htm" />
+  <HelpKINode Title="DeveloperOptions.CustomUserData property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_CustomUserData.htm" />
+  <HelpKINode Title="DeveloperOptions.DBAPassword property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_DBAPassword.htm" />
+  <HelpKINode Title="DeveloperOptions.DBAUsername property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_DBAUsername.htm" />
+  <HelpKINode Title="DeveloperOptions.DbInstanceClass property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_DbInstanceClass.htm" />
+  <HelpKINode Title="DeveloperOptions.DbInstanceIdentifier property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_DbInstanceIdentifier.htm" />
+  <HelpKINode Title="DeveloperOptions.DbName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_DbName.htm" />
+  <HelpKINode Title="DeveloperOptions.DBParameterGroupName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_DBParameterGroupName.htm" />
+  <HelpKINode Title="DeveloperOptions.DBSecurityGroups property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_DBSecurityGroups.htm" />
+  <HelpKINode Title="DeveloperOptions.DeveloperOptions constructor">
+    <HelpKINode Title="DeveloperOptions Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions__ctor.htm" />
+    <HelpKINode Title="DeveloperOptions Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions__ctor.htm" />
+    <HelpKINode Title="DeveloperOptions Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions__ctor.htm" />
+    <HelpKINode Title="DeveloperOptions Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions__ctor.htm" />
+  </HelpKINode>
+  <HelpKINode Title="DeveloperOptions.EndpointAttributes property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_EndpointAttributes.htm" />
+  <HelpKINode Title="DeveloperOptions.Engine property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_Engine.htm" />
+  <HelpKINode Title="DeveloperOptions.EngineVersion property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_EngineVersion.htm" />
+  <HelpKINode Title="DeveloperOptions.LicenseModel property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_LicenseModel.htm" />
+  <HelpKINode Title="DeveloperOptions.MapToOptionWithCollection method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions_MapToOptionWithCollection.htm" />
+  <HelpKINode Title="DeveloperOptions.MessagingPlatform property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_MessagingPlatform.htm" />
+  <HelpKINode Title="DeveloperOptions.MultiAZ property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_MultiAZ.htm" />
+  <HelpKINode Title="DeveloperOptions.NumberOfBackups property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_NumberOfBackups.htm" />
+  <HelpKINode Title="DeveloperOptions.OptionGroup property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_OptionGroup.htm" />
+  <HelpKINode Title="DeveloperOptions.Parse method">
+    <HelpKINode Title="DeveloperOptions.Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions_Parse.htm" />
+    <HelpKINode Title="DeveloperOptions.Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_Parse.htm" />
+    <HelpKINode Title="DeveloperOptions.Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions_Parse.htm" />
+    <HelpKINode Title="DeveloperOptions.Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_Parse.htm" />
+  </HelpKINode>
+  <HelpKINode Title="DeveloperOptions.PlatformApplicationArn property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_PlatformApplicationArn.htm" />
+  <HelpKINode Title="DeveloperOptions.PlatformApplicationName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_PlatformApplicationName.htm" />
+  <HelpKINode Title="DeveloperOptions.PlatformAttributes property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_PlatformAttributes.htm" />
+  <HelpKINode Title="DeveloperOptions.Port property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_Port.htm" />
+  <HelpKINode Title="DeveloperOptions.PreferredBackupWindow property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_PreferredBackupWindow.htm" />
+  <HelpKINode Title="DeveloperOptions.PreferredMXWindow property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_PreferredMXWindow.htm" />
+  <HelpKINode Title="DeveloperOptions.ProvisionedIOPs property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_ProvisionedIOPs.htm" />
+  <HelpKINode Title="DeveloperOptions.PubliclyAccessible property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_PubliclyAccessible.htm" />
+  <HelpKINode Title="DeveloperOptions.QueueName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions_QueueName.htm" />
+  <HelpKINode Title="DeveloperOptions.SecretAccessKey property">
+    <HelpKINode Title="DeveloperOptions.SecretAccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions_SecretAccessKey.htm" />
+    <HelpKINode Title="DeveloperOptions.SecretAccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions_SecretAccessKey.htm" />
+    <HelpKINode Title="DeveloperOptions.SecretAccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_SecretAccessKey.htm" />
+    <HelpKINode Title="DeveloperOptions.SecretAccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_SecretAccessKey.htm" />
+  </HelpKINode>
+  <HelpKINode Title="DeveloperOptions.SubnetGroupName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_SubnetGroupName.htm" />
+  <HelpKINode Title="DeveloperOptions.Tags property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_Tags.htm" />
+  <HelpKINode Title="DeveloperOptions.Token property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_Token.htm" />
+  <HelpKINode Title="DeveloperOptions.TopicName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_TopicName.htm" />
+  <HelpKINode Title="DeveloperOptions.VaultName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions_VaultName.htm" />
+  <HelpKINode Title="DeveloperOptions.VPCSecurityGroupIds property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_VPCSecurityGroupIds.htm" />
+  <HelpKINode Title="ElasticIp property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_ElasticIp.htm" />
+  <HelpKINode Title="Encrypted property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_Encrypted.htm" />
+  <HelpKINode Title="EndpointAddress property">
+    <HelpKINode Title="ConnectionInfo.EndpointAddress Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo_EndpointAddress.htm" />
+    <HelpKINode Title="ConnectionInfo.EndpointAddress Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo_EndpointAddress.htm" />
+    <HelpKINode Title="ConnectionInfo.EndpointAddress Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo_EndpointAddress.htm" />
+  </HelpKINode>
+  <HelpKINode Title="EndpointAttributes property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_EndpointAttributes.htm" />
+  <HelpKINode Title="EndpointPort property">
+    <HelpKINode Title="ConnectionInfo.EndpointPort Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo_EndpointPort.htm" />
+    <HelpKINode Title="ConnectionInfo.EndpointPort Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo_EndpointPort.htm" />
+    <HelpKINode Title="ConnectionInfo.EndpointPort Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo_EndpointPort.htm" />
+  </HelpKINode>
+  <HelpKINode Title="EndUserMessage property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_EMR_AddOn_EndUserMessage.htm" />
+  <HelpKINode Title="Engine property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_Engine.htm" />
+  <HelpKINode Title="EngineVersion property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_EngineVersion.htm" />
+  <HelpKINode Title="GlacierAddon class">
+    <HelpKINode Title="GlacierAddon Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_Glacier_GlacierAddon.htm" />
+    <HelpKINode Title="about GlacierAddon class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_Glacier_GlacierAddon.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_GlacierAddon__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_Glacier_GlacierAddon.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GlacierAddon.Deprovision method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_GlacierAddon_Deprovision.htm" />
+  <HelpKINode Title="GlacierAddon.GlacierAddon constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_GlacierAddon__ctor.htm" />
+  <HelpKINode Title="GlacierAddon.Provision method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_GlacierAddon_Provision.htm" />
+  <HelpKINode Title="GlacierAddon.Test method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_GlacierAddon_Test.htm" />
+  <HelpKINode Title="Grants property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_Grants.htm" />
+  <HelpKINode Title="HSMClientCertificateIdentifier property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_HSMClientCertificateIdentifier.htm" />
+  <HelpKINode Title="HSMClientConfigurationIdentifier property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_HSMClientConfigurationIdentifier.htm" />
+  <HelpKINode Title="LicenseModel property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_LicenseModel.htm" />
+  <HelpKINode Title="Location property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo_Location.htm" />
+  <HelpKINode Title="MapToOption method">
+    <HelpKINode Title="RedshiftDeveloperOptions.MapToOption Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_MapToOption.htm" />
+    <HelpKINode Title="S3DeveloperOptions.MapToOption Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_MapToOption.htm" />
+  </HelpKINode>
+  <HelpKINode Title="MapToOptionWithCollection method">
+    <HelpKINode Title="DeveloperOptions.MapToOptionWithCollection Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions_MapToOptionWithCollection.htm" />
+    <HelpKINode Title="RedshiftDeveloperOptions.MapToOptionWithCollection Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_MapToOptionWithCollection.htm" />
+    <HelpKINode Title="S3DeveloperOptions.MapToOptionWithCollection Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_MapToOptionWithCollection.htm" />
+  </HelpKINode>
+  <HelpKINode Title="MapToProperty method">
+    <HelpKINode Title="ConnectionInfo.MapToProperty Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo_MapToProperty.htm" />
+    <HelpKINode Title="ConnectionInfo.MapToProperty Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo_MapToProperty.htm" />
+    <HelpKINode Title="ConnectionInfo.MapToProperty Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_ConnectionInfo_MapToProperty.htm" />
+    <HelpKINode Title="ConnectionInfo.MapToProperty Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo_MapToProperty.htm" />
+    <HelpKINode Title="ConnectionInfo.MapToProperty Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo_MapToProperty.htm" />
+    <HelpKINode Title="ConnectionInfo.MapToProperty Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo_MapToProperty.htm" />
+    <HelpKINode Title="ConnectionInfo.MapToProperty Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo_MapToProperty.htm" />
+  </HelpKINode>
+  <HelpKINode Title="MasterPassword property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_MasterPassword.htm" />
+  <HelpKINode Title="MasterUserName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_MasterUserName.htm" />
+  <HelpKINode Title="MessagingPlatform property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_MessagingPlatform.htm" />
+  <HelpKINode Title="MultiAZ property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_MultiAZ.htm" />
+  <HelpKINode Title="NodeType property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_NodeType.htm" />
+  <HelpKINode Title="NumberOfBackups property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_NumberOfBackups.htm" />
+  <HelpKINode Title="NumberOfNodes property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_NumberOfNodes.htm" />
+  <HelpKINode Title="OptionGroup property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_OptionGroup.htm" />
+  <HelpKINode Title="Parse method">
+    <HelpKINode Title="ConnectionInfo.Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo_Parse.htm" />
+    <HelpKINode Title="ConnectionInfo.Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo_Parse.htm" />
+    <HelpKINode Title="ConnectionInfo.Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_ConnectionInfo_Parse.htm" />
+    <HelpKINode Title="ConnectionInfo.Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo_Parse.htm" />
+    <HelpKINode Title="ConnectionInfo.Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo_Parse.htm" />
+    <HelpKINode Title="ConnectionInfo.Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo_Parse.htm" />
+    <HelpKINode Title="ConnectionInfo.Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo_Parse.htm" />
+    <HelpKINode Title="DeveloperOptions.Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_Parse.htm" />
+    <HelpKINode Title="DeveloperOptions.Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_Parse.htm" />
+    <HelpKINode Title="DeveloperOptions.Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions_Parse.htm" />
+    <HelpKINode Title="DeveloperOptions.Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions_Parse.htm" />
+    <HelpKINode Title="RedshiftDeveloperOptions.Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_Parse.htm" />
+    <HelpKINode Title="S3DeveloperOptions.Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_Parse.htm" />
+  </HelpKINode>
+  <HelpKINode Title="PlatformApplicationArn property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_PlatformApplicationArn.htm" />
+  <HelpKINode Title="PlatformApplicationName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_PlatformApplicationName.htm" />
+  <HelpKINode Title="PlatformAttributes property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_PlatformAttributes.htm" />
+  <HelpKINode Title="Port property">
+    <HelpKINode Title="DeveloperOptions.Port Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_Port.htm" />
+    <HelpKINode Title="RedshiftDeveloperOptions.Port Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_Port.htm" />
+  </HelpKINode>
+  <HelpKINode Title="PreferredBackupWindow property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_PreferredBackupWindow.htm" />
+  <HelpKINode Title="PreferredMaintenanceWindow property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_PreferredMaintenanceWindow.htm" />
+  <HelpKINode Title="PreferredMXWindow property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_PreferredMXWindow.htm" />
+  <HelpKINode Title="Provision method">
+    <HelpKINode Title="AddOn.Provision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_EMR_AddOn_Provision.htm" />
+    <HelpKINode Title="GlacierAddon.Provision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_GlacierAddon_Provision.htm" />
+    <HelpKINode Title="RDSAddOn.Provision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_RDSAddOn_Provision.htm" />
+    <HelpKINode Title="RedhsiftAddOn.Provision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedhsiftAddOn_Provision.htm" />
+    <HelpKINode Title="S3Addon.Provision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3Addon_Provision.htm" />
+    <HelpKINode Title="SNSAddOn.Provision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_SNSAddOn_Provision.htm" />
+    <HelpKINode Title="SQSAddOn.Provision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_SQSAddOn_Provision.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ProvisionedIOPs property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_ProvisionedIOPs.htm" />
+  <HelpKINode Title="PubliclyAccessible property">
+    <HelpKINode Title="DeveloperOptions.PubliclyAccessible Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_PubliclyAccessible.htm" />
+    <HelpKINode Title="RedshiftDeveloperOptions.PubliclyAccessible Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_PubliclyAccessible.htm" />
+  </HelpKINode>
+  <HelpKINode Title="queueName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo_queueName.htm" />
+  <HelpKINode Title="QueueName property">
+    <HelpKINode Title="ConnectionInfo.QueueName Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo_QueueName.htm" />
+    <HelpKINode Title="DeveloperOptions.QueueName Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions_QueueName.htm" />
+  </HelpKINode>
+  <HelpKINode Title="queueURL property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo_queueURL.htm" />
+  <HelpKINode Title="RDSAddOn class">
+    <HelpKINode Title="RDSAddOn Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_RDS_RDSAddOn.htm" />
+    <HelpKINode Title="about RDSAddOn class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_RDS_RDSAddOn.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_RDSAddOn__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_RDS_RDSAddOn.htm" />
+  </HelpKINode>
+  <HelpKINode Title="RDSAddOn.Deprovision method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_RDSAddOn_Deprovision.htm" />
+  <HelpKINode Title="RDSAddOn.Provision method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_RDSAddOn_Provision.htm" />
+  <HelpKINode Title="RDSAddOn.RDSAddOn constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_RDSAddOn__ctor.htm" />
+  <HelpKINode Title="RDSAddOn.Test method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_RDSAddOn_Test.htm" />
+  <HelpKINode Title="RedhsiftAddOn class">
+    <HelpKINode Title="RedhsiftAddOn Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedhsiftAddOn.htm" />
+    <HelpKINode Title="about RedhsiftAddOn class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedhsiftAddOn.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedhsiftAddOn__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedhsiftAddOn.htm" />
+  </HelpKINode>
+  <HelpKINode Title="RedhsiftAddOn.Deprovision method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedhsiftAddOn_Deprovision.htm" />
+  <HelpKINode Title="RedhsiftAddOn.Provision method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedhsiftAddOn_Provision.htm" />
+  <HelpKINode Title="RedhsiftAddOn.RedhsiftAddOn constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedhsiftAddOn__ctor.htm" />
+  <HelpKINode Title="RedhsiftAddOn.Test method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedhsiftAddOn_Test.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions class">
+    <HelpKINode Title="RedshiftDeveloperOptions Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions.htm" />
+    <HelpKINode Title="about RedshiftDeveloperOptions class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions.htm" />
+  </HelpKINode>
+  <HelpKINode Title="RedshiftDeveloperOptions.AccessKey property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_AccessKey.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.AllocatedStorage property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_AllocatedStorage.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.AllowVersionUpgrade property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_AllowVersionUpgrade.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.AutomatedSnapshotRetentionPeriod property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_AutomatedSnapshotRetentionPeriod.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.AvailabilityZone property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_AvailabilityZone.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.ClusterIdentifier property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_ClusterIdentifier.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.ClusterParameterGroupName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_ClusterParameterGroupName.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.ClusterSecurityGroups property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_ClusterSecurityGroups.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.ClusterSubnetGroupName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_ClusterSubnetGroupName.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.ClusterType property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_ClusterType.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.ClusterVersion property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_ClusterVersion.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.DBName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_DBName.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.ElasticIp property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_ElasticIp.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.Encrypted property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_Encrypted.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.HSMClientCertificateIdentifier property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_HSMClientCertificateIdentifier.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.HSMClientConfigurationIdentifier property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_HSMClientConfigurationIdentifier.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.MapToOption method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_MapToOption.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.MapToOptionWithCollection method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_MapToOptionWithCollection.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.MasterPassword property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_MasterPassword.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.MasterUserName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_MasterUserName.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.NodeType property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_NodeType.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.NumberOfNodes property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_NumberOfNodes.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.Parse method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_Parse.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.Port property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_Port.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.PreferredMaintenanceWindow property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_PreferredMaintenanceWindow.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.PubliclyAccessible property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_PubliclyAccessible.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.RedshiftDeveloperOptions constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions__ctor.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.RegionEndpoint property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_RegionEndpoint.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.SecretAccessKey property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_SecretAccessKey.htm" />
+  <HelpKINode Title="RedshiftDeveloperOptions.VpcSecurityGroupIds property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_VpcSecurityGroupIds.htm" />
+  <HelpKINode Title="RegionEndpoint property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_RegionEndpoint.htm" />
+  <HelpKINode Title="RegionEndpont property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_RegionEndpont.htm" />
+  <HelpKINode Title="S3Addon class">
+    <HelpKINode Title="S3Addon Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_S3_S3Addon.htm" />
+    <HelpKINode Title="about S3Addon class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_S3_S3Addon.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3Addon__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_S3_S3Addon.htm" />
+  </HelpKINode>
+  <HelpKINode Title="S3Addon.Deprovision method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3Addon_Deprovision.htm" />
+  <HelpKINode Title="S3Addon.Provision method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3Addon_Provision.htm" />
+  <HelpKINode Title="S3Addon.S3Addon constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3Addon__ctor.htm" />
+  <HelpKINode Title="S3Addon.Test method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3Addon_Test.htm" />
+  <HelpKINode Title="S3Addon.ValidateManifest method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3Addon_ValidateManifest.htm" />
+  <HelpKINode Title="S3DeveloperOptions class">
+    <HelpKINode Title="S3DeveloperOptions Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions.htm" />
+    <HelpKINode Title="about S3DeveloperOptions class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions.htm" />
+  </HelpKINode>
+  <HelpKINode Title="S3DeveloperOptions.AccessKey property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_AccessKey.htm" />
+  <HelpKINode Title="S3DeveloperOptions.BucketName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_BucketName.htm" />
+  <HelpKINode Title="S3DeveloperOptions.BucketRegion property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_BucketRegion.htm" />
+  <HelpKINode Title="S3DeveloperOptions.BucketRegionName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_BucketRegionName.htm" />
+  <HelpKINode Title="S3DeveloperOptions.CannedACL property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_CannedACL.htm" />
+  <HelpKINode Title="S3DeveloperOptions.Grants property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_Grants.htm" />
+  <HelpKINode Title="S3DeveloperOptions.MapToOption method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_MapToOption.htm" />
+  <HelpKINode Title="S3DeveloperOptions.MapToOptionWithCollection method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_MapToOptionWithCollection.htm" />
+  <HelpKINode Title="S3DeveloperOptions.Parse method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_Parse.htm" />
+  <HelpKINode Title="S3DeveloperOptions.RegionEndpont property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_RegionEndpont.htm" />
+  <HelpKINode Title="S3DeveloperOptions.S3DeveloperOptions constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions__ctor.htm" />
+  <HelpKINode Title="S3DeveloperOptions.SecretAccessKey property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_SecretAccessKey.htm" />
+  <HelpKINode Title="S3DeveloperOptions.UseClientRegion property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_UseClientRegion.htm" />
+  <HelpKINode Title="SecretAccessKey property">
+    <HelpKINode Title="DeveloperOptions.SecretAccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_SecretAccessKey.htm" />
+    <HelpKINode Title="DeveloperOptions.SecretAccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions_SecretAccessKey.htm" />
+    <HelpKINode Title="DeveloperOptions.SecretAccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions_SecretAccessKey.htm" />
+    <HelpKINode Title="DeveloperOptions.SecretAccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_SecretAccessKey.htm" />
+    <HelpKINode Title="RedshiftDeveloperOptions.SecretAccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_SecretAccessKey.htm" />
+    <HelpKINode Title="S3DeveloperOptions.SecretAccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_SecretAccessKey.htm" />
+  </HelpKINode>
+  <HelpKINode Title="SNSAddOn class">
+    <HelpKINode Title="SNSAddOn Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_SNS_SNSAddOn.htm" />
+    <HelpKINode Title="about SNSAddOn class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_SNS_SNSAddOn.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_SNSAddOn__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_SNS_SNSAddOn.htm" />
+  </HelpKINode>
+  <HelpKINode Title="SNSAddOn.Deprovision method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_SNSAddOn_Deprovision.htm" />
+  <HelpKINode Title="SNSAddOn.Provision method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_SNSAddOn_Provision.htm" />
+  <HelpKINode Title="SNSAddOn.SNSAddOn constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_SNSAddOn__ctor.htm" />
+  <HelpKINode Title="SNSAddOn.Test method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_SNSAddOn_Test.htm" />
+  <HelpKINode Title="SQSAddOn class">
+    <HelpKINode Title="SQSAddOn Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_SQS_SQSAddOn.htm" />
+    <HelpKINode Title="about SQSAddOn class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_SQS_SQSAddOn.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_SQSAddOn__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_SQS_SQSAddOn.htm" />
+  </HelpKINode>
+  <HelpKINode Title="SQSAddOn.Deprovision method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_SQSAddOn_Deprovision.htm" />
+  <HelpKINode Title="SQSAddOn.Provision method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_SQSAddOn_Provision.htm" />
+  <HelpKINode Title="SQSAddOn.SQSAddOn constructor" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_SQSAddOn__ctor.htm" />
+  <HelpKINode Title="SQSAddOn.Test method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_SQSAddOn_Test.htm" />
+  <HelpKINode Title="SubnetGroupName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_SubnetGroupName.htm" />
+  <HelpKINode Title="Tags property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_Tags.htm" />
+  <HelpKINode Title="Test method">
+    <HelpKINode Title="AddOn.Test Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_EMR_AddOn_Test.htm" />
+    <HelpKINode Title="GlacierAddon.Test Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_GlacierAddon_Test.htm" />
+    <HelpKINode Title="RDSAddOn.Test Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_RDSAddOn_Test.htm" />
+    <HelpKINode Title="RedhsiftAddOn.Test Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedhsiftAddOn_Test.htm" />
+    <HelpKINode Title="S3Addon.Test Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3Addon_Test.htm" />
+    <HelpKINode Title="SNSAddOn.Test Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_SNSAddOn_Test.htm" />
+    <HelpKINode Title="SQSAddOn.Test Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_SQSAddOn_Test.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Token property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_Token.htm" />
+  <HelpKINode Title="TopicArn property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo_TopicArn.htm" />
+  <HelpKINode Title="TopicName property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_TopicName.htm" />
+  <HelpKINode Title="ToString method">
+    <HelpKINode Title="ConnectionInfo.ToString Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo_ToString.htm" />
+    <HelpKINode Title="ConnectionInfo.ToString Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo_ToString.htm" />
+    <HelpKINode Title="ConnectionInfo.ToString Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo_ToString.htm" />
+    <HelpKINode Title="ConnectionInfo.ToString Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_ConnectionInfo_ToString.htm" />
+    <HelpKINode Title="ConnectionInfo.ToString Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo_ToString.htm" />
+    <HelpKINode Title="ConnectionInfo.ToString Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo_ToString.htm" />
+    <HelpKINode Title="ConnectionInfo.ToString Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo_ToString.htm" />
+  </HelpKINode>
+  <HelpKINode Title="UseClientRegion property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_UseClientRegion.htm" />
+  <HelpKINode Title="ValidateManifest method" Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3Addon_ValidateManifest.htm" />
+  <HelpKINode Title="VaultName property">
+    <HelpKINode Title="ConnectionInfo.VaultName Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo_VaultName.htm" />
+    <HelpKINode Title="DeveloperOptions.VaultName Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions_VaultName.htm" />
+  </HelpKINode>
+  <HelpKINode Title="version">
+    <HelpKINode Title="1.0.0.0" Url="html/e4048608-27ad-4b1b-8489-3c4a4aef3abf.htm" />
+    <HelpKINode Title="history" Url="html/9e042601-625f-4791-945b-ac01e487c64f.htm" />
+  </HelpKINode>
+  <HelpKINode Title="VpcSecurityGroupIds property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_VpcSecurityGroupIds.htm" />
+  <HelpKINode Title="VPCSecurityGroupIds property" Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_VPCSecurityGroupIds.htm" />
+  <HelpKINode Title="Welcome" Url="html/fe742ab9-cfb4-4991-89f4-f3cf37b52dde.htm" />
+</HelpKI>

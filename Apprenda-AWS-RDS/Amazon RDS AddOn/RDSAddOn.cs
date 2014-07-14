@@ -6,7 +6,7 @@ using System.Linq;
 using Amazon.RDS;
 using System.Threading;
 
-namespace Amazon_RDS_AddOn
+namespace Apprenda.SaaSGrid.Addons.AWS.RDS
 {
     public class RDSAddOn : AddonBase
     {

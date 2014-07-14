@@ -1174,7 +1174,7 @@
             of referencing them through the applications but they DONT have credentials to log in to
             SaaSGrid.
             </para>
-            </remarks>
+            </remarks>s
         </member>
         <member name="P:Apprenda.SaaSGrid.UserCreationRequest.FirstName">
             <summary>
@@ -2093,26 +2093,6 @@
             used to uniquely identify entities that belong or are tied to a 
             specific user. Ad Hoc users are short lived so keep that in mind when 
             creating data that is tied to ad hoc users.
-            </remarks>
-        </member>
-        <member name="P:Apprenda.SaaSGrid.AdHocUser.IsSaaSGridUser">
-            <summary>
-            Gets the flag that determines if the current user is a SaaSGrid user.
-            </summary>
-            <value></value>
-            <remarks>
-            <para>
-            SaaSGrid makes a clear distinction on whether a user is a SaaSGrid user, 
-            or a user just being a metadata user defined in the System. The difference 
-            between the two is that SaaSGrid users are allowed to log in and use 
-            applications on SaaSGrid since they get SaaSGrid credentials and regular users 
-            are just users defined in the system for the purpose of referencing them 
-            through the applications but they DONT have credentials to log in to SaaSGrid.
-            </para>
-            <para>
-            In the case of ad hoc users, all users will automatically be created as
-            SaaSGrid users so this property will always return true.
-            </para>
             </remarks>
         </member>
         <member name="P:Apprenda.SaaSGrid.AdHocUser.FirstName">

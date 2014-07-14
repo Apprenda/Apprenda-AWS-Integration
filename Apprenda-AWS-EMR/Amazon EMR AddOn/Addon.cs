@@ -34,7 +34,7 @@ using Amazon.ElasticMapReduce;
 using Amazon.Runtime;
 
 
-namespace AWS_EMR_AddOn
+namespace Apprenda.SaaSGrid.Addons.AWS.EMR
 {
     public class AddOn : AddonBase
     {
@@ -47,7 +47,7 @@ namespace AWS_EMR_AddOn
             try
             {
                 IAmazonElasticMapReduce client;
-                DeveloperOptions devOptions;
+                EMRDeveloperOptions devOptions;
 
                 var parseOptionsResult = ParseDevOptions(developerOptions, out devOptions);
                 if (!parseOptionsResult.IsSuccess)
@@ -56,7 +56,7 @@ namespace AWS_EMR_AddOn
                     return provisionResult;
                 }
 
-                var establishClientResult = EstablishClient(manifest, DeveloperOptions.Parse(developerOptions), out client);
+                var establishClientResult = EstablishClient(manifest, EMRDeveloperOptions.Parse(developerOptions), out client);
                 if (!establishClientResult.IsSuccess)
                 {
                     provisionResult.EndUserMessage = establishClientResult.EndUserMessage;
@@ -64,7 +64,7 @@ namespace AWS_EMR_AddOn
                 }
  
                 provisionResult.IsSuccess = true;
-                provisionResult.ConnectionData = string.Format("AWS AccessKey={0}; AWS SecretKey={1}", devOptions.AccessKey, devOptions.SecretKey);
+                provisionResult.ConnectionData = string.Format("AWS AccessKey={0}; AWS SecretKey={1}", devOptions.AccessKey, devOptions.SecretAccessKey);
                 
             }
 
@@ -89,7 +89,7 @@ namespace AWS_EMR_AddOn
             {
                 IAmazonElasticMapReduce client;
                 //var conInfo = ConnectionInfo.Parse(connectionData);
-                var developerOptions = DeveloperOptions.Parse(devOptions);
+                var developerOptions = EMRDeveloperOptions.Parse(devOptions);
 
                 var establishClientResult = EstablishClient(manifest, developerOptions, out client);
                 if (!establishClientResult.IsSuccess)
@@ -117,7 +117,7 @@ namespace AWS_EMR_AddOn
             
             if (manifest.Properties != null && manifest.Properties.Any())
             {
-                DeveloperOptions devOptions;
+                EMRDeveloperOptions devOptions;
                 
                 testProgress += "Evaluating required manifest properties...\n";
                 if (!ValidateManifest(manifest, out testResult))
@@ -192,12 +192,12 @@ namespace AWS_EMR_AddOn
             return true;
         }
 
-        private bool ValidateDevCreds(DeveloperOptions devOptions)
+        private bool ValidateDevCreds(EMRDeveloperOptions devOptions)
         {
-            return !(string.IsNullOrWhiteSpace(devOptions.AccessKey) || string.IsNullOrWhiteSpace(devOptions.SecretKey));
+            return !(string.IsNullOrWhiteSpace(devOptions.AccessKey) || string.IsNullOrWhiteSpace(devOptions.SecretAccessKey));
         }
 
-        private OperationResult ParseDevOptions(string developerOptions, out DeveloperOptions devOptions)
+        private OperationResult ParseDevOptions(string developerOptions, out EMRDeveloperOptions devOptions)
         {
             devOptions = null;
             var result = new OperationResult() { IsSuccess = false };
@@ -206,7 +206,7 @@ namespace AWS_EMR_AddOn
             try
             {
                 progress += "Parsing developer options...\n";
-                devOptions = DeveloperOptions.Parse(developerOptions);
+                devOptions = EMRDeveloperOptions.Parse(developerOptions);
             }
             catch (ArgumentException)
             {
@@ -219,7 +219,7 @@ namespace AWS_EMR_AddOn
             return result;
         }
 
-        private OperationResult EstablishClient(AddonManifest manifest, DeveloperOptions devOptions, out IAmazonElasticMapReduce client)
+        private OperationResult EstablishClient(AddonManifest manifest, EMRDeveloperOptions devOptions, out IAmazonElasticMapReduce client)
         {
             OperationResult result;
 
@@ -244,7 +244,7 @@ namespace AWS_EMR_AddOn
                 }
 
                 accessKey = devOptions.AccessKey;
-                secretAccessKey = devOptions.SecretKey;
+                secretAccessKey = devOptions.SecretAccessKey;
 
             }
 

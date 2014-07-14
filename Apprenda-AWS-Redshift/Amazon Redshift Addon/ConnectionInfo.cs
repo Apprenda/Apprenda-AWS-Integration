@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Amazon_Redshift_Addon
+namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
 {
     public class ConnectionInfo
     {

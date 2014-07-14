@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Amazon_Redshift_Addon
+namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
 {
-    public class RedshiftDeveloperOptions : DeveloperOptions
+    public class RedshiftDeveloperOptions
     {
         public string ClusterParameterGroupName { get; set; }
         public string MasterUserName { get; set; }
         public string MasterPassword { get; set; }
 
+        public string AccessKey { get; set; }
+        public string SecretAccessKey { get; set; }
+
+        public string RegionEndpoint { get; set; }
         // Amazon Redshift Options
         public int? AllocatedStorage { get; set; }
         public string AvailabilityZone { get; set; }
@@ -112,6 +116,11 @@ namespace Amazon_Redshift_Addon
                 {
                     existingOptions.SecretAccessKey = value;
                     return;
+                }
+
+                if("regionendpoint".Equals(key))
+                {
+                    existingOptions.RegionEndpoint = value;
                 }
 
                 if ("availabilityzone".Equals(key))

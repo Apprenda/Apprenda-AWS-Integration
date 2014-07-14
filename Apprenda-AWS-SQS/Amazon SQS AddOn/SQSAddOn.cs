@@ -10,7 +10,7 @@ using Apprenda.SaaSGrid.Addons;
 using System.Threading;
 
 
-namespace Amazon_SQS_AddOn
+namespace Apprenda.SaaSGrid.Addons.AWS.SQS
 {
     public class SQSAddOn : AddonBase
     {

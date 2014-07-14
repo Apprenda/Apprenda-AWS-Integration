@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Amazon_Base_Addon;
 using Apprenda.SaaSGrid.Addons;
 using Amazon.S3.Model;
 using Amazon.S3;
+using System.Threading;
 
-namespace Amazon_S3_AddOn
+namespace Apprenda.SaaSGrid.Addons.AWS.S3
 {
-    public class S3Addon : Addon
+    public class S3Addon : AddonBase
     {
         public override OperationResult Deprovision(AddonDeprovisionRequest request)
         {
@@ -97,23 +97,29 @@ namespace Amazon_S3_AddOn
                 }
 
                 var response = client.PutBucket(CreatePutBucketRequest(devOptions));
-                // fix 5/22/14 resolves amazon aws deprecation
-                if (!response.HttpStatusCode.Equals(200))
+                // need to verify that the bucket has been created, 20 seconds ok?
+                var i = 0;
+                do
                 {
-                    //var conInfo = new ConnectionInfo()
-                    //{
-                    //    DbInstanceIdentifier = devOptions.DbInstanceIndentifier
-                    //};
-                    //provisionResult.IsSuccess = true;
-                    //provisionResult.ConnectionData = conInfo.ToString();
-                    //Thread.Sleep(TimeSpan.FromMinutes(6));
-                        var verificationResponse = client.ListBuckets(new ListBucketsRequest());
-                        // fix on next few lines 5/22/14 resolve amazon aws deprecation.
-                        if (verificationResponse.Buckets.Any())
+                    var verificationResponse = client.ListBuckets(new ListBucketsRequest());
+                    // fix on next few lines 5/22/14 resolve amazon aws deprecation.
+                    var bucket = verificationResponse.Buckets.Find(m => m.BucketName.Equals(devOptions.BucketName));
+                    if (bucket != null)
+                    {
+
+                        provisionResult.IsSuccess = true;
+                        ConnectionInfo info = new ConnectionInfo()
                         {
-                            provisionResult.IsSuccess = true;
-                        }
+                            BucketName = bucket.BucketName
+                        };
+                        provisionResult.ConnectionData = info.ToString();
+                        break;
+                    }
+                    Thread.Sleep(1000);
+                    i++;
                 }
+                while (i < 20);
+                provisionResult.EndUserMessage = "Amazon S3 has not confirmed creation of your S3 bucket. Please check the management console";
             }
             catch (Exception e)
             {
@@ -190,13 +196,14 @@ namespace Amazon_S3_AddOn
         }
 
 
-        private OperationResult EstablishClient(AddonManifest manifest, DeveloperOptions devOptions, out AmazonS3Client client)
+        private OperationResult EstablishClient(AddonManifest manifest, S3DeveloperOptions devOptions, out AmazonS3Client client)
         {
             OperationResult result;
 
             bool requireCreds;
-            var accessKey = manifest.ProvisioningUsername;
-            var secretAccessKey = manifest.ProvisioningPassword;
+            var accessKey ="";
+            var secretAccessKey = "";
+            var regionEndpoint = "";
 
             var prop =
                 manifest.Properties.First(
@@ -218,15 +225,16 @@ namespace Amazon_S3_AddOn
 
                 accessKey = devOptions.AccessKey;
                 secretAccessKey = devOptions.SecretAccessKey;
+                regionEndpoint = devOptions.RegionEndpont;
             }
 
-            client = new AmazonS3Client(accessKey, secretAccessKey);
+            client = new AmazonS3Client(accessKey, secretAccessKey, regionEndpoint);
             result = new OperationResult { IsSuccess = true };
             return result;
         }
 
         // TODO: We might be able to extend this. 
-        private bool ValidateDevCreds(DeveloperOptions devOptions)
+        private bool ValidateDevCreds(S3DeveloperOptions devOptions)
         {
             return !(string.IsNullOrWhiteSpace(devOptions.AccessKey) || string.IsNullOrWhiteSpace(devOptions.SecretAccessKey));
         }
@@ -251,6 +259,33 @@ namespace Amazon_S3_AddOn
             result.IsSuccess = true;
             result.EndUserMessage = progress;
             return result;
+        }
+
+
+        public bool ValidateManifest(AddonManifest manifest, out OperationResult testResult)
+        {
+            testResult = new OperationResult();
+
+            var prop =
+                    manifest.Properties.FirstOrDefault(
+                        p => p.Key.Equals("requireDevCredentials", StringComparison.InvariantCultureIgnoreCase));
+
+            if (prop == null || !prop.HasValue)
+            {
+                testResult.IsSuccess = false;
+                testResult.EndUserMessage = "Missing required property 'requireDevCredentials'. This property needs to be provided as part of the manifest";
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(manifest.ProvisioningUsername) ||
+                string.IsNullOrWhiteSpace(manifest.ProvisioningPassword))
+            {
+                testResult.IsSuccess = false;
+                testResult.EndUserMessage = "Missing credentials 'provisioningUsername' & 'provisioningPassword' . These values needs to be provided as part of the manifest";
+                return false;
+            }
+
+            return true;
         }
     }
 }

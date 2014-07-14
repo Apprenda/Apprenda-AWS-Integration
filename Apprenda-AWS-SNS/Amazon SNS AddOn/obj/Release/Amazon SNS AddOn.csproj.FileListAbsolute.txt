@@ -1,0 +1,22 @@
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\bin\Release\AddonManifest.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\bin\Release\Amazon SNS AddOn.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\bin\Release\Amazon SNS AddOn.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\bin\Release\AWSSDK.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\bin\Release\SaaSGrid.API.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\bin\Release\SaaSGrid.API.Remote.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\bin\Release\Apprenda.Utils.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\bin\Release\Apprenda.Logging.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\bin\Release\SaaSGrid.Contracts.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\bin\Release\Apprenda.Configuration.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\bin\Release\Apprenda.Utils.Ext.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\bin\Release\AWSSDK.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\bin\Release\SaaSGrid.API.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\bin\Release\Apprenda.Logging.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\AddonManifest.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Amazon SNS AddOn.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Amazon SNS AddOn.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\SNS\AddonManifest.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\SNS\Amazon SNS AddOn.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\SNS\Amazon SNS AddOn.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\obj\Release\Amazon SNS AddOn.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\obj\Release\Amazon SNS AddOn.pdb

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Amazon_SQS_AddOn
+namespace Apprenda.SaaSGrid.Addons.AWS.SQS
 {
     public class DeveloperOptions
     {
@@ -18,13 +18,23 @@ namespace Amazon_SQS_AddOn
 
             if (!string.IsNullOrWhiteSpace(developerOptions))
             {
-                var optionPairs = developerOptions.Split(new []{'&'}, StringSplitOptions.RemoveEmptyEntries);
+                // splitting all entries into arrays of optionPairs
+                var optionPairs = developerOptions.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var optionPair in optionPairs)
                 {
-                    var optionPairParts = optionPair.Split(new[]{'='}, StringSplitOptions.RemoveEmptyEntries);
+                    // splitting all optionPairs into arrays of key/value denominations
+                    var optionPairParts = optionPair.Split(new[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
                     if (optionPairParts.Length == 2)
                     {
-                        MapToOption(options, optionPairParts[0].Trim().ToLowerInvariant(), optionPairParts[1].Trim());
+                        // check for attributes_
+                        if (optionPairParts[0].Trim().ToLowerInvariant().Contains("attributes_"))
+                        {
+                            MapToOptionWithCollection(options, optionPairParts[0].Trim().ToLowerInvariant(), optionPairParts[1].Trim());
+                        }
+                        else
+                        {
+                            MapToOption(options, optionPairParts[0].Trim().ToLowerInvariant(), optionPairParts[1].Trim());
+                        }
                     }
                     else
                     {
@@ -57,6 +67,18 @@ namespace Amazon_SQS_AddOn
            
 
             throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", key));
+        }
+
+        public static void MapToOptionWithCollection(DeveloperOptions existingOptions, string key, string value)
+        {
+            if (key.Contains("attributes_"))
+                {
+                    // trim the leading attributes and add the key
+                    existingOptions.Attributes.Add(key.Replace("attributes_", ""), value);
+                    return;
+                }
+                
+                throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", key));
         }
 
         

@@ -14,5 +14,3 @@ C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SQS\Amazon SQS AddOn\
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SQS\Amazon SQS AddOn\bin\Debug\Apprenda.Logging.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SQS\Amazon SQS AddOn\obj\Debug\Amazon SQS AddOn.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SQS\Amazon SQS AddOn\obj\Debug\Amazon SQS AddOn.pdb
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SQS\Amazon SQS AddOn\bin\Debug\Amazon SQS AddOn.dll.CodeAnalysisLog.xml
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SQS\Amazon SQS AddOn\bin\Debug\Amazon SQS AddOn.dll.lastcodeanalysissucceeded

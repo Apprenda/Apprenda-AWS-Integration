@@ -1,4 +1,5 @@
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\bin\Debug\AddonManifest.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\bin\Debug\icon.png
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\bin\Debug\Amazon Glacier AddOn.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\bin\Debug\Amazon Glacier AddOn.pdb
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\bin\Debug\AWSSDK.dll
@@ -14,4 +15,3 @@ C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacie
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\bin\Debug\Apprenda.Logging.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\obj\Debug\Amazon Glacier AddOn.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\obj\Debug\Amazon Glacier AddOn.pdb
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\bin\Debug\icon.png

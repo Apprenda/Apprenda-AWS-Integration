@@ -1,0 +1,7 @@
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\EMR\AddonManifest.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\EMR\icon.png
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\EMR\Apprenda.SaaSGrid.Addons.AWS.EMR.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\EMR\Apprenda.SaaSGrid.Addons.AWS.EMR.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\obj\Release\Apprenda.SaaSGrid.Addons.AWS.EMR.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\obj\Release\Apprenda.SaaSGrid.Addons.AWS.EMR.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-EMR\Amazon EMR AddOn\obj\Release\Apprenda.SaaSGrid.Addons.AWS.EMR.csprojResolveAssemblyReference.cache

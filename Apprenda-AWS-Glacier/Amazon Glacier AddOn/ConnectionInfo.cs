@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Amazon_Glacier_AddOn
+namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
 {
     public class ConnectionInfo
     {
