@@ -65,7 +65,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"C:\windows\system32\WindowsPowerShell\v1.0\powershell.exe" -file C:/users/cdutra/Documents\github\apprenda-aws\PackageFiles.ps1 "C:\users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Glacier.zip" "C:\users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Glacier"</PostBuildEvent>
+    <PostBuildEvent>"C:\windows\system32\WindowsPowerShell\v1.0\powershell.exe" -file C:/users/cdutra/Documents\github\apprenda-aws\PackageFiles.ps1 "C:\users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Glacier.zip" "C:\users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Glacier"
+"C:\windows\system32\WindowsPowerShell\v1.0\powershell.exe" -file C:/users/cdutra/Documents\github\apprenda-aws\PackageFiles.ps1 "C:\users\cdutra\Dropbox\Apprenda\Amazon\Glacier.zip" "C:\users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Glacier"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

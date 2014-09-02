@@ -9,6 +9,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
         public string AccessKey { get; set; }
         public string SecretAccessKey { get; set; }
         public string AccountId { get; set; }
+        public string RegionEndpoint { get; set; }
         public string VaultName { get; set; }
 
         // Amazon RDS Options required for 
@@ -68,7 +69,10 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
                 return;
             }
 
-
+            if("regionendpoint".Equals(key))
+            {
+                existingOptions.RegionEndpoint = value;
+            }
             throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", key));
         }
     }

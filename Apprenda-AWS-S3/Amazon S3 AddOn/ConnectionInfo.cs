@@ -39,7 +39,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
 
         public static void MapToProperty(ConnectionInfo existingInfo, string key, string value)
         {
-            if ("BucketName".Equals(key))
+            if ("bucketname".Equals(key))
             {
                 existingInfo.BucketName = value;
                 return;
@@ -54,9 +54,8 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
             var builder = new StringBuilder();
 
             if (BucketName != null)
-                builder.AppendFormat("DbInstanceIdentifier={0}&", BucketName);
-
-            return builder.ToString(0, builder.Length - 1);
+                builder.AppendFormat("BucketName={0}", BucketName);
+            return builder.ToString();
         }
     }
 }

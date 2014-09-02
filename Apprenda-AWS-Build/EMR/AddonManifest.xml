@@ -8,13 +8,15 @@
                deploymentNotes=""
                developerHelp=""
                vendor="Apprenda"
-               author="Abraham Sultan and Daniel Domkowski, edited by Chris Dutra"
+               author="Chris Dutra"
                version="1.1.0"
-               provisioningUsername=""
-               provisioningPassword=""
+               provisioningUsername="chris@dutronlabs.com"
+               provisioningPassword="cyrixm2r"
                provisioningLocation="RegionEndpoint.USEast1">
   <properties>
-
+    <property key="AWSClientKey" displayName="AWS Client Key" description="The IAM provisioned AWS Client Key to provision resources." value=""/>
+    <property key="AWSSecretKey" displayName="AWS Secret Key" description="The secret key associated with the AWS client key. Encrypted at rest." value="" />
+    <property key="AWSRegionEndpoint" displayName="AWS Region Endpoint" description="Required-  please specify the region endpoint to log into." value=""/>
     <property key="requireDevCredentials" displayName="Require Developer Credentials" description="If set to true, each developer will need to provide their own Amazon credentials." value="true"  />
     <property key="AdditionalInfo" displayName="Additional Info" description="JSON string adding anything additional to the request" value="" />
     <property key="AmiVersion" displayName="AMI Version" description="Sets the value of the AMI version. For most cases, use 'latest'" value="latest" />

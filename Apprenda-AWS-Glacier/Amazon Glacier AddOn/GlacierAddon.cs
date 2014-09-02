@@ -8,6 +8,7 @@ using Amazon.Glacier;
 using Amazon.Glacier.Model;
 using Amazon.Glacier.Transfer;
 using System.Threading;
+using Amazon;
 
 namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
 {
@@ -90,7 +91,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
                 AmazonGlacierClient client;
                 DeveloperOptions devOptions;
 
-                var parseOptionsResult = ParseDevOptions(developerOptions, out devOptions);
+                var parseOptionsResult = ParseDevOptions(developerOptions, manifest, out devOptions);
                 if (!parseOptionsResult.IsSuccess)
                 {
                     provisionResult.EndUserMessage = parseOptionsResult.EndUserMessage;
@@ -151,7 +152,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
                     return testResult;
                 }
 
-                var parseOptionsResult = ParseDevOptions(developerOptions, out devOptions);
+                var parseOptionsResult = ParseDevOptions(developerOptions, manifest, out devOptions);
                 if (!parseOptionsResult.IsSuccess)
                 {
                     return parseOptionsResult;
@@ -177,6 +178,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
                 catch (Exception e)
                 {
                     testResult.EndUserMessage = e.Message;
+                    Console.WriteLine(e.StackTrace);
                 }
             }
             else
@@ -221,7 +223,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
             return !(string.IsNullOrWhiteSpace(devOptions.AccessKey) || string.IsNullOrWhiteSpace(devOptions.SecretAccessKey));
         }
 
-        private OperationResult ParseDevOptions(string developerOptions, out DeveloperOptions devOptions)
+        private OperationResult ParseDevOptions(string developerOptions, AddonManifest manifest, out DeveloperOptions devOptions)
         {
             devOptions = null;
             var result = new OperationResult() { IsSuccess = false };
@@ -231,6 +233,12 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
             {
                 progress += "Parsing developer options...\n";
                 devOptions = DeveloperOptions.Parse(developerOptions);
+                // we're probably going to need these lines a few times
+                Dictionary<string, string> manifestProperties = manifest.GetProperties().ToDictionary(x => x.Key, x => x.Value);
+                devOptions.AccessKey = manifestProperties["AWSClientKey"];
+                devOptions.SecretAccessKey = manifestProperties["AWSSecretKey"];
+                devOptions.AccountId = manifestProperties["AWSAccountID"];
+                //devOptions.RegionEndpoint = manifestProperties["RegionEndpoint"];
             }
             catch (ArgumentException e)
             {
@@ -248,8 +256,10 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
             OperationResult result;
 
             bool requireCreds;
-            var accessKey = manifest.ProvisioningUsername;
-            var secretAccessKey = manifest.ProvisioningPassword;
+            //var accessKey = manifest.ProvisioningUsername;
+            //var secretAccessKey = manifest.ProvisioningPassword;
+            var accessKey = devOptions.AccessKey;
+            var secretAccessKey = devOptions.SecretAccessKey;
 
             var prop =
                 manifest.Properties.First(
@@ -273,7 +283,8 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
                 secretAccessKey = devOptions.SecretAccessKey;
             }
 
-            client = new AmazonGlacierClient(accessKey, secretAccessKey);
+            AmazonGlacierConfig config = new AmazonGlacierConfig() { RegionEndpoint = RegionEndpoint.USEast1 };
+            client = new AmazonGlacierClient(devOptions.AccessKey, devOptions.SecretAccessKey, config);
             result = new OperationResult { IsSuccess = true };
             return result;
         }

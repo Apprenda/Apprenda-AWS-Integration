@@ -15,8 +15,9 @@
                provisioningLocation="">
   <properties>
     <property key="requireDevCredentials" displayName="Require Developer Credentials" description="If set to true, each developer will need to provide their own Amazon credentials, otherwise the default creds will be used to provision RDS instances." value="false"  />
-    <property key="AccessKey" displayName="AWS Access Key" description="Provide your AWS Access Key here." value="AKIAIJE2KFF2MPGKAGPA" />
-    <property key="SecretAccessKey" displayName="AWS Secret Access Key" description="Provide your Secret AWS Access Key here." value="Ej8gj1FSC28jV+ZK+94GqRI7FHA+DUZKGLP2F1NI"/>
+    <property key="AWSClientKey" displayName="AWS Client Key" description="Required - please specify the client key of the user who has access to provision Glacier vaults." value=""/>
+    <property key="AWSSecretKey" displayName="AWS Secret Key" description="Required - please specify the secret key of the user who has access to provision Glacier vaults." value="" />
+    <property key="AWSRegionEndpoint" displayName="AWS Region Endpoint" description="Required - please specify the AWS Region you wish to connect to." value="useast1"/>
     <property key="AllocatedStorage" displayName="RDS Allocated Storage" description="Amount of storage space requested." value="10" />
     <property key="AutoMinorVersionUpgrade" displayName="Auto Minor Version Upgrade" description="This indicates whether you wish to allow for automatic minor version upgrades on your RDS instace." value="true"/>
     <property key="AvailabilityZone" displayName="Availability Zone" description="The EC2 Availability Zone that the database instance will be created in. Default: A random, system-chosen Availability Zone in the endpoint's region. Example: us-east-1d Constraint: The AvailabilityZone parameter cannot be specified if the MultiAZ parameter is set to true. The specified Availability Zone must be in the same region as the current endpoint." value=""/>

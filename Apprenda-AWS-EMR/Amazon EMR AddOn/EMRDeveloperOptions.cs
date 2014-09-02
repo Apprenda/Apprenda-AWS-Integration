@@ -24,6 +24,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
         public string Jar { get; set; }
         public string stepName { get; set; }
         public List<string> Args { get; set; }
+        public bool EnableDebugging { get; set; }
 
         public static EMRDeveloperOptions Parse(string devOptions)
         {
@@ -115,6 +116,17 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
                 return;
             }
 
+            if("enabledebugging".Equals(key))
+            {
+                bool result;
+                if(bool.TryParse(value, out result))
+                {
+                    throw new ArgumentException(string.Format("The developer option '{0}' can only have an integer value but '{1}' was used instead.", key, value));
+                }
+                existingOptions.EnableDebugging = result;
+            }
+
+
             if ("instancecount".Equals(key))
             {
                 int result;
@@ -192,5 +204,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
             }
             throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", key));
         }
+
+        
     }
 }

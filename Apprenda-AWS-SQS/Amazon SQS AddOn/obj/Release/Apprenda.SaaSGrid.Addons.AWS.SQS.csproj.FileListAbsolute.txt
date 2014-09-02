@@ -1,4 +1,5 @@
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\SQS\AddonManifest.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\SQS\icon.png
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\SQS\Apprenda.SaaSGrid.Addons.AWS.SQS.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\SQS\Apprenda.SaaSGrid.Addons.AWS.SQS.pdb
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SQS\Amazon SQS AddOn\obj\Release\Apprenda.SaaSGrid.Addons.AWS.SQS.dll

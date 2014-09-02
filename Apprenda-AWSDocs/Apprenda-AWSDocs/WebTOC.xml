@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HelpTOC>
+
+  <HelpTOCNode Title="Apprenda AWS Integration" Url="html/fe742ab9-cfb4-4991-89f4-f3cf37b52dde.htm" />
+  <HelpTOCNode Id="c7e8e489-fd6c-4e2f-b7e2-51042183a852" Title="Version History" Url="html/9e042601-625f-4791-945b-ac01e487c64f.htm">
+    <HelpTOCNode Title="Version 1.0.0.0" Url="html/e4048608-27ad-4b1b-8489-3c4a4aef3abf.htm" />
+  </HelpTOCNode>
+  <HelpTOCNode Id="0295d9ad-047f-4a6e-89fe-37ae3126ee4e" Title="Namespaces" Url="html/R_Project_Apprenda_AWS_Documentation.htm">
+    <HelpTOCNode Id="b3f21893-ce3a-4ffc-b4c3-5f4c6d345299" Title="Apprenda.SaaSGrid.Addons.AWS.EMR" Url="html/N_Apprenda_SaaSGrid_Addons_AWS_EMR.htm">
+      <HelpTOCNode Id="9550d3b9-ef08-4ed7-858f-4383bde50ed2" Title="AddOn Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_EMR_AddOn.htm">
+        <HelpTOCNode Title="AddOn Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_EMR_AddOn__ctor.htm" />
+        <HelpTOCNode Id="23c07f3a-e945-406d-abd1-1a23c58d7c92" Title="AddOn Methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_EMR_AddOn.htm">
+          <HelpTOCNode Title="Deprovision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_EMR_AddOn_Deprovision.htm" />
+          <HelpTOCNode Title="Provision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_EMR_AddOn_Provision.htm" />
+          <HelpTOCNode Title="Test Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_EMR_AddOn_Test.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="1e8fafe9-b1d5-4006-b401-6b533b54deb7" Title="AddOn Properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_EMR_AddOn.htm">
+          <HelpTOCNode Title="EndUserMessage Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_EMR_AddOn_EndUserMessage.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="190eb25f-b2cc-491d-8c9b-abd283de0bcd" Title="ConnectionInfo Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo.htm">
+        <HelpTOCNode Title="ConnectionInfo Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo__ctor.htm" />
+        <HelpTOCNode Id="4e563489-0748-4219-9ebb-de57972322ca" Title="ConnectionInfo Methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo.htm">
+          <HelpTOCNode Title="MapToProperty Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo_MapToProperty.htm" />
+          <HelpTOCNode Title="Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo_Parse.htm" />
+          <HelpTOCNode Title="ToString Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo_ToString.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="3e9f7f8e-780f-4633-b9f9-c995ab99ec41" Title="ConnectionInfo Properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo.htm">
+          <HelpTOCNode Title="ClusterIdentifier Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo_ClusterIdentifier.htm" />
+          <HelpTOCNode Title="EndpointAddress Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo_EndpointAddress.htm" />
+          <HelpTOCNode Title="EndpointPort Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_EMR_ConnectionInfo_EndpointPort.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="f236f0de-9f83-4007-b3fa-5d21d0567ea3" Title="Apprenda.SaaSGrid.Addons.AWS.Glacier" Url="html/N_Apprenda_SaaSGrid_Addons_AWS_Glacier.htm">
+      <HelpTOCNode Id="517e05e0-6bfa-4acd-94a0-d8c8cae084a1" Title="ConnectionInfo Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo.htm">
+        <HelpTOCNode Title="ConnectionInfo Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo__ctor.htm" />
+        <HelpTOCNode Id="a25e9300-d2ff-4a4a-8585-30ce6a1b8e2c" Title="ConnectionInfo Methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo.htm">
+          <HelpTOCNode Title="MapToProperty Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo_MapToProperty.htm" />
+          <HelpTOCNode Title="Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo_Parse.htm" />
+          <HelpTOCNode Title="ToString Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo_ToString.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="f77bad3f-0b8a-42e2-8279-8c15dd7cd46b" Title="ConnectionInfo Properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo.htm">
+          <HelpTOCNode Title="AccountId Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo_AccountId.htm" />
+          <HelpTOCNode Title="Location Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo_Location.htm" />
+          <HelpTOCNode Title="VaultName Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Glacier_ConnectionInfo_VaultName.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="bba34845-544f-4578-bd6b-b64c7c22e326" Title="DeveloperOptions Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions.htm">
+        <HelpTOCNode Title="DeveloperOptions Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions__ctor.htm" />
+        <HelpTOCNode Id="32cc461b-a4b6-4faf-803a-417b105aaf86" Title="DeveloperOptions Methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions.htm">
+          <HelpTOCNode Title="Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions_Parse.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="4335f551-0882-43f5-a400-642daac1ec1f" Title="DeveloperOptions Properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions.htm">
+          <HelpTOCNode Title="AccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions_AccessKey.htm" />
+          <HelpTOCNode Title="AccountId Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions_AccountId.htm" />
+          <HelpTOCNode Title="SecretAccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions_SecretAccessKey.htm" />
+          <HelpTOCNode Title="VaultName Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Glacier_DeveloperOptions_VaultName.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="0ad8d266-572d-400d-99bf-87e617dd3d62" Title="GlacierAddon Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_Glacier_GlacierAddon.htm">
+        <HelpTOCNode Title="GlacierAddon Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_GlacierAddon__ctor.htm" />
+        <HelpTOCNode Id="8316a161-8d10-4fd5-a780-f5a5f1c48926" Title="GlacierAddon Methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_Glacier_GlacierAddon.htm">
+          <HelpTOCNode Title="Deprovision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_GlacierAddon_Deprovision.htm" />
+          <HelpTOCNode Title="Provision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_GlacierAddon_Provision.htm" />
+          <HelpTOCNode Title="Test Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Glacier_GlacierAddon_Test.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="9098236e-f74c-4e67-ab53-45277fc5f69f" Title="Apprenda.SaaSGrid.Addons.AWS.RDS" Url="html/N_Apprenda_SaaSGrid_Addons_AWS_RDS.htm">
+      <HelpTOCNode Id="3d26aa66-e2f8-4c37-8c60-5e18cb47c975" Title="ConnectionInfo Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo.htm">
+        <HelpTOCNode Title="ConnectionInfo Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo__ctor.htm" />
+        <HelpTOCNode Id="5c663d41-14fe-4c70-a7cb-de4231841da7" Title="ConnectionInfo Methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo.htm">
+          <HelpTOCNode Title="MapToProperty Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo_MapToProperty.htm" />
+          <HelpTOCNode Title="Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo_Parse.htm" />
+          <HelpTOCNode Title="ToString Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo_ToString.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="7684355b-5629-42df-9f10-df1eae9267ed" Title="ConnectionInfo Properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo.htm">
+          <HelpTOCNode Title="DbInstanceIdentifier Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo_DbInstanceIdentifier.htm" />
+          <HelpTOCNode Title="EndpointAddress Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo_EndpointAddress.htm" />
+          <HelpTOCNode Title="EndpointPort Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_ConnectionInfo_EndpointPort.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="81a512e2-deaf-400c-9b90-0fc4fa9ad866" Title="DeveloperOptions Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions.htm">
+        <HelpTOCNode Title="DeveloperOptions Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions__ctor.htm" />
+        <HelpTOCNode Id="ede50e74-f832-42ea-9bdb-8fe3d8500b71" Title="DeveloperOptions Methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions.htm">
+          <HelpTOCNode Title="Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_Parse.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="4143369d-3dfd-463f-9b3e-7a4b19108e11" Title="DeveloperOptions Properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions.htm">
+          <HelpTOCNode Title="AccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_AccessKey.htm" />
+          <HelpTOCNode Title="AllocatedStorage Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_AllocatedStorage.htm" />
+          <HelpTOCNode Title="AutoMinorVersionUpgrade Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_AutoMinorVersionUpgrade.htm" />
+          <HelpTOCNode Title="AvailabilityZone Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_AvailabilityZone.htm" />
+          <HelpTOCNode Title="BackupRetentionPeriod Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_BackupRetentionPeriod.htm" />
+          <HelpTOCNode Title="CharacterSet Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_CharacterSet.htm" />
+          <HelpTOCNode Title="DBAPassword Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_DBAPassword.htm" />
+          <HelpTOCNode Title="DBAUsername Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_DBAUsername.htm" />
+          <HelpTOCNode Title="DbInstanceClass Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_DbInstanceClass.htm" />
+          <HelpTOCNode Title="DbInstanceIdentifier Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_DbInstanceIdentifier.htm" />
+          <HelpTOCNode Title="DbName Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_DbName.htm" />
+          <HelpTOCNode Title="DBParameterGroupName Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_DBParameterGroupName.htm" />
+          <HelpTOCNode Title="DBSecurityGroups Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_DBSecurityGroups.htm" />
+          <HelpTOCNode Title="Engine Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_Engine.htm" />
+          <HelpTOCNode Title="EngineVersion Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_EngineVersion.htm" />
+          <HelpTOCNode Title="LicenseModel Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_LicenseModel.htm" />
+          <HelpTOCNode Title="MultiAZ Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_MultiAZ.htm" />
+          <HelpTOCNode Title="NumberOfBackups Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_NumberOfBackups.htm" />
+          <HelpTOCNode Title="OptionGroup Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_OptionGroup.htm" />
+          <HelpTOCNode Title="Port Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_Port.htm" />
+          <HelpTOCNode Title="PreferredBackupWindow Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_PreferredBackupWindow.htm" />
+          <HelpTOCNode Title="PreferredMXWindow Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_PreferredMXWindow.htm" />
+          <HelpTOCNode Title="ProvisionedIOPs Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_ProvisionedIOPs.htm" />
+          <HelpTOCNode Title="PubliclyAccessible Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_PubliclyAccessible.htm" />
+          <HelpTOCNode Title="SecretAccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_SecretAccessKey.htm" />
+          <HelpTOCNode Title="SubnetGroupName Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_SubnetGroupName.htm" />
+          <HelpTOCNode Title="Tags Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_Tags.htm" />
+          <HelpTOCNode Title="VPCSecurityGroupIds Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_RDS_DeveloperOptions_VPCSecurityGroupIds.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="2743fd46-0d0f-4359-a526-f576a304ec97" Title="RDSAddOn Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_RDS_RDSAddOn.htm">
+        <HelpTOCNode Title="RDSAddOn Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_RDSAddOn__ctor.htm" />
+        <HelpTOCNode Id="0629171f-b921-43e0-a0c4-eae53a193f00" Title="RDSAddOn Methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_RDS_RDSAddOn.htm">
+          <HelpTOCNode Title="Deprovision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_RDSAddOn_Deprovision.htm" />
+          <HelpTOCNode Title="Provision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_RDSAddOn_Provision.htm" />
+          <HelpTOCNode Title="Test Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_RDS_RDSAddOn_Test.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="1dc7232c-d173-4575-86ac-d675f064ceb5" Title="Apprenda.SaaSGrid.Addons.AWS.Redshift" Url="html/N_Apprenda_SaaSGrid_Addons_AWS_Redshift.htm">
+      <HelpTOCNode Id="84649d03-03f7-46d8-a5b9-f4734a99abdd" Title="ConnectionInfo Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo.htm">
+        <HelpTOCNode Title="ConnectionInfo Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo__ctor.htm" />
+        <HelpTOCNode Id="650e909f-fc81-4867-b646-8bc38ba1fffd" Title="ConnectionInfo Methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo.htm">
+          <HelpTOCNode Title="MapToProperty Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo_MapToProperty.htm" />
+          <HelpTOCNode Title="Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo_Parse.htm" />
+          <HelpTOCNode Title="ToString Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo_ToString.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="caabf422-ce3b-4975-bb1f-cc9412dfad13" Title="ConnectionInfo Properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo.htm">
+          <HelpTOCNode Title="ClusterIdentifier Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo_ClusterIdentifier.htm" />
+          <HelpTOCNode Title="EndpointAddress Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo_EndpointAddress.htm" />
+          <HelpTOCNode Title="EndpointPort Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_ConnectionInfo_EndpointPort.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="d7544a40-cc9e-4c96-8cbd-29aa22d9cf9d" Title="RedhsiftAddOn Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedhsiftAddOn.htm">
+        <HelpTOCNode Title="RedhsiftAddOn Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedhsiftAddOn__ctor.htm" />
+        <HelpTOCNode Id="bad0507d-5782-416c-a2b2-beea39023ca3" Title="RedhsiftAddOn Methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedhsiftAddOn.htm">
+          <HelpTOCNode Title="Deprovision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedhsiftAddOn_Deprovision.htm" />
+          <HelpTOCNode Title="Provision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedhsiftAddOn_Provision.htm" />
+          <HelpTOCNode Title="Test Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedhsiftAddOn_Test.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="d252e287-86ab-4033-b1e4-a2126456fae9" Title="RedshiftDeveloperOptions Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions.htm">
+        <HelpTOCNode Title="RedshiftDeveloperOptions Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions__ctor.htm" />
+        <HelpTOCNode Id="4ec7a0e5-1472-4092-a687-6d63b9c0b24b" Title="RedshiftDeveloperOptions Methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions.htm">
+          <HelpTOCNode Title="MapToOption Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_MapToOption.htm" />
+          <HelpTOCNode Title="MapToOptionWithCollection Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_MapToOptionWithCollection.htm" />
+          <HelpTOCNode Title="Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_Parse.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="7543c698-9b1e-414c-bea8-66cc1908aab7" Title="RedshiftDeveloperOptions Properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions.htm">
+          <HelpTOCNode Title="AccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_AccessKey.htm" />
+          <HelpTOCNode Title="AllocatedStorage Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_AllocatedStorage.htm" />
+          <HelpTOCNode Title="AllowVersionUpgrade Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_AllowVersionUpgrade.htm" />
+          <HelpTOCNode Title="AutomatedSnapshotRetentionPeriod Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_AutomatedSnapshotRetentionPeriod.htm" />
+          <HelpTOCNode Title="AvailabilityZone Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_AvailabilityZone.htm" />
+          <HelpTOCNode Title="ClusterIdentifier Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_ClusterIdentifier.htm" />
+          <HelpTOCNode Title="ClusterParameterGroupName Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_ClusterParameterGroupName.htm" />
+          <HelpTOCNode Title="ClusterSecurityGroups Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_ClusterSecurityGroups.htm" />
+          <HelpTOCNode Title="ClusterSubnetGroupName Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_ClusterSubnetGroupName.htm" />
+          <HelpTOCNode Title="ClusterType Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_ClusterType.htm" />
+          <HelpTOCNode Title="ClusterVersion Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_ClusterVersion.htm" />
+          <HelpTOCNode Title="DBName Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_DBName.htm" />
+          <HelpTOCNode Title="ElasticIp Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_ElasticIp.htm" />
+          <HelpTOCNode Title="Encrypted Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_Encrypted.htm" />
+          <HelpTOCNode Title="HSMClientCertificateIdentifier Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_HSMClientCertificateIdentifier.htm" />
+          <HelpTOCNode Title="HSMClientConfigurationIdentifier Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_HSMClientConfigurationIdentifier.htm" />
+          <HelpTOCNode Title="MasterPassword Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_MasterPassword.htm" />
+          <HelpTOCNode Title="MasterUserName Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_MasterUserName.htm" />
+          <HelpTOCNode Title="NodeType Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_NodeType.htm" />
+          <HelpTOCNode Title="NumberOfNodes Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_NumberOfNodes.htm" />
+          <HelpTOCNode Title="Port Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_Port.htm" />
+          <HelpTOCNode Title="PreferredMaintenanceWindow Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_PreferredMaintenanceWindow.htm" />
+          <HelpTOCNode Title="PubliclyAccessible Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_PubliclyAccessible.htm" />
+          <HelpTOCNode Title="RegionEndpoint Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_RegionEndpoint.htm" />
+          <HelpTOCNode Title="SecretAccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_SecretAccessKey.htm" />
+          <HelpTOCNode Title="VpcSecurityGroupIds Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_Redshift_RedshiftDeveloperOptions_VpcSecurityGroupIds.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="347332ae-4310-4687-bc78-f4dd8c1f6cd9" Title="Apprenda.SaaSGrid.Addons.AWS.S3" Url="html/N_Apprenda_SaaSGrid_Addons_AWS_S3.htm">
+      <HelpTOCNode Id="8b91e229-c316-4402-af2f-e3969d5bb495" Title="ConnectionInfo Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_S3_ConnectionInfo.htm">
+        <HelpTOCNode Title="ConnectionInfo Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_ConnectionInfo__ctor.htm" />
+        <HelpTOCNode Id="8f0844d1-f8f2-4ae8-b064-4d28e78c6151" Title="ConnectionInfo Methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_S3_ConnectionInfo.htm">
+          <HelpTOCNode Title="MapToProperty Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_ConnectionInfo_MapToProperty.htm" />
+          <HelpTOCNode Title="Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_ConnectionInfo_Parse.htm" />
+          <HelpTOCNode Title="ToString Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_ConnectionInfo_ToString.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="be71b0e4-aed3-49cf-9c47-7b9e0939eabf" Title="ConnectionInfo Properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_S3_ConnectionInfo.htm">
+          <HelpTOCNode Title="BucketName Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_ConnectionInfo_BucketName.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="8227d6f6-b50e-4e14-82e7-bef847b0c49a" Title="S3Addon Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_S3_S3Addon.htm">
+        <HelpTOCNode Title="S3Addon Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3Addon__ctor.htm" />
+        <HelpTOCNode Id="e4697bf3-8752-489c-8921-c6c8a5ec99e5" Title="S3Addon Methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_S3_S3Addon.htm">
+          <HelpTOCNode Title="Deprovision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3Addon_Deprovision.htm" />
+          <HelpTOCNode Title="Provision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3Addon_Provision.htm" />
+          <HelpTOCNode Title="Test Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3Addon_Test.htm" />
+          <HelpTOCNode Title="ValidateManifest Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3Addon_ValidateManifest.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="8b901277-da6f-4253-8026-47ab2abff66b" Title="S3DeveloperOptions Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions.htm">
+        <HelpTOCNode Title="S3DeveloperOptions Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions__ctor.htm" />
+        <HelpTOCNode Id="659a18ff-c28e-4d04-80d4-d35dee8e689d" Title="S3DeveloperOptions Methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions.htm">
+          <HelpTOCNode Title="MapToOption Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_MapToOption.htm" />
+          <HelpTOCNode Title="MapToOptionWithCollection Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_MapToOptionWithCollection.htm" />
+          <HelpTOCNode Title="Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_Parse.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="e6066dad-3b64-4b0f-9573-3328b0757dde" Title="S3DeveloperOptions Properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions.htm">
+          <HelpTOCNode Title="AccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_AccessKey.htm" />
+          <HelpTOCNode Title="BucketName Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_BucketName.htm" />
+          <HelpTOCNode Title="BucketRegion Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_BucketRegion.htm" />
+          <HelpTOCNode Title="BucketRegionName Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_BucketRegionName.htm" />
+          <HelpTOCNode Title="CannedACL Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_CannedACL.htm" />
+          <HelpTOCNode Title="Grants Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_Grants.htm" />
+          <HelpTOCNode Title="RegionEndpont Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_RegionEndpont.htm" />
+          <HelpTOCNode Title="SecretAccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_SecretAccessKey.htm" />
+          <HelpTOCNode Title="UseClientRegion Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_S3_S3DeveloperOptions_UseClientRegion.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="98a59315-041c-4ad0-8d7f-e4937e6fbec6" Title="Apprenda.SaaSGrid.Addons.AWS.SNS" Url="html/N_Apprenda_SaaSGrid_Addons_AWS_SNS.htm">
+      <HelpTOCNode Id="8be71c7d-a121-46ff-9e9c-4c7c26ed4af7" Title="ConnectionInfo Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo.htm">
+        <HelpTOCNode Title="ConnectionInfo Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo__ctor.htm" />
+        <HelpTOCNode Id="80b5d07b-272f-4579-8eab-e1c975137bc4" Title="ConnectionInfo Methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo.htm">
+          <HelpTOCNode Title="MapToProperty Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo_MapToProperty.htm" />
+          <HelpTOCNode Title="Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo_Parse.htm" />
+          <HelpTOCNode Title="ToString Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo_ToString.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="2a10e7bd-3015-487d-bbf8-e7fc036eb715" Title="ConnectionInfo Properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo.htm">
+          <HelpTOCNode Title="QueueName Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo_QueueName.htm" />
+          <HelpTOCNode Title="TopicArn Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_ConnectionInfo_TopicArn.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="45cea744-a3eb-4b1d-bb87-34824c545725" Title="DeveloperOptions Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions.htm">
+        <HelpTOCNode Title="DeveloperOptions Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions__ctor.htm" />
+        <HelpTOCNode Id="1aed7fff-0c2d-4df2-9171-a826a3ac1fe0" Title="DeveloperOptions Methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions.htm">
+          <HelpTOCNode Title="Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_Parse.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="b4e27a65-147b-43eb-a130-abdb06325e2e" Title="DeveloperOptions Properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions.htm">
+          <HelpTOCNode Title="AccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_AccessKey.htm" />
+          <HelpTOCNode Title="CustomUserData Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_CustomUserData.htm" />
+          <HelpTOCNode Title="EndpointAttributes Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_EndpointAttributes.htm" />
+          <HelpTOCNode Title="MessagingPlatform Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_MessagingPlatform.htm" />
+          <HelpTOCNode Title="PlatformApplicationArn Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_PlatformApplicationArn.htm" />
+          <HelpTOCNode Title="PlatformApplicationName Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_PlatformApplicationName.htm" />
+          <HelpTOCNode Title="PlatformAttributes Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_PlatformAttributes.htm" />
+          <HelpTOCNode Title="SecretAccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_SecretAccessKey.htm" />
+          <HelpTOCNode Title="Token Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_Token.htm" />
+          <HelpTOCNode Title="TopicName Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SNS_DeveloperOptions_TopicName.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="510ca6a9-2421-487e-bd97-6099e2170a3f" Title="SNSAddOn Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_SNS_SNSAddOn.htm">
+        <HelpTOCNode Title="SNSAddOn Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_SNSAddOn__ctor.htm" />
+        <HelpTOCNode Id="94e9b3ff-45a5-4ea7-beae-d3a4479bdbb8" Title="SNSAddOn Methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_SNS_SNSAddOn.htm">
+          <HelpTOCNode Title="Deprovision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_SNSAddOn_Deprovision.htm" />
+          <HelpTOCNode Title="Provision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_SNSAddOn_Provision.htm" />
+          <HelpTOCNode Title="Test Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SNS_SNSAddOn_Test.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="48ec251a-2f10-4a01-bd95-d19b83b37de9" Title="Apprenda.SaaSGrid.Addons.AWS.SQS" Url="html/N_Apprenda_SaaSGrid_Addons_AWS_SQS.htm">
+      <HelpTOCNode Id="1d00059c-1f8e-4df7-88c1-029e83a8292a" Title="ConnectionInfo Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo.htm">
+        <HelpTOCNode Title="ConnectionInfo Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo__ctor.htm" />
+        <HelpTOCNode Id="6571c2fc-fe48-4965-b985-a222d46109f4" Title="ConnectionInfo Methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo.htm">
+          <HelpTOCNode Title="MapToProperty Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo_MapToProperty.htm" />
+          <HelpTOCNode Title="Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo_Parse.htm" />
+          <HelpTOCNode Title="ToString Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo_ToString.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="275bcfed-f0c8-4e0d-a099-d7902f0cbac0" Title="ConnectionInfo Properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo.htm">
+          <HelpTOCNode Title="queueName Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo_queueName.htm" />
+          <HelpTOCNode Title="queueURL Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SQS_ConnectionInfo_queueURL.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="9ceb6316-95f5-4ed8-8774-bca16dde60c0" Title="DeveloperOptions Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions.htm">
+        <HelpTOCNode Title="DeveloperOptions Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions__ctor.htm" />
+        <HelpTOCNode Id="f9cdd336-ab5f-40fb-aae4-2ab690adb8e7" Title="DeveloperOptions Methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions.htm">
+          <HelpTOCNode Title="MapToOptionWithCollection Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions_MapToOptionWithCollection.htm" />
+          <HelpTOCNode Title="Parse Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions_Parse.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="20f266e3-e51d-44c2-b169-cb150d894f1c" Title="DeveloperOptions Properties" Url="html/Properties_T_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions.htm">
+          <HelpTOCNode Title="AccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions_AccessKey.htm" />
+          <HelpTOCNode Title="Attributes Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions_Attributes.htm" />
+          <HelpTOCNode Title="QueueName Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions_QueueName.htm" />
+          <HelpTOCNode Title="SecretAccessKey Property " Url="html/P_Apprenda_SaaSGrid_Addons_AWS_SQS_DeveloperOptions_SecretAccessKey.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="1a56f3ee-5ecd-4854-b6cc-77bba700ee8e" Title="SQSAddOn Class" Url="html/T_Apprenda_SaaSGrid_Addons_AWS_SQS_SQSAddOn.htm">
+        <HelpTOCNode Title="SQSAddOn Constructor " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_SQSAddOn__ctor.htm" />
+        <HelpTOCNode Id="09cb9bdf-f09e-489f-998e-89ea8e082944" Title="SQSAddOn Methods" Url="html/Methods_T_Apprenda_SaaSGrid_Addons_AWS_SQS_SQSAddOn.htm">
+          <HelpTOCNode Title="Deprovision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_SQSAddOn_Deprovision.htm" />
+          <HelpTOCNode Title="Provision Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_SQSAddOn_Provision.htm" />
+          <HelpTOCNode Title="Test Method " Url="html/M_Apprenda_SaaSGrid_Addons_AWS_SQS_SQSAddOn_Test.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+    </HelpTOCNode>
+  </HelpTOCNode>
+</HelpTOC>

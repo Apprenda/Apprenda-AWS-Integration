@@ -48,6 +48,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packaging Scripts", "Packag
 		Package.bat = Package.bat
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlacierSmokeTests", "GlacierSmokeTests\GlacierSmokeTests.csproj", "{EAE82A91-0E9A-4B26-BA93-E10E72CF8DBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "S3SmokeTests", "S3SmokeTests\S3SmokeTests.csproj", "{481E2342-74E5-413C-BDCE-282C956D41C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +127,14 @@ Global
 		{D40D36CB-2935-40D7-AC40-0534CFA92A0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D40D36CB-2935-40D7-AC40-0534CFA92A0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D40D36CB-2935-40D7-AC40-0534CFA92A0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAE82A91-0E9A-4B26-BA93-E10E72CF8DBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAE82A91-0E9A-4B26-BA93-E10E72CF8DBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAE82A91-0E9A-4B26-BA93-E10E72CF8DBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAE82A91-0E9A-4B26-BA93-E10E72CF8DBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{481E2342-74E5-413C-BDCE-282C956D41C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{481E2342-74E5-413C-BDCE-282C956D41C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{481E2342-74E5-413C-BDCE-282C956D41C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{481E2342-74E5-413C-BDCE-282C956D41C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

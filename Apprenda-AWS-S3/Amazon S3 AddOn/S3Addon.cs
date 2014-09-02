@@ -7,11 +7,15 @@ using Apprenda.SaaSGrid.Addons;
 using Amazon.S3.Model;
 using Amazon.S3;
 using System.Threading;
+using Amazon;
+using Apprenda.Services.Logging;
 
 namespace Apprenda.SaaSGrid.Addons.AWS.S3
 {
     public class S3Addon : AddonBase
     {
+        private static readonly ILogger log = LogManager.Instance().GetLogger(typeof(S3Addon));
+
         public override OperationResult Deprovision(AddonDeprovisionRequest request)
         {
             string connectionData = request.ConnectionData;
@@ -25,6 +29,8 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                 AmazonS3Client client;
                 var conInfo = ConnectionInfo.Parse(connectionData);
                 var developerOptions = S3DeveloperOptions.Parse(devOptions);
+                // heh, need to know which bucket to remove...
+                developerOptions.BucketName = conInfo.BucketName;
 
                 var establishClientResult = EstablishClient(manifest, developerOptions, out client);
                 if (!establishClientResult.IsSuccess)
@@ -37,31 +43,20 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                     client.DeleteBucket(new DeleteBucketRequest()
                     {
                         // TODO- add in developer options
-                        BucketName = developerOptions.BucketName,
-                        BucketRegion = developerOptions.BucketRegion,
-                        UseClientRegion = developerOptions.UseClientRegion
+                        BucketName = developerOptions.BucketName
                     });
                 // 5/22/14 fixing amazon aws deprecation
-                if (!response.HttpStatusCode.Equals(200))
-                {
-                    do
-                    {
-                        var verificationResponse = client.ListBuckets(new ListBucketsRequest());
+                var verificationResponse = client.ListBuckets(new ListBucketsRequest());
                         // 5/22/14 fixing amazaon aws deprecration
-                        if (!verificationResponse.Buckets.Any())
+                        if (!verificationResponse.Buckets.Any(x=>x.BucketName == conInfo.BucketName))
                         {
                             deprovisionResult.IsSuccess = true;
-                            break;
+                            deprovisionResult.EndUserMessage = "Successfully deleted bucket: " + conInfo.BucketName;
                         }
-                       
-
-                    } while (true);
-                }
-            }
-           
+            }          
             catch (Exception e)
             {
-                deprovisionResult.EndUserMessage = e.Message;
+                deprovisionResult.EndUserMessage = e.Message + e.StackTrace;
             }
 
             return deprovisionResult;
@@ -72,8 +67,8 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
         // Output: ProvisionAddOnResult
         public override ProvisionAddOnResult Provision(AddonProvisionRequest request)
         {
-            // i think this is a bug. but I'm going to throw an empty string to it to clear the warning.
             var provisionResult = new ProvisionAddOnResult("");
+            provisionResult.IsSuccess = false;
             AddonManifest manifest = request.Manifest;
             string developerOptions = request.DeveloperOptions;
 
@@ -96,47 +91,39 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                     return provisionResult;
                 }
 
-                var response = client.PutBucket(CreatePutBucketRequest(devOptions));
-                // need to verify that the bucket has been created, 20 seconds ok?
-                var i = 0;
-                do
+                var response = client.PutBucket(new PutBucketRequest()
                 {
-                    var verificationResponse = client.ListBuckets(new ListBucketsRequest());
-                    // fix on next few lines 5/22/14 resolve amazon aws deprecation.
-                    var bucket = verificationResponse.Buckets.Find(m => m.BucketName.Equals(devOptions.BucketName));
-                    if (bucket != null)
-                    {
-
-                        provisionResult.IsSuccess = true;
-                        ConnectionInfo info = new ConnectionInfo()
-                        {
-                            BucketName = bucket.BucketName
-                        };
-                        provisionResult.ConnectionData = info.ToString();
-                        break;
-                    }
-                    Thread.Sleep(1000);
-                    i++;
+                    BucketName = devOptions.BucketName,
+                    BucketRegion = Amazon.S3.S3Region.US
+                });
+                
+                if(!response.HttpStatusCode.Equals(System.Net.HttpStatusCode.OK))
+                {
+                    provisionResult.EndUserMessage = response.HttpStatusCode.ToString();
+                    return provisionResult;
                 }
-                while (i < 20);
-                provisionResult.EndUserMessage = "Amazon S3 has not confirmed creation of your S3 bucket. Please check the management console";
+
+                var verificationResponse = client.ListBuckets(new ListBucketsRequest());
+
+                var bucket = verificationResponse.Buckets.Find(m => m.BucketName.Equals(devOptions.BucketName));
+
+                if(bucket == null)
+                {
+                    provisionResult.EndUserMessage = "We aren't getting the bucket filtered here correctly.";
+                    return provisionResult;
+                }
+                
+                provisionResult.ConnectionData = "BucketName=" + devOptions.BucketName;
             }
             catch (Exception e)
             {
-                provisionResult.EndUserMessage = e.Message;
+                Console.WriteLine(e.StackTrace);
+                log.Error(e.Message + "\n" + e.StackTrace);
+                provisionResult.EndUserMessage = e.Message + "\n" + e.StackTrace;
             }
-
+             
+            provisionResult.IsSuccess = true;
             return provisionResult;
-        }
-
-        private PutBucketRequest CreatePutBucketRequest(S3DeveloperOptions devOptions)
-        {
-            return new PutBucketRequest()
-            {
-                BucketName = devOptions.BucketName,
-                BucketRegion = devOptions.BucketRegion,
-                BucketRegionName = devOptions.BucketRegionName
-            };
         }
 
         // Testing Instance
@@ -144,6 +131,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
         // Output: OperationResult
         public override OperationResult Test(AddonTestRequest request)
         {
+            AddonProvisionRequest provisionRequest = new AddonProvisionRequest() { Manifest = request.Manifest, DeveloperOptions = request.DeveloperOptions };
             AddonManifest manifest = request.Manifest;
             string developerOptions = request.DeveloperOptions;
             var testResult = new OperationResult { IsSuccess = false };
@@ -177,14 +165,27 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                     }
                     testProgress += establishClientResult.EndUserMessage;
 
-                    client.ListBuckets();
-                    testProgress += "Successfully passed all testing criteria!";
+                    var buckets = client.ListBuckets();
+                    testProgress += "Successfully passed all testing criteria! \n";
                     testResult.IsSuccess = true;
                     testResult.EndUserMessage = testProgress;
+
+                    // ok and let let's try provisioning
+
+                    var result = Provision(provisionRequest);
+
+                    testResult.EndUserMessage += result.IsSuccess + "\n";
+                    testResult.EndUserMessage += result.ConnectionData + "\n";
+                    testResult.EndUserMessage += result.EndUserMessage + "\n";
+
+                    var dep_result = Deprovision(new AddonDeprovisionRequest() { ConnectionData = result.ConnectionData, DeveloperOptions = provisionRequest.DeveloperOptions, Manifest = provisionRequest.Manifest});
+
+                    testResult.EndUserMessage += dep_result.IsSuccess + "\n";
+                    testResult.EndUserMessage += dep_result.EndUserMessage;
                 }
                 catch (Exception e)
                 {
-                    testResult.EndUserMessage = e.Message;
+                    testResult.EndUserMessage = e.Message + e.StackTrace;
                 }
             }
             else
@@ -201,9 +202,10 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
             OperationResult result;
 
             bool requireCreds;
-            var accessKey ="";
-            var secretAccessKey = "";
-            var regionEndpoint = "";
+            var manifestprops = manifest.GetProperties().ToDictionary(x => x.Key, x => x.Value);
+            var accessKey = manifestprops["AWSClientKey"];
+            var secretAccessKey = manifestprops["AWSSecretKey"];
+            var regionEndpoint = manifestprops["RegionEndpoint"];
 
             var prop =
                 manifest.Properties.First(
@@ -223,12 +225,12 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                     return result;
                 }
 
-                accessKey = devOptions.AccessKey;
-                secretAccessKey = devOptions.SecretAccessKey;
-                regionEndpoint = devOptions.RegionEndpont;
+                //accessKey = devOptions.AccessKey;
+                //secretAccessKey = devOptions.SecretAccessKey;
+                //regionEndpoint = devOptions.RegionEndpont;
             }
-
-            client = new AmazonS3Client(accessKey, secretAccessKey, regionEndpoint);
+            AmazonS3Config config = new AmazonS3Config() { ServiceURL = @"http://s3.amazonaws.com"};
+            client = new AmazonS3Client(accessKey, secretAccessKey, config);
             result = new OperationResult { IsSuccess = true };
             return result;
         }

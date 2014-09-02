@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Amazon.RDS;
+using Amazon;
 using System.Threading;
 
 namespace Apprenda.SaaSGrid.Addons.AWS.RDS
@@ -263,8 +264,10 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
             OperationResult result;
             
             bool requireCreds;
-            var accessKey = manifest.ProvisioningUsername;
-            var secretAccessKey = manifest.ProvisioningPassword;
+            var manifestProps= manifest.GetProperties().ToDictionary(x => x.Key, x => x.Value);
+            var accessKey = manifestProps["AWSClientKey"];
+            var secretAccessKey = manifestProps["AWSSecretKey"];
+            var regionEndpoint = manifestProps["AWSRegionEndpoint"];
             
             var prop =
                 manifest.Properties.First(
@@ -287,8 +290,8 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
                 accessKey = devOptions.AccessKey;
                 secretAccessKey = devOptions.SecretAccessKey;
             }
-            
-            client = new AmazonRDSClient(accessKey, secretAccessKey);
+            AmazonRDSConfig config = new AmazonRDSConfig() { RegionEndpoint = RegionEndpoint.USEast1 };
+            client = new AmazonRDSClient(accessKey, secretAccessKey, config);
             result = new OperationResult { IsSuccess = true };
             return result;
         }

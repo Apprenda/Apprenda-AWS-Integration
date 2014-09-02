@@ -8,6 +8,7 @@ using Amazon.SQS.Model;
 using Amazon.SQS.Util;
 using Apprenda.SaaSGrid.Addons;
 using System.Threading;
+using Amazon;
 
 
 namespace Apprenda.SaaSGrid.Addons.AWS.SQS
@@ -269,9 +270,10 @@ namespace Apprenda.SaaSGrid.Addons.AWS.SQS
             OperationResult result;
 
             bool requireCreds;
-            var accessKey = manifest.ProvisioningUsername;
-            var secretAccessKey = manifest.ProvisioningPassword;
-
+            var manifestprops = manifest.GetProperties().ToDictionary(x=>x.Key, x=>x.Value);
+            var AccessKey = manifestprops["AWSClientKey"];
+            var SecretAccessKey = manifestprops["AWSSecretKey"];
+            var _RegionEndpoint = manifestprops["AWSRegionEndpoint"];
             var prop =
                 manifest.Properties.First(
                     p => p.Key.Equals("requireDevCredentials", StringComparison.InvariantCultureIgnoreCase));
@@ -289,12 +291,9 @@ namespace Apprenda.SaaSGrid.Addons.AWS.SQS
                     };
                     return result;
                 }
-
-                accessKey = devOptions.AccessKey;
-                secretAccessKey = devOptions.SecretAccessKey;
             }
-
-            client = new AmazonSQSClient(accessKey, secretAccessKey);
+            AmazonSQSConfig config = new AmazonSQSConfig() { RegionEndpoint = RegionEndpoint.USEast1 };
+            client = new AmazonSQSClient(AccessKey, SecretAccessKey, config);
             result = new OperationResult { IsSuccess = true };
             return result;
         }

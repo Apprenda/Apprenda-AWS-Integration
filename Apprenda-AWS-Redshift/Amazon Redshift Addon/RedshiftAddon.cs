@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Amazon.Redshift;
 using System.Threading;
+using Amazon;
 
 namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
 {
@@ -238,8 +239,10 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
             OperationResult result;
 
             bool requireCreds;
-            var accessKey = manifest.ProvisioningUsername;
-            var secretAccessKey = manifest.ProvisioningPassword;
+            var manifestprops = manifest.GetProperties().ToDictionary(x => x.Key, x => x.Value);
+            var AccessKey = manifestprops["AWSClientKey"];
+            var SecretAccessKey = manifestprops["AWSSecretKey"];
+            var _RegionEndpoint = manifestprops["AWSRegionEndpoint"];
 
             var prop =
                 manifest.Properties.First(
@@ -259,11 +262,9 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
                     return result;
                 }
 
-                accessKey = devOptions.AccessKey;
-                secretAccessKey = devOptions.SecretAccessKey;
             }
-
-            client = new AmazonRedshiftClient(accessKey, secretAccessKey);
+            AmazonRedshiftConfig config = new AmazonRedshiftConfig() { RegionEndpoint = RegionEndpoint.USEast1 };
+            client = new AmazonRedshiftClient(AccessKey, SecretAccessKey, config);
             result = new OperationResult { IsSuccess = true };
             return result;
         }

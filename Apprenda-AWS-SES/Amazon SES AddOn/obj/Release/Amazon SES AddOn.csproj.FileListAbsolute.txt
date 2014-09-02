@@ -1,4 +1,3 @@
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Release\AWSSDK.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Release\AddonManifest.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Release\Amazon SES AddOn.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Release\Amazon SES AddOn.pdb
@@ -10,6 +9,7 @@ C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Release\SaaSGrid.Contracts.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Release\Apprenda.Configuration.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Release\Apprenda.Utils.Ext.dll
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Release\AWSSDK.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Release\SaaSGrid.API.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\bin\Release\Apprenda.Logging.xml
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SES\Amazon SES AddOn\obj\Release\Amazon SES AddOn.csprojResolveAssemblyReference.cache

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Apprenda.SaaSGrid.Addons;
 using Amazon.SimpleNotificationService;
 using Amazon.SimpleNotificationService.Model;
+using Amazon;
 using System.Threading;
 
 namespace Apprenda.SaaSGrid.Addons.AWS.SNS
@@ -253,8 +254,10 @@ namespace Apprenda.SaaSGrid.Addons.AWS.SNS
             OperationResult result;
 
             bool requireCreds;
-            var accessKey = manifest.ProvisioningUsername;
-            var secretAccessKey = manifest.ProvisioningPassword;
+            var manifestprops = manifest.GetProperties().ToDictionary(x => x.Key, x => x.Value);
+            var AccessKey = manifestprops["AWSClientKey"];
+            var SecretAccessKey = manifestprops["AWSSecretKey"];
+            var _RegionEndpoint = manifestprops["AWSRegionEndpoint"];
 
             var prop =
                 manifest.Properties.First(
@@ -274,11 +277,11 @@ namespace Apprenda.SaaSGrid.Addons.AWS.SNS
                     return result;
                 }
 
-                accessKey = devOptions.AccessKey;
-                secretAccessKey = devOptions.SecretAccessKey;
+                //accessKey = devOptions.AccessKey;
+                //secretAccessKey = devOptions.SecretAccessKey;
             }
-
-            client = new AmazonSimpleNotificationServiceClient(accessKey, secretAccessKey);
+            AmazonSimpleNotificationServiceConfig config = new AmazonSimpleNotificationServiceConfig() { RegionEndpoint = RegionEndpoint.USEast1 };
+            client = new AmazonSimpleNotificationServiceClient(AccessKey, SecretAccessKey, config);
             result = new OperationResult { IsSuccess = true };
             return result;
         }

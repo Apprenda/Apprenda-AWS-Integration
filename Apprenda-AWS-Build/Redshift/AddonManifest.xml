@@ -9,11 +9,14 @@
                developerHelp="contact cdutra@apprenda.com for assistance."
                vendor="Apprenda"
                author="Chris Dutra"
-               version="0.1.0"
+               version="1.0.0"
                provisioningUsername=""
                provisioningPassword=""
                provisioningLocation="">
   <properties>
+    <property key="AWSClientKey" displayName="AWS Client Key" description="Required - please specify the client key of the user who has access to provision Glacier vaults." value=""/>
+    <property key="AWSSecretKey" displayName="AWS Secret Key" description="Required - please specify the secret key of the user who has access to provision Glacier vaults." value="" />
+    <property key="AWSRegionEndpoint" displayName="AWS Region Endpoint" description="Required-  please specify the region endpoint to log into." value=""/>
     <property key="requireDevCredentials" displayName="Require Developer Credentials" description="If set to true, each developer will need to provide their own Amazon credentials, otherwise the default creds will be used to provision Redshift instances." value="true"  />
     <property key="AllowVersionUpgrade" displayName="Allow Version Upgrades" description="Default: true. Set to false if you wish to not have Redshift perform version upgrades during maintenance windows." value="" />
     <property key="AutomatedSnapshotRetentionPeriod" displayName="Automated Snapshot Retention Period" description="Default: 1. The number of days automated snapshots are retained. If value is 0, snapshots are disabled." value="" />

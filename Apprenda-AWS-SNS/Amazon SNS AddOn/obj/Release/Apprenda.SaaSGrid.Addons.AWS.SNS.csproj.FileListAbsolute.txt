@@ -1,6 +1,7 @@
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\SNS\AddonManifest.xml
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\SNS\icon.png
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\SNS\Apprenda.SaaSGrid.Addons.AWS.SNS.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\SNS\Apprenda.SaaSGrid.Addons.AWS.SNS.pdb
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\obj\Release\Apprenda.SaaSGrid.Addons.AWS.SNS.csprojResolveAssemblyReference.cache
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\obj\Release\Apprenda.SaaSGrid.Addons.AWS.SNS.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\obj\Release\Apprenda.SaaSGrid.Addons.AWS.SNS.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-SNS\Amazon SNS AddOn\obj\Release\Apprenda.SaaSGrid.Addons.AWS.SNS.csprojResolveAssemblyReference.cache

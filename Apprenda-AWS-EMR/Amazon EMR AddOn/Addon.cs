@@ -1,19 +1,4 @@
-﻿/*******************************************************************************
-* Copyright 2009-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-* 
-* Licensed under the Apache License, Version 2.0 (the "License"). You may
-* not use this file except in compliance with the License. A copy of the
-* License is located at
-* 
-* http://aws.amazon.com/apache2.0/
-* 
-* or in the "license" file accompanying this file. This file is
-* distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied. See the License for the specific
-* language governing permissions and limitations under the License.
-*******************************************************************************/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Linq;
@@ -40,7 +25,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
     {
         public override ProvisionAddOnResult Provision(AddonProvisionRequest request)
         {
-            var provisionResult = new ProvisionAddOnResult() { IsSuccess = true };
+            var provisionResult = new ProvisionAddOnResult("") { IsSuccess = true };
             AddonManifest manifest = request.Manifest;
             string developerOptions = request.DeveloperOptions;
 
@@ -62,15 +47,69 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
                     provisionResult.EndUserMessage = establishClientResult.EndUserMessage;
                     return provisionResult;
                 }
- 
+
+                var stepFactory = new StepFactory();
+
+                StepConfig enabledebugging = null;
+                // if the devs request that debugging be enabled, we'll add the step here.
+                if (devOptions.EnableDebugging)
+                {
+                    enabledebugging = new StepConfig
+                    {
+                        Name = "Enable debugging",
+                        ActionOnFailure = "TERMINATE_JOB_FLOW",
+                        HadoopJarStep = stepFactory.NewEnableDebuggingStep()
+                    };
+                }
+
+                var installHive = new StepConfig
+                {
+                    Name = "Install Hive",
+                    ActionOnFailure = "TERMINATE_JOB_FLOW",
+                    HadoopJarStep = stepFactory.NewInstallHiveStep()
+                };
+
+                var instanceConfig = new JobFlowInstancesConfig
+                {
+                    Ec2KeyName = devOptions.Ec2KeyName,
+                    HadoopVersion = "0.20",
+                    InstanceCount = devOptions.InstanceCount,
+                    // this is important. must be kept alive for the application to see it during provisioning
+                    KeepJobFlowAliveWhenNoSteps = true,
+                    MasterInstanceType = devOptions.MasterInstanceType,
+                    SlaveInstanceType = devOptions.SlaveInstanceType
+                };
+            
+                var _request = new RunJobFlowRequest
+                {
+                    Name = devOptions.JobFlowName,
+                    Steps = { enabledebugging, installHive },
+                    LogUri = "s3://myawsbucket",
+                    Instances = instanceConfig
+                };
+
+                // if debugging is enabled, add to top of the list of steps.
+                if(devOptions.EnableDebugging)
+                {
+                   _request.Steps.Insert(0, enabledebugging); 
+                }
+
+                var result = client.RunJobFlow(_request);
+
+                // wait for JobFlowID to come back.
+                while (result.JobFlowId == null)
+                {
+                    Thread.Sleep(1000);
+                }
+
                 provisionResult.IsSuccess = true;
-                provisionResult.ConnectionData = string.Format("AWS AccessKey={0}; AWS SecretKey={1}", devOptions.AccessKey, devOptions.SecretAccessKey);
+                provisionResult.ConnectionData = string.Format(result.JobFlowId);
                 
             }
 
-            catch (Exception)
+            catch (Exception e)
             {
-                provisionResult.EndUserMessage = "Placeholder for Provision";
+                provisionResult.EndUserMessage = e.Message;
             }
 
             return provisionResult;
@@ -78,7 +117,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
 
         public override OperationResult Deprovision(AddonDeprovisionRequest request)
         {
-            var deprovisionResult = new ProvisionAddOnResult() { IsSuccess = true };
+            var deprovisionResult = new ProvisionAddOnResult("") { IsSuccess = true };
             deprovisionResult.ConnectionData = "deprovision";
             AddonManifest manifest = request.Manifest;
             string connectionData = request.ConnectionData;
@@ -97,10 +136,15 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
                     deprovisionResult.EndUserMessage = establishClientResult.EndUserMessage;
                     return deprovisionResult;
                 }
+
+                var result = client.TerminateJobFlows(new TerminateJobFlowsRequest() { JobFlowIds = {connectionData}});
+                
+                deprovisionResult.IsSuccess = true;
+                deprovisionResult.EndUserMessage = "EMR Cluster Termination Request Successfully Invoked.";
             }
             catch (Exception)
             {
-                deprovisionResult.EndUserMessage = "Placeholder for Derovision";
+                deprovisionResult.EndUserMessage = "An error occurred during deprovisioning, please check the SOC logs for further assistance.";
             }
 
             return deprovisionResult;
@@ -153,9 +197,9 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
                     testResult.IsSuccess = true;
                     testResult.EndUserMessage = testProgress;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    testResult.EndUserMessage = "Placeholder for Test";
+                    testResult.EndUserMessage = e.Message;
                 }
             }
             else
@@ -250,43 +294,13 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
 
             AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretAccessKey);
             client = AWSClientFactory.CreateAmazonElasticMapReduceClient(credentials, RegionEndpoint.USEast1);
-            
-            
-            var stepFactory = new StepFactory();
 
-            var enabledebugging = new StepConfig
-            {
-                Name = "Enable debugging",
-                ActionOnFailure = "TERMINATE_CLUSTER",
-                HadoopJarStep = stepFactory.NewEnableDebuggingStep()
-            };
-
-
-            var instanceConfig = new JobFlowInstancesConfig
-            {
-                Ec2KeyName = "cs-keypair",
-                HadoopVersion = "1.0.3",
-                InstanceCount = 2,
-                KeepJobFlowAliveWhenNoSteps = true,
-                MasterInstanceType = "m1.small",
-                SlaveInstanceType = "m1.small"
-            };
-
-            var runJobFlow = new RunJobFlowRequest
-            {
-                Name = "Startup EMR Cluster",
-                Steps = { enabledebugging },
-                LogUri = "s3://apprenda2/logs2/",
-                Instances = instanceConfig
-            };
-
-            var job = client.RunJobFlow(runJobFlow);
 
             //jobid = job.JobFlowId;
 
-            result = new OperationResult
+            result = new OperationResult()
             {
-                IsSuccess = true,
+                IsSuccess = true
             };
 
             return result;
