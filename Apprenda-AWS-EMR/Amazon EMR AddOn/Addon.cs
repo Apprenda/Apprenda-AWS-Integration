@@ -51,7 +51,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
                 var stepFactory = new StepFactory();
 
                 StepConfig enabledebugging = null;
-                // if the devs request that debugging be enabled, we'll add the step here.
+                
                 if (devOptions.EnableDebugging)
                 {
                     enabledebugging = new StepConfig
@@ -74,7 +74,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
                     Ec2KeyName = devOptions.Ec2KeyName,
                     HadoopVersion = "0.20",
                     InstanceCount = devOptions.InstanceCount,
-                    // this is important. must be kept alive for the application to see it during provisioning
+                    // this is important. the EMR job flow must be kept alive for the application to see it during provisioning
                     KeepJobFlowAliveWhenNoSteps = true,
                     MasterInstanceType = devOptions.MasterInstanceType,
                     SlaveInstanceType = devOptions.SlaveInstanceType
@@ -84,6 +84,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
                 {
                     Name = devOptions.JobFlowName,
                     Steps = { enabledebugging, installHive },
+                    // revisit this one in ne
                     LogUri = "s3://myawsbucket",
                     Instances = instanceConfig
                 };

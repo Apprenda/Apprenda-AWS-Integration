@@ -2,6 +2,5 @@ C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Glacier\AddonMa
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Glacier\icon.png
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Glacier\Apprenda.SaaSGrid.Addons.AWS.Glacier.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Glacier\Apprenda.SaaSGrid.Addons.AWS.Glacier.pdb
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\obj\Release\Apprenda.SaaSGrid.Addons.AWS.Glacier.csprojResolveAssemblyReference.cache
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\obj\Release\Apprenda.SaaSGrid.Addons.AWS.Glacier.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Glacier\Amazon Glacier AddOn\obj\Release\Apprenda.SaaSGrid.Addons.AWS.Glacier.pdb

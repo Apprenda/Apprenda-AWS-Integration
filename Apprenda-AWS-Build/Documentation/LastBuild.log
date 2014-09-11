@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shfbBuild product="Sandcastle Help File Builder" version="2014.5.31.0" projectFile="C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Documentation\AWS Documentation.shfbproj" started="8/25/2014 12:01:55 AM">
+<shfbBuild product="Sandcastle Help File Builder" version="2014.5.31.0" projectFile="C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Documentation\AWS Documentation.shfbproj" started="9/11/2014 10:12:32 AM">
 <buildStep step="Initializing">
 Finding tools...
 The Sandcastle tools are located in &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\&#39;
@@ -10,9 +10,6 @@ Loading and initializing plug-ins...
 Lightweight Website Style Version 2014.5.31.0
 Copyright &#169; 2006-2014, Eric Woodruff, All Rights Reserved
 Portions Copyright &#169; 2014, Sam Harwell, All Rights Reserved
-</buildStep>
-<buildStep step="ClearWorkFolder">
-Clearing working folder...
 </buildStep>
 <buildStep step="ValidatingDocumentationSources">
 Validating and copying documentation source information
@@ -68,20 +65,20 @@ SHFB: Warning BE0062: No XML comments files found.  The help file will not conta
 <buildStep step="GenerateSharedContent">
 Generating shared content files (en-US, English (United States))...
 <plugIn name="Lightweight Website Style" behavior="After" priority="1000">
-</plugIn>    Last step completed in 00:00:00.0440
+</plugIn>    Last step completed in 00:00:00.0170
 </buildStep>
 <buildStep step="GenerateApiFilter">
 Generating API filter for MRefBuilder...
-    Last step completed in 00:00:00.0030
+    Last step completed in 00:00:00.0005
 </buildStep>
 <buildStep step="GenerateReflectionInfo">
 Generating reflection information...
 [C:\Program Files (x86)\MSBuild\12.0\bin\MSBuild.exe]
-Build started 8/25/2014 12:01:58 AM.
+Build started 9/11/2014 10:12:33 AM.
 Project &quot;C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Documentation\Working\GenerateRefInfo.proj&quot; on node 1 (default targets).
 PrepareForBuild:
   Creating directory &quot;obj\Debug\&quot;.
-C:\Program Files (x86)\MSBuild\12.0\bin\Microsoft.Common.CurrentVersion.targets(1635,5): warning MSB3270: There was a mismatch between the processor architecture of the project being built &quot;MSIL&quot; and the processor architecture of the reference &quot;NLogC, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null&quot;, &quot;x86&quot;. This mismatch may cause runtime failures. Please consider changing the targeted processor architecture of your project through the Configuration Manager so as to align the processor architectures between your project and references, or take a dependency on references with a processor architecture that matches the targeted processor architecture of your project. [C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Documentation\Working\GenerateRefInfo.proj]
+C:\Program Files (x86)\MSBuild\12.0\bin\Microsoft.Common.CurrentVersion.targets(1697,5): warning MSB3270: There was a mismatch between the processor architecture of the project being built &quot;MSIL&quot; and the processor architecture of the reference &quot;NLogC, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null&quot;, &quot;x86&quot;. This mismatch may cause runtime failures. Please consider changing the targeted processor architecture of your project through the Configuration Manager so as to align the processor architectures between your project and references, or take a dependency on references with a processor architecture that matches the targeted processor architecture of your project. [C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Documentation\Working\GenerateRefInfo.proj]
 GenerateRefInfo:
   MRefBuilder (v2014.5.31.0)
   Copyright c 2006-2014, Microsoft Corporation, All Rights Reserved.
@@ -97,13 +94,13 @@ Done Building Project &quot;C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Appren
 
 Build succeeded.
 
-Time Elapsed 00:00:01.06
-    Last step completed in 00:00:01.1911
+Time Elapsed 00:00:01.24
+    Last step completed in 00:00:01.4115
 </buildStep>
 <buildStep step="TransformReflectionInfo">
 Transforming reflection output...
 [C:\Program Files (x86)\MSBuild\12.0\bin\MSBuild.exe]
-Build started 8/25/2014 12:01:59 AM.
+Build started 9/11/2014 10:12:35 AM.
 Project &quot;C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Documentation\Working\TransformManifest.proj&quot; on node 1 (default targets).
 TransformManifest:
   XslTransform (v2014.5.31.0)
@@ -128,12 +125,12 @@ Done Building Project &quot;C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Appren
 
 Build succeeded.
 
-Time Elapsed 00:00:00.72
-    Last step completed in 00:00:00.8330
+Time Elapsed 00:00:00.62
+    Last step completed in 00:00:00.7075
 </buildStep>
 <buildStep step="GenerateNamespaceSummaries">
 Generating namespace summary information...
-    Last step completed in 00:00:00.2400
+    Last step completed in 00:00:00.2557
 </buildStep>
 <buildStep step="CopyConceptualContent">
 Copying conceptual content...
@@ -148,30 +145,30 @@ Generating conceptual topic files
     C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Documentation\Content\VersionHistory\VersionHistory.aml -&gt; C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Documentation\Working\ddueXml\9e042601-625f-4791-945b-ac01e487c64f.xml
     Parsing topic file &#39;C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Documentation\Content\VersionHistory\v1.0.0.0.aml&#39;
     C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Documentation\Content\VersionHistory\v1.0.0.0.aml -&gt; C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Documentation\Working\ddueXml\e4048608-27ad-4b1b-8489-3c4a4aef3abf.xml
-    Last step completed in 00:00:00.1420
+    Last step completed in 00:00:00.0916
 </buildStep>
 <buildStep step="CreateConceptualTopicConfigs">
 Creating conceptual topic configuration files...
     Companion files
     _ContentMetadata_.xml
     ConceptualManifest.xml
-    Last step completed in 00:00:00.0330
+    Last step completed in 00:00:00.0135
 </buildStep>
 <buildStep step="CopyAdditionalContent">
 Copying additional content files...
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Documentation\icons\apprenda.jpg -&gt; C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Documentation\Working\Output\Website\icons\apprenda.jpg
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Documentation\icons\favicon.ico -&gt; C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Documentation\Working\Output\Website\icons\favicon.ico
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Solution Files\Apprenda-AWS\AWS Documentation\icons\Help.png -&gt; C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Documentation\Working\Output\Website\icons\Help.png
-    Last step completed in 00:00:00.0350
+    Last step completed in 00:00:00.0245
 </buildStep>
 <buildStep step="MergeTablesOfContents">
 Merging conceptual and additional tables of contents...
-    Last step completed in 00:00:00.0050
+    Last step completed in 00:00:00.0005
 </buildStep>
 <buildStep step="GenerateIntermediateTableOfContents">
 Generating intermediate table of contents file...
 [C:\Program Files (x86)\MSBuild\12.0\bin\MSBuild.exe]
-Build started 8/25/2014 12:02:00 AM.
+Build started 9/11/2014 10:12:36 AM.
 Project &quot;C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Documentation\Working\GenerateIntermediateTOC.proj&quot; on node 1 (default targets).
 GenerateIntermediateTOC:
   XslTransform (v2014.5.31.0)
@@ -182,27 +179,27 @@ Done Building Project &quot;C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Appren
 
 Build succeeded.
 
-Time Elapsed 00:00:00.17
+Time Elapsed 00:00:00.13
 Generating conceptual content intermediate TOC file...
-    Last step completed in 00:00:00.2760
+    Last step completed in 00:00:00.2117
 </buildStep>
 <buildStep step="CreateBuildAssemblerConfigs">
 Creating Sandcastle configuration files...
     sandcastle.config
     conceptual.config
-    Last step completed in 00:00:00.3590
+    Last step completed in 00:00:00.1806
 </buildStep>
 <buildStep step="MergeCustomConfigs">
 Merging custom build component configurations
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Documentation\Working\sandcastle.config
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Documentation\Working\conceptual.config
     Removing unused ExampleComponent.
-    Last step completed in 00:00:00.1810
+    Last step completed in 00:00:00.1681
 </buildStep>
 <buildStep step="BuildConceptualTopics">
 Building conceptual help topics...
 [C:\Program Files (x86)\MSBuild\12.0\bin\MSBuild.exe]
-Build started 8/25/2014 12:02:01 AM.
+Build started 9/11/2014 10:12:36 AM.
 Project &quot;C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Documentation\Working\BuildConceptualTopics.proj&quot; on node 1 (default targets).
 BuildConceptualTopics:
   BuildAssembler (v2014.5.31.0)
@@ -216,13 +213,13 @@ Done Building Project &quot;C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Appren
 
 Build succeeded.
 
-Time Elapsed 00:00:07.59
-    Last step completed in 00:00:07.8114
+Time Elapsed 00:00:05.34
+    Last step completed in 00:00:05.5685
 </buildStep>
 <buildStep step="BuildReferenceTopics">
 Building reference help topics...
 [C:\Program Files (x86)\MSBuild\12.0\bin\MSBuild.exe]
-Build started 8/25/2014 12:02:09 AM.
+Build started 9/11/2014 10:12:42 AM.
 Project &quot;C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Documentation\Working\BuildReferenceTopics.proj&quot; on node 1 (default targets).
 BuildReferenceTopics:
   BuildAssembler (v2014.5.31.0)
@@ -629,14 +626,14 @@ Done Building Project &quot;C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Appren
 
 Build succeeded.
 
-Time Elapsed 00:00:14.25
-    Last step completed in 00:00:14.3486
+Time Elapsed 00:00:12.42
+    Last step completed in 00:00:12.5096
 </buildStep>
 <buildStep step="CombiningIntermediateTocFiles">
 Combining conceptual and API intermediate TOC files...
 
 Clearing any prior web output
-    Last step completed in 00:00:00.1260
+    Last step completed in 00:00:00.0090
 </buildStep>
 <buildStep step="ExtractingHtmlInfo">
 Extracting HTML info for HTML Help 1 and/or website...
@@ -652,7 +649,7 @@ Processed 239 HTML files
 Sorting keywords and generating See Also indices
 Saving website keyword index to C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Documentation\Working\WebKI.xml
 Saving website table of contents to C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Documentation\Working\WebTOC.xml
-    Last step completed in 00:00:00.8971
+    Last step completed in 00:00:00.9498
 </buildStep>
 <buildStep step="CopyStandardHelpContent">
 Copying standard help content...
@@ -731,18 +728,18 @@ C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyle
 C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\icons\TocOpen.gif -&gt; C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Documentation\Working\Output\Website\icons\TocOpen.gif
 C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\scripts\branding-Website.js -&gt; C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Documentation\Working\Output\Website\scripts\branding-Website.js
 C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\scripts\jquery-1.11.0.min.js -&gt; C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Documentation\Working\Output\Website\scripts\jquery-1.11.0.min.js
-    Last step completed in 00:00:00.5481
+    Last step completed in 00:00:00.4466
 </buildStep>
 <buildStep step="GenerateHelpFormatTableOfContents">
 Generating website table of contents file...
-    Last step completed in 00:00:00.0010
+    Last step completed in 00:00:00.0000
 </buildStep>
 <buildStep step="GenerateFullTextIndex">
 Generating full-text index for the website...
 
 <plugIn name="Lightweight Website Style" behavior="After" priority="1000">
 Adding lightweight search and TOC elements to each topic...
-</plugIn>    Last step completed in 00:00:02.0494
+</plugIn>    Last step completed in 00:00:01.9989
 </buildStep>
 <buildStep step="CopyingWebsiteFiles">
 Copying website files to output folder...
@@ -752,15 +749,15 @@ Copied 200 files
 Copied 300 files
 Copied 400 files
 Copied 407 files for the website content
-    Last step completed in 00:00:00.5071
+    Last step completed in 00:00:00.4602
 </buildStep>
 <buildStep step="CleanIntermediates">
 Removing intermediate files...
-    Last step completed in 00:00:00.1221
+    Last step completed in 00:00:00.1075
 </buildStep>
 <buildStep step="Completed">
 
-Build completed successfully at 08/25/2014 12:02 AM.  Total time: 00:00:32.3661
+Build completed successfully at 09/11/2014 10:12 AM.  Total time: 00:00:26.1900
 
 </buildStep>
 </shfbBuild>

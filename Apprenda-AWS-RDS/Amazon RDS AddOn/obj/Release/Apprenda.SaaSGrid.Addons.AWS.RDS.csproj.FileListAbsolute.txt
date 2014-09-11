@@ -2,6 +2,5 @@ C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\RDS\AddonManife
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\RDS\icon.png
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\RDS\Apprenda.SaaSGrid.Addons.AWS.RDS.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\RDS\Apprenda.SaaSGrid.Addons.AWS.RDS.pdb
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-RDS\Amazon RDS AddOn\obj\Release\Apprenda.SaaSGrid.Addons.AWS.RDS.csprojResolveAssemblyReference.cache
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-RDS\Amazon RDS AddOn\obj\Release\Apprenda.SaaSGrid.Addons.AWS.RDS.dll
 C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-RDS\Amazon RDS AddOn\obj\Release\Apprenda.SaaSGrid.Addons.AWS.RDS.pdb
