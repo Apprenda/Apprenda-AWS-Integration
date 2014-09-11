@@ -1,6 +1,0 @@
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWSDocs\Apprenda-AWSDocs\bin\Apprenda-AWSDocs.dll.config
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWSDocs\Apprenda-AWSDocs\bin\Apprenda-AWSDocs.dll
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWSDocs\Apprenda-AWSDocs\bin\Apprenda-AWSDocs.pdb
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWSDocs\Apprenda-AWSDocs\obj\Debug\Apprenda-AWSDocs.csprojResolveAssemblyReference.cache
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWSDocs\Apprenda-AWSDocs\obj\Debug\Apprenda-AWSDocs.dll
-C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWSDocs\Apprenda-AWSDocs\obj\Debug\Apprenda-AWSDocs.pdb
