@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<addonManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://schemas.apprenda.com/AddonManifest"
+               xsi:schemaLocation="http://schemas.apprenda.com/AddonManifest http://apprenda.com/schemas/platform/5.0/AddonManifest.xsd"
+               name="Amazon RDS"
+               description="Amazon RDS is a service that allows you to set up, operate and scale a dedicated MySQL database server on top of EC2. In addition to standard MySQL features, RDS offers the following functionality: - Automated backups -Point-in-time recovery -Seamless vertical scaling between instance types. The Amazon RDS add-on lets you connect your app to an RDS instance and seamlessly use it in place of the standard, provided SQL database"
+               deploymentNotes="Updated to reflect changes in Amazon SDK, configured to work on .NET 4.5 runtime, and updated for work in Apprenda 5.0."
+               developerHelp="contact cdutra@apprenda.com for assistance."
+               vendor="Apprenda"
+               author="Abraham Sultan, Modifed by Chris Dutra"
+               version="1.1.0"
+               provisioningUsername=""
+               provisioningPassword=""
+               provisioningLocation="">
+  <properties>
+    <property key="requireDevCredentials" displayName="Require Developer Credentials" description="If set to true, each developer will need to provide their own Amazon credentials, otherwise the default creds will be used to provision RDS instances." value="false"  />
+    <property key="AWSClientKey" displayName="AWS Client Key" description="Required - please specify the client key of the user who has access to provision Glacier vaults." value=""/>
+    <property key="AWSSecretKey" displayName="AWS Secret Key" description="Required - please specify the secret key of the user who has access to provision Glacier vaults." value="" />
+    <property key="AWSRegionEndpoint" displayName="AWS Region Endpoint" description="Required - please specify the AWS Region you wish to connect to." value="useast1"/>
+    <property key="AllocatedStorage" displayName="RDS Allocated Storage" description="Amount of storage space requested." value="10" />
+    <property key="AutoMinorVersionUpgrade" displayName="Auto Minor Version Upgrade" description="This indicates whether you wish to allow for automatic minor version upgrades on your RDS instace." value="true"/>
+    <property key="AvailabilityZone" displayName="Availability Zone" description="The EC2 Availability Zone that the database instance will be created in. Default: A random, system-chosen Availability Zone in the endpoint's region. Example: us-east-1d Constraint: The AvailabilityZone parameter cannot be specified if the MultiAZ parameter is set to true. The specified Availability Zone must be in the same region as the current endpoint." value=""/>
+    <property key="DBInstanceClass" displayName="DB Instance" description="The compute and memory capacity of the DB instance. Valid Values: db.t1.micro | db.m1.small | db.m1.medium | db.m1.large | db.m1.xlarge | db.m2.xlarge |db.m2.2xlarge | db.m2.4xlarge" value=""/>
+    <property key="DBName" displayName="Database Name" description="Usually provided during custom properties, default value provided here." value=""/>
+    <property key="DBInstanceIdentifier" displayName="DB Instance Identifier" description="The instance identifier as seen in AWS Management Console" value=""/>
+    <property key="Engine" displayName="Database Type" description="The name of the database engine to be used for this instance. Valid Values: MySQL | oracle-se1 | oracle-se | oracle-ee | sqlserver-ee | sqlserver-se | sqlserver-ex | sqlserver-web" value=""/>
+    <property key="MultiAZ" displayName="Multi-Availability Zone" description="Specifies if the DB instance is a Multi-AZ deployment. You cannot set the AvailabilityZone parameter if the MultiAZ parameter is set to true." value=""/>
+    <property key="EngineVersion" displayName="Database Version" description="The version number of the database engine to use. MySQL Example: 5.1.42 Type: String Oracle Example: 11.2.0.2.v2 Type: String SQL Server Example: 10.50.2789.0.v1" value=""/>
+    <property key="OptionGroupName" displayName="Option Group" description="*Rarely Used* this is if there is an option group already configured for a particular database enging in AWS" value=""/>
+    <property key="Port" displayName="Database Port" description="The port number on which the database accepts connections. MySQL Default: 3306 Valid Values: 1150-65535 Type: Integer Oracle Default: 1521 Valid Values: 1150-65535SQL Server Default: 1433 Valid Values: 1150-65535 except for 1434 and 3389." value=""/>
+    <property key="BackupRetentionPeriod" displayName="Backup Retention Period" description="The number of days for which automated backups are retained. Setting this parameter to a positive number enables backups. Setting this parameter to 0 disables automated backups. Default: 1 Constraints:
+Must be a value from 0 to 35
+Cannot be set to 0 if the DB instance is a source to read replicas" value=""/>
+  </properties>
+</addonManifest>

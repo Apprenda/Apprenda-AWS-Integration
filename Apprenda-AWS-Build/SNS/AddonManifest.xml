@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<addonManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://schemas.apprenda.com/AddonManifest"
+               xsi:schemaLocation="http://schemas.apprenda.com/AddonManifest http://apprenda.com/schemas/platform/4.5/AddonManifest.xsd"
+               name="Amazon SNS"
+               description="Amazon Simple Notification Service (SNS) is a fast, flexible, fully managed push messaging service. Amazon SNS makes it simple and cost-effective to push notifications to Apple, Google, Fire OS, and Windows devices, as well as Android devices in China with Baidu Cloud Push.  You can also use SNS to push notifications to internet connected smart devices, as well as other distributed services."
+               deploymentNotes=""
+               developerHelp=""
+               vendor="Apprenda"
+               author="Chris Dutra"
+               version="1.0.0"
+               provisioningUsername="chris@dutronlabs.com"
+               provisioningPassword="cyrixm2r"
+               provisioningLocation="RegionEndpoint.USEast1">
+  <properties>
+    <property key="AWSClientKey" displayName="AWS Client Key" description="Required - please specify the client key of the user who has access to provision Glacier vaults." value=""/>
+    <property key="AWSSecretKey" displayName="AWS Secret Key" description="Required - please specify the secret key of the user who has access to provision Glacier vaults." value="" />
+    <property key="AWSRegionEndpoint" displayName="AWS Region Endpoint" description="Required-  please specify the region endpoint to log into." value=""/>
+    <property key="requireDevCredentials" displayName="Require Developer Credentials" description="If set to true, each developer will need to provide their own Amazon credentials." value="true"  />
+    <property key="Name" displayName="Topic Name" description="The name of the SNS Topic you wish to create. Set a default name here." value="topic" />
+  </properties>
+</addonManifest>
