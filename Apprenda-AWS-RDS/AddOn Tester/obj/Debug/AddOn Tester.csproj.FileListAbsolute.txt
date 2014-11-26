@@ -19,3 +19,6 @@ C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tes
 C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tester\bin\Debug\Apprenda.Logging.xml
 C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tester\obj\Debug\AddOn Tester.exe
 C:\Users\cdutra\Documents\Apprenda Add-Ons\Amazon RDS\Amazon RDS AddOn\AddOn Tester\obj\Debug\AddOn Tester.pdb
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-RDS\AddOn Tester\bin\Debug\AddOn Tester.exe.config
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-RDS\AddOn Tester\obj\Debug\AddOn Tester.exe
+C:\Users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-RDS\AddOn Tester\obj\Debug\AddOn Tester.pdb

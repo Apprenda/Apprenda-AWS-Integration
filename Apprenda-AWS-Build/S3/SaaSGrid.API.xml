@@ -1259,7 +1259,7 @@
         </member>
         <member name="M:Apprenda.SaaSGrid.DispatchScope.UnicastScope">
             <summary>
-            Creates a scope that supresses any targeted or broadcast scope
+            Creates a scope that suppresses any targeted or broadcast scope
             </summary>
             <returns>A handle to the created scope</returns>
         </member>
@@ -6966,6 +6966,13 @@
             <param name="identifier">The identifier of the user.</param>
             <param name="tenantAliases">The aliases of all the tenants that the user belongs to.</param>
         </member>
+        <member name="M:Apprenda.SaaSGrid.Users.UserInfo.#ctor(System.String,System.Collections.Generic.IEnumerable{Apprenda.SaaSGrid.Users.UserTenantInfo})">
+            <summary>
+            Initializes a new instance of <see cref="T:Apprenda.SaaSGrid.Users.NewUserInfo"/> with the given parameters.
+            </summary>
+            <param name="identifier"></param>
+            <param name="userTenantInfos"></param>
+        </member>
         <member name="P:Apprenda.SaaSGrid.Users.UserInfo.Identifier">
             <summary>
             Gets or sets the identifier of the user.
@@ -7046,6 +7053,12 @@
             This field is optional.
             </remarks>
         </member>
+        <member name="P:Apprenda.SaaSGrid.Users.UserInfo.AssociatedTenants">
+            <summary>
+            Gets or sets a collection of UserTenantInfo instances, each of which describes user characteristics
+            specific to a single tenant.
+            </summary>
+        </member>
         <member name="M:Apprenda.SaaSGrid.Users.NewUserInfo.#ctor(System.String,System.Boolean)">
             <summary>
             Initializes a new instance of <see cref="T:Apprenda.SaaSGrid.Users.NewUserInfo"/> with the given parameters.
@@ -7069,6 +7082,13 @@
             <param name="tenantAliases">The aliases of all the tenants that the new user belongs to.</param>
             <param name="isDeveloperPortalUser">A flag indicating whether or not the new user should have a subscription to the developer portal.</param>
         </member>
+        <member name="M:Apprenda.SaaSGrid.Users.NewUserInfo.#ctor(System.String,System.Collections.Generic.IEnumerable{Apprenda.SaaSGrid.Users.UserTenantInfo})">
+            <summary>
+            Initializes a new instance of <see cref="T:Apprenda.SaaSGrid.Users.NewUserInfo"/> with the given parameters.
+            </summary>
+            <param name="identifier"></param>
+            <param name="userTenantInfos"></param>
+        </member>
         <member name="P:Apprenda.SaaSGrid.Users.NewUserInfo.IsDeveloperPortalUser">
             <summary>
             Gets or sets a flag indicating whether or not the new user should have a subscription to the developer portal.
@@ -7086,6 +7106,43 @@
             </remarks>
         </member>
         <member name="P:Apprenda.SaaSGrid.Users.NewUserInfo.State">
+            <summary>
+            Gets or sets any object representing the state of the current call to <see cref="M:Apprenda.SaaSGrid.Users.UserProviderBase.GetNewUserInfo(System.String)"/>.
+            </summary>
+            <seealso cref="M:Apprenda.SaaSGrid.Users.UserProviderBase.GetNewTenantInfo(System.String,System.Object)"/>
+            <remarks>
+            When a NewUserInfo object returned from <see cref="M:Apprenda.SaaSGrid.Users.UserProviderBase.GetNewUserInfo(System.String)"/> contains a tenant alias that is
+            unknown to the platform it is immediately followed by a call to <see cref="M:Apprenda.SaaSGrid.Users.UserProviderBase.GetNewTenantInfo(System.String,System.Object)"/>.  The
+            state value from the NewUserInfo object is passed into the call to GetNewTenantInfo.  This allows synchronization
+            between the two calls if necessary.
+            This field is optional.
+            </remarks>
+        </member>
+        <member name="P:Apprenda.SaaSGrid.Users.UserTenantInfo.TenantAlias">
+            <summary>
+            Gets or sets the alias of the tenant that the new user belongs to.
+            </summary>
+            <remarks>
+            This field is required.
+            </remarks>
+        </member>
+        <member name="P:Apprenda.SaaSGrid.Users.UserTenantInfo.IsDeveloperPortalUser">
+            <summary>
+            Gets or sets a flag indicating whether or not the new user should have a subscription to the developer portal.
+            </summary>
+            <remarks>
+            This field is required.
+            </remarks>
+        </member>
+        <member name="P:Apprenda.SaaSGrid.Users.UserTenantInfo.Roles">
+            <summary>
+            Gets or sets the existing roles that the new user should be a part of.
+            </summary>
+            <remarks>
+            This field is optional.
+            </remarks>
+        </member>
+        <member name="P:Apprenda.SaaSGrid.Users.UserTenantInfo.State">
             <summary>
             Gets or sets any object representing the state of the current call to <see cref="M:Apprenda.SaaSGrid.Users.UserProviderBase.GetNewUserInfo(System.String)"/>.
             </summary>
@@ -7268,6 +7325,2082 @@
             Initializes a new instance of the <see cref="T:Apprenda.SaaSGrid.ValueTypeCacheMissException"/> class.
             </summary>
             <param name="message">The exception message.</param>
+        </member>
+        <member name="T:Apprenda.Configuration.ConfigurationProvider">
+            <summary>
+            A class with mechanisms that uses a probing heuristic for discovering an
+            appropriate <see cref="T:System.Configuration.Configuration"/>. This class
+            relies on a priority chain for probing. 
+            </summary>
+        </member>
+        <member name="M:Apprenda.Configuration.ConfigurationProvider.GetConfiguration">
+            <summary>
+            Gets a <see cref="T:System.Configuration.Configuration"/>, as defined
+            by the shim implementation.
+            </summary>
+            <returns>A configuration instance, or null if not found.</returns>
+        </member>
+        <member name="M:Apprenda.Configuration.ConfigurationProvider.GetConfigurationSection(System.String)">
+            <summary>
+            Gets a <see cref="T:System.Configuration.Configuration"/>, as defined
+            by the shim implementation.
+            </summary>
+            <returns>A configuration instance, or null if not found.</returns>
+        </member>
+        <member name="M:Apprenda.Configuration.ConfigurationProvider.RefreshConfigurationSection(System.String)">
+            <summary>
+            Forces the configuration section to be reloaded from disk on the next read.
+            </summary>
+        </member>
+        <member name="M:Apprenda.Configuration.ConfigurationProvider.GetConfiguration(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Gets a <see cref="T:System.Configuration.Configuration"/>, as defined
+            by the shim implementation.
+            </summary>
+            <param name="initParams">A dictionary of values that can be used to initialize
+            properties with matching key names.</param>
+            <returns>A configuration instance, or null if not found.</returns>
+            <exception cref="T:Apprenda.Utility.Windows.ConfigurationShimException">
+            Thrown if an expected error is encountered while loading a configuration.</exception>
+        </member>
+        <member name="M:Apprenda.Configuration.ConfigurationProvider.GetConnectionSettings(System.String)">
+            <summary>
+            Gets configured meta-information pertaining to a named connection string from the standard 'connectionStrings' section.
+            </summary>
+            <param name="connectionName">The name of the configured connection string.</param>
+            <returns>A <see cref="T:System.Configuration.ConnectionStringSettings"/> instance.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if 'sectionName' is null or empty.</exception>
+            <exception cref="T:System.ArgumentException">Thrown if 'sectionName' does not point to a ConnectionStringsSection .</exception>
+        </member>
+        <member name="M:Apprenda.Configuration.ConfigurationProvider.GetConnectionSettings(System.String,System.String)">
+            <summary>
+            Gets configured meta-information pertaining to a named connection string.
+            </summary>
+            <param name="sectionName">The ConnectionStringsSection name to search for the 'connectionName'</param>
+            <param name="connectionName">The name of the configured connection string.</param>
+            <returns>A <see cref="T:System.Configuration.ConnectionStringSettings"/> instance.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if 'sectionName' is null or empty.</exception>
+            <exception cref="T:System.ArgumentException">Thrown if 'sectionName' does not point to a ConnectionStringsSection .</exception>
+        </member>
+        <member name="M:Apprenda.Configuration.ConfigurationProvider.GetConnection(System.String)">
+            <summary>
+            Creates an unopened <see cref="T:System.Data.Common.DbConnection"/> based on meta-information configured in the settings provided by the
+            'connectionName' configuration in the default 'connectionStrings' section.
+            </summary>
+            <param name="connectionName">The name of the configured connection.</param>
+            <returns>A connection to a database.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if 'sectionName' is null or empty.</exception>
+            <exception cref="T:System.ArgumentException">Thrown if 'sectionName' does not point to a ConnectionStringsSection .</exception>
+        </member>
+        <member name="M:Apprenda.Configuration.ConfigurationProvider.GetConnection(System.String,System.String)">
+            <summary>
+            Creates an unopened <see cref="T:System.Data.Common.DbConnection"/> based on meta-information configured in the settings provided by the
+            'connectionName' configuration.
+            </summary>
+            <param name="sectionName">The name of the ConnectionStringsSection.</param>
+            <param name="connectionName">The name of the configured connection.</param>
+            <returns>A connection to a database.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if 'sectionName' is null or empty.</exception>
+            <exception cref="T:System.ArgumentException">Thrown if 'sectionName' does not point to a ConnectionStringsSection .</exception>
+        </member>
+        <member name="M:Apprenda.Configuration.ConfigurationProvider.GetSetting``1(System.String,``0)">
+            <summary>
+            Gets an instance of the template type using the value stored in appSettings at a specified
+            key as the instantiation value for T's constructor.
+            </summary>
+            <typeparam name="T">The type to retrieve the setting as.</typeparam>
+            <param name="settingsKey">The appSettings lookup key.</param>
+            <param name="valueIfNone">The value to return in the event that the key is not found.</param>
+            <returns>An instance of T created via a string constructor call using the setting value.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if 'settingsKey' is null</exception>
+            <exception cref="T:System.ArgumentException">Thrown if 'T' has no string constructor.</exception>
+            <exception cref="T:System.FormatException">Thrown if the value at 'settingKey' is not a valid string representation of 'T'</exception>
+        </member>
+        <member name="M:Apprenda.Configuration.ConfigurationProvider.GetSetting``1(System.String)">
+            <summary>
+            Gets an instance of the template type using the value stored in appSettings at a specified
+            key as the instantiation value for T's constructor.
+            </summary>
+            <typeparam name="T">The type to retrieve the setting as.</typeparam>
+            <param name="settingsKey">The appSettings lookup key.</param>
+            <returns>An instance of T created via a string constructor call using the setting value.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if 'settingsKey' is null</exception>
+            <exception cref="T:System.ArgumentException">Thrown if 'T' has no string constructor.</exception>
+            <exception cref="T:System.FormatException">Thrown if the value at 'settingKey' is not a valid string representation of 'T'</exception>
+        </member>
+        <member name="M:Apprenda.Configuration.ConfigurationProvider.GetSetting``1(System.String,System.String)">
+            <summary>
+            Gets an instance of the template type using the value stored in appSettings at a specified
+            key as the instantiation value for T's constructor.
+            </summary>
+            <typeparam name="T">The type to retrieve the setting as.</typeparam>
+            <param name="sectionName">The name of the AppSettingsSection to lookup the setting in.</param>
+            <param name="settingsKey">The appSettings lookup key.</param>
+            <returns>An instance of T created via a string constructor call using the setting value.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if 'settingsKey' is null</exception>
+            <exception cref="T:System.ArgumentException">Thrown if 'T' has no string constructor or if the sectionName does not point to an AppSettingsSection.</exception>
+            <exception cref="T:System.FormatException">Thrown if the value at 'settingKey' is not a valid string representation of 'T'</exception>
+        </member>
+        <member name="M:Apprenda.Configuration.ConfigurationProvider.GetSetting``1(System.String,System.String,``0)">
+            <summary>
+            Gets an instance of the template type using the value stored in appSettings at a specified
+            key as the instantiation value for T's constructor. If the key is not found, the value of
+            <paramref name="valueIfNone"/> will be returned.
+            </summary>
+            <typeparam name="T">The type to retrieve the setting as.</typeparam>
+            <param name="sectionName">The name of the AppSettingsSection to lookup the setting in.</param>
+            <param name="settingsKey">The appSettings lookup key.</param>
+            <param name="valueIfNone">The value to return in the event that the key is not found.</param>
+            <returns>An instance of T created via a string constructor call using the setting value.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if 'settingsKey' is null</exception>
+            <exception cref="T:System.ArgumentException">Thrown if 'T' has no string constructor or if the sectionName does not point to an AppSettingsSection.</exception>
+            <exception cref="T:System.FormatException">Thrown if the value at 'settingKey' is not a valid string representation of 'T'</exception>
+        </member>
+        <member name="M:Apprenda.Configuration.ConfigurationProvider.GetSetting(System.String)">
+            <summary>
+            Gets an appSetting from the default 'appSettings' section.
+            </summary>
+            <param name="settingsKey">The appSetting key</param>
+            <returns>The string value of the setting</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if 'settingsKey' is null or empty</exception>
+        </member>
+        <member name="M:Apprenda.Configuration.ConfigurationProvider.GetSetting(System.String,System.String)">
+            <summary>
+            Gets an appSetting
+            </summary>
+            <param name="sectionName">The name of the AppSettingsSection to lookup the setting in.</param>
+            <param name="settingsKey">The appSetting key</param>
+            <returns>The string value of the setting</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if 'settingsKey' is null or empty</exception>
+            <exception cref="T:System.ArgumentException">Thrown if the sectionName does not point to an AppSettingsSection</exception>
+        </member>
+        <member name="M:Apprenda.Configuration.ConfigurationProvider.GetSetting(System.String,System.String,System.String)">
+            <summary>
+            Gets an appSetting. If the key is not found, the value of
+            <paramref name="valueIfNone"/> will be returned.
+            </summary>
+            <param name="sectionName">The name of the AppSettingsSection to lookup the setting in.</param>
+            <param name="settingsKey">The appSetting key</param>
+            <param name="valueIfNone">The value to return in the event that the key is not found.</param>
+            <returns>The string value of the setting</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if 'settingsKey' is null or empty</exception>
+            <exception cref="T:System.ArgumentException">Thrown if the sectionName does not point to an AppSettingsSection</exception>
+        </member>
+        <member name="P:Apprenda.Configuration.ConfigurationProvider.ProbePath">
+            <summary>
+            Gets an array of strings that identifies the ordered path that 
+            this provider uses for discovering a configuration file.
+            </summary>
+        </member>
+        <member name="T:Apprenda.Configuration.ConfigurationShimException">
+            <summary>
+            Thrown if an error occurs while a <see cref="T:Apprenda.Configuration.IConfigurationShim"/> implementation
+            is loading a <see cref="T:System.Configuration.Configuration"/>.
+            </summary>
+        </member>
+        <member name="M:Apprenda.Configuration.ConfigurationShimException.#ctor(System.String,System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ConfigurationShimException"/> class.
+            </summary>
+            <param name="message">The error message.</param>
+            <param name="shimType">Type of the shim.</param>
+        </member>
+        <member name="P:Apprenda.Configuration.ConfigurationShimException.ShimType">
+            <summary>
+            Gets the shim type being used when the exception occurred.
+            </summary>
+        </member>
+        <member name="T:Apprenda.Configuration.IConfigurationShim">
+            <summary>
+            <see cref="T:Apprenda.Configuration.IConfigurationShim"/> provides behavior that defines an 
+            expected mechanism for retrieving <see cref="T:System.Configuration.Configuration"/>
+            instances.
+            </summary>
+        </member>
+        <member name="M:Apprenda.Configuration.IConfigurationShim.GetConfiguration">
+            <summary>
+            Gets a <see cref="T:System.Configuration.Configuration"/>, as defined
+            by the shim implementation.
+            </summary>
+            <returns>A configuration instance, or null if not found.</returns>
+        </member>
+        <member name="M:Apprenda.Configuration.IConfigurationShim.Refresh(System.String)">
+            <summary>
+            Refreshes a specific section of the configuration file, causing it to be re-read from disk.
+            </summary>
+            <param name="sectionName"></param>
+        </member>
+        <member name="M:Apprenda.Configuration.IConfigurationShim.GetConfiguration(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Gets a <see cref="T:System.Configuration.Configuration"/>, as defined
+            by the shim implementation.
+            </summary>
+            <param name="initParams">A dictionary of values that can be used to initialize
+            properties with matching key names.</param>
+            <returns>A configuration instance, or null if not found.</returns>
+        </member>
+        <member name="P:Apprenda.Configuration.IConfigurationShim.Name">
+            <summary>
+            Gets a human-readable name for the shim. The name should provide insight as to 
+            where the shim loads from.
+            </summary>
+        </member>
+        <member name="M:Apprenda.Configuration.ConfigurationShim.GetConfiguration">
+            <summary>
+            Gets a <see cref="T:System.Configuration.Configuration"/>, as defined
+            by the shim implementation.
+            </summary>
+            <returns>
+            A configuration instance, or null if not found.
+            </returns>
+        </member>
+        <member name="M:Apprenda.Configuration.ConfigurationShim.GetConfiguration(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Gets a <see cref="T:System.Configuration.Configuration"/>, as defined
+            by the shim implementation.
+            </summary>
+            <param name="initParams">A dictionary of values that can be used to initialize
+            properties with matching key names.</param>
+            <returns>
+            A configuration instance, or null if not found.
+            </returns>
+        </member>
+        <member name="P:Apprenda.Configuration.ConfigurationShim.Name">
+            <summary>
+            Gets a human-readable name for the shim. The name should provide insight as to
+            where the shim loads from.
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Apprenda.Configuration.ExeConfigurationShim">
+            <summary>
+            Retrieves <see cref="T:System.Configuration.Configuration"/> for standalone
+            applications.
+            </summary>
+        </member>
+        <member name="M:Apprenda.Configuration.ExeConfigurationShim.GetConfiguration">
+            <summary>
+            Gets a <see cref="T:System.Configuration.Configuration"/>, as defined
+            by the shim implementation.
+            </summary>
+            <returns>
+            A configuration instance, or null if not found.
+            </returns>
+        </member>
+        <member name="T:Apprenda.Configuration.WebConfigurationShim">
+            <summary>
+            Retrieves <see cref="T:System.Configuration.Configuration"/> for standalone
+            applications.
+            </summary>
+        </member>
+        <member name="T:Apprenda.Utility.DataAccess.InvalidQueryException">
+            <summary>
+            Thrown when an error is discovered during <see cref="T:Apprenda.Utility.DataAccess.Query"/> pre-interpretation processing
+            </summary>
+        </member>
+        <member name="M:Apprenda.Utility.DataAccess.InvalidQueryException.#ctor(Apprenda.Utility.DataAccess.Query,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Apprenda.Utility.DataAccess.InvalidQueryException"/> class.
+            </summary>
+            <param name="invalidQuery">The invalid query.</param>
+            <param name="message">The message.</param>
+        </member>
+        <member name="M:Apprenda.Utility.DataAccess.InvalidQueryException.#ctor(Apprenda.Utility.DataAccess.Query)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Apprenda.Utility.DataAccess.InvalidQueryException"/> class.
+            </summary>
+            <param name="invalidQuery">The invalid query.</param>
+        </member>
+        <member name="T:Apprenda.Utility.DataAccess.InvalidQueryFault">
+            <summary>
+            A fault capturing a <see cref="T:Apprenda.Utility.DataAccess.Query"/> that was blocked during pre-interpretation phases because
+            it represents a query that is un-interpretable (according to the acceptors rules)
+            </summary>
+        </member>
+        <member name="M:Apprenda.Utility.DataAccess.InvalidQueryFault.#ctor(Apprenda.Utility.DataAccess.Query)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Apprenda.Utility.DataAccess.InvalidQueryFault"/> class.
+            </summary>
+            <param name="invalidQuery">The failed query.</param>
+        </member>
+        <member name="P:Apprenda.Utility.DataAccess.InvalidQueryFault.InvalidQuery">
+            <summary>
+            Gets the invalid query.
+            </summary>
+        </member>
+        <member name="T:Apprenda.Utility.DataAccess.QueryInterpretationException">
+            <summary>
+            An instance of this class identifies an error during interpretation of
+            a <see cref="T:Apprenda.Utility.DataAccess.Query"/> instance.
+            </summary>
+        </member>
+        <member name="M:Apprenda.Utility.DataAccess.QueryInterpretationException.#ctor(Apprenda.Utility.DataAccess.Query,System.String,System.String)">
+            <summary>
+            Creates an instance identifying the problematic query, interpreter,
+            and additional information.
+            </summary>
+            <param name="problemQuery">The query that was being interpreted
+            when the exception occurred.</param>
+            <param name="interpreterName">A string identifying the interpreter
+            implementation.</param>
+            <param name="message">A message.</param>
+        </member>
+        <member name="M:Apprenda.Utility.DataAccess.QueryInterpretationException.#ctor(Apprenda.Utility.DataAccess.Query,System.String)">
+            <summary>
+            Creates an instance identifying the problematic query, interpreter,
+            and additional information.
+            </summary>
+            <param name="problemQuery">The query that was being interpreted
+            when the exception occurred.</param>
+            <param name="interpreterName">A string identifying the interpreter
+            implementation.</param>
+        </member>
+        <member name="T:Apprenda.Utility.DataAccess.QueryInterpretationFault">
+            <summary>
+            A fault capturing errors related to interpreting a <see cref="T:Apprenda.Utility.DataAccess.Query"/> instance from its invariant form to
+            a datasource specific form.
+            </summary>
+        </member>
+        <member name="M:Apprenda.Utility.DataAccess.QueryInterpretationFault.#ctor(Apprenda.Utility.DataAccess.Query)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Apprenda.Utility.DataAccess.QueryInterpretationFault"/> class.
+            </summary>
+            <param name="failedQuery"></param>
+        </member>
+        <member name="M:Apprenda.Utility.DataAccess.QueryInterpretationFault.#ctor(Apprenda.Utility.DataAccess.Query,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Apprenda.Utility.DataAccess.QueryInterpretationFault"/> class.
+            </summary>
+            <param name="failedQuery">The query that caused the problem</param>
+            <param name="interpreterName">Name of the interpreter used when the fault occurred.</param>
+        </member>
+        <member name="P:Apprenda.Utility.DataAccess.QueryInterpretationFault.InterpreterName">
+            <summary>
+            Gets the name of the interpreter.
+            </summary>
+            <value>The name of the interpreter.</value>
+        </member>
+        <member name="P:Apprenda.Utility.DataAccess.QueryInterpretationFault.FailedQuery">
+            <summary>
+            Gets the query that failed interpretation
+            </summary>
+            <value>The failed query.</value>
+        </member>
+        <member name="T:Apprenda.SaaSGrid.Manifest.BlockMeter">
+            <summary>
+            Represents a local BLOCK application meter.
+            </summary>
+        </member>
+        <member name="T:Apprenda.SaaSGrid.Manifest.MeterBase">
+            <summary>
+            Abstract class that provides the common properties of application meters.    
+            </summary>
+        </member>
+        <member name="T:Apprenda.SaaSGrid.Manifest.IMeter">
+            <summary>
+            Interface that provides common structure for application meters.
+            </summary>
+        </member>
+        <member name="P:Apprenda.SaaSGrid.Manifest.IMeter.Name">
+            <summary>
+            The name of the meter.
+            </summary>
+            <remarks>
+            All meters must be named.
+            </remarks>        
+        </member>
+        <member name="P:Apprenda.SaaSGrid.Manifest.IMeter.IsEnabled">
+            <summary>
+            Gets or sets a value indicating whether this instance is enabled.
+            </summary>
+            <value>
+            	<c>true</c> if this instance is enabled; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Apprenda.SaaSGrid.Manifest.MeterBase.Name">
+            <summary>
+            The name of the meter.
+            </summary>        
+            <remarks>
+            All meters must be named.
+            </remarks>
+        </member>
+        <member name="P:Apprenda.SaaSGrid.Manifest.MeterBase.IsEnabled">
+            <summary>
+            Gets or sets a value indicating whether this instance is enabled.
+            </summary>
+            <value>
+            	<c>true</c> if this instance is enabled; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="M:Apprenda.SaaSGrid.Manifest.BlockMeter.ToString">
+            <summary>
+            Prints friendly meter information.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Apprenda.SaaSGrid.Manifest.BoundaryMeter">
+            <summary>
+            Represents a local BOUNDARY application meter.
+            </summary>
+        </member>
+        <member name="M:Apprenda.SaaSGrid.Manifest.BoundaryMeter.ToString">
+            <summary>
+            Provides friendly meter information.
+            </summary>        
+        </member>
+        <member name="M:Apprenda.SaaSGrid.Manifest.DeploymentManifest.Load(Apprenda.FileSystem.FileSystemUri)">
+            <summary>
+            
+            </summary>
+            <param name="manifestUri"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Apprenda.SaaSGrid.Manifest.DeploymentManifest.schemaLocation">
+            <summary>
+            For internal use only, should not be used
+            </summary>
+        </member>
+        <member name="T:Apprenda.SaaSGrid.Manifest.LimiterMeter">
+            <summary>
+            Represents a local LIMITER application meter.
+            </summary>
+        </member>
+        <member name="M:Apprenda.SaaSGrid.Manifest.LimiterMeter.ToString">
+            <summary>
+            Provides friendly meter information.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Apprenda.SaaSGrid.Manifest.PersistenceOptions.UpdateManifestPersistenceProvisioning(Apprenda.FileSystem.FSDirectory)">
+            <summary>
+            Guarantees that the manifest indicates the scripts to use and the DBMS.
+            </summary>
+            <param name="scripts"></param>
+            <returns>returns true if a useful change was made to the manifest</returns>
+        </member>
+        <member name="T:Apprenda.SaaSGrid.Manifest.MeterType">
+            <summary>
+            Provides an enumeration of the valid application meter types.
+            </summary>
+        </member>
+        <member name="T:Apprenda.SaaSGrid.Manifest.PersistencePatch">
+            <summary>
+            Defines a database patch script.
+            </summary>
+        </member>
+        <member name="P:Apprenda.SaaSGrid.Manifest.PersistencePatch.Type">
+            <summary>
+            Gets or sets the type of patch script.
+            </summary>
+        </member>
+        <member name="P:Apprenda.SaaSGrid.Manifest.PersistencePatch.Path">
+            <summary>
+            Gets or sets the relative path inside the patch archive for this patch script.
+            </summary>
+        </member>
+        <member name="P:Apprenda.SaaSGrid.Manifest.ProvisioningOption.Path">
+            <summary>
+            Path &amp; Scripts need to be treated as mutually exclusive
+            </summary>
+        </member>
+        <member name="M:Apprenda.SaaSGrid.Manifest.Securable.ToString">
+            <summary>
+            Provides friendly user information.
+            </summary>
+            <remarks>
+            Format: 'Name'        
+            </remarks>
+        </member>
+        <member name="P:Apprenda.SaaSGrid.Manifest.Securable.Name">
+            <summary>
+            Gets or sets the id.
+            </summary>
+            <value>The id.</value>
+        </member>
+        <member name="T:Apprenda.SaaSGrid.Manifest.ToggleMeter">
+            <summary>
+            Represents a local toggle application meter.
+            </summary>
+        </member>
+        <member name="T:Apprenda.Services.Logging.Config.ApprendaLoggerCustomSection">
+            <summary>
+            This custom section is responsible for handling configuration
+            sections that define loggers as well as global Apprenda logger
+            attributes, such as what the default logger is.
+            </summary>
+        </member>
+        <member name="P:Apprenda.Services.Logging.Config.ApprendaLoggerCustomSection.Default">
+            <summary>
+            Gets or sets the name of the default logger implementation.
+            This is the LogManager/ILogger pair that will be returned
+            when the generic <see cref="M:Apprenda.Services.Logging.LogManager.Instance"/>
+            is called
+            </summary>
+            <value>The name of the LogManager to use by default</value>
+        </member>
+        <member name="P:Apprenda.Services.Logging.Config.ApprendaLoggerCustomSection.Loggers">
+            <summary>
+            Gets a Collection of Logger Elements that are defined in the configuration
+            </summary>
+            <value>The Collection of Loggers</value>
+            <seealso cref="N:Apprenda.Services.Logging.Config"/>
+        </member>
+        <member name="T:Apprenda.Services.Logging.Config.LoggerElementCollection">
+            <summary>
+            A Collection of LoggerElement ConfigurationElements.
+            </summary>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Config.LoggerElementCollection.CreateNewElement">
+            <summary>
+            Creates a new <see cref="T:Apprenda.Services.Logging.Config.LoggerElement"></see>.
+            </summary>
+            <returns>
+            A new <see cref="T:System.Configuration.ConfigurationElement"></see>.
+            </returns>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Config.LoggerElementCollection.GetElementKey(System.Configuration.ConfigurationElement)">
+            <summary>
+            Gets the element key for a specified LoggerElement
+            </summary>
+            <param name="element">The <see cref="T:Apprenda.Services.Logging.Config.LoggerElement"></see> to return the key for.</param>
+            <returns>
+            An <see cref="T:string"></see> that acts as the key for the specified <see cref="T:Apprenda.Services.Logging.Config.LoggerElement"></see>.
+            </returns>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Config.LoggerElementCollection.IsElementName(System.String)">
+            <summary>
+            Indicates whether the specified <see cref="T:T:Apprenda.Services.Logging.Config.LoggerElement"></see> 
+            exists in the <see cref="T:Apprenda.Services.Logging.Config.LoggerElementCollection"></see>.
+            </summary>
+            <param name="elementName">The name of the element to verify.</param>
+            <returns>
+            true if the element exists in the collection; otherwise, false. The default is false.
+            </returns>
+        </member>
+        <member name="P:Apprenda.Services.Logging.Config.LoggerElementCollection.ElementName">
+            <summary>
+            Gets the name used to identify this collection of elements in the configuration file.
+            </summary>
+            <value></value>
+            <returns>The name of the collection; otherwise, an empty string. The default is an empty string.</returns>
+        </member>
+        <member name="P:Apprenda.Services.Logging.Config.LoggerElementCollection.CollectionType">
+            <summary>
+            Gets the type of the <see cref="T:System.Configuration.ConfigurationElementCollection"></see>.
+            </summary>
+            <value></value>
+            <returns>The <see cref="T:System.Configuration.ConfigurationElementCollectionType"></see> of this collection.</returns>
+        </member>
+        <member name="P:Apprenda.Services.Logging.Config.LoggerElementCollection.Item(System.String)">
+            <summary>
+            Gets or sets the <see cref="T:LoggerElement"/> with the specified name.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Apprenda.Services.Logging.Config.LoggerElementCollection.Item(System.Int32)">
+            <summary>
+            Gets or sets the <see cref="T:LoggerElement"/> at the specified index.
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Apprenda.Services.Logging.Config.LoggerElement">
+            <summary>
+            A ConfigrationElement that maps to an Apprenda Logging
+            configuration tag for an ILogger implementation entry.
+            </summary>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Config.LoggerElement.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:LoggerElement"/> class.
+            </summary>
+        </member>
+        <member name="P:Apprenda.Services.Logging.Config.LoggerElement.Name">
+            <summary>
+            Gets or sets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="P:Apprenda.Services.Logging.Config.LoggerElement.Manager">
+            <summary>
+            Gets or sets the manager Type for this Logger
+            </summary>
+            <value>The manager type</value>
+        </member>
+        <member name="P:Apprenda.Services.Logging.Config.LoggerElement.Assembly">
+            <summary>
+            Gets or sets the Assembly that the Manager type is found in
+            </summary>
+            <value>The Assembly the manager Type is found in</value>
+        </member>
+        <member name="P:Apprenda.Services.Logging.Config.LoggerElement.Default">
+            <summary>
+            Gets or sets the default named logger for the given implementation.
+            This generally maps to a named logger on the underlying logger (i.e.
+            Log4Net)
+            </summary>
+            <value>The defaultname logger</value>
+        </member>
+        <member name="T:Apprenda.Services.Logging.Config.LoggerConfigurationException">
+            <summary>
+            LoggerConfigurationException should be used to describe and deliver Exceptions
+            relating to or directly stemming from configuration abnormalities. For example,
+            if an invalid default manager is specified in the configuration section,
+            then it would reasonable to throw a LoggerConfigurationException. If an error
+            occurs at runtime (such as an inability to send a log message to a wrapped logger)
+            that is independent of configuration, it is more logical to use and throw a
+            <see cref="T:Apprenda.Services.Logging.LoggerException"/>
+            </summary>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Config.LoggerConfigurationException.#ctor">
+            <summary>
+            A blank default constructor
+            </summary>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Config.LoggerConfigurationException.#ctor(System.String)">
+            <summary>
+            A constructor which builds a LoggerConfigurationException delivering
+            a specific message.
+            </summary>
+            <param name="message">The message defining the LoggerConfigurationException</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Config.LoggerConfigurationException.#ctor(System.String,System.Exception)">
+            <summary>
+            A constructor that wraps an inner exception and augments the Exception
+            description through its own message.
+            </summary>
+            <param name="message">The message giving more detail to the inner exception</param>
+            <param name="innerException">The root cause of the Exception</param>
+        </member>
+        <member name="T:Apprenda.Services.Logging.LogLevel">
+            <summary>
+            LogLevel defines the various settings that dictate when the logger
+            should process which log messages. Each enumeration entry is described
+            in the 'Members' section of this documentation.
+            </summary>
+        </member>
+        <member name="F:Apprenda.Services.Logging.LogLevel.Off">
+            <summary>
+            Off indicates that all logging requests will be ignored.
+            </summary>
+        </member>
+        <member name="F:Apprenda.Services.Logging.LogLevel.Debug">
+            <summary>
+            Debug represents the broadest logging level. It processes
+            all requests made at the Debug level as well as any requests at any other
+            level. This could generate logs that are quite large and is generally not
+            suited for a production environment.
+            </summary>
+        </member>
+        <member name="F:Apprenda.Services.Logging.LogLevel.Info">
+            <summary>
+            Info is the next level of granularity after Debug. Any messages
+            that are Info level or higher are processed, ignoring any calls to explicit
+            Debug level requests.
+            </summary>
+        </member>
+        <member name="F:Apprenda.Services.Logging.LogLevel.Warn">
+            <summary>
+            Warn is the next level of granularity after Info. Any messages
+            that are Warn level or higher are processed, ignoring any calls to explicit
+            Debug and Info level requests.
+            </summary>
+        </member>
+        <member name="F:Apprenda.Services.Logging.LogLevel.Error">
+            <summary>
+            Error is the next level of granularity after Warn. Any messages
+            that are Error level or higher are processed, ignoring any calls to explicit
+            Debug, Info, and Warn level requests.
+            </summary>
+        </member>
+        <member name="F:Apprenda.Services.Logging.LogLevel.Fatal">
+            <summary>
+            Fatal is the next level of granularity after Error. It is generally
+            reserved for severe situations that would render the calling application/library
+            unstable or unusable. Any messages that are Fatal level or higher are processed,
+            ignoring any calls to explicit Debug, Info, Warn, and Error level requests.
+            </summary>
+        </member>
+        <member name="T:Apprenda.Services.Logging.ILogger">
+            <summary>
+            The ILogger interface provides a basic logging contract between the Apprenda
+            Logging Services and the client application making the log requests.
+            
+            ILogger's goals include provide a minimally invasive, easy to use interface that
+            allows for logging access to all possible LogLevels. In order to retrieve an
+            implementation of an ILogger interface, use the Apprenda.Services.Logging.LogManager
+            class.
+            </summary>
+            <seealso cref="T:Apprenda.Services.Logging.LogManager"/>    
+        </member>
+        <member name="M:Apprenda.Services.Logging.ILogger.Debug(System.Object)">
+            <summary>
+            Debug requires the logger to log the provided message string. The string
+            will be formatted with any configured formatting options. It is equivalent
+            to calling Logger.Log(string,LogLevel.Debug)
+            </summary>
+            <param name="message">The message to log</param>        
+        </member>
+        <member name="M:Apprenda.Services.Logging.ILogger.Debug(System.Object,System.Exception)">
+            <summary>
+            Debug requires the logger to log the provided message string along with a
+            origin Exception. The string/Exception pair will be formatted with any 
+            configured formatting options. It is equivalent to calling 
+            Logger.Log(string,Exception,LogLevel.Debug)
+            </summary>
+            <param name="message">The message to log</param>        
+            <param name="e">The Exception that originated the log call</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.ILogger.DebugFormat(System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Debug overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]);
+            </summary>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            int i = 10;
+            long j = 9;
+            
+            log.Debug("Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+            <param name="message">The message to log</param>        
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.ILogger.Debug(System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Debug overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]);
+            </summary>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            IFormatProvider fProvider = new MyFormatProvider(); //Implements IFormatProvider
+            int i = 10;
+            long j = 9;
+            
+            log.Debug(fProvider, "Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+            <param name="formatProvider">The IFormatProvider instance to use when
+            formatting the final log string</param>
+            <param name="message">The message to log</param>        
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.ILogger.Info(System.Object)">
+            <summary>
+            Info requires the logger to log the provided message string. The string
+            will be formatted with any configured formatting options. It is equivalent
+            to calling Logger.Log(string,LogLevel.Info)
+            </summary>
+            <param name="message">The message to log</param>        
+        </member>
+        <member name="M:Apprenda.Services.Logging.ILogger.Info(System.Object,System.Exception)">
+            <summary>
+            Info requires the logger to log the provided message string along with a
+            origin Exception. The string/Exception pair will be formatted with any 
+            configured formatting options. It is equivalent to calling 
+            Logger.Log(string,Exception,LogLevel.Info)
+            </summary>
+            <param name="message">The message to log</param>        
+            <param name="e">The Exception that originated the log call</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.ILogger.InfoFormat(System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Info overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]);
+            </summary>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            int i = 10;
+            long j = 9;
+            
+            log.Info("Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+            <param name="message">The message to log</param>        
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.ILogger.Info(System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Info overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]);
+            </summary>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            IFormatProvider fProvider = new MyFormatProvider(); //Implements IFormatProvider
+            int i = 10;
+            long j = 9;
+            
+            log.Info(fProvider, "Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+            <param name="formatProvider">The IFormatProvider instance to use when
+            formatting the final log string</param>
+            <param name="message">The message to log</param>        
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.ILogger.Warn(System.Object)">
+            <summary>
+            Warn requires the logger to log the provided message string. The string
+            will be formatted with any configured formatting options. It is equivalent
+            to calling Logger.Log(string,LogLevel.Warn)
+            </summary>
+            <param name="message">The message to log</param>        
+        </member>
+        <member name="M:Apprenda.Services.Logging.ILogger.Warn(System.Object,System.Exception)">
+            <summary>
+            Warn requires the logger to log the provided message string along with a
+            origin Exception. The string/Exception pair will be formatted with any 
+            configured formatting options. It is equivalent to calling 
+            Logger.Log(string,Exception,LogLevel.Warn)
+            </summary>
+            <param name="message">The message to log</param>        
+            <param name="e">The Exception that originated the log call</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.ILogger.WarnFormat(System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Warn overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]);
+            </summary>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            int i = 10;
+            long j = 9;
+            
+            log.Warn("Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+            <param name="message">The message to log</param>        
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.ILogger.Warn(System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Warn overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]);
+            </summary>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            IFormatProvider fProvider = new MyFormatProvider(); //Implements IFormatProvider
+            int i = 10;
+            long j = 9;
+            
+            log.Warn(fProvider, "Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+            <param name="formatProvider">The IFormatProvider instance to use when
+            formatting the final log string</param>
+            <param name="message">The message to log</param>        
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.ILogger.Error(System.Object)">
+            <summary>
+            Error requires the logger to log the provided message string. The string
+            will be formatted with any configured formatting options. It is equivalent
+            to calling Logger.Log(string,LogLevel.Error)
+            </summary>
+            <param name="message">The message to log</param>        
+        </member>
+        <member name="M:Apprenda.Services.Logging.ILogger.Error(System.Object,System.Exception)">
+            <summary>
+            Error requires the logger to log the provided message string along with a
+            origin Exception. The string/Exception pair will be formatted with any 
+            configured formatting options. It is equivalent to calling 
+            Logger.Log(string,Exception,LogLevel.Error)
+            </summary>
+            <param name="message">The message to log</param>        
+            <param name="e">The Exception that originated the log call</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.ILogger.ErrorFormat(System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Error overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]);
+            </summary>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            int i = 10;
+            long j = 9;
+            
+            log.Error("Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+            <param name="message">The message to log</param>        
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.ILogger.Error(System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Error overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]);
+            </summary>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            IFormatProvider fProvider = new MyFormatProvider(); //Implements IFormatProvider
+            int i = 10;
+            long j = 9;
+            
+            log.Error(fProvider, "Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+            <param name="formatProvider">The IFormatProvider instance to use when
+            formatting the final log string</param>
+            <param name="message">The message to log</param>        
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.ILogger.Fatal(System.Object)">
+            <summary>
+            Fatal requires the logger to log the provided message string. The string
+            will be formatted with any configured formatting options. It is equivalent
+            to calling Logger.Log(string,LogLevel.Fatal)
+            </summary>
+            <param name="message">The message to log</param>        
+        </member>
+        <member name="M:Apprenda.Services.Logging.ILogger.Fatal(System.Object,System.Exception)">
+            <summary>
+            Fatal requires the logger to log the provided message string along with a
+            origin Exception. The string/Exception pair will be formatted with any 
+            configured formatting options. It is equivalent to calling 
+            Logger.Log(string,Exception,LogLevel.Fatal)
+            </summary>
+            <param name="message">The message to log</param>        
+            <param name="e">The Exception that originated the log call</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.ILogger.FatalFormat(System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Fatal overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]);
+            </summary>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            int i = 10;
+            long j = 9;
+            
+            log.Fatal("Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+            <param name="message">The message to log</param>        
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.ILogger.Fatal(System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Fatal overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]);
+            </summary>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            IFormatProvider fProvider = new MyFormatProvider(); //Implements IFormatProvider
+            int i = 10;
+            long j = 9;
+            
+            log.Fatal(fProvider, "Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+            <param name="formatProvider">The IFormatProvider instance to use when
+            formatting the final log string</param>
+            <param name="message">The message to log</param>        
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.ILogger.Log(System.Object,Apprenda.Services.Logging.LogLevel)">
+            <summary>
+            Log is a generic logging request to the logger where the level to log at is
+            determined by the LogLevel parameter.
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="logLevel">The LogLevel to log at</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.ILogger.Log(System.Object,System.Exception,Apprenda.Services.Logging.LogLevel)">
+            <summary>
+            Log is a generic logging request to the logger where the level to log at is
+            determined by the LogLevel parameter.
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="e">The Exception that caused the log request</param>
+            <param name="logLevel">The LogLevel to log at</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.ILogger.Log(System.String,Apprenda.Services.Logging.LogLevel,System.Object[])">
+            <summary>
+            Log is a generic logging request to the logger where the level to log at is
+            determined by the LogLevel parameter. This overload is a scriptable message
+            overload that works similar to Console.WriteLine(string, params).
+            </summary>
+            <param name="message">The scriptable message to log</param>
+            <param name="logLevel">The LogLevel to log at</param>
+            <param name="objects">The parameters to inject into the scriptable message</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.ILogger.Log(System.IFormatProvider,System.String,Apprenda.Services.Logging.LogLevel,System.Object[])">
+            <summary>
+            Log is a generic logging request to the logger where the level to log at is
+            determined by the LogLevel parameter. This overload is a scriptable message
+            overload that works similar to Console.WriteLine(string, params).
+            </summary>
+            <param name="formatProvider">The IFormatProvider implementation to use</param>
+            <param name="message">The scriptable message to log</param>
+            <param name="logLevel">The LogLevel to log at</param>
+            <param name="objects">The parameters to inject into the scriptable message</param>
+        </member>
+        <member name="P:Apprenda.Services.Logging.ILogger.IsDebugEnabled">
+            <summary>
+            Gets whether or not the logger is currently setup to process LogLevel.Debug
+            requests
+            </summary>
+            <seealso cref="T:Apprenda.Services.Logging.LogLevel"/>
+        </member>
+        <member name="P:Apprenda.Services.Logging.ILogger.IsInfoEnabled">
+            <summary>
+            Gets whether or not the logger is currently setup to process LogLevel.Info
+            requests
+            </summary>
+            <seealso cref="T:Apprenda.Services.Logging.LogLevel"/>
+        </member>
+        <member name="P:Apprenda.Services.Logging.ILogger.IsWarnEnabled">
+            <summary>
+            Gets whether or not the logger is currently setup to process LogLevel.Warn
+            requests
+            </summary>
+            <seealso cref="T:Apprenda.Services.Logging.LogLevel"/>
+        </member>
+        <member name="P:Apprenda.Services.Logging.ILogger.IsErrorEnabled">
+            <summary>
+            Gets whether or not the logger is currently setup to process LogLevel.Error
+            requests
+            </summary>
+            <seealso cref="T:Apprenda.Services.Logging.LogLevel"/>
+        </member>
+        <member name="P:Apprenda.Services.Logging.ILogger.IsFatalEnabled">
+            <summary>
+            Gets whether or not the logger is currently setup to process LogLevel.Fatal
+            requests
+            </summary>
+            <seealso cref="T:Apprenda.Services.Logging.LogLevel"/>
+        </member>
+        <member name="P:Apprenda.Services.Logging.ILogger.IsOff">
+            <summary>
+            Determines whether or not the logger is on/off
+            </summary>
+            <seealso cref="T:Apprenda.Services.Logging.LogLevel"/>
+        </member>
+        <member name="P:Apprenda.Services.Logging.ILogger.WrappedLogger">
+            <summary>
+            Retrieves the underlying logger implementation, allowing a calling client
+            to access and modify custom implementation properties directly.
+            </summary>
+        </member>
+        <member name="T:Apprenda.Services.Logging.Impl.MockLogger">
+            <summary>
+            Mock logging instance that implements the logging contract and writes everything to the console.
+            </summary>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogger.Debug(System.Object)">
+            <summary>
+            Debug requires the logger to log the provided message string. The string
+            will be formatted with any configured formatting options. It is equivalent
+            to calling Logger.Log(string,LogLevel.Debug); always logs to console.
+            </summary>
+            <param name="message">The message to log</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogger.Debug(System.Object,System.Exception)">
+            <summary>
+            Debug requires the logger to log the provided message string along with a
+            origin Exception. The string/Exception pair will be formatted with any
+            configured formatting options. It is equivalent to calling
+            Logger.Log(string,Exception,LogLevel.Debug); always logs to console.
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="e">The Exception that originated the log call</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogger.DebugFormat(System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Debug overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]); always logs to console.
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            int i = 10;
+            long j = 9;
+            log.Debug("Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogger.Debug(System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Debug overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]); always logs to console.
+            </summary>
+            <param name="formatProvider">The IFormatProvider instance to use when
+            formatting the final log string</param>
+            <param name="message">The message to log</param>
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            IFormatProvider fProvider = new MyFormatProvider(); //Implements IFormatProvider
+            int i = 10;
+            long j = 9;
+            log.Debug(fProvider, "Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogger.Info(System.Object)">
+            <summary>
+            Info requires the logger to log the provided message string. The string
+            will be formatted with any configured formatting options. It is equivalent
+            to calling Logger.Log(string,LogLevel.Info); always logs to console.
+            </summary>
+            <param name="message">The message to log</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogger.Info(System.Object,System.Exception)">
+            <summary>
+            Info requires the logger to log the provided message string along with a
+            origin Exception. The string/Exception pair will be formatted with any
+            configured formatting options. It is equivalent to calling
+            Logger.Log(string,Exception,LogLevel.Info); always logs to console.
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="e">The Exception that originated the log call</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogger.InfoFormat(System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Info overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]); always logs to console.
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            int i = 10;
+            long j = 9;
+            log.Info("Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogger.Info(System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Info overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]); always logs to console.
+            </summary>
+            <param name="formatProvider">The IFormatProvider instance to use when
+            formatting the final log string</param>
+            <param name="message">The message to log</param>
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            IFormatProvider fProvider = new MyFormatProvider(); //Implements IFormatProvider
+            int i = 10;
+            long j = 9;
+            log.Info(fProvider, "Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogger.Warn(System.Object)">
+            <summary>
+            Warn requires the logger to log the provided message string. The string
+            will be formatted with any configured formatting options. It is equivalent
+            to calling Logger.Log(string,LogLevel.Warn); always logs to console.
+            </summary>
+            <param name="message">The message to log</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogger.Warn(System.Object,System.Exception)">
+            <summary>
+            Warn requires the logger to log the provided message string along with a
+            origin Exception. The string/Exception pair will be formatted with any
+            configured formatting options. It is equivalent to calling
+            Logger.Log(string,Exception,LogLevel.Warn); always logs to console.
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="e">The Exception that originated the log call</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogger.WarnFormat(System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Warn overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]); always logs to console.
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            int i = 10;
+            long j = 9;
+            log.Warn("Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogger.Warn(System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Warn overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]); always logs to console.
+            </summary>
+            <param name="formatProvider">The IFormatProvider instance to use when
+            formatting the final log string</param>
+            <param name="message">The message to log</param>
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            IFormatProvider fProvider = new MyFormatProvider(); //Implements IFormatProvider
+            int i = 10;
+            long j = 9;
+            log.Warn(fProvider, "Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogger.Error(System.Object)">
+            <summary>
+            Error requires the logger to log the provided message string. The string
+            will be formatted with any configured formatting options. It is equivalent
+            to calling Logger.Log(string,LogLevel.Error); always logs to console.
+            </summary>
+            <param name="message">The message to log</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogger.Error(System.Object,System.Exception)">
+            <summary>
+            Error requires the logger to log the provided message string along with a
+            origin Exception. The string/Exception pair will be formatted with any
+            configured formatting options. It is equivalent to calling
+            Logger.Log(string,Exception,LogLevel.Error); always logs to console.
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="e">The Exception that originated the log call</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogger.ErrorFormat(System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Error overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]); always logs to console.
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            int i = 10;
+            long j = 9;
+            log.Error("Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogger.Error(System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Error overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]); always logs to console.
+            </summary>
+            <param name="formatProvider">The IFormatProvider instance to use when
+            formatting the final log string</param>
+            <param name="message">The message to log</param>
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            IFormatProvider fProvider = new MyFormatProvider(); //Implements IFormatProvider
+            int i = 10;
+            long j = 9;
+            log.Error(fProvider, "Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogger.Fatal(System.Object)">
+            <summary>
+            Fatal requires the logger to log the provided message string. The string
+            will be formatted with any configured formatting options. It is equivalent
+            to calling Logger.Log(string,LogLevel.Fatal); always logs to console.
+            </summary>
+            <param name="message">The message to log</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogger.Fatal(System.Object,System.Exception)">
+            <summary>
+            Fatal requires the logger to log the provided message string along with a
+            origin Exception. The string/Exception pair will be formatted with any
+            configured formatting options. It is equivalent to calling
+            Logger.Log(string,Exception,LogLevel.Fatal); always logs to console.
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="e">The Exception that originated the log call</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogger.FatalFormat(System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Fatal overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]); always logs to console.
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            int i = 10;
+            long j = 9;
+            log.Fatal("Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogger.Fatal(System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Fatal overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]); always logs to console.
+            </summary>
+            <param name="formatProvider">The IFormatProvider instance to use when
+            formatting the final log string</param>
+            <param name="message">The message to log</param>
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            IFormatProvider fProvider = new MyFormatProvider(); //Implements IFormatProvider
+            int i = 10;
+            long j = 9;
+            log.Fatal(fProvider, "Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogger.Log(System.Object,Apprenda.Services.Logging.LogLevel)">
+            <summary>
+            Log is a generic logging request to the logger where the level to log at is
+            determined by the LogLevel parameter; always logs to console.
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="logLevel">The LogLevel to log at</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogger.Log(System.Object,System.Exception,Apprenda.Services.Logging.LogLevel)">
+            <summary>
+            Log is a generic logging request to the logger where the level to log at is
+            determined by the LogLevel parameter; always logs to console.
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="e">The Exception that caused the log request</param>
+            <param name="logLevel">The LogLevel to log at</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogger.Log(System.String,Apprenda.Services.Logging.LogLevel,System.Object[])">
+            <summary>
+            Log is a generic logging request to the logger where the level to log at is
+            determined by the LogLevel parameter. This overload is a scriptable message
+            overload that works similar to Console.WriteLine(string, params); always logs to console.
+            </summary>
+            <param name="message">The scriptable message to log</param>
+            <param name="logLevel">The LogLevel to log at</param>
+            <param name="objects">The parameters to inject into the scriptable message</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogger.Log(System.IFormatProvider,System.String,Apprenda.Services.Logging.LogLevel,System.Object[])">
+            <summary>
+            Log is a generic logging request to the logger where the level to log at is
+            determined by the LogLevel parameter. This overload is a scriptable message
+            overload that works similar to Console.WriteLine(string, params); always logs to console.
+            </summary>
+            <param name="formatProvider">The IFormatProvider implementation to use</param>
+            <param name="message">The scriptable message to log</param>
+            <param name="logLevel">The LogLevel to log at</param>
+            <param name="objects">The parameters to inject into the scriptable message</param>
+        </member>
+        <member name="P:Apprenda.Services.Logging.Impl.MockLogger.IsDebugEnabled">
+            <summary>
+            Gets whether or not the logger is currently setup to process LogLevel.Debug
+            requests; always returns true.
+            </summary>
+            <value></value>
+            <seealso cref="T:Apprenda.Services.Logging.LogLevel"/>
+        </member>
+        <member name="P:Apprenda.Services.Logging.Impl.MockLogger.IsInfoEnabled">
+            <summary>
+            Gets whether or not the logger is currently setup to process LogLevel.Info
+            requests; always returns true.
+            </summary>
+            <value></value>
+            <seealso cref="T:Apprenda.Services.Logging.LogLevel"/>
+        </member>
+        <member name="P:Apprenda.Services.Logging.Impl.MockLogger.IsWarnEnabled">
+            <summary>
+            Gets whether or not the logger is currently setup to process LogLevel.Warn
+            requests; always returns true.
+            </summary>
+            <value></value>
+            <seealso cref="T:Apprenda.Services.Logging.LogLevel"/>
+        </member>
+        <member name="P:Apprenda.Services.Logging.Impl.MockLogger.IsErrorEnabled">
+            <summary>
+            Gets whether or not the logger is currently setup to process LogLevel.Error
+            requests; always returns true.
+            </summary>
+            <value></value>
+            <seealso cref="T:Apprenda.Services.Logging.LogLevel"/>
+        </member>
+        <member name="P:Apprenda.Services.Logging.Impl.MockLogger.IsFatalEnabled">
+            <summary>
+            Gets whether or not the logger is currently setup to process LogLevel.Fatal
+            requests; always returns true.
+            </summary>
+            <value></value>
+            <seealso cref="T:Apprenda.Services.Logging.LogLevel"/>
+        </member>
+        <member name="P:Apprenda.Services.Logging.Impl.MockLogger.IsOff">
+            <summary>
+            Determines whether or not the logger is on/off; always returns true.
+            </summary>
+            <value></value>
+            <seealso cref="T:Apprenda.Services.Logging.LogLevel"/>
+        </member>
+        <member name="P:Apprenda.Services.Logging.Impl.MockLogger.WrappedLogger">
+            <summary>
+            Retrieves the underlying logger implementation, allowing a calling client
+            to access and modify custom implementation properties directly; always returns true.
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Apprenda.Services.Logging.Impl.MockLogManager">
+            <summary>
+            A <see cref="T:Apprenda.Services.Logging.Impl.MockLogManager"/> produces <see cref="T:Apprenda.Services.Logging.Impl.MockLogger"/> instances.
+            </summary>
+        </member>
+        <member name="T:Apprenda.Services.Logging.LogManager">
+            <summary>
+            The LogManager Class has a main responsibility of providing logger
+            instances to requesting client classes. 
+            
+            The LogManager handles loading a specific LogManager implementation 
+            which accepts requests to load actual ILogger implementations to 
+            instances of the implementation.
+            </summary>
+        </member>
+        <member name="M:Apprenda.Services.Logging.LogManager.Instance">
+            <summary>
+            Returns the default configured instance of the LogManager
+            </summary>
+            <returns>The default configured instance of the LogManager
+            or null if one was never configured</returns>
+        </member>
+        <member name="M:Apprenda.Services.Logging.LogManager.Instance(System.String)">
+            <summary>
+            A LogManager instance matching the fully qualified type name
+            provided as a parameter.
+            </summary>
+            <param name="name">A name that matches an implementation
+            reference in the .config file for Apprenda Logger</param>
+            <returns>A LogManager instance matching the provided qualified
+            name</returns>
+        </member>
+        <member name="M:Apprenda.Services.Logging.LogManager.AddManager(System.String,Apprenda.Services.Logging.LogManager)">
+            <summary>
+            Allows a <see cref="T:Apprenda.Services.Logging.LogManager"/> to be added at runtime.
+            </summary>
+            <param name="name">The name to bind the LogManager to. Pass 'null' if the LogManager should be used as default.</param>
+            <param name="logManager">The LogManager to install.</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.LogManager.GetConfigurationSection">
+            <summary>
+            Gets the configuration section from the application configuration file. 
+            The expected name for the configuration section is defined in the 
+            static constant 'CONFIGURATION_SECTION'.
+            </summary>
+            <returns>The ApprendaLoggerCustomSection extracted from the information
+            found in the configuration file</returns>
+        </member>
+        <member name="M:Apprenda.Services.Logging.LogManager.GetLogger">
+            <summary>
+            Returns an ILogger instance that is defined as the default logger
+            for a given LogManager. This may or may not have relevance, depending
+            on the implementation
+            </summary>
+            <returns>An ILogger instance</returns>
+            <exception cref="T:Apprenda.Services.Logging.Config.LoggerConfigurationException">
+            Thrown if there is an exception getting the ILogger instance or the 
+            method is not valid for the specified LogManager subclass.
+            </exception>
+        </member>
+        <member name="M:Apprenda.Services.Logging.LogManager.GetLogger(System.String)">
+            <summary>
+            Returns an ILogger instance matching the specified loggerName.
+            The ILogger instance would have to be configured to have this name.
+            </summary>
+            <param name="loggerName">The name of the ILogger to retrieve</param>
+            <returns>An instance of an ILogger or null if one with that name is
+            not found</returns>
+        </member>
+        <member name="M:Apprenda.Services.Logging.LogManager.GetLogger(System.String,System.String)">
+            <summary>
+            Returns an ILogger instance matching the specified loggerName.
+            </summary>
+            <param name="tag">The tag to be used.</param>
+            <param name="endpointName">The name of the logging service endpoint.</param>
+            <returns>The new instance.</returns>
+        </member>
+        <member name="M:Apprenda.Services.Logging.LogManager.GetLogger(System.Type)">
+            <summary>
+            Returns an ILogger instance responsible for logging information
+            for a specific type
+            </summary>
+            <param name="type">The type whose ILogger implementation should
+            be retrieved.</param>
+            <returns>An instance of an ILogger</returns>
+        </member>
+        <member name="M:Apprenda.Services.Logging.LogManager.GetLogger(System.Type,System.String)">
+            <summary>
+            Returns an ILogger instance responsible for logging information
+            for a specific type
+            </summary>
+            <param name="typeTag">The type whose name should be used as a tag.</param>
+            <param name="endpointName">The name of the logging service endpoint.</param>
+            <returns>The new instance.</returns>
+        </member>
+        <member name="M:Apprenda.Services.Logging.LogManager.GetLogger(System.Reflection.Assembly,System.String)">
+            <summary>
+            Returns an instance of an ILogger in the Assembly specified by the 
+            assembly parameter and the typeName string.
+            </summary>
+            <param name="assembly">An Assembly that the type should be loaded
+            from</param>
+            <param name="typeName">The type name of the ILogger instance</param>
+            <returns>An instance of an ILogger or null if one is not found
+            </returns>
+        </member>
+        <member name="P:Apprenda.Services.Logging.LogManager.DefaultLoggerName">
+            <summary>
+            Gets or sets the name of the default logger.
+            </summary>
+            <value>The name of the default logger.</value>
+        </member>
+        <member name="P:Apprenda.Services.Logging.LogManager.NamedLogManagers">
+            <summary>
+            Returns a copy of the collection of installed named <see cref="T:Apprenda.Services.Logging.LogManager"/> instances.
+            </summary>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogManager.GetLogger(System.String)">
+            <returns>A new <see cref="T:Apprenda.Services.Logging.Impl.MockLogger"/> instance.</returns>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogManager.GetLogger(System.String,System.String)">
+            <returns>A new <see cref="T:Apprenda.Services.Logging.Impl.MockLogger"/> instance.</returns>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogManager.GetLogger(System.Type)">
+            <returns>A new <see cref="T:Apprenda.Services.Logging.Impl.MockLogger"/> instance.</returns>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogManager.GetLogger(System.Type,System.String)">
+            <returns>A new <see cref="T:Apprenda.Services.Logging.Impl.MockLogger"/> instance.</returns>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogManager.GetLogger(System.Reflection.Assembly,System.String)">
+            <returns>A new <see cref="T:Apprenda.Services.Logging.Impl.MockLogger"/> instance.</returns>
+        </member>
+        <member name="M:Apprenda.Services.Logging.Impl.MockLogManager.GetLogger">
+            <returns>A new <see cref="T:Apprenda.Services.Logging.Impl.MockLogger"/> instance.</returns>
+        </member>
+        <member name="T:Apprenda.Services.Logging.LoggerException">
+            <summary>
+            LoggerException should be used to push implementation Exceptions up to
+            the client code <i>that did not</i> originate from configuration issues.
+            For configuration related exceptions, it is recommended that an implementation
+            use <see cref="T:Apprenda.Services.Logging.Config.LoggerConfigurationException"/>
+            </summary>
+        </member>
+        <member name="M:Apprenda.Services.Logging.LoggerException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            A serializing constructor.
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.LoggerException.#ctor">
+            <summary>
+            The empty constructor
+            </summary>
+        </member>
+        <member name="M:Apprenda.Services.Logging.LoggerException.#ctor(System.String)">
+            <summary>
+            A constructor which builds a LoggerConfigurationException delivering
+            a specific message.
+            </summary>
+            <param name="message">The message defining the LoggerConfigurationException</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.LoggerException.#ctor(System.String,System.Exception)">
+            <summary>
+            A constructor that wraps an inner exception and augments the exception
+            description through its own message.
+            </summary>
+            <param name="message">The message giving more detail to the inner exception</param>
+            <param name="innerException">The root cause of the Exception</param>
+        </member>
+        <member name="T:Apprenda.Services.Logging.NullLogger">
+            <summary>
+            The <see cref="T:Apprenda.Services.Logging.NullLogger"/> is a functionless logger that is used by Apprenda Logging as a degredation target in case
+            an application does not configure a logger. This prevents Apprenda Logging from adversely affecting functionality of a dependent piece
+            of source code.
+            </summary>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogger.Debug(System.Object)">
+            <summary>
+            Debug requires the logger to log the provided message string. The string
+            will be formatted with any configured formatting options. It is equivalent
+            to calling Logger.Log(string,LogLevel.Debug)
+            </summary>
+            <param name="message">The message to log</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogger.Debug(System.Object,System.Exception)">
+            <summary>
+            Debug requires the logger to log the provided message string along with a
+            origin Exception. The string/Exception pair will be formatted with any
+            configured formatting options. It is equivalent to calling
+            Logger.Log(string,Exception,LogLevel.Debug)
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="e">The Exception that originated the log call</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogger.DebugFormat(System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Debug overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]);
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            int i = 10;
+            long j = 9;
+            log.Debug("Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogger.Debug(System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Debug overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]);
+            </summary>
+            <param name="formatProvider">The IFormatProvider instance to use when
+            formatting the final log string</param>
+            <param name="message">The message to log</param>
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            IFormatProvider fProvider = new MyFormatProvider(); //Implements IFormatProvider
+            int i = 10;
+            long j = 9;
+            log.Debug(fProvider, "Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogger.Info(System.Object)">
+            <summary>
+            Info requires the logger to log the provided message string. The string
+            will be formatted with any configured formatting options. It is equivalent
+            to calling Logger.Log(string,LogLevel.Info)
+            </summary>
+            <param name="message">The message to log</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogger.Info(System.Object,System.Exception)">
+            <summary>
+            Info requires the logger to log the provided message string along with a
+            origin Exception. The string/Exception pair will be formatted with any
+            configured formatting options. It is equivalent to calling
+            Logger.Log(string,Exception,LogLevel.Info)
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="e">The Exception that originated the log call</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogger.InfoFormat(System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Info overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]);
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            int i = 10;
+            long j = 9;
+            log.Info("Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogger.Info(System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Info overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]);
+            </summary>
+            <param name="formatProvider">The IFormatProvider instance to use when
+            formatting the final log string</param>
+            <param name="message">The message to log</param>
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            IFormatProvider fProvider = new MyFormatProvider(); //Implements IFormatProvider
+            int i = 10;
+            long j = 9;
+            log.Info(fProvider, "Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogger.Warn(System.Object)">
+            <summary>
+            Warn requires the logger to log the provided message string. The string
+            will be formatted with any configured formatting options. It is equivalent
+            to calling Logger.Log(string,LogLevel.Warn)
+            </summary>
+            <param name="message">The message to log</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogger.Warn(System.Object,System.Exception)">
+            <summary>
+            Warn requires the logger to log the provided message string along with a
+            origin Exception. The string/Exception pair will be formatted with any
+            configured formatting options. It is equivalent to calling
+            Logger.Log(string,Exception,LogLevel.Warn)
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="e">The Exception that originated the log call</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogger.WarnFormat(System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Warn overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]);
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            int i = 10;
+            long j = 9;
+            log.Warn("Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogger.Warn(System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Warn overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]);
+            </summary>
+            <param name="formatProvider">The IFormatProvider instance to use when
+            formatting the final log string</param>
+            <param name="message">The message to log</param>
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            IFormatProvider fProvider = new MyFormatProvider(); //Implements IFormatProvider
+            int i = 10;
+            long j = 9;
+            log.Warn(fProvider, "Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogger.Error(System.Object)">
+            <summary>
+            Error requires the logger to log the provided message string. The string
+            will be formatted with any configured formatting options. It is equivalent
+            to calling Logger.Log(string,LogLevel.Error)
+            </summary>
+            <param name="message">The message to log</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogger.Error(System.Object,System.Exception)">
+            <summary>
+            Error requires the logger to log the provided message string along with a
+            origin Exception. The string/Exception pair will be formatted with any
+            configured formatting options. It is equivalent to calling
+            Logger.Log(string,Exception,LogLevel.Error)
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="e">The Exception that originated the log call</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogger.ErrorFormat(System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Error overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]);
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            int i = 10;
+            long j = 9;
+            log.Error("Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogger.Error(System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Error overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]);
+            </summary>
+            <param name="formatProvider">The IFormatProvider instance to use when
+            formatting the final log string</param>
+            <param name="message">The message to log</param>
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            IFormatProvider fProvider = new MyFormatProvider(); //Implements IFormatProvider
+            int i = 10;
+            long j = 9;
+            log.Error(fProvider, "Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogger.Fatal(System.Object)">
+            <summary>
+            Fatal requires the logger to log the provided message string. The string
+            will be formatted with any configured formatting options. It is equivalent
+            to calling Logger.Log(string,LogLevel.Fatal)
+            </summary>
+            <param name="message">The message to log</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogger.Fatal(System.Object,System.Exception)">
+            <summary>
+            Fatal requires the logger to log the provided message string along with a
+            origin Exception. The string/Exception pair will be formatted with any
+            configured formatting options. It is equivalent to calling
+            Logger.Log(string,Exception,LogLevel.Fatal)
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="e">The Exception that originated the log call</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogger.FatalFormat(System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Fatal overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]);
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            int i = 10;
+            long j = 9;
+            log.Fatal("Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogger.Fatal(System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Given a scriptable position string (similar to those used in Console.WriteLine),
+            this Fatal overload injects the extra params at their respective positions.
+            It is equivalent to calling Logger.Log(string,LogLevel,params object[]);
+            </summary>
+            <param name="formatProvider">The IFormatProvider instance to use when
+            formatting the final log string</param>
+            <param name="message">The message to log</param>
+            <param name="objects">An array of objects to place in their respective
+            positions in the message when the message is logged</param>
+            <example>This example shows how to use the scriptable position strings and the
+            log call.
+            <code>
+            ILogger log = LogManager.GetLogger("MyLogger");
+            IFormatProvider fProvider = new MyFormatProvider(); //Implements IFormatProvider
+            int i = 10;
+            long j = 9;
+            log.Fatal(fProvider, "Hello number {0}. Good bye number {1}", i, j);
+            </code>
+            </example>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogger.Log(System.Object,Apprenda.Services.Logging.LogLevel)">
+            <summary>
+            Log is a generic logging request to the logger where the level to log at is
+            determined by the LogLevel parameter.
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="logLevel">The LogLevel to log at</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogger.Log(System.Object,System.Exception,Apprenda.Services.Logging.LogLevel)">
+            <summary>
+            Log is a generic logging request to the logger where the level to log at is
+            determined by the LogLevel parameter.
+            </summary>
+            <param name="message">The message to log</param>
+            <param name="e">The Exception that caused the log request</param>
+            <param name="logLevel">The LogLevel to log at</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogger.Log(System.String,Apprenda.Services.Logging.LogLevel,System.Object[])">
+            <summary>
+            Log is a generic logging request to the logger where the level to log at is
+            determined by the LogLevel parameter. This overload is a scriptable message
+            overload that works similar to Console.WriteLine(string, params).
+            </summary>
+            <param name="message">The scriptable message to log</param>
+            <param name="logLevel">The LogLevel to log at</param>
+            <param name="objects">The parameters to inject into the scriptable message</param>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogger.Log(System.IFormatProvider,System.String,Apprenda.Services.Logging.LogLevel,System.Object[])">
+            <summary>
+            Log is a generic logging request to the logger where the level to log at is
+            determined by the LogLevel parameter. This overload is a scriptable message
+            overload that works similar to Console.WriteLine(string, params).
+            </summary>
+            <param name="formatProvider">The IFormatProvider implementation to use</param>
+            <param name="message">The scriptable message to log</param>
+            <param name="logLevel">The LogLevel to log at</param>
+            <param name="objects">The parameters to inject into the scriptable message</param>
+        </member>
+        <member name="P:Apprenda.Services.Logging.NullLogger.IsDebugEnabled">
+            <summary>
+            Gets whether or not the logger is currently setup to process LogLevel.Debug
+            requests
+            </summary>
+            <value></value>
+            <seealso cref="T:Apprenda.Services.Logging.LogLevel"/>
+        </member>
+        <member name="P:Apprenda.Services.Logging.NullLogger.IsInfoEnabled">
+            <summary>
+            Gets whether or not the logger is currently setup to process LogLevel.Info
+            requests
+            </summary>
+            <value></value>
+            <seealso cref="T:Apprenda.Services.Logging.LogLevel"/>
+        </member>
+        <member name="P:Apprenda.Services.Logging.NullLogger.IsWarnEnabled">
+            <summary>
+            Gets whether or not the logger is currently setup to process LogLevel.Warn
+            requests
+            </summary>
+            <value></value>
+            <seealso cref="T:Apprenda.Services.Logging.LogLevel"/>
+        </member>
+        <member name="P:Apprenda.Services.Logging.NullLogger.IsErrorEnabled">
+            <summary>
+            Gets whether or not the logger is currently setup to process LogLevel.Error
+            requests
+            </summary>
+            <value></value>
+            <seealso cref="T:Apprenda.Services.Logging.LogLevel"/>
+        </member>
+        <member name="P:Apprenda.Services.Logging.NullLogger.IsFatalEnabled">
+            <summary>
+            Gets whether or not the logger is currently setup to process LogLevel.Fatal
+            requests
+            </summary>
+            <value></value>
+            <seealso cref="T:Apprenda.Services.Logging.LogLevel"/>
+        </member>
+        <member name="P:Apprenda.Services.Logging.NullLogger.IsOff">
+            <summary>
+            Determines whether or not the logger is on/off
+            </summary>
+            <value></value>
+            <seealso cref="T:Apprenda.Services.Logging.LogLevel"/>
+        </member>
+        <member name="P:Apprenda.Services.Logging.NullLogger.WrappedLogger">
+            <summary>
+            Retrieves the underlying logger implementation, allowing a calling client
+            to access and modify custom implementation properties directly.
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Apprenda.Services.Logging.NullLogManager">
+            <summary>
+            A <see cref="T:Apprenda.Services.Logging.NullLogManager"/> produces functionless, placeholder <see cref="T:Apprenda.Services.Logging.NullLogger"/> instances.
+            </summary>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogManager.GetLogger">
+            <returns>A new <see cref="T:Apprenda.Services.Logging.NullLogger"/> instance.</returns>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogManager.GetLogger(System.String)">
+            <returns>A new <see cref="T:Apprenda.Services.Logging.NullLogger"/> instance.</returns>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogManager.GetLogger(System.String,System.String)">
+            <returns>A new <see cref="T:Apprenda.Services.Logging.NullLogger"/> instance.</returns>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogManager.GetLogger(System.Type)">
+            <returns>A new <see cref="T:Apprenda.Services.Logging.NullLogger"/> instance.</returns>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogManager.GetLogger(System.Type,System.String)">
+            <returns>A new <see cref="T:Apprenda.Services.Logging.NullLogger"/> instance.</returns>
+        </member>
+        <member name="M:Apprenda.Services.Logging.NullLogManager.GetLogger(System.Reflection.Assembly,System.String)">
+            <returns>A new <see cref="T:Apprenda.Services.Logging.NullLogger"/> instance.</returns>
         </member>
         <member name="T:SaaSGridAPI.Messages">
             <summary>
