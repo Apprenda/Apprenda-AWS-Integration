@@ -1,21 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda.SaaSGrid.Addons.AWS.EMR", "..\..\Apprenda-AWS-EMR\Amazon EMR AddOn\Apprenda.SaaSGrid.Addons.AWS.EMR.csproj", "{DF55A13A-863B-4DE2-99C4-FE7A0F86C2DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda-EMR", "..\..\Apprenda-AWS-EMR\Amazon EMR AddOn\Apprenda-EMR.csproj", "{DF55A13A-863B-4DE2-99C4-FE7A0F86C2DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda.SaaSGrid.Addons.AWS.Glacier", "..\..\Apprenda-AWS-Glacier\Amazon Glacier AddOn\Apprenda.SaaSGrid.Addons.AWS.Glacier.csproj", "{78545FFF-B690-4FC3-B140-970C2E5E8180}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda-Glacier", "..\..\Apprenda-AWS-Glacier\Amazon Glacier AddOn\Apprenda-Glacier.csproj", "{78545FFF-B690-4FC3-B140-970C2E5E8180}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda.SaaSGrid.Addons.AWS.RDS", "..\..\Apprenda-AWS-RDS\Amazon RDS AddOn\Apprenda.SaaSGrid.Addons.AWS.RDS.csproj", "{2A594CB1-D5EF-4D5E-B7D6-205A3E278B2B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda-RDS", "..\..\Apprenda-AWS-RDS\Amazon RDS AddOn\Apprenda-RDS.csproj", "{2A594CB1-D5EF-4D5E-B7D6-205A3E278B2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda.SaaSGrid.Addons.AWS.Redshift", "..\..\Apprenda-AWS-Redshift\Amazon Redshift Addon\Apprenda.SaaSGrid.Addons.AWS.Redshift.csproj", "{22A64B89-56D8-445E-86E9-F8A03D11C485}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda-Redshift", "..\..\Apprenda-AWS-Redshift\Amazon Redshift Addon\Apprenda-Redshift.csproj", "{22A64B89-56D8-445E-86E9-F8A03D11C485}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda.SaaSGrid.Addons.AWS.S3", "..\..\Apprenda-AWS-S3\Amazon S3 AddOn\Apprenda.SaaSGrid.Addons.AWS.S3.csproj", "{45464494-E0E1-44E2-B3F5-68BD5660B921}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda-S3", "..\..\Apprenda-AWS-S3\Amazon S3 AddOn\Apprenda-S3.csproj", "{45464494-E0E1-44E2-B3F5-68BD5660B921}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda.SaaSGrid.Addons.AWS.SNS", "..\..\Apprenda-AWS-SNS\Amazon SNS AddOn\Apprenda.SaaSGrid.Addons.AWS.SNS.csproj", "{028A908D-B002-493C-B0D8-DD8D23741DC8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda-SNS", "..\..\Apprenda-AWS-SNS\Amazon SNS AddOn\Apprenda-SNS.csproj", "{028A908D-B002-493C-B0D8-DD8D23741DC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda.SaaSGrid.Addons.AWS.SQS", "..\..\Apprenda-AWS-SQS\Amazon SQS AddOn\Apprenda.SaaSGrid.Addons.AWS.SQS.csproj", "{ED935B62-0B85-4B38-BCF6-B9F9BEAC8704}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda-SQS", "..\..\Apprenda-AWS-SQS\Amazon SQS AddOn\Apprenda-SQS.csproj", "{ED935B62-0B85-4B38-BCF6-B9F9BEAC8704}"
 EndProject
 Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "AWS Documentation", "AWS Documentation\AWS Documentation.shfbproj", "{D40D36CB-2935-40D7-AC40-0534CFA92A0F}"
 EndProject
@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packaging Scripts", "Packag
 	ProjectSection(SolutionItems) = preProject
 		Package.bat = Package.bat
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda-EC2-AMI", "Apprenda-EC2-AMI\Apprenda-EC2-AMI.csproj", "{D74D6061-9D55-4C37-AA8B-CEA6356D7108}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,6 +64,10 @@ Global
 		{D40D36CB-2935-40D7-AC40-0534CFA92A0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D40D36CB-2935-40D7-AC40-0534CFA92A0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D40D36CB-2935-40D7-AC40-0534CFA92A0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D74D6061-9D55-4C37-AA8B-CEA6356D7108}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D74D6061-9D55-4C37-AA8B-CEA6356D7108}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D74D6061-9D55-4C37-AA8B-CEA6356D7108}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D74D6061-9D55-4C37-AA8B-CEA6356D7108}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

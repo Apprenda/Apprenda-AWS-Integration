@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Apprenda.SaaSGrid.Addons;
+﻿using Amazon.S3;
 using Amazon.S3.Model;
-using Amazon.S3;
-using System.Threading;
-using Amazon;
 using Apprenda.Services.Logging;
+using System;
+using System.Linq;
+using System.Net;
 
 namespace Apprenda.SaaSGrid.Addons.AWS.S3
 {
     public class S3Addon : AddonBase
     {
-        private static readonly ILogger log = LogManager.Instance().GetLogger(typeof(S3Addon));
+        private static readonly ILogger Log = LogManager.Instance().GetLogger(typeof(S3Addon));
 
         public override OperationResult Deprovision(AddonDeprovisionRequest request)
         {
@@ -40,20 +35,27 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                 }
 
                 var response =
-                    client.DeleteBucket(new DeleteBucketRequest()
+                    client.DeleteBucket(new DeleteBucketRequest
                     {
-                        // TODO- add in developer options
                         BucketName = developerOptions.BucketName
                     });
                 // 5/22/14 fixing amazon aws deprecation
-                var verificationResponse = client.ListBuckets(new ListBucketsRequest());
-                        // 5/22/14 fixing amazaon aws deprecration
-                        if (!verificationResponse.Buckets.Any(x=>x.BucketName == conInfo.BucketName))
-                        {
-                            deprovisionResult.IsSuccess = true;
-                            deprovisionResult.EndUserMessage = "Successfully deleted bucket: " + conInfo.BucketName;
-                        }
-            }          
+                if (response.HttpStatusCode.Equals(HttpStatusCode.OK))
+                {
+                    var verificationResponse = client.ListBuckets(new ListBucketsRequest());
+                    // 5/22/14 fixing amazaon aws deprecration
+                    if (verificationResponse.Buckets.All(x => x.BucketName != conInfo.BucketName))
+                    {
+                        deprovisionResult.IsSuccess = true;
+                        deprovisionResult.EndUserMessage = "Successfully deleted bucket: " + conInfo.BucketName;
+                    }
+                }
+                else
+                {
+                    // error occurred during deletion
+                    deprovisionResult.EndUserMessage = "Error during deprovision. Check S3 to ensure bucket was deleted.";
+                }
+            }
             catch (Exception e)
             {
                 deprovisionResult.EndUserMessage = e.Message + e.StackTrace;
@@ -67,10 +69,9 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
         // Output: ProvisionAddOnResult
         public override ProvisionAddOnResult Provision(AddonProvisionRequest request)
         {
-            var provisionResult = new ProvisionAddOnResult("");
-            provisionResult.IsSuccess = false;
-            AddonManifest manifest = request.Manifest;
-            string developerOptions = request.DeveloperOptions;
+            var provisionResult = new ProvisionAddOnResult("") { IsSuccess = false };
+            var manifest = request.Manifest;
+            var developerOptions = request.DeveloperOptions;
 
             try
             {
@@ -91,13 +92,13 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                     return provisionResult;
                 }
 
-                var response = client.PutBucket(new PutBucketRequest()
+                var response = client.PutBucket(new PutBucketRequest
                 {
                     BucketName = devOptions.BucketName,
-                    BucketRegion = Amazon.S3.S3Region.US
+                    BucketRegion = S3Region.US
                 });
-                
-                if(!response.HttpStatusCode.Equals(System.Net.HttpStatusCode.OK))
+
+                if (response.HttpStatusCode != HttpStatusCode.OK)
                 {
                     provisionResult.EndUserMessage = response.HttpStatusCode.ToString();
                     return provisionResult;
@@ -107,21 +108,21 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
 
                 var bucket = verificationResponse.Buckets.Find(m => m.BucketName.Equals(devOptions.BucketName));
 
-                if(bucket == null)
+                if (bucket == null)
                 {
                     provisionResult.EndUserMessage = "We aren't getting the bucket filtered here correctly.";
                     return provisionResult;
                 }
-                
+
                 provisionResult.ConnectionData = "BucketName=" + devOptions.BucketName;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.StackTrace);
-                log.Error(e.Message + "\n" + e.StackTrace);
+                Log.Error(e.Message + "\n" + e.StackTrace);
                 provisionResult.EndUserMessage = e.Message + "\n" + e.StackTrace;
             }
-             
+
             provisionResult.IsSuccess = true;
             return provisionResult;
         }
@@ -131,9 +132,9 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
         // Output: OperationResult
         public override OperationResult Test(AddonTestRequest request)
         {
-            AddonProvisionRequest provisionRequest = new AddonProvisionRequest() { Manifest = request.Manifest, DeveloperOptions = request.DeveloperOptions };
-            AddonManifest manifest = request.Manifest;
-            string developerOptions = request.DeveloperOptions;
+            var provisionRequest = new AddonProvisionRequest { Manifest = request.Manifest, DeveloperOptions = request.DeveloperOptions };
+            var manifest = request.Manifest;
+            var developerOptions = request.DeveloperOptions;
             var testResult = new OperationResult { IsSuccess = false };
             var testProgress = "";
 
@@ -165,8 +166,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                     }
                     testProgress += establishClientResult.EndUserMessage;
 
-                    var buckets = client.ListBuckets();
-                    testProgress += "Successfully passed all testing criteria! \n";
+                    testProgress += "Successfully connected. \n";
                     testResult.IsSuccess = true;
                     testResult.EndUserMessage = testProgress;
 
@@ -178,10 +178,14 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                     testResult.EndUserMessage += result.ConnectionData + "\n";
                     testResult.EndUserMessage += result.EndUserMessage + "\n";
 
-                    var dep_result = Deprovision(new AddonDeprovisionRequest() { ConnectionData = result.ConnectionData, DeveloperOptions = provisionRequest.DeveloperOptions, Manifest = provisionRequest.Manifest});
+                    var depResult = Deprovision(new AddonDeprovisionRequest { ConnectionData = result.ConnectionData, DeveloperOptions = provisionRequest.DeveloperOptions, Manifest = provisionRequest.Manifest });
+                    if (depResult == null)
+                    {
+                        throw new ArgumentNullException("request");
+                    }
 
-                    testResult.EndUserMessage += dep_result.IsSuccess + "\n";
-                    testResult.EndUserMessage += dep_result.EndUserMessage;
+                    testResult.EndUserMessage += depResult.IsSuccess + "\n";
+                    testResult.EndUserMessage += depResult.EndUserMessage;
                 }
                 catch (Exception e)
                 {
@@ -196,7 +200,6 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
             return testResult;
         }
 
-
         private OperationResult EstablishClient(AddonManifest manifest, S3DeveloperOptions devOptions, out AmazonS3Client client)
         {
             OperationResult result;
@@ -205,7 +208,6 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
             var manifestprops = manifest.GetProperties().ToDictionary(x => x.Key, x => x.Value);
             var accessKey = manifestprops["AWSClientKey"];
             var secretAccessKey = manifestprops["AWSSecretKey"];
-            var regionEndpoint = manifestprops["RegionEndpoint"];
 
             var prop =
                 manifest.Properties.First(
@@ -216,7 +218,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                 if (!ValidateDevCreds(devOptions))
                 {
                     client = null;
-                    result = new OperationResult()
+                    result = new OperationResult
                     {
                         IsSuccess = false,
                         EndUserMessage =
@@ -229,22 +231,21 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                 //secretAccessKey = devOptions.SecretAccessKey;
                 //regionEndpoint = devOptions.RegionEndpont;
             }
-            AmazonS3Config config = new AmazonS3Config() { ServiceURL = @"http://s3.amazonaws.com"};
+            var config = new AmazonS3Config { ServiceURL = @"http://s3.amazonaws.com" };
             client = new AmazonS3Client(accessKey, secretAccessKey, config);
             result = new OperationResult { IsSuccess = true };
             return result;
         }
 
-        // TODO: We might be able to extend this. 
-        private bool ValidateDevCreds(S3DeveloperOptions devOptions)
+        private static bool ValidateDevCreds(S3DeveloperOptions devOptions)
         {
             return !(string.IsNullOrWhiteSpace(devOptions.AccessKey) || string.IsNullOrWhiteSpace(devOptions.SecretAccessKey));
         }
 
-        private OperationResult ParseDevOptions(string developerOptions, out S3DeveloperOptions devOptions)
+        private static OperationResult ParseDevOptions(string developerOptions, out S3DeveloperOptions devOptions)
         {
             devOptions = null;
-            var result = new OperationResult() { IsSuccess = false };
+            var result = new OperationResult { IsSuccess = false };
             var progress = "";
 
             try
@@ -263,8 +264,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
             return result;
         }
 
-
-        public bool ValidateManifest(AddonManifest manifest, out OperationResult testResult)
+        private static bool ValidateManifest(AddonManifest manifest, out OperationResult testResult)
         {
             testResult = new OperationResult();
 

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{ED935B62-0B85-4B38-BCF6-B9F9BEAC8704}</ProjectGuid>
+    <ProjectGuid>{D74D6061-9D55-4C37-AA8B-CEA6356D7108}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Apprenda.SaaSGrid.Addons.AWS.SQS</RootNamespace>
-    <AssemblyName>Apprenda.SaaSGrid.Addons.AWS.SQS</AssemblyName>
+    <RootNamespace>Apprenda.SaaSGrid.Addons.AWS.EC2</RootNamespace>
+    <AssemblyName>Apprenda-EC2-AMI</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -24,22 +24,18 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Apprenda-AWS-Build\SQS\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AWSSDK">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\AWS SDK for .NET\bin\Net45\AWSSDK.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\AWS SDK for .NET\bin\Net45\AWSSDK.dll</HintPath>
     </Reference>
-    <Reference Include="SaaSGrid.API, Version=5.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SaaSGrid.API, Version=5.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Apprenda\SDK\API Files\SaaSGrid.API.dll</HintPath>
-    </Reference>
-    <Reference Include="SaaSGrid.API.Remote, Version=5.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Apprenda\SDK\API Files\SaaSGrid.API.Remote.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Apprenda\SDK\API Files\SaaSGrid.API.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -50,23 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SQSAddOn.cs" />
+    <Compile Include="Addon.cs" />
     <Compile Include="ConnectionInfo.cs" />
-    <Compile Include="DeveloperOptions.cs" />
+    <Compile Include="EC2AMIFactory.cs" />
+    <Compile Include="Ec2Response.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="AddonManifest.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icon.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Compile Include="DevloperOptions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>"C:\windows\system32\WindowsPowerShell\v1.0\powershell.exe" -file C:/users/cdutra/Documents\github\apprenda-aws\PackageFiles.ps1 "C:\users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\SQS.zip" "C:\users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\SQS"</PostBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

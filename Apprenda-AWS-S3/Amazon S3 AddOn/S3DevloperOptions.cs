@@ -1,109 +1,95 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Apprenda.SaaSGrid.Addons.AWS.S3
 {
     public class S3DeveloperOptions
     {
-        public String BucketName { get; set; }
-        public String BucketRegion { get; set; }
-        public String BucketRegionName { get; set; }
-        public String CannedACL { get; set; }
-        public List<String> Grants { get; set; }
-        public bool UseClientRegion { get; set; }
-        public String RegionEndpont { get; set; }
+        internal String BucketName { get; set; }
+
+        internal String BucketRegion { get; set; }
+
+        internal String BucketRegionName { get; set; }
+
+        internal String CannedAcl { get; set; }
+
+        internal List<String> Grants { get; set; }
+
+        internal bool UseClientRegion { get; set; }
+
+        internal String RegionEndpont { get; set; }
+
         public string AccessKey { get; set; }
+
         public string SecretAccessKey { get; set; }
 
         public static S3DeveloperOptions Parse(string devOptions)
         {
-            S3DeveloperOptions options = new S3DeveloperOptions();
+            var options = new S3DeveloperOptions();
 
-            if (!string.IsNullOrWhiteSpace(devOptions))
+            if (string.IsNullOrWhiteSpace(devOptions)) return options;
+            var optionPairs = devOptions.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var optionPair in optionPairs)
             {
-                var optionPairs = devOptions.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
-                foreach (var optionPair in optionPairs)
+                var optionPairParts = optionPair.Split(new[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
+                if (optionPairParts.Length == 2)
                 {
-                    var optionPairParts = optionPair.Split(new[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (optionPairParts.Length == 2)
-                    {
-                        MapToOption(options, optionPairParts[0].Trim().ToLowerInvariant(), optionPairParts[1].Trim());
-                    }
-                    else
-                    {
-                        throw new ArgumentException(
-                            string.Format(
-                                "Unable to parse developer options which should be in the form of 'option=value&nextOption=nextValue'. The option '{0}' was not properly constructed",
-                                optionPair));
-                    }
+                    MapToOption(options, optionPairParts[0].Trim().ToLowerInvariant(), optionPairParts[1].Trim());
+                }
+                else
+                {
+                    throw new ArgumentException(
+                        string.Format(
+                            "Unable to parse developer options which should be in the form of 'option=value&nextOption=nextValue'. The option '{0}' was not properly constructed",
+                            optionPair));
                 }
             }
             return options;
         }
 
-        // TODO
-        public static void MapToOptionWithCollection(S3DeveloperOptions existingOptions, string key, string value, string lastKey)
+        private static void MapToOption(S3DeveloperOptions existingOptions, string key, string value)
         {
-                if(key.Equals(lastKey))
-                {
-                   if ("grants".Equals(key))
-                    {
-                        existingOptions.Grants.Add(value);
-                        return;
-                    }
-                    throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", key));
-                }
-                throw new ArgumentException(string.Format("The developer option '{0}' is grouped out of order in the REST call. Group collection parameters together in the request.", key));
-        }
-
-
-        public static void MapToOption(S3DeveloperOptions existingOptions, string key, string value)
-        {
-            if("bucketname".Equals(key))
+            if ("bucketname".Equals(key))
             {
                 existingOptions.BucketName = value;
                 return;
             }
-            if("bucketregion".Equals(key))
+            if ("bucketregion".Equals(key))
             {
                 existingOptions.BucketRegion = value;
                 return;
             }
-            if("bucketregionname".Equals(key))
+            if ("bucketregionname".Equals(key))
             {
                 existingOptions.BucketRegionName = value;
                 return;
             }
-            if("cannedacl".Equals(key))
+            if ("cannedacl".Equals(key))
             {
-                existingOptions.CannedACL = value;
+                existingOptions.CannedAcl = value;
                 return;
             }
-            if("useclientregion".Equals(key))
+            if ("useclientregion".Equals(key))
             {
                 bool result;
-                if(!bool.TryParse(value, out result))
+                if (!bool.TryParse(value, out result))
                 {
                     throw new Exception("Cannot parse boolean value.");
                 }
                 existingOptions.UseClientRegion = result;
                 return;
             }
-            if("grants".Equals(key))
+            if ("grants".Equals(key))
             {
                 existingOptions.Grants.Add(value);
                 return;
             }
-            if("regionendpoint".Equals(key))
+            if ("regionendpoint".Equals(key))
             {
                 existingOptions.RegionEndpont = value;
             }
             // else option is not found, throw exception
             throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", key));
         }
-
     }
 }
