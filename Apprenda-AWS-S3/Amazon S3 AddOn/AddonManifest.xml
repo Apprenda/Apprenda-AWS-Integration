@@ -24,11 +24,4 @@
     <property key="UseClientRegion" displayName="Use Client Region"  description="This indicates whether to use the same region as the S3 client was established." value=""/>
     <property key="RegionEndpoint" displayName="S3 Client Region Endpoint" description="Used during setup of the S3 client for provisioning/deprovisioning" value=""/>
   </properties>
-  <developerOptions>
-    <![CDATA[
-    [ { "optionName" : "BucketName" , "optionRequired" : true, "optionDefaultValue" : null, "optionDescription":"The name of the bucket you want to provision" },
-      { "optionName" : "CannedACL" , "optionRequired" : true, "optionDefaultValue" : null, "optionDescription" : "The canned access control list for this bucket."  }
-    ]
-    ]]>
-  </developerOptions>
 </addonManifest>
