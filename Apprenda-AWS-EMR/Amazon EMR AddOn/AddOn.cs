@@ -1,23 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Linq;
-using Apprenda.SaaSGrid.Addons;
-using Amazon;
-using Amazon.EC2;
-using Amazon.EC2.Model;
-using Amazon.EC2.Util;
-using Amazon.IdentityManagement;
-using Amazon.IdentityManagement.Model;
-using Amazon.Auth.AccessControlPolicy;
-using Amazon.Auth.AccessControlPolicy.ActionIdentifiers;
-using Amazon.S3;
-using Amazon.S3.Model;
-using Amazon.S3.Util;
-using Amazon.ElasticMapReduce.Model;
+﻿using Amazon;
 using Amazon.ElasticMapReduce;
+using Amazon.ElasticMapReduce.Model;
 using Amazon.Runtime;
-
+using System;
+using System.Linq;
+using System.Threading;
 
 namespace Apprenda.SaaSGrid.Addons.AWS.EMR
 {
@@ -51,7 +38,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
                 var stepFactory = new StepFactory();
 
                 StepConfig enabledebugging = null;
-                
+
                 if (devOptions.EnableDebugging)
                 {
                     enabledebugging = new StepConfig
@@ -79,7 +66,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
                     MasterInstanceType = devOptions.MasterInstanceType,
                     SlaveInstanceType = devOptions.SlaveInstanceType
                 };
-            
+
                 var _request = new RunJobFlowRequest
                 {
                     Name = devOptions.JobFlowName,
@@ -90,9 +77,9 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
                 };
 
                 // if debugging is enabled, add to top of the list of steps.
-                if(devOptions.EnableDebugging)
+                if (devOptions.EnableDebugging)
                 {
-                   _request.Steps.Insert(0, enabledebugging); 
+                    _request.Steps.Insert(0, enabledebugging);
                 }
 
                 var result = client.RunJobFlow(_request);
@@ -105,9 +92,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
 
                 provisionResult.IsSuccess = true;
                 provisionResult.ConnectionData = string.Format(result.JobFlowId);
-                
             }
-
             catch (Exception e)
             {
                 provisionResult.EndUserMessage = e.Message;
@@ -138,8 +123,8 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
                     return deprovisionResult;
                 }
 
-                var result = client.TerminateJobFlows(new TerminateJobFlowsRequest() { JobFlowIds = {connectionData}});
-                
+                var result = client.TerminateJobFlows(new TerminateJobFlowsRequest() { JobFlowIds = { connectionData } });
+
                 deprovisionResult.IsSuccess = true;
                 deprovisionResult.EndUserMessage = "EMR Cluster Termination Request Successfully Invoked.";
             }
@@ -153,47 +138,43 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
 
         public override OperationResult Test(AddonTestRequest request)
         {
-            
             AddonManifest manifest = request.Manifest;
             string developerOptions = request.DeveloperOptions;
             var testResult = new OperationResult { IsSuccess = false };
             var testProgress = "";
             //string jobid = null;
-            
+
             if (manifest.Properties != null && manifest.Properties.Any())
             {
                 EMRDeveloperOptions devOptions;
-                
+
                 testProgress += "Evaluating required manifest properties...\n";
                 if (!ValidateManifest(manifest, out testResult))
                 {
-                   
                     return testResult;
                 }
 
                 var parseOptionsResult = ParseDevOptions(developerOptions, out devOptions);
-                
+
                 if (!parseOptionsResult.IsSuccess)
                 {
-                    
                     return parseOptionsResult;
                 }
                 testProgress += parseOptionsResult.EndUserMessage;
-                
+
                 try
                 {
                     testProgress += "Establishing connection to AWS...\n";
                     IAmazonElasticMapReduce client;
-                    
+
                     var establishClientResult = EstablishClient(manifest, devOptions, out client);
-                    
+
                     if (!establishClientResult.IsSuccess)
                     {
-                        
                         return establishClientResult;
                     }
                     testProgress += establishClientResult.EndUserMessage;
-                    
+
                     testProgress += "Successfully passed all testing criteria!";
                     testResult.IsSuccess = true;
                     testResult.EndUserMessage = testProgress;
@@ -284,18 +265,16 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
                         IsSuccess = false,
                         EndUserMessage = "The add on requires that developer credentials are specified but none were provided."
                     };
-                    
+
                     return result;
                 }
 
                 accessKey = devOptions.AccessKey;
                 secretAccessKey = devOptions.SecretAccessKey;
-
             }
 
             AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretAccessKey);
             client = AWSClientFactory.CreateAmazonElasticMapReduceClient(credentials, RegionEndpoint.USEast1);
-
 
             //jobid = job.JobFlowId;
 
@@ -306,7 +285,6 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
 
             return result;
         }
-
 
         public string EndUserMessage { get; set; }
     }
