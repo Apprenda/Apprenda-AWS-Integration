@@ -87,6 +87,28 @@
             <param name="request">A request object encapsulating all the parameters available to test the Addon.</param>
             <returns>An <see cref="T:Apprenda.SaaSGrid.Addons.OperationResult"/> object containing the results of the test.</returns>
         </member>
+        <member name="P:Apprenda.SaaSGrid.Addons.AddonManifest.SerializableParameterList">
+            <summary>
+            This member is exposed for serialization only. Use Parameters instead.
+            </summary>
+        </member>
+        <member name="T:Apprenda.SaaSGrid.Addons.AddonParameter">
+            <summary>
+            Options provided by the developer to be used upon provisioning of the account
+            
+            They may fulfill a contract defined by the addon developer, or may be entirely ad-hoc
+            </summary>
+        </member>
+        <member name="P:Apprenda.SaaSGrid.Addons.AddonParameter.Key">
+            <summary>
+            Unique identifier for the parameter (within a given addon action)
+            </summary>
+        </member>
+        <member name="P:Apprenda.SaaSGrid.Addons.AddonParameter.Value">
+            <summary>
+            Developer provided parameter value
+            </summary>
+        </member>
         <member name="T:Apprenda.SaaSGrid.Addons.AddonTestRequest">
             <summary>
             The class used to construct an Addon testing request.
@@ -100,6 +122,13 @@
         <member name="P:Apprenda.SaaSGrid.Addons.AddonTestRequest.DeveloperOptions">
             <summary>
             Optional parameters given by the developer who requested the provisioned instance.
+            </summary>
+        </member>
+        <member name="P:Apprenda.SaaSGrid.Addons.AddonTestRequest.DeveloperParameters">
+            <summary>
+            List of developer parameters given by the developer. 
+            
+            May be from a set of possible parameters defined by the addon creator, or may be ad-hoc
             </summary>
         </member>
         <member name="T:Apprenda.SaaSGrid.Addons.AddonDeprovisionRequest">
@@ -123,6 +152,13 @@
             <summary>
             A string indicating how to connect to / use the instance of the add-on. This is the value 
             that was returned from the original call to Provision.
+            </summary>
+        </member>
+        <member name="P:Apprenda.SaaSGrid.Addons.AddonDeprovisionRequest.DeveloperParameters">
+            <summary>
+            List of developer parameters given by the developer. 
+            
+            May be from a set of possible parameters defined by the addon creator, or may be ad-hoc
             </summary>
         </member>
         <member name="T:Apprenda.SaaSGrid.Addons.OperationResult">
@@ -191,6 +227,13 @@
         <member name="P:Apprenda.SaaSGrid.Addons.AddonProvisionRequest.DeveloperOptions">
             <summary>
             Optional parameters given by the developer who requested the provisioned instance.
+            </summary>
+        </member>
+        <member name="P:Apprenda.SaaSGrid.Addons.AddonProvisionRequest.DeveloperParameters">
+            <summary>
+            List of developer parameters given by the developer. 
+            
+            May be from a set of possible parameters defined by the addon creator, or may be ad-hoc
             </summary>
         </member>
         <member name="T:Apprenda.SaaSGrid.ApplicationContext">
@@ -664,14 +707,14 @@
         <member name="M:Apprenda.SaaSGrid.ITenantRole.AddChildRole(System.Guid)">
             <summary>
             Associates one role as the child of another role.
-            Any action the child role is permitted to perform, the parent role will also have access to.
+            Any action the parent role is permitted to perform, the child role will also have access to.
             </summary>
             <param name="childRoleId">The Id of the child role.</param>
         </member>
         <member name="M:Apprenda.SaaSGrid.ITenantRole.AddChildRole(Apprenda.SaaSGrid.ITenantRole)">
             <summary>
             Associates one role as the child of another role.
-            Any action the child role is permitted to perform, the parent role will also have access to.
+            Any action the parent role is permitted to perform, the child role will also have access to.
             </summary>
             <param name="childRole">The child role.</param>
         </member>
@@ -1280,6 +1323,35 @@
             Creates a scope to broadcast to all nodes on a particular cloud.
             </summary>
             <returns>A handle to the created scope</returns>
+        </member>
+        <member name="T:Apprenda.API.Extension.Placement.IPlacementExtensionService">
+            <summary>
+            Exposes a service that Apprenda will use when determining which target to place new workloads and tenant shards on. Implementors should derive from <see cref="T:Apprenda.API.Extension.Placement.PlacementExtensionServiceBase"/>
+            rather than implementing this contract directly as the base implementation guarantees continued compatibility with future versions of Apprenda.
+            </summary>
+        </member>
+        <member name="M:Apprenda.API.Extension.Placement.IPlacementExtensionService.FilterHostsForNewWorkload(System.Collections.Generic.IEnumerable{Apprenda.SaaSGrid.Extensions.DTO.TargetDTO},Apprenda.SaaSGrid.ComponentType)">
+            <summary>
+            Allows the extension to filter the hosts that will be considered by Apprenda for placement of a new workload. This method will be called
+            after all Apprenda filtering has taken place so that only valid candidates for the component will be supplied.
+            </summary>
+            <param name="potentialHosts">The hosts Apprenda has determined to be valid targets for the new workload.</param>
+            <param name="componentType">The type of component being deployed.</param>
+            <returns>The hosts that should be used in the final selection of a target for the new workload.</returns>
+        </member>
+        <member name="M:Apprenda.API.Extension.Placement.IPlacementExtensionService.FilterHostsForNewTenantShard(System.Collections.Generic.IEnumerable{Apprenda.SaaSGrid.Extensions.DTO.TargetDTO},Apprenda.SaaSGrid.ComponentType)">
+            <summary>
+            Allows the extension to filter the hosts that will be considered by Apprenda for placement of a new shard for a tenant. This method will be called
+            after all Apprenda filtering has taken place so that only valid candidates for the component will be supplied.
+            </summary>
+            <param name="potentialHosts">The hosts Apprenda has determined to be valid targets for the new workload.</param>
+            <param name="componentType">The type of component being deployed.</param>
+            <returns>The hosts that should be used in the final selection of a target for the new workload.</returns>
+        </member>
+        <member name="T:Apprenda.API.Extension.Placement.PlacementExtensionServiceBase">
+            <summary>
+            An implementation of <see cref="T:Apprenda.API.Extension.Placement.IPlacementExtensionService"/> that will maintain compatibility with implementors in future versions of Apprenda.
+            </summary>
         </member>
         <member name="T:Apprenda.SaaSGrid.IApplicationPropertiesRetriever">
             <summary>
@@ -2042,6 +2114,13 @@
             <value>The contact sections as a list of <see cref="T:Apprenda.SaaSGrid.IContactInfo"/>s.</value>
             <seealso cref="T:Apprenda.SaaSGrid.IContactInfo"/>
             <seealso cref="P:Apprenda.SaaSGrid.ITenantUser.PrimaryLocation"/>
+        </member>
+        <member name="P:Apprenda.SaaSGrid.ITenantUser.IsEnabled">
+            <summary>
+            Indicates whether the user is allowed access. Access may be enabled or disabled platform-wide
+            or only within this specific tenant.
+            </summary>
+            <returns>True if the user is allowed access, false if the user is not allowed access</returns>
         </member>
         <member name="F:Apprenda.SaaSGrid.AdHocUser.firstName">
             <summary>
@@ -6495,6 +6574,13 @@
             </summary>
             <value>The unique identifier of the tenant.</value>
         </member>
+        <member name="P:Apprenda.SaaSGrid.ITenantProfile.IsEnabled">
+            <summary>
+            Indicates whether the user associated with ths profile is allowed access. Access may be enabled or disabled platform-wide
+            or only within this specific tenant.
+            </summary>
+            <returns>True if the user is allowed access, false if the user is not allowed access</returns>
+        </member>
         <member name="P:Apprenda.SaaSGrid.ITenantProfile.Name">
             <summary>
             Gets/sets the company profile name (Name of the tenant/company).
@@ -6732,6 +6818,11 @@
         <member name="T:Apprenda.SaaSGrid.UserContext.AuthorizedAction">
             <summary>
             The action to perform.
+            </summary>
+        </member>
+        <member name="T:Apprenda.SaaSGrid.Users.AuthenticationProviderBase">
+            <summary>
+            Provides methods necessary for creating a custom authentication provider for Apprenda.
             </summary>
         </member>
         <member name="P:Apprenda.SaaSGrid.Users.ExtendedUserInfo.PrimaryLocation">
@@ -7118,6 +7209,29 @@
             This field is optional.
             </remarks>
         </member>
+        <member name="M:Apprenda.SaaSGrid.Users.RoleInfo.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of <see cref="T:Apprenda.SaaSGrid.Users.RoleInfo">RoleInfo</see> with the specified name.
+            </summary>
+            <param name="name">Name of the role</param>
+        </member>
+        <member name="M:Apprenda.SaaSGrid.Users.RoleInfo.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of <see cref="T:Apprenda.SaaSGrid.Users.RoleInfo">RoleInfo</see> with the specified name and description.
+            </summary>
+            <param name="name">Name of the role</param>
+            <param name="description">Description of the role</param>
+        </member>
+        <member name="P:Apprenda.SaaSGrid.Users.RoleInfo.Name">
+            <summary>
+            Gets or sets the name of this role.
+            </summary>
+        </member>
+        <member name="P:Apprenda.SaaSGrid.Users.RoleInfo.Description">
+            <summary>
+            Gets or sets the description of this role.
+            </summary>
+        </member>
         <member name="P:Apprenda.SaaSGrid.Users.UserTenantInfo.TenantAlias">
             <summary>
             Gets or sets the alias of the tenant that the new user belongs to.
@@ -7135,6 +7249,14 @@
             </remarks>
         </member>
         <member name="P:Apprenda.SaaSGrid.Users.UserTenantInfo.Roles">
+            <summary>
+            Gets or sets the existing roles that the new user should be a part of, specifying only the name.
+            </summary>
+            <remarks>
+            This field is optional. This field only sets role names; for names and descriptions use AssociatedRoles.
+            </remarks>
+        </member>
+        <member name="P:Apprenda.SaaSGrid.Users.UserTenantInfo.AssociatedRoles">
             <summary>
             Gets or sets the existing roles that the new user should be a part of.
             </summary>
@@ -9485,6 +9607,35 @@
             <remarks>
             This class is used by SaaSGrid and provides no functionality to application code.
             </remarks>
+        </member>
+        <member name="T:SaaSGridAPI.Schemas">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:SaaSGridAPI.Schemas.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:SaaSGridAPI.Schemas.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:SaaSGridAPI.Schemas.AddOnManifestXmlSchema">
+             <summary>
+               Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+            &lt;xs:schema id=&quot;appManifest&quot; targetNamespace=&quot;http://schemas.apprenda.com/AddonManifest&quot; xmlns=&quot;http://schemas.apprenda.com/AddonManifest&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; attributeFormDefault=&quot;qualified&quot; elementFormDefault=&quot;qualified&quot;&gt;
+              &lt;xs:element name=&quot;addonManifest&quot;&gt;
+                &lt;xs:complexType&gt;
+                  &lt;xs:all&gt;
+                    &lt;xs:element name=&quot;properties&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;1&quot;&gt;
+                      &lt;xs:annotation&gt;
+                        &lt;xs:documentation&gt;
+                          Represen [rest of string was truncated]&quot;;.
+             </summary>
         </member>
     </members>
 </doc>

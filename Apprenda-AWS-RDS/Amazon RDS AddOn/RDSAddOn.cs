@@ -1,10 +1,8 @@
-﻿using Amazon.RDS.Model;
-using Apprenda.SaaSGrid.Addons;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Amazon;
 using Amazon.RDS;
-using Amazon;
+using Amazon.RDS.Model;
+using System;
+using System.Linq;
 using System.Threading;
 
 namespace Apprenda.SaaSGrid.Addons.AWS.RDS
@@ -21,7 +19,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
             var deprovisionResult = new ProvisionAddOnResult(connectionData);
             AddonManifest manifest = request.Manifest;
             string devOptions = request.DeveloperOptions;
-            
+
             try
             {
                 AmazonRDSClient client;
@@ -57,7 +55,6 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
                             break;
                         }
                         Thread.Sleep(TimeSpan.FromSeconds(10d));
-
                     } while (true);
                 }
             }
@@ -135,8 +132,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
                             break;
                         }
                         Thread.Sleep(TimeSpan.FromSeconds(10d));
-
-                    } while (true); 
+                    } while (true);
                 }
             }
             catch (Exception e)
@@ -154,7 +150,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
         {
             AddonManifest manifest = request.Manifest;
             string developerOptions = request.DeveloperOptions;
-            var testResult = new OperationResult {IsSuccess = false};
+            var testResult = new OperationResult { IsSuccess = false };
             var testProgress = "";
 
             if (manifest.Properties != null && manifest.Properties.Any())
@@ -171,20 +167,20 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
                 if (!parseOptionsResult.IsSuccess)
                 {
                     return parseOptionsResult;
-                } 
+                }
                 testProgress += parseOptionsResult.EndUserMessage;
 
                 try
                 {
                     testProgress += "Establishing connection to AWS...\n";
-                    AmazonRDSClient client; 
+                    AmazonRDSClient client;
                     var establishClientResult = EstablishClient(manifest, devOptions, out client);
                     if (!establishClientResult.IsSuccess)
                     {
                         return establishClientResult;
                     }
                     testProgress += establishClientResult.EndUserMessage;
-                    
+
                     client.DescribeDBInstances();
                     testProgress += "Successfully passed all testing criteria!";
                     testResult.IsSuccess = true;
@@ -207,7 +203,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
 
         private bool ValidateManifest(AddonManifest manifest, out OperationResult testResult)
         {
-            testResult = new OperationResult(); 
+            testResult = new OperationResult();
 
             var prop =
                     manifest.Properties.FirstOrDefault(
@@ -231,7 +227,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
             return true;
         }
 
-        // TODO: We might be able to extend this. 
+        // TODO: We might be able to extend this.
         private bool ValidateDevCreds(DeveloperOptions devOptions)
         {
             return !(string.IsNullOrWhiteSpace(devOptions.AccessKey) || string.IsNullOrWhiteSpace(devOptions.SecretAccessKey));
@@ -240,7 +236,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
         private OperationResult ParseDevOptions(string developerOptions, out DeveloperOptions devOptions)
         {
             devOptions = null;
-            var result = new OperationResult(){IsSuccess = false};
+            var result = new OperationResult() { IsSuccess = false };
             var progress = "";
 
             try
@@ -262,13 +258,13 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
         private OperationResult EstablishClient(AddonManifest manifest, DeveloperOptions devOptions, out AmazonRDSClient client)
         {
             OperationResult result;
-            
+
             bool requireCreds;
-            var manifestProps= manifest.GetProperties().ToDictionary(x => x.Key, x => x.Value);
+            var manifestProps = manifest.GetProperties().ToDictionary(x => x.Key, x => x.Value);
             var accessKey = manifestProps["AWSClientKey"];
             var secretAccessKey = manifestProps["AWSSecretKey"];
             var regionEndpoint = manifestProps["AWSRegionEndpoint"];
-            
+
             var prop =
                 manifest.Properties.First(
                     p => p.Key.Equals("requireDevCredentials", StringComparison.InvariantCultureIgnoreCase));
@@ -301,7 +297,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
             var request = new CreateDBInstanceRequest()
             {
                 // TODO - need to determine where defaults are used, and then not create the constructor where value is null (to use default)
-                
+
                 // These are required values.
                 BackupRetentionPeriod = devOptions.BackupRetentionPeriod,
                 DBParameterGroupName = devOptions.DBParameterGroupName,
@@ -326,13 +322,13 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
                 VpcSecurityGroupIds = devOptions.VPCSecurityGroupIds
             };
 
-            if(!devOptions.MultiAZ)
+            if (!devOptions.MultiAZ)
             {
                 request.AvailabilityZone = devOptions.AvailabilityZone;
             }
 
             // Oracle DB only parameter
-            if(request.Engine.Equals("Oracle") && devOptions.CharacterSet != null)
+            if (request.Engine.Equals("Oracle") && devOptions.CharacterSet != null)
             {
                 request.CharacterSetName = devOptions.CharacterSet;
             }
