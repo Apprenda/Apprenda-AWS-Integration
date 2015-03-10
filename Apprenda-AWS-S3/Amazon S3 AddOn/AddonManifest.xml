@@ -1,8 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <addonManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xmlns="http://schemas.apprenda.com/AddonManifest"
-               xsi:schemaLocation="http://schemas.apprenda.com/AddonManifest http://apprenda.com/schemas/platform/5.0/AddonManifest.xsd"
                name="Amazon S3"
                description="Amazon S3 is storage for the Internet. It is designed to make web-scale computing easier for developers."
                deploymentNotes="Updated to reflect changes in Amazon SDK, configured to work on .NET 4.5 runtime, and updated for work in Apprenda 5.0."
@@ -12,7 +11,8 @@
                version="1.0.0"
                provisioningUsername=""
                provisioningPassword=""
-               provisioningLocation="">
+               provisioningLocation=""
+               manifestVersion="2">
   <properties>
     <property key="AWSClientKey" displayName="AWS Client Key" description="Required - please specify the client key of the user who has access to provision Glacier vaults." value=""/>
     <property key="AWSSecretKey" displayName="AWS Secret Key" description="Required - please specify the secret key of the user who has access to provision Glacier vaults." value=""/>
@@ -24,4 +24,5 @@
     <property key="UseClientRegion" displayName="Use Client Region"  description="This indicates whether to use the same region as the S3 client was established." value=""/>
     <property key="RegionEndpoint" displayName="S3 Client Region Endpoint" description="Used during setup of the S3 client for provisioning/deprovisioning" value=""/>
   </properties>
+  <parameters allowUserDefinedParameters="true" />
 </addonManifest>
