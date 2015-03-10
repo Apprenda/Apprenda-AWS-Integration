@@ -20,6 +20,7 @@ bld/
 
 # this is Apprenda-specific - we're removing the .zip packages so they are built
 *.zip
+Apprenda-AWS-Build/
 
 # Roslyn cache directories
 *.ide/
