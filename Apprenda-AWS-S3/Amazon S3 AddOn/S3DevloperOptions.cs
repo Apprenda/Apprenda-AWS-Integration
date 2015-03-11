@@ -103,6 +103,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
             {
                 MapToOption(options, parameter.Key, parameter.Value);
             }
+            return options;
         }
     }
 }
