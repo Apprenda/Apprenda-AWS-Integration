@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<addonManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://schemas.apprenda.com/AddonManifest"
+               name="File Share"
+               description="Provides shared storage scoped to a development tenant within guest applications."
+               deploymentNotes="When developers provision instances of this add-on a folder named 'DevTeamAlias-InstanceAlias' will be created under the root location, which is defined in the Location property."
+               developerHelp="Use the value '--testError' as the Options argument to tell the add-on to throw an unhandled exception.  Use the '--testUserError' option to test returning an error message to the user."
+               vendor="Apprenda"
+               author="Eric Coonradt"
+               version="1.0.0"
+               provisioningLocation="\\zethos\AddOns"
+               manifestVersion="2">
+  <properties>
+    <property key="maxPathLength" displayName="Maximum Path Length" value="255" />
+    <property key="password" value="secretp@ssw0rd" isEncrypted="true" />
+  </properties>
+  <parameters allowUserDefinedParameters="false" />
+</addonManifest>
