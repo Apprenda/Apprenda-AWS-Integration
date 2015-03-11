@@ -23,6 +23,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
 
         public string SecretAccessKey { get; set; }
 
+        [Obsolete]
         public static S3DeveloperOptions Parse(string devOptions)
         {
             var options = new S3DeveloperOptions();
@@ -90,6 +91,18 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
             }
             // else option is not found, throw exception
             throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", key));
+        }
+
+        // This is the new method. give this a test!
+        public static S3DeveloperOptions ParseWithParameters(IEnumerable<AddonParameter> developerParameters)
+        {
+            // TODO
+            // given developerParameters, map the
+            var options = new S3DeveloperOptions();
+            foreach (var parameter in developerParameters)
+            {
+                MapToOption(options, parameter.Key, parameter.Value);
+            }
         }
     }
 }
