@@ -71,21 +71,33 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
         {
             var provisionResult = new ProvisionAddOnResult("") { IsSuccess = false };
             var manifest = request.Manifest;
-            var developerOptions = request.DeveloperOptions;
+
+            // so here, we're going to have to
+            //var developerOptions = request.DeveloperOptions;
+
+            var developerParameters = request.DeveloperParameters;
 
             try
             {
                 AmazonS3Client client;
-                S3DeveloperOptions devOptions;
 
-                var parseOptionsResult = ParseDevOptions(developerOptions, out devOptions);
-                if (!parseOptionsResult.IsSuccess)
-                {
-                    provisionResult.EndUserMessage = parseOptionsResult.EndUserMessage;
-                    return provisionResult;
-                }
+                // to minimize the change, we need to take the DeveloperParameters property and convert it to the S3DeveloperOptions class
+                var devOptions = S3DeveloperOptions.ParseWithParameters(developerParameters);
 
-                var establishClientResult = EstablishClient(manifest, S3DeveloperOptions.Parse(developerOptions), out client);
+                // we're going to have to change this stuff here.
+                //var parseOptionsResult = ParseDevOptions(developer, out devOptions);
+                //if (!parseOptionsResult.IsSuccess)
+                //{
+                //    provisionResult.EndUserMessage = parseOptionsResult.EndUserMessage;
+                //    return provisionResult;
+                //}
+
+                // this is a reference change
+                //var establishClientResult = EstablishClient(manifest, S3DeveloperOptions.Parse(developerOptions), out client);
+
+                // we'll change this underlying method
+                var establishClientResult = EstablishClient(manifest, devOptions, out client);
+
                 if (!establishClientResult.IsSuccess)
                 {
                     provisionResult.EndUserMessage = establishClientResult.EndUserMessage;
