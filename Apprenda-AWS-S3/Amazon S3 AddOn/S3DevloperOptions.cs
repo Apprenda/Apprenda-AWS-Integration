@@ -101,7 +101,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
             var options = new S3DeveloperOptions();
             foreach (var parameter in developerParameters)
             {
-                MapToOption(options, parameter.Key, parameter.Value);
+                MapToOption(options, parameter.Key.ToLowerInvariant(), parameter.Value);
             }
             return options;
         }
