@@ -92,7 +92,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                 //if (!parseOptionsResult.IsSuccess)
                 //{
                 //    provisionResult.EndUserMessage = parseOptionsResult.EndUserMessage;
-                //    return provisionResult;st
+                //    return provisionResult;
                 //}
 
                 // this is a reference change
@@ -135,9 +135,11 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
             {
                 Console.WriteLine(e.StackTrace);
                 Log.Error(e.Message + "\n" + e.StackTrace);
+                provisionResult.IsSuccess = false;
                 provisionResult.EndUserMessage = e.Message + "\n" + e.StackTrace;
+                return provisionResult;
             }
-
+            //
             provisionResult.IsSuccess = true;
             return provisionResult;
         }
