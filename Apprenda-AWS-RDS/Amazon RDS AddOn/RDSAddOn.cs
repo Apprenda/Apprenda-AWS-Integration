@@ -2,24 +2,23 @@
 using Amazon.RDS;
 using Amazon.RDS.Model;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
 namespace Apprenda.SaaSGrid.Addons.AWS.RDS
 {
-    public class RDSAddOn : AddonBase
+    public class RdsAddOn : AddonBase
     {
         // Deprovision RDS Instance
         // Input: AddonDeprovisionRequest request
         // Output: OperationResult
         public override OperationResult Deprovision(AddonDeprovisionRequest request)
         {
-            string connectionData = request.ConnectionData;
-            // changing to overloaded constructor - 5/22/14
+            var connectionData = request.ConnectionData;
             var deprovisionResult = new ProvisionAddOnResult(connectionData);
-            AddonManifest manifest = request.Manifest;
-            string devOptions = request.DeveloperOptions;
-
+            var manifest = request.Manifest;
+            var devOptions = request.DeveloperParameters;
             try
             {
                 AmazonRDSClient client;
@@ -33,22 +32,19 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
                     return deprovisionResult;
                 }
 
-                var response =
-                    client.DeleteDBInstance(new DeleteDBInstanceRequest()
+                var response = client.DeleteDBInstance(new DeleteDBInstanceRequest
                         {
                             DBInstanceIdentifier = conInfo.DbInstanceIdentifier,
                             SkipFinalSnapshot = true
                         });
-                // 5/22/14 fixing amazon aws deprecation
                 if (response.DBInstance != null)
                 {
                     do
                     {
-                        var verificationResponse = client.DescribeDBInstances(new DescribeDBInstancesRequest()
+                        var verificationResponse = client.DescribeDBInstances(new DescribeDBInstancesRequest
                             {
                                 DBInstanceIdentifier = conInfo.DbInstanceIdentifier
                             });
-                        // 5/22/14 fixing amazaon aws deprecration
                         if (!verificationResponse.DBInstances.Any())
                         {
                             deprovisionResult.IsSuccess = true;
@@ -75,10 +71,9 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
         // Output: ProvisionAddOnResult
         public override ProvisionAddOnResult Provision(AddonProvisionRequest request)
         {
-            // i think this is a bug. but I'm going to throw an empty string to it to clear the warning.
             var provisionResult = new ProvisionAddOnResult("");
-            AddonManifest manifest = request.Manifest;
-            string developerOptions = request.DeveloperOptions;
+            var manifest = request.Manifest;
+            var developerOptions = request.DeveloperParameters;
 
             try
             {
@@ -92,7 +87,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
                     return provisionResult;
                 }
 
-                var establishClientResult = EstablishClient(manifest, DeveloperOptions.Parse(developerOptions), out client);
+                var establishClientResult = EstablishClient(manifest, devOptions, out client);
                 if (!establishClientResult.IsSuccess)
                 {
                     provisionResult.EndUserMessage = establishClientResult.EndUserMessage;
@@ -100,28 +95,18 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
                 }
 
                 var response = client.CreateDBInstance(CreateDbInstanceRequest(devOptions));
-                // fix 5/22/14 resolves amazon aws deprecation
                 if (response.DBInstance != null)
                 {
-                    //var conInfo = new ConnectionInfo()
-                    //{
-                    //    DbInstanceIdentifier = devOptions.DbInstanceIndentifier
-                    //};
-                    //provisionResult.IsSuccess = true;
-                    //provisionResult.ConnectionData = conInfo.ToString();
-                    //Thread.Sleep(TimeSpan.FromMinutes(6));
-
                     do
                     {
-                        var verificationResponse = client.DescribeDBInstances(new DescribeDBInstancesRequest()
+                        var verificationResponse = client.DescribeDBInstances(new DescribeDBInstancesRequest
                             {
                                 DBInstanceIdentifier = devOptions.DbInstanceIdentifier
                             });
-                        // fix on next few lines 5/22/14 resolve amazon aws deprecation.
                         if (verificationResponse.DBInstances.Any() && verificationResponse.DBInstances[0].DBInstanceStatus == "available")
                         {
                             var dbInstance = verificationResponse.DBInstances[0];
-                            var conInfo = new ConnectionInfo()
+                            var conInfo = new ConnectionInfo
                                 {
                                     DbInstanceIdentifier = devOptions.DbInstanceIdentifier,
                                     EndpointAddress = dbInstance.Endpoint.Address,
@@ -148,8 +133,8 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
         // Output: OperationResult
         public override OperationResult Test(AddonTestRequest request)
         {
-            AddonManifest manifest = request.Manifest;
-            string developerOptions = request.DeveloperOptions;
+            var manifest = request.Manifest;
+            var developerOptions = request.DeveloperParameters;
             var testResult = new OperationResult { IsSuccess = false };
             var testProgress = "";
 
@@ -199,8 +184,6 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
             return testResult;
         }
 
-        /* Begin private methods */
-
         private bool ValidateManifest(AddonManifest manifest, out OperationResult testResult)
         {
             testResult = new OperationResult();
@@ -227,18 +210,15 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
             return true;
         }
 
-        // TODO: We might be able to extend this.
         private bool ValidateDevCreds(DeveloperOptions devOptions)
         {
             return !(string.IsNullOrWhiteSpace(devOptions.AccessKey) || string.IsNullOrWhiteSpace(devOptions.SecretAccessKey));
         }
 
-        private OperationResult ParseDevOptions(string developerOptions, out DeveloperOptions devOptions)
+        private OperationResult ParseDevOptions(IEnumerable<AddonParameter> developerOptions, out DeveloperOptions devOptions)
         {
-            devOptions = null;
-            var result = new OperationResult() { IsSuccess = false };
+            var result = new OperationResult { IsSuccess = false };
             var progress = "";
-
             try
             {
                 progress += "Parsing developer options...\n";
@@ -247,6 +227,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
             catch (ArgumentException e)
             {
                 result.EndUserMessage = e.Message;
+                devOptions = null;
                 return result;
             }
 
@@ -263,7 +244,9 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
             var manifestProps = manifest.GetProperties().ToDictionary(x => x.Key, x => x.Value);
             var accessKey = manifestProps["AWSClientKey"];
             var secretAccessKey = manifestProps["AWSSecretKey"];
-            var regionEndpoint = manifestProps["AWSRegionEndpoint"];
+
+            // we *should* be using this...
+            //var regionEndpoint = manifestProps["AWSRegionEndpoint"];
 
             var prop =
                 manifest.Properties.First(
@@ -274,7 +257,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
                 if (!ValidateDevCreds(devOptions))
                 {
                     client = null;
-                    result = new OperationResult()
+                    result = new OperationResult
                     {
                         IsSuccess = false,
                         EndUserMessage =
@@ -286,7 +269,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
                 accessKey = devOptions.AccessKey;
                 secretAccessKey = devOptions.SecretAccessKey;
             }
-            AmazonRDSConfig config = new AmazonRDSConfig() { RegionEndpoint = RegionEndpoint.USEast1 };
+            var config = new AmazonRDSConfig { RegionEndpoint = RegionEndpoint.USEast1 };
             client = new AmazonRDSClient(accessKey, secretAccessKey, config);
             result = new OperationResult { IsSuccess = true };
             return result;
@@ -294,13 +277,11 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
 
         private CreateDBInstanceRequest CreateDbInstanceRequest(DeveloperOptions devOptions)
         {
-            var request = new CreateDBInstanceRequest()
+            var request = new CreateDBInstanceRequest
             {
-                // TODO - need to determine where defaults are used, and then not create the constructor where value is null (to use default)
-
                 // These are required values.
                 BackupRetentionPeriod = devOptions.BackupRetentionPeriod,
-                DBParameterGroupName = devOptions.DBParameterGroupName,
+                DBParameterGroupName = devOptions.DbParameterGroupName,
                 DBSecurityGroups = devOptions.DBSecurityGroups,
                 DBSubnetGroupName = devOptions.SubnetGroupName,
                 DBInstanceClass = devOptions.DbInstanceClass,
@@ -312,33 +293,33 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
                 MasterUsername = devOptions.DBAUsername,
                 MasterUserPassword = devOptions.DBAPassword,
                 Iops = devOptions.ProvisionedIOPs,
-                MultiAZ = devOptions.MultiAZ,
+                MultiAZ = devOptions.MultiAz,
                 OptionGroupName = devOptions.OptionGroup,
                 Port = devOptions.Port,
                 PreferredBackupWindow = devOptions.PreferredBackupWindow,
                 PreferredMaintenanceWindow = devOptions.PreferredMXWindow,
                 PubliclyAccessible = devOptions.PubliclyAccessible,
                 Tags = devOptions.Tags,
-                VpcSecurityGroupIds = devOptions.VPCSecurityGroupIds
+                VpcSecurityGroupIds = devOptions.VpcSecurityGroupIds
             };
 
-            if (!devOptions.MultiAZ)
+            if (!devOptions.MultiAz)
             {
                 request.AvailabilityZone = devOptions.AvailabilityZone;
             }
 
             // Oracle DB only parameter
-            if (request.Engine.Equals("Oracle") && devOptions.CharacterSet != null)
+            if (request.Engine.Equals("Oracle") && devOptions.CharacterSet.Length > 0)
             {
                 request.CharacterSetName = devOptions.CharacterSet;
             }
-
-            if (devOptions.AllocatedStorage != null)
+            // default is 0, if specified change it
+            if (devOptions.AllocatedStorage > 0)
             {
                 request.AllocatedStorage = devOptions.AllocatedStorage;
             }
-
-            if (devOptions.AutoMinorVersionUpgrade != null)
+            // default is false, if true change it
+            if (devOptions.AutoMinorVersionUpgrade)
             {
                 request.AutoMinorVersionUpgrade = devOptions.AutoMinorVersionUpgrade;
             }

@@ -5,63 +5,72 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
 {
     public class DeveloperOptions
     {
-        public bool MultiAZ { get; set; }
+        public bool MultiAz { get; set; }
+
         public List<Amazon.RDS.Model.Tag> Tags { get; set; }
-        public List<string> VPCSecurityGroupIds { get; set; }
-        public string DBParameterGroupName {get; set;}
 
-        // Amazon Credentials. Required for IAM. 
-        public string AccessKey { get; set; }
-        public string SecretAccessKey { get; set; }
+        public List<string> VpcSecurityGroupIds { get; set; }
 
-        // Amazon RDS Options required for 
-        public int AllocatedStorage { get; set; }
-        public bool AutoMinorVersionUpgrade { get; set; }
-        public string AvailabilityZone { get; set; }
-        public string DbInstanceClass { get; set; }
-        public string DbInstanceIdentifier { get; set; }
-        public string DbName { get; set; }
-        public string Engine { get; set; }
-        public string EngineVersion { get; set; }
-        public string DBAUsername { get; set; }
-        public string DBAPassword { get; set; }
-        public string LicenseModel { get; set; }
+        public string DbParameterGroupName { get; set; }
+
+        // Amazon Credentials. Required for IAM.
+        public string AccessKey { get; private set; }
+
+        public string SecretAccessKey { get; private set; }
+
+        // Amazon RDS Options required for
+        public int AllocatedStorage { get; private set; }
+
+        public bool AutoMinorVersionUpgrade { get; private set; }
+
+        public string AvailabilityZone { get; private set; }
+
+        public string DbInstanceClass { get; private set; }
+
+        public string DbInstanceIdentifier { get; private set; }
+
+        public string DbName { get; private set; }
+
+        public string Engine { get; private set; }
+
+        public string EngineVersion { get; private set; }
+
+        public string DBAUsername { get; private set; }
+
+        public string DBAPassword { get; private set; }
+
+        public string LicenseModel { get; private set; }
+
         public int Port { get; set; }
+
         public int ProvisionedIOPs { get; set; }
+
         public List<String> DBSecurityGroups { get; set; }
+
         public String OptionGroup { get; set; }
+
         public String PreferredMXWindow { get; set; }
+
         public String PreferredBackupWindow { get; set; }
-        public int NumberOfBackups { get; set; }
+
+        private int NumberOfBackups { get; set; }
+
         public String SubnetGroupName { get; set; }
+
         public bool PubliclyAccessible { get; set; }
+
         public String CharacterSet { get; set; }
+
         public int BackupRetentionPeriod { get; set; }
+
         // Method takes in a string and parses it into a DeveloperOptions class.
-        public static DeveloperOptions Parse(string developerOptions)
+        public static DeveloperOptions Parse(IEnumerable<AddonParameter> parameters)
         {
-            DeveloperOptions options = new DeveloperOptions();
-
-            if (!string.IsNullOrWhiteSpace(developerOptions))
+            var options = new DeveloperOptions();
+            foreach (var addonparam in parameters)
             {
-                var optionPairs = developerOptions.Split(new []{'&'}, StringSplitOptions.RemoveEmptyEntries);
-                foreach (var optionPair in optionPairs)
-                {
-                    var optionPairParts = optionPair.Split(new[]{'='}, StringSplitOptions.RemoveEmptyEntries);
-                    if (optionPairParts.Length == 2)
-                    {
-                        MapToOption(options, optionPairParts[0].Trim().ToLowerInvariant(), optionPairParts[1].Trim());
-                    }
-                    else
-                    {
-                        throw new ArgumentException(
-                            string.Format(
-                                "Unable to parse developer options which should be in the form of 'option=value&nextOption=nextValue'. The option '{0}' was not properly constructed",
-                                optionPair));
-                    }
-                }
+                MapToOption(options, addonparam.Key.ToLowerInvariant(), addonparam.Value);
             }
-
             return options;
         }
 
@@ -155,7 +164,16 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
                 return;
             }
 
-            throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", key));
+            if (!"numberofbackups".Equals(key))
+                throw new ArgumentException(
+                    string.Format("The developer option '{0}' was not expected and is not understood.", key));
+            int iresult;
+            if (!int.TryParse(value, out iresult))
+            {
+                throw new ArgumentException(string.Format("The developer option '{0}' must be an integer, not '{1}'", key, value));
+            }
+            existingOptions.NumberOfBackups = iresult;
+            return;
         }
     }
 }

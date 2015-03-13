@@ -2,6 +2,7 @@
 using Amazon.S3.Model;
 using Apprenda.Services.Logging;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
@@ -13,40 +14,30 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
 
         public override OperationResult Deprovision(AddonDeprovisionRequest request)
         {
-            string connectionData = request.ConnectionData;
-            // changing to overloaded constructor - 5/22/14
+            var connectionData = request.ConnectionData;
             var deprovisionResult = new ProvisionAddOnResult(connectionData);
-            AddonManifest manifest = request.Manifest;
-            //  string devOptions = request.DeveloperOptions;
+            var manifest = request.Manifest;
             var devParameters = request.DeveloperParameters;
-
             try
             {
                 AmazonS3Client client;
                 var conInfo = ConnectionInfo.Parse(connectionData);
                 var devOptions = S3DeveloperOptions.ParseWithParameters(devParameters);
-               // ParseWithParameters(IEnumerable<AddonParameter> developerParameters)
-                //var developerOptions = S3DeveloperOptions.Parse(devOptions);
-                // heh, need to know which bucket to remove...
                 devOptions.BucketName = conInfo.BucketName;
-
                 var establishClientResult = EstablishClient(manifest, devOptions, out client);
                 if (!establishClientResult.IsSuccess)
                 {
                     deprovisionResult.EndUserMessage = establishClientResult.EndUserMessage;
                     return deprovisionResult;
                 }
-
                 var response =
                     client.DeleteBucket(new DeleteBucketRequest
                     {
                         BucketName = devOptions.BucketName
                     });
-                // 5/22/14 fixing amazon aws deprecation
                 if (response.HttpStatusCode.Equals(HttpStatusCode.OK))
                 {
                     var verificationResponse = client.ListBuckets(new ListBucketsRequest());
-                    // 5/22/14 fixing amazaon aws deprecration
                     if (verificationResponse.Buckets.All(x => x.BucketName != conInfo.BucketName))
                     {
                         deprovisionResult.IsSuccess = true;
@@ -55,15 +46,15 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                 }
                 else
                 {
-                    // error occurred during deletion
                     deprovisionResult.EndUserMessage = "Error during deprovision. Check S3 to ensure bucket was deleted.";
                 }
             }
             catch (Exception e)
             {
-                deprovisionResult.EndUserMessage = e.Message + e.StackTrace;
+                deprovisionResult.EndUserMessage =
+                    "There was an error while deprovisioning your addon. Please check with your platform operator. \n";
+                deprovisionResult.EndUserMessage += e.Message;
             }
-
             return deprovisionResult;
         }
 
@@ -165,7 +156,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                     return testResult;
                 }
 
-                var parseOptionsResult = ParseDevOptions(developerParameters.ToString(), out devOptions);
+                var parseOptionsResult = TestDeveloperParameters(developerParameters, out devOptions);
                 if (!parseOptionsResult.IsSuccess)
                 {
                     return parseOptionsResult;
@@ -259,26 +250,22 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
             return !(string.IsNullOrWhiteSpace(devOptions.AccessKey) || string.IsNullOrWhiteSpace(devOptions.SecretAccessKey));
         }
 
-        private static OperationResult ParseDevOptions(string developerOptions, out S3DeveloperOptions devOptions)
+        private static OperationResult TestDeveloperParameters(IEnumerable<AddonParameter> devParams, out S3DeveloperOptions devOptions)
         {
-            devOptions = null;
-            var result = new OperationResult { IsSuccess = false };
-            var progress = "";
-
-            try
+            devOptions = new S3DeveloperOptions();
+            var result = new OperationResult();
+            foreach (var param in devParams)
             {
-                progress += "Parsing developer options...\n";
-
-                devOptions = S3DeveloperOptions.Parse(developerOptions);
+                if (param.Key.ToLowerInvariant().Equals("bucketname"))
+                {
+                    if (param.Value.Length > 0)
+                    {
+                        // this is all of the required params we need, return true;
+                        result.IsSuccess = true;
+                        devOptions.BucketName = param.Value;
+                    }
+                }
             }
-            catch (ArgumentException e)
-            {
-                result.EndUserMessage = e.Message;
-                return result;
-            }
-
-            result.IsSuccess = true;
-            result.EndUserMessage = progress;
             return result;
         }
 
@@ -297,15 +284,11 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                 return false;
             }
 
-            if (string.IsNullOrWhiteSpace(manifest.ProvisioningUsername) ||
-                string.IsNullOrWhiteSpace(manifest.ProvisioningPassword))
-            {
-                testResult.IsSuccess = false;
-                testResult.EndUserMessage = "Missing credentials 'provisioningUsername' & 'provisioningPassword' . These values needs to be provided as part of the manifest";
-                return false;
-            }
-
-            return true;
+            if (!string.IsNullOrWhiteSpace(manifest.ProvisioningUsername) &&
+                !string.IsNullOrWhiteSpace(manifest.ProvisioningPassword)) return true;
+            testResult.IsSuccess = false;
+            testResult.EndUserMessage = "Missing credentials 'provisioningUsername' & 'provisioningPassword' . These values needs to be provided as part of the manifest";
+            return false;
         }
     }
 }
