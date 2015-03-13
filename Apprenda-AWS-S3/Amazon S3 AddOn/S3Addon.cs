@@ -21,7 +21,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
             try
             {
                 AmazonS3Client client;
-                var conInfo = ConnectionInfo.Parse(connectionData);
+                var conInfo = S3ConnectionInfo.Parse(connectionData);
                 var devOptions = S3DeveloperOptions.ParseWithParameters(devParameters);
                 devOptions.BucketName = conInfo.BucketName;
                 var establishClientResult = EstablishClient(manifest, devOptions, out client);
@@ -119,8 +119,12 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                     provisionResult.EndUserMessage = "We aren't getting the bucket filtered here correctly.";
                     return provisionResult;
                 }
-
-                provisionResult.ConnectionData = "BucketName=" + devOptions.BucketName;
+                // not adding connection info object here.
+                var connInfo = new S3ConnectionInfo
+                {
+                    BucketName = devOptions.BucketName
+                };
+                provisionResult.ConnectionData = connInfo.ToString();
             }
             catch (Exception e)
             {

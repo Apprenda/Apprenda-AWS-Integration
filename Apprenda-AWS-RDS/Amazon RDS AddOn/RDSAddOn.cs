@@ -22,8 +22,8 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
             try
             {
                 AmazonRDSClient client;
-                var conInfo = ConnectionInfo.Parse(connectionData);
-                var developerOptions = DeveloperOptions.Parse(devOptions);
+                var conInfo = RDSConnectionInfo.Parse(connectionData);
+                var developerOptions = RDSDeveloperOptions.Parse(devOptions);
 
                 var establishClientResult = EstablishClient(manifest, developerOptions, out client);
                 if (!establishClientResult.IsSuccess)
@@ -78,7 +78,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
             try
             {
                 AmazonRDSClient client;
-                DeveloperOptions devOptions;
+                RDSDeveloperOptions devOptions;
 
                 var parseOptionsResult = ParseDevOptions(developerOptions, out devOptions);
                 if (!parseOptionsResult.IsSuccess)
@@ -106,7 +106,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
                         if (verificationResponse.DBInstances.Any() && verificationResponse.DBInstances[0].DBInstanceStatus == "available")
                         {
                             var dbInstance = verificationResponse.DBInstances[0];
-                            var conInfo = new ConnectionInfo
+                            var conInfo = new RDSConnectionInfo
                                 {
                                     DbInstanceIdentifier = devOptions.DbInstanceIdentifier,
                                     EndpointAddress = dbInstance.Endpoint.Address,
@@ -140,7 +140,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
 
             if (manifest.Properties != null && manifest.Properties.Any())
             {
-                DeveloperOptions devOptions;
+                RDSDeveloperOptions devOptions;
 
                 testProgress += "Evaluating required manifest properties...\n";
                 if (!ValidateManifest(manifest, out testResult))
@@ -210,19 +210,19 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
             return true;
         }
 
-        private bool ValidateDevCreds(DeveloperOptions devOptions)
+        private bool ValidateDevCreds(RDSDeveloperOptions devOptions)
         {
             return !(string.IsNullOrWhiteSpace(devOptions.AccessKey) || string.IsNullOrWhiteSpace(devOptions.SecretAccessKey));
         }
 
-        private OperationResult ParseDevOptions(IEnumerable<AddonParameter> developerOptions, out DeveloperOptions devOptions)
+        private OperationResult ParseDevOptions(IEnumerable<AddonParameter> developerOptions, out RDSDeveloperOptions devOptions)
         {
             var result = new OperationResult { IsSuccess = false };
             var progress = "";
             try
             {
                 progress += "Parsing developer options...\n";
-                devOptions = DeveloperOptions.Parse(developerOptions);
+                devOptions = RDSDeveloperOptions.Parse(developerOptions);
             }
             catch (ArgumentException e)
             {
@@ -236,7 +236,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
             return result;
         }
 
-        private OperationResult EstablishClient(AddonManifest manifest, DeveloperOptions devOptions, out AmazonRDSClient client)
+        private OperationResult EstablishClient(AddonManifest manifest, RDSDeveloperOptions devOptions, out AmazonRDSClient client)
         {
             OperationResult result;
 
@@ -275,7 +275,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
             return result;
         }
 
-        private CreateDBInstanceRequest CreateDbInstanceRequest(DeveloperOptions devOptions)
+        private CreateDBInstanceRequest CreateDbInstanceRequest(RDSDeveloperOptions devOptions)
         {
             var request = new CreateDBInstanceRequest
             {

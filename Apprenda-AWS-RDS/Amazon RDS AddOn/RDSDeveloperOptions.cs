@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Apprenda.SaaSGrid.Addons.AWS.RDS
 {
-    public class DeveloperOptions
+    public class RDSDeveloperOptions
     {
         public bool MultiAz { get; set; }
 
@@ -64,9 +64,9 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
         public int BackupRetentionPeriod { get; set; }
 
         // Method takes in a string and parses it into a DeveloperOptions class.
-        public static DeveloperOptions Parse(IEnumerable<AddonParameter> parameters)
+        public static RDSDeveloperOptions Parse(IEnumerable<AddonParameter> parameters)
         {
-            var options = new DeveloperOptions();
+            var options = new RDSDeveloperOptions();
             foreach (var addonparam in parameters)
             {
                 MapToOption(options, addonparam.Key.ToLowerInvariant(), addonparam.Value);
@@ -75,7 +75,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
         }
 
         // Interior method takes in instance of DeveloperOptions (aptly named existingOptions) and maps them to the proper value. In essence, a setter method.
-        private static void MapToOption(DeveloperOptions existingOptions, string key, string value)
+        private static void MapToOption(RDSDeveloperOptions existingOptions, string key, string value)
         {
             if ("accesskey".Equals(key))
             {
