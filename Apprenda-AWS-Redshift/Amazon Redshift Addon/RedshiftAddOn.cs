@@ -1,11 +1,10 @@
-﻿using Amazon.Redshift.Model;
-using Apprenda.SaaSGrid.Addons;
+﻿using Amazon;
+using Amazon.Redshift;
+using Amazon.Redshift.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Amazon.Redshift;
 using System.Threading;
-using Amazon;
 
 namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
 {
@@ -16,48 +15,41 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
         // Output: OperationResult
         public override OperationResult Deprovision(AddonDeprovisionRequest request)
         {
-            string connectionData = request.ConnectionData;
+            var connectionData = request.ConnectionData;
             var deprovisionResult = new ProvisionAddOnResult(connectionData);
-            AddonManifest manifest = request.Manifest;
-            
-            string devOptions = request.DeveloperOptions;
+            var manifest = request.Manifest;
+            var devParams = request.DeveloperParameters;
 
             try
             {
                 AmazonRedshiftClient client;
-                var conInfo = ConnectionInfo.Parse(connectionData);
-                var developerOptions = RedshiftDeveloperOptions.Parse(devOptions);
-
+                var conInfo = RedshiftConnectionInfo.Parse(connectionData);
+                var developerOptions = RedshiftDeveloperOptions.Parse(devParams);
                 var establishClientResult = EstablishClient(manifest, developerOptions, out client);
                 if (!establishClientResult.IsSuccess)
                 {
                     deprovisionResult.EndUserMessage = establishClientResult.EndUserMessage;
                     return deprovisionResult;
                 }
-
                 var response =
-                    client.DeleteCluster(new DeleteClusterRequest()
+                    client.DeleteCluster(new DeleteClusterRequest
                     {
                         ClusterIdentifier = conInfo.ClusterIdentifier,
-                        //SkipFinalSnapshot = true
                     });
-                // modified 5/22/14 to fix deprecation in Amazon AWS SDK
                 if (response.Cluster != null)
                 {
                     do
                     {
-                        var verificationResponse = client.DescribeClusters(new DescribeClustersRequest()
+                        var verificationResponse = client.DescribeClusters(new DescribeClustersRequest
                         {
                             ClusterIdentifier = conInfo.ClusterIdentifier
                         });
-                        // modified 5/22/14 to fix deprecation in Amazon AWS SDK
                         if (!verificationResponse.Clusters.Any())
                         {
                             deprovisionResult.IsSuccess = true;
                             break;
                         }
                         Thread.Sleep(TimeSpan.FromSeconds(10d));
-
                     } while (true);
                 }
             }
@@ -79,22 +71,20 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
         public override ProvisionAddOnResult Provision(AddonProvisionRequest request)
         {
             var provisionResult = new ProvisionAddOnResult("") { IsSuccess = false };
-            AddonManifest manifest = request.Manifest;
-            string developerOptions = request.DeveloperOptions;
+            var manifest = request.Manifest;
+            var developerParameters = request.DeveloperParameters;
 
             try
             {
                 AmazonRedshiftClient client;
                 RedshiftDeveloperOptions devOptions;
-
-                var parseOptionsResult = ParseDevOptions(developerOptions, out devOptions);
+                var parseOptionsResult = ParseDevOptions(developerParameters, out devOptions);
                 if (!parseOptionsResult.IsSuccess)
                 {
                     provisionResult.EndUserMessage = parseOptionsResult.EndUserMessage;
                     return provisionResult;
                 }
-
-                var establishClientResult = EstablishClient(manifest, RedshiftDeveloperOptions.Parse(developerOptions), out client);
+                var establishClientResult = EstablishClient(manifest, devOptions, out client);
                 if (!establishClientResult.IsSuccess)
                 {
                     provisionResult.EndUserMessage = establishClientResult.EndUserMessage;
@@ -102,28 +92,18 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
                 }
 
                 var response = client.CreateCluster(CreateClusterRequest(devOptions));
-                // modified 5/22/14 to fix amazon aws deprecation
                 if (response.Cluster != null)
                 {
-                    //var conInfo = new ConnectionInfo()
-                    //{
-                    //    DbInstanceIdentifier = devOptions.DbInstanceIndentifier
-                    //};
-                    //provisionResult.IsSuccess = true;
-                    //provisionResult.ConnectionData = conInfo.ToString();
-                    //Thread.Sleep(TimeSpan.FromMinutes(6));
-
                     do
                     {
-                        var verificationResponse = client.DescribeClusters(new DescribeClustersRequest()
+                        var verificationResponse = client.DescribeClusters(new DescribeClustersRequest
                         {
                             ClusterIdentifier = devOptions.ClusterIdentifier
                         });
-                        // next few lines fixed 5/22/14 to resolve amazon aws deprecation
                         if (verificationResponse.Clusters.Any() && verificationResponse.Clusters[0].ClusterStatus == "available")
                         {
                             var dbInstance = verificationResponse.Clusters[0];
-                            var conInfo = new ConnectionInfo()
+                            var conInfo = new RedshiftConnectionInfo
                             {
                                 ClusterIdentifier = devOptions.ClusterIdentifier,
                                 EndpointAddress = dbInstance.Endpoint.Address,
@@ -134,7 +114,6 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
                             break;
                         }
                         Thread.Sleep(TimeSpan.FromSeconds(10d));
-
                     } while (true);
                 }
             }
@@ -151,11 +130,10 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
         // Output: OperationResult
         public override OperationResult Test(AddonTestRequest request)
         {
-            AddonManifest manifest = request.Manifest;
-            string developerOptions = request.DeveloperOptions;
+            var manifest = request.Manifest;
+            var developerParameters = request.DeveloperParameters;
             var testResult = new OperationResult { IsSuccess = false };
             var testProgress = "";
-
             if (manifest.Properties != null && manifest.Properties.Any())
             {
                 RedshiftDeveloperOptions devOptions;
@@ -166,7 +144,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
                     return testResult;
                 }
 
-                var parseOptionsResult = ParseDevOptions(developerOptions, out devOptions);
+                var parseOptionsResult = ParseDevOptions(developerParameters, out devOptions);
                 if (!parseOptionsResult.IsSuccess)
                 {
                     return parseOptionsResult;
@@ -204,24 +182,21 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
 
         /* Begin private methods */
 
-        
-
-        // TODO: We might be able to extend this. 
-        private bool ValidateDevCreds(RedshiftDeveloperOptions devOptions)
+        private static bool ValidateDevCreds(RedshiftDeveloperOptions devOptions)
         {
             return !(string.IsNullOrWhiteSpace(devOptions.AccessKey) || string.IsNullOrWhiteSpace(devOptions.SecretAccessKey));
         }
 
-        private OperationResult ParseDevOptions(string developerOptions, out RedshiftDeveloperOptions devOptions)
+        private static OperationResult ParseDevOptions(IEnumerable<AddonParameter> developerParameters, out RedshiftDeveloperOptions devOptions)
         {
             devOptions = null;
-            var result = new OperationResult() { IsSuccess = false };
+            var result = new OperationResult { IsSuccess = false };
             var progress = "";
 
             try
             {
                 progress += "Parsing developer options...\n";
-                devOptions = RedshiftDeveloperOptions.Parse(developerOptions);
+                devOptions = RedshiftDeveloperOptions.Parse(developerParameters);
             }
             catch (ArgumentException e)
             {
@@ -234,15 +209,15 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
             return result;
         }
 
-        private OperationResult EstablishClient(AddonManifest manifest, RedshiftDeveloperOptions devOptions, out AmazonRedshiftClient client)
+        private static OperationResult EstablishClient(AddonManifest manifest, RedshiftDeveloperOptions devOptions, out AmazonRedshiftClient client)
         {
             OperationResult result;
 
             bool requireCreds;
             var manifestprops = manifest.GetProperties().ToDictionary(x => x.Key, x => x.Value);
-            var AccessKey = manifestprops["AWSClientKey"];
-            var SecretAccessKey = manifestprops["AWSSecretKey"];
-            var _RegionEndpoint = manifestprops["AWSRegionEndpoint"];
+            var accessKey = manifestprops["AWSClientKey"];
+            var secretAccessKey = manifestprops["AWSSecretKey"];
+            //var AWSRegionEndpoint = manifestprops["AWSRegionEndpoint"];
 
             var prop =
                 manifest.Properties.First(
@@ -253,7 +228,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
                 if (!ValidateDevCreds(devOptions))
                 {
                     client = null;
-                    result = new OperationResult()
+                    result = new OperationResult
                     {
                         IsSuccess = false,
                         EndUserMessage =
@@ -261,19 +236,18 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
                     };
                     return result;
                 }
-
             }
-            AmazonRedshiftConfig config = new AmazonRedshiftConfig() { RegionEndpoint = RegionEndpoint.USEast1 };
-            client = new AmazonRedshiftClient(AccessKey, SecretAccessKey, config);
+            var config = new AmazonRedshiftConfig { RegionEndpoint = RegionEndpoint.USEast1 };
+            client = new AmazonRedshiftClient(accessKey, secretAccessKey, config);
             result = new OperationResult { IsSuccess = true };
             return result;
         }
 
-        private CreateClusterRequest CreateClusterRequest(RedshiftDeveloperOptions devOptions)
+        private static CreateClusterRequest CreateClusterRequest(RedshiftDeveloperOptions devOptions)
         {
-            var request = new CreateClusterRequest()
+            return new CreateClusterRequest
             {
-                AllowVersionUpgrade = devOptions.AllowVersionUpgrade, 
+                AllowVersionUpgrade = devOptions.AllowVersionUpgrade,
                 AutomatedSnapshotRetentionPeriod = devOptions.AutomatedSnapshotRetentionPeriod,
                 AvailabilityZone = devOptions.AvailabilityZone,
                 ClusterIdentifier = devOptions.ClusterIdentifier,
@@ -282,11 +256,11 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
                 ClusterSubnetGroupName = devOptions.ClusterSubnetGroupName,
                 ClusterType = devOptions.ClusterType,
                 ClusterVersion = devOptions.ClusterVersion,
-                DBName = devOptions.DBName,
+                DBName = devOptions.DbName,
                 ElasticIp = devOptions.ElasticIp,
                 Encrypted = devOptions.Encrypted,
-                HsmClientCertificateIdentifier = devOptions.HSMClientCertificateIdentifier,
-                HsmConfigurationIdentifier = devOptions.HSMClientConfigurationIdentifier,
+                HsmClientCertificateIdentifier = devOptions.HsmClientCertificateIdentifier,
+                HsmConfigurationIdentifier = devOptions.HsmClientConfigurationIdentifier,
                 MasterUsername = devOptions.MasterUserName,
                 MasterUserPassword = devOptions.MasterPassword,
                 NodeType = devOptions.NodeType,
@@ -296,10 +270,9 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
                 PubliclyAccessible = devOptions.PubliclyAccessible,
                 VpcSecurityGroupIds = devOptions.VpcSecurityGroupIds
             };
-            return request;
         }
 
-        private bool ValidateManifest(AddonManifest manifest, out OperationResult testResult)
+        private static bool ValidateManifest(AddonManifest manifest, out OperationResult testResult)
         {
             testResult = new OperationResult();
 
@@ -314,15 +287,11 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
                 return false;
             }
 
-            if (string.IsNullOrWhiteSpace(manifest.ProvisioningUsername) ||
-                string.IsNullOrWhiteSpace(manifest.ProvisioningPassword))
-            {
-                testResult.IsSuccess = false;
-                testResult.EndUserMessage = "Missing credentials 'provisioningUsername' & 'provisioningPassword' . These values needs to be provided as part of the manifest";
-                return false;
-            }
-
-            return true;
+            if (!string.IsNullOrWhiteSpace(manifest.ProvisioningUsername) &&
+                !string.IsNullOrWhiteSpace(manifest.ProvisioningPassword)) return true;
+            testResult.IsSuccess = false;
+            testResult.EndUserMessage = "Missing credentials 'provisioningUsername' & 'provisioningPassword' . These values needs to be provided as part of the manifest";
+            return false;
         }
     }
 }
