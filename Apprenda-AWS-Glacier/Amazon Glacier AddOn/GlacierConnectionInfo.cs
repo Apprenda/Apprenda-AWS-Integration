@@ -1,20 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace Apprenda.SaaSGrid.Addons.AWS.EMR
+namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
 {
-    public class ConnectionInfo
+    public class GlacierConnectionInfo
     {
-        public string ClusterIdentifier { get; set; }
-        public string EndpointAddress { get; set; }
-        public int? EndpointPort { get; set; }
+        public string AccountId { get; set; }
+        public string VaultName { get; set; }
+        public string Location { get; set; }
 
-        public static ConnectionInfo Parse(string connectionInfo)
+
+        public static GlacierConnectionInfo Parse(string connectionInfo)
         {
-            ConnectionInfo info = new ConnectionInfo();
+            GlacierConnectionInfo info = new GlacierConnectionInfo();
 
             if (!string.IsNullOrWhiteSpace(connectionInfo))
             {
@@ -39,28 +37,23 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
             return info;
         }
 
-        public static void MapToProperty(ConnectionInfo existingInfo, string key, string value)
+        public static void MapToProperty(GlacierConnectionInfo existingInfo, string key, string value)
         {
-            if ("dbinstanceidentifier".Equals(key))
+            if ("accountid".Equals(key))
             {
-                existingInfo.ClusterIdentifier = value;
+                existingInfo.AccountId = value;
                 return;
             }
 
-            if ("endpointaddress".Equals(key))
+            if ("vaultname".Equals(key))
             {
-                existingInfo.EndpointAddress = value;
+                existingInfo.VaultName = value;
                 return;
             }
 
-            if ("endpointport".Equals(key))
+            if ("location".Equals(key))
             {
-                int result;
-                if (!int.TryParse(value, out result))
-                {
-                    throw new ArgumentException(string.Format("The connection info property '{0}' can only have an integer value but '{1}' was used instead.", key, value));
-                }
-                existingInfo.EndpointPort = result;
+                existingInfo.Location = value;
                 return;
             }
 
@@ -71,16 +64,18 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
         {
             var builder = new StringBuilder();
 
-            if (ClusterIdentifier != null)
-                builder.AppendFormat("DbInstanceIdentifier={0}&", ClusterIdentifier);
+            if (AccountId != null)
+                builder.AppendFormat("DbInstanceIdentifier={0}&", AccountId);
 
-            if (EndpointAddress != null)
-                builder.AppendFormat("EndpointAddress={0}&", EndpointAddress);
+            if (VaultName != null)
+                builder.AppendFormat("EndpointAddress={0}&", VaultName);
 
-            if (EndpointPort.HasValue)
-                builder.AppendFormat("EndpointPort={0}&", EndpointPort);
+            if (Location != null)
+                builder.AppendFormat("EndpointPort={0}&", Location);
 
             return builder.ToString(0, builder.Length - 1);
         }
+
+        
     }
 }

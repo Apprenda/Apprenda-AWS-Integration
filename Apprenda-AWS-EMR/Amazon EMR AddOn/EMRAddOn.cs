@@ -1,34 +1,36 @@
-﻿using Amazon;
+﻿using System.Collections.Generic;
+using Amazon;
 using Amazon.ElasticMapReduce;
 using Amazon.ElasticMapReduce.Model;
 using Amazon.Runtime;
 using System;
 using System.Linq;
 using System.Threading;
+using Apprenda.SaaSGrid.Addons.AWS.Util;
 
 namespace Apprenda.SaaSGrid.Addons.AWS.EMR
 {
-    public class AddOn : AddonBase
+    public class EmrAddOn : AddonBase
     {
         public override ProvisionAddOnResult Provision(AddonProvisionRequest request)
         {
             var provisionResult = new ProvisionAddOnResult("") { IsSuccess = true };
-            AddonManifest manifest = request.Manifest;
-            string developerOptions = request.DeveloperOptions;
+            var manifest = request.Manifest;
+            var developerParameters = request.DeveloperParameters;
 
             try
             {
                 IAmazonElasticMapReduce client;
                 EMRDeveloperOptions devOptions;
 
-                var parseOptionsResult = ParseDevOptions(developerOptions, out devOptions);
+                var parseOptionsResult = ParseDevOptions(developerParameters, out devOptions);
                 if (!parseOptionsResult.IsSuccess)
                 {
                     provisionResult.EndUserMessage = parseOptionsResult.EndUserMessage;
                     return provisionResult;
                 }
 
-                var establishClientResult = EstablishClient(manifest, EMRDeveloperOptions.Parse(developerOptions), out client);
+                var establishClientResult = EstablishClient(manifest, out client);
                 if (!establishClientResult.IsSuccess)
                 {
                     provisionResult.EndUserMessage = establishClientResult.EndUserMessage;
@@ -67,7 +69,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
                     SlaveInstanceType = devOptions.SlaveInstanceType
                 };
 
-                var _request = new RunJobFlowRequest
+                var jobFlowRequestrequest = new RunJobFlowRequest
                 {
                     Name = devOptions.JobFlowName,
                     Steps = { enabledebugging, installHive },
@@ -79,10 +81,10 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
                 // if debugging is enabled, add to top of the list of steps.
                 if (devOptions.EnableDebugging)
                 {
-                    _request.Steps.Insert(0, enabledebugging);
+                    jobFlowRequestrequest.Steps.Insert(0, enabledebugging);
                 }
 
-                var result = client.RunJobFlow(_request);
+                var result = client.RunJobFlow(jobFlowRequestrequest);
 
                 // wait for JobFlowID to come back.
                 while (result.JobFlowId == null)
@@ -103,27 +105,24 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
 
         public override OperationResult Deprovision(AddonDeprovisionRequest request)
         {
-            var deprovisionResult = new ProvisionAddOnResult("") { IsSuccess = true };
-            deprovisionResult.ConnectionData = "deprovision";
-            AddonManifest manifest = request.Manifest;
-            string connectionData = request.ConnectionData;
-            string devOptions = request.DeveloperOptions;
-            //string jobid = null;
-
+            var manifest = request.Manifest;
+            var connectionData = request.ConnectionData;
+            var deprovisionResult = new OperationResult
+            {
+                IsSuccess = false
+            };
             try
             {
                 IAmazonElasticMapReduce client;
-                //var conInfo = ConnectionInfo.Parse(connectionData);
-                var developerOptions = EMRDeveloperOptions.Parse(devOptions);
 
-                var establishClientResult = EstablishClient(manifest, developerOptions, out client);
+                var establishClientResult = EstablishClient(manifest, out client);
                 if (!establishClientResult.IsSuccess)
                 {
                     deprovisionResult.EndUserMessage = establishClientResult.EndUserMessage;
                     return deprovisionResult;
                 }
 
-                var result = client.TerminateJobFlows(new TerminateJobFlowsRequest() { JobFlowIds = { connectionData } });
+                client.TerminateJobFlows(new TerminateJobFlowsRequest { JobFlowIds = { connectionData } });
 
                 deprovisionResult.IsSuccess = true;
                 deprovisionResult.EndUserMessage = "EMR Cluster Termination Request Successfully Invoked.";
@@ -139,7 +138,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
         public override OperationResult Test(AddonTestRequest request)
         {
             AddonManifest manifest = request.Manifest;
-            string developerOptions = request.DeveloperOptions;
+            var developerParameters = request.DeveloperParameters;
             var testResult = new OperationResult { IsSuccess = false };
             var testProgress = "";
             //string jobid = null;
@@ -154,7 +153,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
                     return testResult;
                 }
 
-                var parseOptionsResult = ParseDevOptions(developerOptions, out devOptions);
+                var parseOptionsResult = ParseDevOptions(developerParameters, out devOptions);
 
                 if (!parseOptionsResult.IsSuccess)
                 {
@@ -167,7 +166,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
                     testProgress += "Establishing connection to AWS...\n";
                     IAmazonElasticMapReduce client;
 
-                    var establishClientResult = EstablishClient(manifest, devOptions, out client);
+                    var establishClientResult = EstablishClient(manifest, out client);
 
                     if (!establishClientResult.IsSuccess)
                     {
@@ -218,74 +217,37 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
             return true;
         }
 
-        private bool ValidateDevCreds(EMRDeveloperOptions devOptions)
+        private OperationResult ParseDevOptions(IEnumerable<AddonParameter> developerParameters, out EMRDeveloperOptions devOptions)
         {
-            return !(string.IsNullOrWhiteSpace(devOptions.AccessKey) || string.IsNullOrWhiteSpace(devOptions.SecretAccessKey));
-        }
-
-        private OperationResult ParseDevOptions(string developerOptions, out EMRDeveloperOptions devOptions)
-        {
-            devOptions = null;
-            var result = new OperationResult() { IsSuccess = false };
-            var progress = "";
-
             try
             {
-                progress += "Parsing developer options...\n";
-                devOptions = EMRDeveloperOptions.Parse(developerOptions);
+                devOptions = EMRDeveloperOptions.Parse(developerParameters);
+                return new OperationResult {IsSuccess = true};
             }
-            catch (ArgumentException)
+            catch (ArgumentException e)
             {
-                result.EndUserMessage = "Placeholder for ValidateDevCreds";
-                return result;
+                devOptions = null;
+                return new OperationResult
+                {
+                    IsSuccess = false,
+                    EndUserMessage = e.Message
+                };
             }
-
-            result.IsSuccess = true;
-            result.EndUserMessage = progress;
-            return result;
         }
 
-        private OperationResult EstablishClient(AddonManifest manifest, EMRDeveloperOptions devOptions, out IAmazonElasticMapReduce client)
+        private OperationResult EstablishClient(IAddOnDefinition manifest, out IAmazonElasticMapReduce client)
         {
-            OperationResult result;
-
-            bool requireCreds;
             var accessKey = manifest.ProvisioningUsername;
             var secretAccessKey = manifest.ProvisioningPassword;
-            var prop = manifest.Properties.First(p => p.Key.Equals("requireDevCredentials", StringComparison.InvariantCultureIgnoreCase));
-            //jobid = null;
-
-            if (bool.TryParse(prop.Value, out requireCreds) && requireCreds)
-            {
-                if (!ValidateDevCreds(devOptions))
-                {
-                    client = null;
-                    result = new OperationResult()
-                    {
-                        IsSuccess = false,
-                        EndUserMessage = "The add on requires that developer credentials are specified but none were provided."
-                    };
-
-                    return result;
-                }
-
-                accessKey = devOptions.AccessKey;
-                secretAccessKey = devOptions.SecretAccessKey;
-            }
-
+            var regionEndpoint = AWSUtils.ParseRegionEndpoint(manifest.ProvisioningLocation);
             AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretAccessKey);
-            client = AWSClientFactory.CreateAmazonElasticMapReduceClient(credentials, RegionEndpoint.USEast1);
-
-            //jobid = job.JobFlowId;
-
-            result = new OperationResult()
+            client = AWSClientFactory.CreateAmazonElasticMapReduceClient(credentials, regionEndpoint);
+            var result = new OperationResult
             {
                 IsSuccess = true
             };
 
             return result;
         }
-
-        public string EndUserMessage { get; set; }
     }
 }

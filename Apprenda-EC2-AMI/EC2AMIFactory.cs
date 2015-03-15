@@ -9,7 +9,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EC2
 {
     internal class Ec2AmiFactory
     {
-        public static Ec2Response StartServer(DeveloperOptions developerOptions)
+        public static EC2Response StartServer(DeveloperOptions developerOptions)
         {
             try
             {
@@ -45,12 +45,12 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EC2
             return null;
         }
 
-        public Ec2Response StopServer(ConnectionInfo info)
+        public EC2Response StopServer(ConnectionInfo info)
         {
             return null;
         }
 
-        public Ec2Response TerminateServer(ConnectionInfo info)
+        public EC2Response TerminateServer(ConnectionInfo info)
         {
             return null;
         }

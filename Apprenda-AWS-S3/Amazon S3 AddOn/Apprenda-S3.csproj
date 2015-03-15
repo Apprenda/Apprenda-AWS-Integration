@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="S3DevloperOptions.cs" />
-    <Compile Include="ConnectionInfo.cs" />
+    <Compile Include="S3ConnectionInfo.cs" />
     <Compile Include="S3Addon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -65,6 +65,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Solution Files\Apprenda-AWS\AWS-Utilities\AWS-Utilities.csproj">
+      <Project>{7672A36C-D531-4FCB-8071-9054B301D087}</Project>
+      <Name>AWS-Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

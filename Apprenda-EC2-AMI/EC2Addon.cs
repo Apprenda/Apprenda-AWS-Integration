@@ -1,6 +1,6 @@
 ﻿namespace Apprenda.SaaSGrid.Addons.AWS.EC2
 {
-    public class Addon : AddonBase
+    public class EC2Addon : AddonBase
     {
         public override ProvisionAddOnResult Provision(AddonProvisionRequest request)
         {

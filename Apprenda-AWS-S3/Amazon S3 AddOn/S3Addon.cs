@@ -1,5 +1,6 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
+using Apprenda.SaaSGrid.Addons.AWS.Util;
 using Apprenda.Services.Logging;
 using System;
 using System.Collections.Generic;
@@ -218,8 +219,11 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
 
             bool requireCreds;
             var manifestprops = manifest.GetProperties().ToDictionary(x => x.Key, x => x.Value);
-            var accessKey = manifestprops["AWSClientKey"];
-            var secretAccessKey = manifestprops["AWSSecretKey"];
+            //var accessKey = manifestprops["AWSClientKey"];
+            var accessKey = manifest.ProvisioningUsername;
+            //var secretAccessKey = manifestprops["AWSSecretKey"];
+            var secretAccessKey = manifest.ProvisioningPassword;
+            var regionEndpoint = AWSUtils.ParseRegionEndpoint(manifest.ProvisioningLocation);
 
             var prop =
                 manifest.Properties.First(
@@ -238,10 +242,6 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                     };
                     return result;
                 }
-
-                //accessKey = devOptions.AccessKey;
-                //secretAccessKey = devOptions.SecretAccessKey;
-                //regionEndpoint = devOptions.RegionEndpont;
             }
             var config = new AmazonS3Config { ServiceURL = @"http://s3.amazonaws.com" };
             client = new AmazonS3Client(accessKey, secretAccessKey, config);

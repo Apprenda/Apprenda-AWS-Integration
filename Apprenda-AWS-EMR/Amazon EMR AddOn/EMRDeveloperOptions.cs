@@ -1,103 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Apprenda.SaaSGrid.Addons.AWS.EMR
 {
-    // this base class idea was a poor one.
     class EMRDeveloperOptions
     {
-        public string AccessKey { get; set; }
-        public string SecretAccessKey { get; set; }
-        public string Ec2KeyName { get; set; }
-        public int InstanceCount { get; set; }
-        public bool KeepJobFlowaliveWhenNoSteps { get; set; }
-        public string MasterInstanceType { get; set; }
-        public string SlaveInstanceType { get; set; }
-        public string AvailabilityZone { get; set; }
-        public string LogURI { get; set; }
-        public string JobFlowName { get; set; }
-        public Amazon.ElasticMapReduce.ActionOnFailure ActionOnFailure { get; set; }
-        public string MainClass { get; set; }
-        public string Jar { get; set; }
-        public string stepName { get; set; }
-        public List<string> Args { get; set; }
-        public bool EnableDebugging { get; set; }
+        public string Ec2KeyName { get; private set; }
+        public int InstanceCount { get; private set; }
+        public bool KeepJobFlowaliveWhenNoSteps { get; private set; }
+        public string MasterInstanceType { get; private set; }
+        public string SlaveInstanceType { get; private set; }
+        public string AvailabilityZone { get; private set; }
+        public string LogUri { get; private set; }
+        public string JobFlowName { get; private set; }
+        public Amazon.ElasticMapReduce.ActionOnFailure ActionOnFailure { get; private set; }
+        public string MainClass { get; private set; }
+        public string Jar { get; private set; }
+        public string StepName { get; private set; }
+        public List<string> Args { get; private set; }
+        public bool EnableDebugging { get; private set; }
 
-        public static EMRDeveloperOptions Parse(string devOptions)
+        public static EMRDeveloperOptions Parse(IEnumerable<AddonParameter> devParameters)
         {
-            EMRDeveloperOptions options = new EMRDeveloperOptions();
-            String lastKey = "";
+            var options = new EMRDeveloperOptions();
 
-            if (!string.IsNullOrWhiteSpace(devOptions))
+            foreach (var parameter in devParameters)
             {
-                // splitting all entries into arrays of optionPairs
-                var optionPairs = devOptions.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
-                foreach (var optionPair in optionPairs)
-                {
-                    // splitting all optionPairs into arrays of key/value denominations
-                    var optionPairParts = optionPair.Split(new[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (optionPairParts.Length == 2)
-                    {
-                        if (lastKey.Equals(optionPairParts[0].Trim().ToLowerInvariant()))
-                        {
-                            MapToOptionWithCollection(options, optionPairParts[0].Trim().ToLowerInvariant(), optionPairParts[1].Trim(), lastKey);
-                        }
-                        else
-                        {
-                            MapToOption(options, optionPairParts[0].Trim().ToLowerInvariant(), optionPairParts[1].Trim());
-                            lastKey = optionPairParts[0].Trim().ToLowerInvariant();
-                        }
-                    }
-                    else
-                    {
-                        throw new ArgumentException(
-                            string.Format(
-                                "Unable to parse developer options which should be in the form of 'option=value&nextOption=nextValue'. The option '{0}' was not properly constructed",
-                                optionPair));
-                    }
-                }
+                MapToOption(options, parameter.Key.ToLowerInvariant(), parameter.Value);
             }
             return options;
         }
 
-        // Use this method to map all collections to their proper places.
-        // Usage here is to confirm that the subsequent key is the same as the preceding key. 
-        // This forces that the REST call ensure all collection parameters are grouped together.
-        // Ex. This is good: (key1=value&key1=value2)
-        // Ex. This is bad: (key1=value&key2=value2)
-        // Ex. This is bad: (key1=value&key2=value2&key1=value3)
-        public static void MapToOptionWithCollection(EMRDeveloperOptions existingOptions, string key, string value, string lastKey)
-        {
-            if (key.Equals(lastKey))
-            {
-                if ("args".Equals(key))
-                {
-                    existingOptions.Args.Add(value);
-                    return;
-                }
-                throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", key));
-            }
-            throw new ArgumentException(string.Format("The developer option '{0}' is grouped out of order in the REST call. Group collection parameters together in the request.", key));
-        }
-
         // Interior method takes in instance of DeveloperOptions (aptly named existingOptions) and maps them to the proper value. In essence, a setter method.
-        public static void MapToOption(EMRDeveloperOptions existingOptions, string key, string value)
+        private static void MapToOption(EMRDeveloperOptions existingOptions, string key, string value)
         {
-            if ("accesskey".Equals(key))
-            {
-                existingOptions.AccessKey = value;
-                return;
-            }
-
-            if ("secretkey".Equals(key))
-            {
-                existingOptions.SecretAccessKey = value;
-                return;
-            }
-
             if ("availabilityzone".Equals(key))
             {
                 existingOptions.AvailabilityZone = value;
@@ -158,7 +94,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
 
             if ("loguri".Equals(key))
             {
-                existingOptions.LogURI = value;
+                existingOptions.LogUri = value;
                 return;
             }
 
@@ -182,7 +118,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
 
             if ("stepname".Equals(key))
             {
-                existingOptions.stepName = value;
+                existingOptions.StepName = value;
                 return;
             }
 
@@ -196,13 +132,6 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
                 existingOptions.KeepJobFlowaliveWhenNoSteps = result;
                 return;
             }
-
-            if ("secretaccesskey".Equals(key))
-            {
-                existingOptions.SecretAccessKey = value;
-                return;
-            }
-            throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", key));
         }
 
         
