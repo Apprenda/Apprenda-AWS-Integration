@@ -10,9 +10,9 @@
                vendor="Apprenda"
                author="Chris Dutra"
                version="1.1.0"
-               provisioningUsername="chris@dutronlabs.com"
-               provisioningPassword="cyrixm2r"
-               provisioningLocation="RegionEndpoint.USEast1">
+               provisioningUsername=""
+               provisioningPassword=""
+               provisioningLocation="">
   <properties>
     <property key="AWSClientKey" displayName="AWS Client Key" description="The IAM provisioned AWS Client Key to provision resources." value=""/>
     <property key="AWSSecretKey" displayName="AWS Secret Key" description="The secret key associated with the AWS client key. Encrypted at rest." value="" />
@@ -31,5 +31,6 @@
     <property key="SupportedProducts" displayName="Supported Products" description="See 'New Supported Products'" value="" />
     <property key="Tags" displayName="Tags" description="List of Tags to associate with a cluster and its respective EC2 instnaces." value="" />
     <property key="VisibleToAlUsers" displayName="Visible to All Users" description="If true, all IAM users of the AWS account can see/manage the job flow. Set to false to make this restricted to just the IAM user." value="" />
+    <property key="HadoopVersion" displayName="Hadoop Version" description="Specify the version of haddop "/>
   </properties>
 </addonManifest>

@@ -1,17 +1,26 @@
 ﻿using System.Collections.Generic;
 using Amazon;
 using Amazon.ElasticMapReduce;
-using Amazon.ElasticMapReduce.Model;
 using Amazon.Runtime;
 using System;
 using System.Linq;
-using System.Threading;
 using Apprenda.SaaSGrid.Addons.AWS.Util;
 
 namespace Apprenda.SaaSGrid.Addons.AWS.EMR
 {
     public class EmrAddOn : AddonBase
     {
+        // ---------------------------------------------
+        // we need to re-architect this. 
+        // I strongly believe that an EMR solution is going to be decoupled from an application, and the Apprenda addon should manage the connection string to the EMR instance,
+        // rather than create it. 
+        // ---------------------------------------------
+        // ---------------------------------------------
+        // Provision - is going to provision
+        // Assumptions - we already already have an EMR cluster, requirement here is to get a connection string to access it.
+        // 
+        // Supported formats, HIVE, Impala, and HBase
+        // ---------------------------------------------
         public override ProvisionAddOnResult Provision(AddonProvisionRequest request)
         {
             var provisionResult = new ProvisionAddOnResult("") { IsSuccess = true };
@@ -21,7 +30,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
             try
             {
                 IAmazonElasticMapReduce client;
-                EMRDeveloperOptions devOptions;
+                EmrDeveloperOptions devOptions;
 
                 var parseOptionsResult = ParseDevOptions(developerParameters, out devOptions);
                 if (!parseOptionsResult.IsSuccess)
@@ -37,63 +46,52 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
                     return provisionResult;
                 }
 
-                var stepFactory = new StepFactory();
+                // ok, we need 
+                // the EMR Cluster info from developer options
+                // the protocol (Hive, Impala, HBase)
 
-                StepConfig enabledebugging = null;
-
-                if (devOptions.EnableDebugging)
+                var clusterResponse = client.DescribeCluster();
+                // this is the endpoint you need for your client
+                var dns = clusterResponse.Cluster.MasterPublicDnsName;
+                var url = "";
+                if (devOptions.Protocol.Equals(EmrProtocol.Jdbc))
                 {
-                    enabledebugging = new StepConfig
+                    // and generate connection string!
+                    if (devOptions.InterfaceType.Equals(EmrInterfaceType.HBase))
                     {
-                        Name = "Enable debugging",
-                        ActionOnFailure = "TERMINATE_JOB_FLOW",
-                        HadoopJarStep = stepFactory.NewEnableDebuggingStep()
-                    };
+                        url = "jdbc:hbase://" + dns + ":" + devOptions.Port + "/default";
+                    }
+                    else if (devOptions.InterfaceType.Equals(EmrInterfaceType.Hive))
+                    {
+                        url = "jdbc:hbase://" + dns + ":" + devOptions.Port + "/default";
+                    }
+                    else if (devOptions.InterfaceType.Equals(EmrInterfaceType.Impala))
+                    {
+                        url = "jdbc:hbase://" + dns + ":" + devOptions.Port + "/default";
+                    }
                 }
-
-                var installHive = new StepConfig
+                if (devOptions.Protocol.Equals(EmrProtocol.Odbc))
                 {
-                    Name = "Install Hive",
-                    ActionOnFailure = "TERMINATE_JOB_FLOW",
-                    HadoopJarStep = stepFactory.NewInstallHiveStep()
-                };
-
-                var instanceConfig = new JobFlowInstancesConfig
-                {
-                    Ec2KeyName = devOptions.Ec2KeyName,
-                    HadoopVersion = "0.20",
-                    InstanceCount = devOptions.InstanceCount,
-                    // this is important. the EMR job flow must be kept alive for the application to see it during provisioning
-                    KeepJobFlowAliveWhenNoSteps = true,
-                    MasterInstanceType = devOptions.MasterInstanceType,
-                    SlaveInstanceType = devOptions.SlaveInstanceType
-                };
-
-                var jobFlowRequestrequest = new RunJobFlowRequest
-                {
-                    Name = devOptions.JobFlowName,
-                    Steps = { enabledebugging, installHive },
-                    // revisit this one in ne
-                    LogUri = "s3://myawsbucket",
-                    Instances = instanceConfig
-                };
-
-                // if debugging is enabled, add to top of the list of steps.
-                if (devOptions.EnableDebugging)
-                {
-                    jobFlowRequestrequest.Steps.Insert(0, enabledebugging);
-                }
-
-                var result = client.RunJobFlow(jobFlowRequestrequest);
-
-                // wait for JobFlowID to come back.
-                while (result.JobFlowId == null)
-                {
-                    Thread.Sleep(1000);
+                    // and generate connection string!
+                    if (devOptions.InterfaceType.Equals(EmrInterfaceType.HBase))
+                    {
+                        url = "jdbc:hbql://" + dns + ":" + devOptions.Port + "/default";
+                    }
+                    else if (devOptions.InterfaceType.Equals(EmrInterfaceType.Hive))
+                    {
+                        url = "jdbc:hive://" + dns + ":" + devOptions.Port + "/default";
+                    }
+                    else if (devOptions.InterfaceType.Equals(EmrInterfaceType.Impala))
+                    {
+                        url = "jdbc:hive2://" + dns + ":" + devOptions.Port + "/default";
+                    }
                 }
 
                 provisionResult.IsSuccess = true;
-                provisionResult.ConnectionData = string.Format(result.JobFlowId);
+                provisionResult.ConnectionData = new EmrConnectionInfo
+                {
+                    EmrConnectionString = url
+                }.ToString();
             }
             catch (Exception e)
             {
@@ -103,49 +101,24 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
             return provisionResult;
         }
 
+        // Deprovision - is going to delete the connector to EMR.
         public override OperationResult Deprovision(AddonDeprovisionRequest request)
         {
-            var manifest = request.Manifest;
-            var connectionData = request.ConnectionData;
-            var deprovisionResult = new OperationResult
-            {
-                IsSuccess = false
-            };
-            try
-            {
-                IAmazonElasticMapReduce client;
-
-                var establishClientResult = EstablishClient(manifest, out client);
-                if (!establishClientResult.IsSuccess)
-                {
-                    deprovisionResult.EndUserMessage = establishClientResult.EndUserMessage;
-                    return deprovisionResult;
-                }
-
-                client.TerminateJobFlows(new TerminateJobFlowsRequest { JobFlowIds = { connectionData } });
-
-                deprovisionResult.IsSuccess = true;
-                deprovisionResult.EndUserMessage = "EMR Cluster Termination Request Successfully Invoked.";
-            }
-            catch (Exception)
-            {
-                deprovisionResult.EndUserMessage = "An error occurred during deprovisioning, please check the SOC logs for further assistance.";
-            }
-
-            return deprovisionResult;
+            // We aren't really doing much here. Just remove the connection string and we should be good.
+            // -------------------------------------------------------------------------------------------
+            return new OperationResult { EndUserMessage = "Deprovision complete.", IsSuccess =  true};
         }
 
         public override OperationResult Test(AddonTestRequest request)
         {
-            AddonManifest manifest = request.Manifest;
+            var manifest = request.Manifest;
             var developerParameters = request.DeveloperParameters;
             var testResult = new OperationResult { IsSuccess = false };
             var testProgress = "";
-            //string jobid = null;
-
+            
             if (manifest.Properties != null && manifest.Properties.Any())
             {
-                EMRDeveloperOptions devOptions;
+                EmrDeveloperOptions devOptions;
 
                 testProgress += "Evaluating required manifest properties...\n";
                 if (!ValidateManifest(manifest, out testResult))
@@ -191,7 +164,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
             return testResult;
         }
 
-        private bool ValidateManifest(AddonManifest manifest, out OperationResult testResult)
+        private static bool ValidateManifest(AddonManifest manifest, out OperationResult testResult)
         {
             testResult = new OperationResult();
 
@@ -217,11 +190,11 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
             return true;
         }
 
-        private OperationResult ParseDevOptions(IEnumerable<AddonParameter> developerParameters, out EMRDeveloperOptions devOptions)
+        private static OperationResult ParseDevOptions(IEnumerable<AddonParameter> developerParameters, out EmrDeveloperOptions devOptions)
         {
             try
             {
-                devOptions = EMRDeveloperOptions.Parse(developerParameters);
+                devOptions = EmrDeveloperOptions.Parse(developerParameters);
                 return new OperationResult {IsSuccess = true};
             }
             catch (ArgumentException e)
@@ -235,7 +208,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
             }
         }
 
-        private OperationResult EstablishClient(IAddOnDefinition manifest, out IAmazonElasticMapReduce client)
+        private static OperationResult EstablishClient(IAddOnDefinition manifest, out IAmazonElasticMapReduce client)
         {
             var accessKey = manifest.ProvisioningUsername;
             var secretAccessKey = manifest.ProvisioningPassword;
