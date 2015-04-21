@@ -1,0 +1,45 @@
+@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+}
+<style>
+    .error-list th {
+        padding: 10px;
+    }
+
+    .error-list td {
+        padding: 10px;
+        border-bottom: 1px solid #efeeef;
+    }
+</style>
+
+<h1 class="text-danger">Error.</h1>
+<h2 class="text-danger">An error occurred while processing your request.</h2>
+<table class="error-list">
+    <tr>
+        <th class="ig_headerLabels3">Possible Issue</th>
+        <th class="ig_headerLabels3">Recommendation</th>
+    </tr>
+    <tr>
+        <td>The Ignite UI&#8482; product is not installed on your system.</td>
+        <td>Verify the Ignite UI product is installed. To download a free trial, please visit <a href="http://www.infragistics.com">www.infragistics.com</a>.</td>
+    </tr>
+    <tr>
+        <td>The Infragistics.Web.Mvc assembly (DLL) reference must be updated to the correct version.</td>
+        <td>
+            <p>By default, the template uses the initial release version of Ignite UI. If you have installed a service release, you must update the version numbers.</p>
+            <p>
+                To update the version number, remove the assembly reference and re-add it from the Global Assembly Cache (GAC).
+            <p>
+            <p>
+                You must ensure that the ASP.NET MVC version of the template matches the first number of the Infragistics.Web.Mvc.dll version number and also set the
+                reference property <b>Copy Local</b> to <em>True</em>.
+            </p>
+        </td>
+    </tr>
+</table>
+<p>
+    For specific error details, locate the <em>customErrors</em> element in the web.config file and set the
+    <em>mode</em> attribute to <em>Off</em>. For additional assistance, please visit the <a href="http://www.infragistics.com/help/" target="_blank">Infragistics help page</a>.
+</p>

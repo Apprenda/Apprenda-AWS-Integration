@@ -1,0 +1,47 @@
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@section styles {
+    <style>
+    #resources li {
+        margin-bottom:6px;
+    }
+        #resources li a {
+            display: block;
+            width: 100%;
+            font-size: .75em;
+            text-align: center;
+            font-weight: bold;
+            background-color: #3276b1;
+            text-decoration: none;
+            color: #fff;
+        }
+
+            #resources li a:hover {
+                background-color: #999;
+            }
+    </style>
+}
+
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-4">
+            <a href="http://igniteui.com" target="_blank" style="color: #eeeeee"><img id="igniteui-logo" src="/images/ignite-ui.png" class="img-responsive" /></a>
+            <ul id="resources" class="list-unstyled">
+                <li><a href="http://igniteui.com/getting-started" target="_blank">Getting Started</a></li>
+                <li><a href="http://www.igniteui.com/" target="_blank">Code Samples</a></li>
+                <li><a href="http://www.infragistics.com/help/online-documentation/" target="_blank">API Documentation</a></li>
+                <li><a href="http://igniteui.com/application-samples" target="_blank">Application Samples</a></li>
+                <li><a href="http://labs.infragistics.com/jquery/configure/" target="_blank">Code Configurator</a></li>
+                <li><a href="http://www.infragistics.com/community/forums/default.aspx?GroupID=80" target="_blank">Forums</a></li>
+                <li><a href="http://www.infragistics.com/community/blogs/jquery/" target="_blank">Blogs</a></li>
+            </ul>
+        </div>
+        <div class="col-md-8 hidden-sm hidden-xs">
+            <iframe width="560" height="315" src="//www.youtube.com/embed/rN4rV09hFcA?list=PLZ4rRHIJepBsKpiMyZW-EI43PWVf9ajkL" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("ExamplesPartial")

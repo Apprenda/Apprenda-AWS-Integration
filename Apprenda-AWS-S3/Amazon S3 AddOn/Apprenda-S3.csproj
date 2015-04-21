@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AWSSDK">
-      <HintPath>..\..\..\Program Files (x86)\AWS SDK for .NET\bin\Net45\AWSSDK.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\Solution Files\Apprenda-AWS\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -68,7 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Solution Files\Apprenda-AWS\AWS-Utilities\AWS-Utilities.csproj">
-      <Project>{7672A36C-D531-4FCB-8071-9054B301D087}</Project>
+      <Project>{7672a36c-d531-4fcb-8071-9054b301d087}</Project>
       <Name>AWS-Utilities</Name>
     </ProjectReference>
   </ItemGroup>

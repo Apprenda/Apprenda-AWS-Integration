@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AWSSDK">
-      <HintPath>..\Shared Libaries\AWSSDK.dll</HintPath>
-    </Reference>
     <Reference Include="SaaSGrid.API, Version=5.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Shared Libraries\SaaSGrid.API.dll</HintPath>

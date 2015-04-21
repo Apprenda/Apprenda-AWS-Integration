@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda-EC2-AMI", "..\..\A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AWS-Utilities", "AWS-Utilities\AWS-Utilities.csproj", "{7672A36C-D531-4FCB-8071-9054B301D087}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprendazon", "Apprendazon\Apprendazon.csproj", "{9C05DC6F-DB2E-44A1-A3EF-7E9D60888031}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,10 @@ Global
 		{7672A36C-D531-4FCB-8071-9054B301D087}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7672A36C-D531-4FCB-8071-9054B301D087}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7672A36C-D531-4FCB-8071-9054B301D087}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C05DC6F-DB2E-44A1-A3EF-7E9D60888031}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C05DC6F-DB2E-44A1-A3EF-7E9D60888031}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C05DC6F-DB2E-44A1-A3EF-7E9D60888031}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C05DC6F-DB2E-44A1-A3EF-7E9D60888031}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
