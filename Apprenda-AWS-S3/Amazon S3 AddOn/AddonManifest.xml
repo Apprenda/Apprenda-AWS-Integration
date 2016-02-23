@@ -8,7 +8,7 @@
                developerHelp="Bucket Name = Set the name for the bucket you wish to provision. Must be a unique name, or the process will fail."
                vendor="Apprenda"
                author="Chris Dutra"
-               Version="2.0"
+               version="2.0"
                provisioningUsername=""
                provisioningPassword=""
                provisioningLocation=""

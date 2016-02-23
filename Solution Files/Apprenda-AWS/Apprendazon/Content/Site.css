@@ -72,7 +72,7 @@ input[type="checkbox"].input-validation-error {
     color:#666;
 }
 
-@media (max-width: 996) {
+@media (max-width: 996px) {
     #igniteui-logo {
         margin-left:15%;
     }

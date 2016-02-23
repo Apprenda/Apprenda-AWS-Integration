@@ -1,0 +1,359 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Ignite UI &ndash; トライアル版デモ</title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="/Content/Infragistics/css/themes/metro/infragistics.theme.css" rel="stylesheet" />
+    <link href="/Content/Infragistics/css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="/Scripts/modernizr-2.7.2.js"></script>
+    <script src="/Scripts/jquery-2.0.3.min.js"></script>
+    <script src="/Scripts/jquery-ui-1.10.3.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+	<script src="/Scripts/Infragistics/js/i18n/infragistics-ja.js" type="text/javascript"></script>
+    <script src="/Scripts/Infragistics/js/infragistics.core.js"></script>
+    <script src="/Scripts/Infragistics/js/infragistics.lob.js"></script>
+    <script src="/Scripts/Infragistics/js/infragistics.dv.js"></script>
+    <!--[if IE]>
+        <style type="text/css">
+            div.splitlogo{display:none!important;}
+            h1 {top:80px;}
+        </style>
+    <![endif]-->
+</head>
+<body>
+    <style type="text/css">
+    img {
+        border: none;
+    }
+    body {
+        overflow-x:hidden;
+        background: url(/Images/Infragistics/subtle-pattern-11.jpg);
+        font-family: 'segoe ui', 'arial', 'sans-serif';
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    #splitter {
+        display:block; 
+    }
+
+    #main {
+        margin:0 auto;
+        width: 80%;
+        max-width: 1000px;
+        box-shadow: 0 0 25px #DDD;
+    }
+	
+	#map {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -o-box-sizing: border-box;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+        h1 {
+            width:200px;
+            font-weight: bold;
+            font-size: 42px;
+            color: #FFFFFF;
+            position: relative;
+            z-index: 1000;
+            top:25px;
+            text-shadow: 3px 3px 0px #ad5308;
+        }
+
+    header {
+        background-image: url(/Images/Infragistics/headerBg.png);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: #ff7a0c;
+        width:100%;
+        height: 140px;
+        display: block;
+        border: 1px solid #ccc;
+        position: relative;
+        z-index: 1000;
+        margin-bottom: 30px;
+        overflow: hidden;
+        border: 0;
+        border-bottom:2px solid #bb5500;
+        box-shadow: 0px 0px 10px 0px #999;
+    }
+        header p {
+            width:200px;
+            position: relative;
+            font-weight: bold;
+            top:15px;
+            left: 65px;
+            color:#fff;
+            opacity: 0.9;
+            font-size: 20px;
+            text-shadow: 2px 2px 3px #ad5308;
+        }
+
+
+    header div.headwrap {
+        width: 1000px;
+        height:100%;
+        margin: 0 auto;
+    }
+
+    footer {
+        text-align: right;
+        padding: 20px 20px 20px 0;
+        position: relative;
+        display: block;
+        background-color: #f9f9f9;
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        margin-bottom: 20px;
+    }
+
+    div.tree-head {
+        width: 100%;
+        color: #FFF;
+        background-color: #00AADE;
+        padding: 15px;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		-o-box-sizing: border-box;
+		box-sizing: border-box;
+    }
+
+    img.rocket {
+        position: absolute;
+        -webkit-transform: translate(-50px, 40px) rotate(-45deg);
+        -webkit-animation:rocket 4s infinite;
+        -webkit-transition:3s;
+
+        -ms-transform: translate(-50px, 40px) rotate(-45deg);
+        -ms-animation: rocket 4s infinite;
+        -ms-transition: 3s;
+
+        transform: translate(-50px, 40px) rotate(-45deg);
+        animation:rocket 4s infinite;
+        transition:3s;
+    }
+
+    img.rocket:hover {
+        -webkit-transform: translate(1550px, -1250px) rotate(-45deg);
+        -ms-transform: translate(1550px, -1250px) rotate(-45deg);
+        transform: translate(1550px, -1250px) rotate(-45deg);
+    }
+    
+    @-webkit-keyframes rocket {
+        0%      {-webkit-transform: translate(-50px, 40px) rotate(-45deg);}
+        50%     {-webkit-transform: translate(-45px, 52px) rotate(-50deg);}
+        100%    {-webkit-transform: translate(-50px, 40px) rotate(-45deg);}
+    }
+
+    @keyframes rocket {
+        0%      {transform: translate(-50px, 40px) rotate(-45deg);}
+        50%     {transform: translate(-45px, 52px) rotate(-50deg);}
+        100%    {transform: translate(-50px, 40px) rotate(-45deg);}
+    }
+
+    header div.headwrap nav {
+        float:right;
+        width:400px;
+        position:relative;
+        right:0px;
+        top:-45px;
+        text-align:center;
+    }
+
+        header div.headwrap nav div {
+            font-size:14px;
+            margin:0 0 0 20px;
+            width:70px;
+            height:auto;
+            display:inline-block;
+            opacity:0.85;
+        }
+            header div.headwrap nav div:hover {
+                opacity:1.0;
+                text-decoration:underline;
+            }
+            header div.headwrap nav a {
+                text-decoration:none;
+                color:#fff;
+            }
+            header div.headwrap nav img {
+                margin:5px auto;
+                display:block;
+            }
+
+        div.apidocs, div.helpdocs {
+            position:relative;
+            top:-18px;
+        }
+    </style> 
+        <header>
+            <div class="headwrap">
+                <img class="rocket" src="/Images/Infragistics/rocket.png">
+                <h1>Ignite UI</h1>
+                <p>トライアル版デモ</p>
+                <nav>
+                    <a href="http://help.infragistics.com/jQuery/2015.1/" target="_blank"><div class="apidocs"><img src="/Images/Infragistics/apidocs.png" />API ヘルプ</div></a>
+                    <a href="http://www.jp.igniteui.com/help/" target="_blank"><div class="helpdocs"><img src="/Images/Infragistics/helpdocs.png" />開発ガイド</div></a>
+                    <a href="http://jp.infragistics.com/" target="_blank"><div class="igwebsite"><img src="/Images/Infragistics/igwebsite.png" />Infragistics Web サイト</div></a>
+                    <a href="http://jp.igniteui.com/" target="_blank"><div class="igniteuisamples"><img src="/Images/Infragistics/igniteuisamples.png" />Ignite UI サンプル</div></a>
+                </nav>
+            </div>
+        </header>
+
+    <div id="main">
+
+
+        <div id="splitter">
+
+            <div>
+                <div class="tree-head">
+                    <p>国の選択</p>
+                </div>
+                <ul id="tree"></ul>
+            </div>
+
+            <div id="detailSplitter">
+
+                <div>
+                    <div id="map"></div>
+                </div>
+
+                <div id="dataVisualisation">
+                    <div>
+                        <table id="grid"></table>
+                    </div>
+                    <div>
+                        <div id="chart"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+           <footer>
+                <img class="logo" src="/Images/Infragistics/IGLogo_notNegative.png" width="125px" height="21px">  
+            </footer>
+    </div>
+        
+        
+    <script src="continents-with-countries-and-cities-ja.js" type="text/javascript"></script>
+    <script>
+
+        $(function () {
+            $("#splitter").igSplitter({ height: 680, width: 1000, panels: [{ size: 200, resizable: true }, { collapsible: false }] });
+            $("#detailSplitter").igSplitter({ orientation: "horizontal", panels: [{ size: 500, resizable: false, collapsible: true }, { size: 200, collapsible: true}] });
+            $("#dataVisualisation").igSplitter({ orientation: "vertical", panels: [{ resizable: true, collapsible: true }, {  collapsible: true}] });
+            $("#tree").igTree({
+                dataSource: continentsWithCountriesAndCitiesCoordinates,
+                dataSourceType: "json",
+                bindings: {
+                    textKey: "Text",
+                    valueKey: "Text",
+                    childDataProperty: "Countries"
+                }
+            });
+            $("#map").igMap({
+                width: "100%",
+                height: "100%",
+                crosshairVisibility: "visible",
+                overviewPlusDetailPaneVisibility: "visible",
+                overviewPlusDetailPaneBackgroundImageUri: "/Images/Infragistics/world.png",
+                panModifier: "control",
+                backgroundContent: {
+                    type: "openStreet"
+                },
+                windowResponse: "immediate",
+                windowRect: {
+                    left: 0.27,
+                    top: 0.20,
+                    height: 0.45,
+                    width: 0.45
+                }
+            });
+        });
+
+        $("#tree").on("igtreeselectionchanged", function (sender, eventArgs) {
+            var node = eventArgs.selectedNodes[0];
+            if (node.data.Cities) {
+                $("#grid").igGrid({
+                        columns: [
+                            { headerText: "名前", key: "Name", dataType: "string" },
+                            { headerText: "国", key: "Country", dataType: "string" },
+                            { headerText: "緯度", key: "Latitude", dataType: "number" },
+                            { headerText: "経度", key: "Longitude", dataType: "number" }
+                        ],
+                        width: "100%",
+                        height: 148,
+                        dataSource: node.data.Cities,
+                        features: [{
+                        name: "Selection",
+                        mode: "row",
+                        rowSelectionChanged: function (ui, args) {
+                            var selectedCity = $("#grid").data("igGrid").dataSource.dataView()[args.row.index];
+                            var geographic = geographichFromCentered({
+                                latitude: selectedCity.Latitude,
+                                longitude: selectedCity.Longitude,
+                                radius: 0.5
+                            });
+                            var zoom = $("#map").igMap("zoomToGeographic", geographic);
+                        }
+                    }]
+                });
+                $("#chart").igDataChart({
+                width: 389,
+                height: 172,
+                dataSource: node.data.Cities,
+
+                 axes: [{
+                    name: "xAxis",
+                    type: "categoryX",
+                    label: "Name"
+                }, {
+                    name: "yAxis",
+                    type: "numericY",
+                    labelVisibility: "visible"
+                }],
+                series: [{
+                    name: "series",
+                    dataSource: node.data.Cities,
+                    type: "column",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "Latitude"
+
+                }]
+              
+            });
+            }
+            var geographic = geographichFromCentered({
+                    latitude: node.data.Latitude,
+                    longitude: node.data.Longitude,
+                    radius: 23
+            });
+            var zoom = $("#map").igMap("zoomToGeographic", geographic);
+            $("#detailSplitter").igSplitter("expandAt", 1);
+        });
+
+        //  Calculates the geographich coordinates of a square around a central point and radius
+        function geographichFromCentered(centered) {
+            var geographic =
+            {
+                left: centered.longitude - centered.radius,
+                top: centered.latitude - centered.radius,
+                width: centered.radius * 2,
+                height: centered.radius * 2
+            };
+            return geographic;
+        }
+    </script>
+</body>
+</html>

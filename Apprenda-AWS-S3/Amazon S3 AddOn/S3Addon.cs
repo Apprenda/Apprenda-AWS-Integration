@@ -1,18 +1,42 @@
-﻿using Amazon.S3;
-using Amazon.S3.Model;
-using Apprenda.SaaSGrid.Addons.AWS.Util;
-using Apprenda.Services.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="S3Addon.cs" company="Apprenda">
+//   MIT License
+// </copyright>
+// <summary>
+//   The s 3 addon.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Apprenda.SaaSGrid.Addons.AWS.S3
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
+    using Amazon.S3;
+    using Amazon.S3.Model;
+    using Apprenda.SaaSGrid.Addons.AWS.Util;
+    using Apprenda.Services.Logging;
+
+    /// <summary>
+    /// The s 3 add-on.
+    /// </summary>
     public class S3Addon : AddonBase
     {
+        /// <summary>
+        /// The log.
+        /// </summary>
         private static readonly ILogger Log = LogManager.Instance().GetLogger(typeof(S3Addon));
 
+        /// <summary>
+        /// Removes an instance of the add-on, deleting the S3 bucket.
+        /// </summary>
+        /// <param name="request">
+        /// The request.
+        /// </param>
+        /// <returns>
+        /// The <see cref="OperationResult"/>.
+        /// </returns>
         public override OperationResult Deprovision(AddonDeprovisionRequest request)
         {
             var connectionData = request.ConnectionData;
@@ -25,12 +49,13 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                 var conInfo = S3ConnectionInfo.Parse(connectionData);
                 var devOptions = S3DeveloperOptions.ParseWithParameters(devParameters);
                 devOptions.BucketName = conInfo.BucketName;
-                var establishClientResult = EstablishClient(manifest, devOptions, out client);
+                var establishClientResult = this.EstablishClient(manifest, devOptions, out client);
                 if (!establishClientResult.IsSuccess)
                 {
                     deprovisionResult.EndUserMessage = establishClientResult.EndUserMessage;
                     return deprovisionResult;
                 }
+
                 var response =
                     client.DeleteBucket(new DeleteBucketRequest
                     {
@@ -38,16 +63,20 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                     });
                 if (response.HttpStatusCode.Equals(HttpStatusCode.OK))
                 {
-                    var verificationResponse = client.ListBuckets(new ListBucketsRequest());
-                    if (verificationResponse.Buckets.All(x => x.BucketName != conInfo.BucketName))
+                    while (true)
                     {
-                        deprovisionResult.IsSuccess = true;
-                        deprovisionResult.EndUserMessage = "Successfully deleted bucket: " + conInfo.BucketName;
+                        var verificationResponse = client.ListBuckets(new ListBucketsRequest());
+                        if (verificationResponse.Buckets.All(x => x.BucketName != conInfo.BucketName))
+                        {
+                            deprovisionResult.IsSuccess = true;
+                            deprovisionResult.EndUserMessage = "Successfully deleted bucket: " + conInfo.BucketName;
+                            return deprovisionResult;
+                        } 
                     }
                 }
                 else
                 {
-                    deprovisionResult.EndUserMessage = "Error during deprovision. Check S3 to ensure bucket was deleted.";
+                    deprovisionResult.EndUserMessage = "We sent the deleted the bucket, but didn't get confirmation back yet. Check S3 to ensure bucket was deleted.";
                 }
             }
             catch (Exception e)
@@ -56,42 +85,30 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                     "There was an error while deprovisioning your addon. Please check with your platform operator. \n";
                 deprovisionResult.EndUserMessage += e.Message;
             }
+
             return deprovisionResult;
         }
 
-        // Provision RDS Instance
-        // Input: AddonDeprovisionRequest request
-        // Output: ProvisionAddOnResult
+        /// <summary>
+        /// The provision.
+        /// </summary>
+        /// <param name="request">
+        /// The request.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ProvisionAddOnResult"/>.
+        /// </returns>
         public override ProvisionAddOnResult Provision(AddonProvisionRequest request)
         {
-            var provisionResult = new ProvisionAddOnResult("") { IsSuccess = false };
+            var provisionResult = new ProvisionAddOnResult(string.Empty) { IsSuccess = false };
             var manifest = request.Manifest;
-
-            // so here, we're going to have to
-            //var developerOptions = request.DeveloperOptions;
-
             var developerParameters = request.DeveloperParameters;
 
             try
             {
                 AmazonS3Client client;
-
-                // to minimize the change, we need to take the DeveloperParameters property and convert it to the S3DeveloperOptions class
                 var devOptions = S3DeveloperOptions.ParseWithParameters(developerParameters);
-
-                // we're going to have to change this stuff here.
-                //var parseOptionsResult = ParseDevOptions(developer, out devOptions);
-                //if (!parseOptionsResult.IsSuccess)
-                //{
-                //    provisionResult.EndUserMessage = parseOptionsResult.EndUserMessage;
-                //    return provisionResult;
-                //}
-
-                // this is a reference change
-                //var establishClientResult = EstablishClient(manifest, S3DeveloperOptions.Parse(developerOptions), out client);
-
-                // we'll change this underlying method
-                var establishClientResult = EstablishClient(manifest, devOptions, out client);
+                var establishClientResult = this.EstablishClient(manifest, devOptions, out client);
 
                 if (!establishClientResult.IsSuccess)
                 {
@@ -120,7 +137,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                     provisionResult.EndUserMessage = "We aren't getting the bucket filtered here correctly.";
                     return provisionResult;
                 }
-                // not adding connection info object here.
+
                 var connInfo = new S3ConnectionInfo
                 {
                     BucketName = devOptions.BucketName
@@ -140,16 +157,24 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
             return provisionResult;
         }
 
-        // Testing Instance
-        // Input: AddonTestRequest request
-        // Output: OperationResult
+        /// <summary>
+        /// The test.
+        /// </summary>
+        /// <param name="request">
+        /// The request.
+        /// </param>
+        /// <returns>
+        /// The <see cref="OperationResult"/>.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// </exception>
         public override OperationResult Test(AddonTestRequest request)
         {
             var provisionRequest = new AddonProvisionRequest { Manifest = request.Manifest, DeveloperParameters = request.DeveloperParameters };
             var manifest = request.Manifest;
             var developerParameters = request.DeveloperParameters;
             var testResult = new OperationResult { IsSuccess = false };
-            var testProgress = "";
+            var testProgress = string.Empty;
 
             if (manifest.Properties != null && manifest.Properties.Any())
             {
@@ -213,15 +238,28 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
             return testResult;
         }
 
+        /// <summary>
+        /// The establish client.
+        /// </summary>
+        /// <param name="manifest">
+        /// The manifest.
+        /// </param>
+        /// <param name="devOptions">
+        /// The dev options.
+        /// </param>
+        /// <param name="client">
+        /// The client.
+        /// </param>
+        /// <returns>
+        /// The <see cref="OperationResult"/>.
+        /// </returns>
         private OperationResult EstablishClient(AddonManifest manifest, S3DeveloperOptions devOptions, out AmazonS3Client client)
         {
             OperationResult result;
 
             bool requireCreds;
             var manifestprops = manifest.GetProperties().ToDictionary(x => x.Key, x => x.Value);
-            //var accessKey = manifestprops["AWSClientKey"];
             var accessKey = manifest.ProvisioningUsername;
-            //var secretAccessKey = manifestprops["AWSSecretKey"];
             var secretAccessKey = manifest.ProvisioningPassword;
             var regionEndpoint = AWSUtils.ParseRegionEndpoint(manifest.ProvisioningLocation);
 
@@ -249,11 +287,32 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
             return result;
         }
 
+        /// <summary>
+        /// The validate dev creds.
+        /// </summary>
+        /// <param name="devOptions">
+        /// The dev options.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
         private static bool ValidateDevCreds(S3DeveloperOptions devOptions)
         {
             return !(string.IsNullOrWhiteSpace(devOptions.AccessKey) || string.IsNullOrWhiteSpace(devOptions.SecretAccessKey));
         }
 
+        /// <summary>
+        /// The test developer parameters.
+        /// </summary>
+        /// <param name="devParams">
+        /// The dev params.
+        /// </param>
+        /// <param name="devOptions">
+        /// The dev options.
+        /// </param>
+        /// <returns>
+        /// The <see cref="OperationResult"/>.
+        /// </returns>
         private static OperationResult TestDeveloperParameters(IEnumerable<AddonParameter> devParams, out S3DeveloperOptions devOptions)
         {
             devOptions = new S3DeveloperOptions();
@@ -273,6 +332,18 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
             return result;
         }
 
+        /// <summary>
+        /// The validate manifest.
+        /// </summary>
+        /// <param name="manifest">
+        /// The manifest.
+        /// </param>
+        /// <param name="testResult">
+        /// The test result.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
         private static bool ValidateManifest(AddonManifest manifest, out OperationResult testResult)
         {
             testResult = new OperationResult();
