@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda-EMR", "..\..\Apprenda-AWS-EMR\Amazon EMR AddOn\Apprenda-EMR.csproj", "{DF55A13A-863B-4DE2-99C4-FE7A0F86C2DB}"
 EndProject
@@ -25,8 +25,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda-EC2-AMI", "..\..\Apprenda-EC2-AMI\Apprenda-EC2-AMI.csproj", "{D74D6061-9D55-4C37-AA8B-CEA6356D7108}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AWS-Utilities", "AWS-Utilities\AWS-Utilities.csproj", "{7672A36C-D531-4FCB-8071-9054B301D087}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprendazon", "Apprendazon\Apprendazon.csproj", "{9C05DC6F-DB2E-44A1-A3EF-7E9D60888031}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,10 +68,6 @@ Global
 		{7672A36C-D531-4FCB-8071-9054B301D087}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7672A36C-D531-4FCB-8071-9054B301D087}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7672A36C-D531-4FCB-8071-9054B301D087}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9C05DC6F-DB2E-44A1-A3EF-7E9D60888031}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9C05DC6F-DB2E-44A1-A3EF-7E9D60888031}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9C05DC6F-DB2E-44A1-A3EF-7E9D60888031}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9C05DC6F-DB2E-44A1-A3EF-7E9D60888031}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
