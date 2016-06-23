@@ -1,68 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Apprenda.SaaSGrid.Addons;
-using Amazon.Glacier;
-using Amazon.Glacier.Model;
-using Amazon.Glacier.Transfer;
 using System.Threading;
 using Amazon;
+using Amazon.Glacier;
+using Amazon.Glacier.Model;
 
 namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
 {
-    public class GlacierAddon : AddonBase 
+    public class GlacierAddon : AddonBase
     {
-        // Deprovision RDS Instance
+        // Deprovision Glacier Instance
         // Input: AddonDeprovisionRequest request
         // Output: OperationResult
         public override OperationResult Deprovision(AddonDeprovisionRequest request)
         {
-            string connectionData = request.ConnectionData;
-            // changing to overloaded constructor - 5/22/14
+            var connectionData = request.ConnectionData;
             var deprovisionResult = new ProvisionAddOnResult(connectionData);
-            AddonManifest manifest = request.Manifest;
-            string devOptions = request.DeveloperOptions;
-
+            var manifest = request.Manifest;
             try
             {
                 AmazonGlacierClient client;
-                var conInfo = ConnectionInfo.Parse(connectionData);
-                var developerOptions = DeveloperOptions.Parse(devOptions);
-
-                var establishClientResult = EstablishClient(manifest, developerOptions, out client);
+                var conInfo = GlacierConnectionInfo.Parse(connectionData);
+                var establishClientResult = EstablishClient(manifest, out client);
                 if (!establishClientResult.IsSuccess)
                 {
                     deprovisionResult.EndUserMessage = establishClientResult.EndUserMessage;
                     return deprovisionResult;
                 }
-                var getArchivesInVault = client.DescribeVault(new DescribeVaultRequest() { AccountId = conInfo.AccountId, VaultName = conInfo.VaultName });
-                var response =
-                    client.DeleteVault(new DeleteVaultRequest()
-                    {
-                        AccountId = conInfo.AccountId,
-                        VaultName = conInfo.VaultName
-                    });
-                // 5/22/14 fixing amazon aws deprecation
-                if (response.HttpStatusCode != null)
+                client.DeleteVault(new DeleteVaultRequest
                 {
-                    do
+                    AccountId = conInfo.AccountId,
+                    VaultName = conInfo.VaultName
+                });
+                do
+                {
+                    var verificationResponse = client.DescribeVault(new DescribeVaultRequest());
+                    if (verificationResponse == null)
                     {
-                        var verificationResponse = client.DescribeVault(new DescribeVaultRequest()
-                        {
-                            
-                        });
-                        // 5/22/14 fixing amazaon aws deprecration
-                        if (verificationResponse == null)
-                        {
-                            deprovisionResult.IsSuccess = true;
-                            break;
-                        }
-                        Thread.Sleep(TimeSpan.FromSeconds(10d));
-
-                    } while (true);
-                }
+                        deprovisionResult.IsSuccess = true;
+                        break;
+                    }
+                    Thread.Sleep(TimeSpan.FromSeconds(10d));
+                } while (true);
+                
             }
             catch (ResourceNotFoundException)
             {
@@ -81,40 +62,40 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
         // Output: ProvisionAddOnResult
         public override ProvisionAddOnResult Provision(AddonProvisionRequest request)
         {
-            // i think this is a bug. but I'm going to throw an empty string to it to clear the warning.
             var provisionResult = new ProvisionAddOnResult("");
-            AddonManifest manifest = request.Manifest;
-            string developerOptions = request.DeveloperOptions;
+            var manifest = request.Manifest;
+            var developerParameters = request.DeveloperParameters;
 
             try
             {
                 AmazonGlacierClient client;
-                DeveloperOptions devOptions;
+                GlacierDeveloperOptions devOptions;
 
-                var parseOptionsResult = ParseDevOptions(developerOptions, manifest, out devOptions);
+                // ReSharper disable MaximumChainedReferences
+                var accountId = manifest.Properties.Find(property => property.Key.Equals("AWSAccountID")).Value;
+
+                var parseOptionsResult = ParseDevOptions(developerParameters, out devOptions);
                 if (!parseOptionsResult.IsSuccess)
                 {
                     provisionResult.EndUserMessage = parseOptionsResult.EndUserMessage;
                     return provisionResult;
                 }
 
-                var establishClientResult = EstablishClient(manifest, DeveloperOptions.Parse(developerOptions), out client);
+                var establishClientResult = EstablishClient(manifest, out client);
                 if (!establishClientResult.IsSuccess)
                 {
                     provisionResult.EndUserMessage = establishClientResult.EndUserMessage;
                     return provisionResult;
                 }
 
-                var response = client.CreateVault(CreateVaultRequest(devOptions));
-                // fix 5/22/14 resolves amazon aws deprecation
-                // wait for response to come back with a location
+                var response = client.CreateVault(CreateVaultRequest(devOptions, accountId));
                 while (true)
                 {
                     if (response.Location != null)
                     {
-                        var conInfo = new ConnectionInfo()
+                        var conInfo = new GlacierConnectionInfo
                         {
-                            AccountId = devOptions.AccountId,
+                            AccountId = accountId,
                             VaultName = devOptions.VaultName,
                             Location = response.Location
                         };
@@ -123,7 +104,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
                         break;
                     }
                     Thread.Sleep(10);
-                }   
+                }
             }
             catch (Exception e)
             {
@@ -138,13 +119,13 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
         public override OperationResult Test(AddonTestRequest request)
         {
             AddonManifest manifest = request.Manifest;
-            string developerOptions = request.DeveloperOptions;
-            var testResult = new OperationResult { IsSuccess = false };
-            var testProgress = "";
+            var developerParameters = request.DeveloperParameters;
+            var testResult = new OperationResult {IsSuccess = false};
+            string testProgress = "";
 
             if (manifest.Properties != null && manifest.Properties.Any())
             {
-                DeveloperOptions devOptions;
+                GlacierDeveloperOptions devOptions;
 
                 testProgress += "Evaluating required manifest properties...\n";
                 if (!ValidateManifest(manifest, out testResult))
@@ -152,7 +133,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
                     return testResult;
                 }
 
-                var parseOptionsResult = ParseDevOptions(developerOptions, manifest, out devOptions);
+                OperationResult parseOptionsResult = ParseDevOptions(developerParameters, out devOptions);
                 if (!parseOptionsResult.IsSuccess)
                 {
                     return parseOptionsResult;
@@ -163,14 +144,12 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
                 {
                     testProgress += "Establishing connection to AWS...\n";
                     AmazonGlacierClient client;
-                    var establishClientResult = EstablishClient(manifest, devOptions, out client);
+                    OperationResult establishClientResult = EstablishClient(manifest, out client);
                     if (!establishClientResult.IsSuccess)
                     {
                         return establishClientResult;
                     }
                     testProgress += establishClientResult.EndUserMessage;
-
-                    var vaults = client.ListVaults();
                     testProgress += "Successfully passed all testing criteria!";
                     testResult.IsSuccess = true;
                     testResult.EndUserMessage = testProgress;
@@ -191,54 +170,39 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
 
         /* Begin private methods */
 
-        private bool ValidateManifest(AddonManifest manifest, out OperationResult testResult)
+        private static bool ValidateManifest(AddonManifest manifest, out OperationResult testResult)
         {
             testResult = new OperationResult();
 
             var prop =
-                    manifest.Properties.FirstOrDefault(
-                        p => p.Key.Equals("requireDevCredentials", StringComparison.InvariantCultureIgnoreCase));
+                manifest.Properties.FirstOrDefault(
+                    p => p.Key.Equals("requireDevCredentials", StringComparison.InvariantCultureIgnoreCase));
 
             if (prop == null || !prop.HasValue)
             {
                 testResult.IsSuccess = false;
-                testResult.EndUserMessage = "Missing required property 'requireDevCredentials'. This property needs to be provided as part of the manifest";
+                testResult.EndUserMessage =
+                    "Missing required property 'requireDevCredentials'. This property needs to be provided as part of the manifest";
                 return false;
             }
 
-            if (string.IsNullOrWhiteSpace(manifest.ProvisioningUsername) ||
-                string.IsNullOrWhiteSpace(manifest.ProvisioningPassword))
-            {
-                testResult.IsSuccess = false;
-                testResult.EndUserMessage = "Missing credentials 'provisioningUsername' & 'provisioningPassword' . These values needs to be provided as part of the manifest";
-                return false;
-            }
-
-            return true;
+            if (!string.IsNullOrWhiteSpace(manifest.ProvisioningUsername) &&
+                !string.IsNullOrWhiteSpace(manifest.ProvisioningPassword)) return true;
+            testResult.IsSuccess = false;
+            testResult.EndUserMessage =
+                "Missing credentials 'provisioningUsername' & 'provisioningPassword' . These values needs to be provided as part of the manifest";
+            return false;
         }
 
-        // TODO: We might be able to extend this. 
-        private bool ValidateDevCreds(DeveloperOptions devOptions)
-        {
-            return !(string.IsNullOrWhiteSpace(devOptions.AccessKey) || string.IsNullOrWhiteSpace(devOptions.SecretAccessKey));
-        }
-
-        private OperationResult ParseDevOptions(string developerOptions, AddonManifest manifest, out DeveloperOptions devOptions)
+        private static OperationResult ParseDevOptions(IEnumerable<AddonParameter> developerParameters,
+            out GlacierDeveloperOptions devOptions)
         {
             devOptions = null;
-            var result = new OperationResult() { IsSuccess = false };
-            var progress = "";
+            var result = new OperationResult {IsSuccess = false};
 
             try
             {
-                progress += "Parsing developer options...\n";
-                devOptions = DeveloperOptions.Parse(developerOptions);
-                // we're probably going to need these lines a few times
-                Dictionary<string, string> manifestProperties = manifest.GetProperties().ToDictionary(x => x.Key, x => x.Value);
-                devOptions.AccessKey = manifestProperties["AWSClientKey"];
-                devOptions.SecretAccessKey = manifestProperties["AWSSecretKey"];
-                devOptions.AccountId = manifestProperties["AWSAccountID"];
-                //devOptions.RegionEndpoint = manifestProperties["RegionEndpoint"];
+                devOptions = GlacierDeveloperOptions.Parse(developerParameters);
             }
             catch (ArgumentException e)
             {
@@ -247,56 +211,26 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
             }
 
             result.IsSuccess = true;
-            result.EndUserMessage = progress;
             return result;
         }
 
-        private OperationResult EstablishClient(AddonManifest manifest, DeveloperOptions devOptions, out AmazonGlacierClient client)
+        private static OperationResult EstablishClient(IAddOnDefinition manifest,
+            out AmazonGlacierClient client)
         {
-            OperationResult result;
+            var accessKey = manifest.ProvisioningUsername;
+            var secretAccessKey = manifest.ProvisioningPassword;
 
-            bool requireCreds;
-            //var accessKey = manifest.ProvisioningUsername;
-            //var secretAccessKey = manifest.ProvisioningPassword;
-            var accessKey = devOptions.AccessKey;
-            var secretAccessKey = devOptions.SecretAccessKey;
-
-            var prop =
-                manifest.Properties.First(
-                    p => p.Key.Equals("requireDevCredentials", StringComparison.InvariantCultureIgnoreCase));
-
-            if (bool.TryParse(prop.Value, out requireCreds) && requireCreds)
-            {
-                if (!ValidateDevCreds(devOptions))
-                {
-                    client = null;
-                    result = new OperationResult()
-                    {
-                        IsSuccess = false,
-                        EndUserMessage =
-                            "The add on requires that developer credentials are specified but none were provided."
-                    };
-                    return result;
-                }
-
-                accessKey = devOptions.AccessKey;
-                secretAccessKey = devOptions.SecretAccessKey;
-            }
-
-            AmazonGlacierConfig config = new AmazonGlacierConfig() { RegionEndpoint = RegionEndpoint.USEast1 };
-            client = new AmazonGlacierClient(devOptions.AccessKey, devOptions.SecretAccessKey, config);
-            result = new OperationResult { IsSuccess = true };
+            var config = new AmazonGlacierConfig {RegionEndpoint = RegionEndpoint.USEast1};
+            client = new AmazonGlacierClient(accessKey, secretAccessKey, config);
+            var result = new OperationResult {IsSuccess = true};
             return result;
         }
 
-        private CreateVaultRequest CreateVaultRequest(DeveloperOptions devOptions)
+        private static CreateVaultRequest CreateVaultRequest(GlacierDeveloperOptions devOptions, string accountId)
         {
-            var request = new CreateVaultRequest()
+            var request = new CreateVaultRequest
             {
-                // TODO - need to determine where defaults are used, and then not create the constructor where value is null (to use default)
-
-                // These are required values.
-                AccountId = devOptions.AccountId,
+                AccountId = accountId,
                 VaultName = devOptions.VaultName
             };
             return request;

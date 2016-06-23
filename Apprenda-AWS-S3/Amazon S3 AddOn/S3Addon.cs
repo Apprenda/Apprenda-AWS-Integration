@@ -1,7 +1,9 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
+using Apprenda.SaaSGrid.Addons.AWS.Util;
 using Apprenda.Services.Logging;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
@@ -13,37 +15,30 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
 
         public override OperationResult Deprovision(AddonDeprovisionRequest request)
         {
-            string connectionData = request.ConnectionData;
-            // changing to overloaded constructor - 5/22/14
+            var connectionData = request.ConnectionData;
             var deprovisionResult = new ProvisionAddOnResult(connectionData);
-            AddonManifest manifest = request.Manifest;
-            string devOptions = request.DeveloperOptions;
-
+            var manifest = request.Manifest;
+            var devParameters = request.DeveloperParameters;
             try
             {
                 AmazonS3Client client;
-                var conInfo = ConnectionInfo.Parse(connectionData);
-                var developerOptions = S3DeveloperOptions.Parse(devOptions);
-                // heh, need to know which bucket to remove...
-                developerOptions.BucketName = conInfo.BucketName;
-
-                var establishClientResult = EstablishClient(manifest, developerOptions, out client);
+                var conInfo = S3ConnectionInfo.Parse(connectionData);
+                var devOptions = S3DeveloperOptions.ParseWithParameters(devParameters);
+                devOptions.BucketName = conInfo.BucketName;
+                var establishClientResult = EstablishClient(manifest, devOptions, out client);
                 if (!establishClientResult.IsSuccess)
                 {
                     deprovisionResult.EndUserMessage = establishClientResult.EndUserMessage;
                     return deprovisionResult;
                 }
-
                 var response =
                     client.DeleteBucket(new DeleteBucketRequest
                     {
-                        BucketName = developerOptions.BucketName
+                        BucketName = devOptions.BucketName
                     });
-                // 5/22/14 fixing amazon aws deprecation
                 if (response.HttpStatusCode.Equals(HttpStatusCode.OK))
                 {
                     var verificationResponse = client.ListBuckets(new ListBucketsRequest());
-                    // 5/22/14 fixing amazaon aws deprecration
                     if (verificationResponse.Buckets.All(x => x.BucketName != conInfo.BucketName))
                     {
                         deprovisionResult.IsSuccess = true;
@@ -52,15 +47,15 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                 }
                 else
                 {
-                    // error occurred during deletion
                     deprovisionResult.EndUserMessage = "Error during deprovision. Check S3 to ensure bucket was deleted.";
                 }
             }
             catch (Exception e)
             {
-                deprovisionResult.EndUserMessage = e.Message + e.StackTrace;
+                deprovisionResult.EndUserMessage =
+                    "There was an error while deprovisioning your addon. Please check with your platform operator. \n";
+                deprovisionResult.EndUserMessage += e.Message;
             }
-
             return deprovisionResult;
         }
 
@@ -71,21 +66,33 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
         {
             var provisionResult = new ProvisionAddOnResult("") { IsSuccess = false };
             var manifest = request.Manifest;
-            var developerOptions = request.DeveloperOptions;
+
+            // so here, we're going to have to
+            //var developerOptions = request.DeveloperOptions;
+
+            var developerParameters = request.DeveloperParameters;
 
             try
             {
                 AmazonS3Client client;
-                S3DeveloperOptions devOptions;
 
-                var parseOptionsResult = ParseDevOptions(developerOptions, out devOptions);
-                if (!parseOptionsResult.IsSuccess)
-                {
-                    provisionResult.EndUserMessage = parseOptionsResult.EndUserMessage;
-                    return provisionResult;
-                }
+                // to minimize the change, we need to take the DeveloperParameters property and convert it to the S3DeveloperOptions class
+                var devOptions = S3DeveloperOptions.ParseWithParameters(developerParameters);
 
-                var establishClientResult = EstablishClient(manifest, S3DeveloperOptions.Parse(developerOptions), out client);
+                // we're going to have to change this stuff here.
+                //var parseOptionsResult = ParseDevOptions(developer, out devOptions);
+                //if (!parseOptionsResult.IsSuccess)
+                //{
+                //    provisionResult.EndUserMessage = parseOptionsResult.EndUserMessage;
+                //    return provisionResult;
+                //}
+
+                // this is a reference change
+                //var establishClientResult = EstablishClient(manifest, S3DeveloperOptions.Parse(developerOptions), out client);
+
+                // we'll change this underlying method
+                var establishClientResult = EstablishClient(manifest, devOptions, out client);
+
                 if (!establishClientResult.IsSuccess)
                 {
                     provisionResult.EndUserMessage = establishClientResult.EndUserMessage;
@@ -113,16 +120,22 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                     provisionResult.EndUserMessage = "We aren't getting the bucket filtered here correctly.";
                     return provisionResult;
                 }
-
-                provisionResult.ConnectionData = "BucketName=" + devOptions.BucketName;
+                // not adding connection info object here.
+                var connInfo = new S3ConnectionInfo
+                {
+                    BucketName = devOptions.BucketName
+                };
+                provisionResult.ConnectionData = connInfo.ToString();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.StackTrace);
                 Log.Error(e.Message + "\n" + e.StackTrace);
+                provisionResult.IsSuccess = false;
                 provisionResult.EndUserMessage = e.Message + "\n" + e.StackTrace;
+                return provisionResult;
             }
-
+            //
             provisionResult.IsSuccess = true;
             return provisionResult;
         }
@@ -132,9 +145,9 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
         // Output: OperationResult
         public override OperationResult Test(AddonTestRequest request)
         {
-            var provisionRequest = new AddonProvisionRequest { Manifest = request.Manifest, DeveloperOptions = request.DeveloperOptions };
+            var provisionRequest = new AddonProvisionRequest { Manifest = request.Manifest, DeveloperParameters = request.DeveloperParameters };
             var manifest = request.Manifest;
-            var developerOptions = request.DeveloperOptions;
+            var developerParameters = request.DeveloperParameters;
             var testResult = new OperationResult { IsSuccess = false };
             var testProgress = "";
 
@@ -148,7 +161,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                     return testResult;
                 }
 
-                var parseOptionsResult = ParseDevOptions(developerOptions, out devOptions);
+                var parseOptionsResult = TestDeveloperParameters(developerParameters, out devOptions);
                 if (!parseOptionsResult.IsSuccess)
                 {
                     return parseOptionsResult;
@@ -178,7 +191,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                     testResult.EndUserMessage += result.ConnectionData + "\n";
                     testResult.EndUserMessage += result.EndUserMessage + "\n";
 
-                    var depResult = Deprovision(new AddonDeprovisionRequest { ConnectionData = result.ConnectionData, DeveloperOptions = provisionRequest.DeveloperOptions, Manifest = provisionRequest.Manifest });
+                    var depResult = Deprovision(new AddonDeprovisionRequest { ConnectionData = result.ConnectionData, DeveloperParameters = provisionRequest.DeveloperParameters, Manifest = provisionRequest.Manifest });
                     if (depResult == null)
                     {
                         throw new ArgumentNullException("request");
@@ -206,8 +219,11 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
 
             bool requireCreds;
             var manifestprops = manifest.GetProperties().ToDictionary(x => x.Key, x => x.Value);
-            var accessKey = manifestprops["AWSClientKey"];
-            var secretAccessKey = manifestprops["AWSSecretKey"];
+            //var accessKey = manifestprops["AWSClientKey"];
+            var accessKey = manifest.ProvisioningUsername;
+            //var secretAccessKey = manifestprops["AWSSecretKey"];
+            var secretAccessKey = manifest.ProvisioningPassword;
+            var regionEndpoint = AWSUtils.ParseRegionEndpoint(manifest.ProvisioningLocation);
 
             var prop =
                 manifest.Properties.First(
@@ -226,10 +242,6 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                     };
                     return result;
                 }
-
-                //accessKey = devOptions.AccessKey;
-                //secretAccessKey = devOptions.SecretAccessKey;
-                //regionEndpoint = devOptions.RegionEndpont;
             }
             var config = new AmazonS3Config { ServiceURL = @"http://s3.amazonaws.com" };
             client = new AmazonS3Client(accessKey, secretAccessKey, config);
@@ -242,25 +254,22 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
             return !(string.IsNullOrWhiteSpace(devOptions.AccessKey) || string.IsNullOrWhiteSpace(devOptions.SecretAccessKey));
         }
 
-        private static OperationResult ParseDevOptions(string developerOptions, out S3DeveloperOptions devOptions)
+        private static OperationResult TestDeveloperParameters(IEnumerable<AddonParameter> devParams, out S3DeveloperOptions devOptions)
         {
-            devOptions = null;
-            var result = new OperationResult { IsSuccess = false };
-            var progress = "";
-
-            try
+            devOptions = new S3DeveloperOptions();
+            var result = new OperationResult();
+            foreach (var param in devParams)
             {
-                progress += "Parsing developer options...\n";
-                devOptions = S3DeveloperOptions.Parse(developerOptions);
+                if (param.Key.ToLowerInvariant().Equals("bucketname"))
+                {
+                    if (param.Value.Length > 0)
+                    {
+                        // this is all of the required params we need, return true;
+                        result.IsSuccess = true;
+                        devOptions.BucketName = param.Value;
+                    }
+                }
             }
-            catch (ArgumentException e)
-            {
-                result.EndUserMessage = e.Message;
-                return result;
-            }
-
-            result.IsSuccess = true;
-            result.EndUserMessage = progress;
             return result;
         }
 
@@ -279,15 +288,11 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                 return false;
             }
 
-            if (string.IsNullOrWhiteSpace(manifest.ProvisioningUsername) ||
-                string.IsNullOrWhiteSpace(manifest.ProvisioningPassword))
-            {
-                testResult.IsSuccess = false;
-                testResult.EndUserMessage = "Missing credentials 'provisioningUsername' & 'provisioningPassword' . These values needs to be provided as part of the manifest";
-                return false;
-            }
-
-            return true;
+            if (!string.IsNullOrWhiteSpace(manifest.ProvisioningUsername) &&
+                !string.IsNullOrWhiteSpace(manifest.ProvisioningPassword)) return true;
+            testResult.IsSuccess = false;
+            testResult.EndUserMessage = "Missing credentials 'provisioningUsername' & 'provisioningPassword' . These values needs to be provided as part of the manifest";
+            return false;
         }
     }
 }

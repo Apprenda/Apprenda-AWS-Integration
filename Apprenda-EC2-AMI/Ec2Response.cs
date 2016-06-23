@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Apprenda.SaaSGrid.Addons.AWS.EC2
 {
-    internal class Ec2Response
+    internal class EC2Response
     {
         internal int code { get; set; }
 
