@@ -40,7 +40,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
         public override OperationResult Deprovision(AddonDeprovisionRequest request)
         {
             var connectionData = request.ConnectionData;
-            var deprovisionResult = new ProvisionAddOnResult(connectionData);
+            var deprovisionResult = new OperationResult();
             var manifest = request.Manifest;
             var devParameters = request.DeveloperParameters;
             try
@@ -56,36 +56,18 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                     return deprovisionResult;
                 }
 
-                var response =
-                    client.DeleteBucket(new DeleteBucketRequest
-                    {
-                        BucketName = devOptions.BucketName
-                    });
-                if (response.HttpStatusCode.Equals(HttpStatusCode.OK))
+                client.DeleteBucket(new DeleteBucketRequest
                 {
-                    while (true)
-                    {
-                        var verificationResponse = client.ListBuckets(new ListBucketsRequest());
-                        if (verificationResponse.Buckets.All(x => x.BucketName != conInfo.BucketName))
-                        {
-                            deprovisionResult.IsSuccess = true;
-                            deprovisionResult.EndUserMessage = "Successfully deleted bucket: " + conInfo.BucketName;
-                            return deprovisionResult;
-                        } 
-                    }
-                }
-                else
-                {
-                    deprovisionResult.EndUserMessage = "We sent the deleted the bucket, but didn't get confirmation back yet. Check S3 to ensure bucket was deleted.";
-                }
+                    BucketName = devOptions.BucketName
+                });
+                deprovisionResult.IsSuccess = true;
+                deprovisionResult.EndUserMessage = "Sent request to delete S3 bucket: " + conInfo.BucketName;
+                return deprovisionResult;
             }
             catch (Exception e)
             {
-                deprovisionResult.EndUserMessage =
-                    "There was an error while deprovisioning your addon. Please check with your platform operator. \n";
-                deprovisionResult.EndUserMessage += e.Message;
+                deprovisionResult.EndUserMessage = e.Message;
             }
-
             return deprovisionResult;
         }
 
@@ -181,11 +163,6 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                 S3DeveloperOptions devOptions;
 
                 testProgress += "Evaluating required manifest properties...\n";
-                if (!ValidateManifest(manifest, out testResult))
-                {
-                    return testResult;
-                }
-
                 var parseOptionsResult = TestDeveloperParameters(developerParameters, out devOptions);
                 if (!parseOptionsResult.IsSuccess)
                 {
@@ -197,7 +174,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                 {
                     testProgress += "Establishing connection to AWS...\n";
                     AmazonS3Client client;
-                    var establishClientResult = EstablishClient(manifest, devOptions, out client);
+                    var establishClientResult = this.EstablishClient(manifest, devOptions, out client);
                     if (!establishClientResult.IsSuccess)
                     {
                         return establishClientResult;
@@ -262,43 +239,10 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
             var accessKey = manifest.ProvisioningUsername;
             var secretAccessKey = manifest.ProvisioningPassword;
             var regionEndpoint = AWSUtils.ParseRegionEndpoint(manifest.ProvisioningLocation);
-
-            var prop =
-                manifest.Properties.First(
-                    p => p.Key.Equals("requireDevCredentials", StringComparison.InvariantCultureIgnoreCase));
-
-            if (bool.TryParse(prop.Value, out requireCreds) && requireCreds)
-            {
-                if (!ValidateDevCreds(devOptions))
-                {
-                    client = null;
-                    result = new OperationResult
-                    {
-                        IsSuccess = false,
-                        EndUserMessage =
-                            "The add on requires that developer credentials are specified but none were provided."
-                    };
-                    return result;
-                }
-            }
             var config = new AmazonS3Config { ServiceURL = @"http://s3.amazonaws.com" };
             client = new AmazonS3Client(accessKey, secretAccessKey, config);
             result = new OperationResult { IsSuccess = true };
             return result;
-        }
-
-        /// <summary>
-        /// The validate dev creds.
-        /// </summary>
-        /// <param name="devOptions">
-        /// The dev options.
-        /// </param>
-        /// <returns>
-        /// The <see cref="bool"/>.
-        /// </returns>
-        private static bool ValidateDevCreds(S3DeveloperOptions devOptions)
-        {
-            return !(string.IsNullOrWhiteSpace(devOptions.AccessKey) || string.IsNullOrWhiteSpace(devOptions.SecretAccessKey));
         }
 
         /// <summary>
@@ -330,40 +274,6 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                 }
             }
             return result;
-        }
-
-        /// <summary>
-        /// The validate manifest.
-        /// </summary>
-        /// <param name="manifest">
-        /// The manifest.
-        /// </param>
-        /// <param name="testResult">
-        /// The test result.
-        /// </param>
-        /// <returns>
-        /// The <see cref="bool"/>.
-        /// </returns>
-        private static bool ValidateManifest(AddonManifest manifest, out OperationResult testResult)
-        {
-            testResult = new OperationResult();
-
-            var prop =
-                    manifest.Properties.FirstOrDefault(
-                        p => p.Key.Equals("requireDevCredentials", StringComparison.InvariantCultureIgnoreCase));
-
-            if (prop == null || !prop.HasValue)
-            {
-                testResult.IsSuccess = false;
-                testResult.EndUserMessage = "Missing required property 'requireDevCredentials'. This property needs to be provided as part of the manifest";
-                return false;
-            }
-
-            if (!string.IsNullOrWhiteSpace(manifest.ProvisioningUsername) &&
-                !string.IsNullOrWhiteSpace(manifest.ProvisioningPassword)) return true;
-            testResult.IsSuccess = false;
-            testResult.EndUserMessage = "Missing credentials 'provisioningUsername' & 'provisioningPassword' . These values needs to be provided as part of the manifest";
-            return false;
         }
     }
 }

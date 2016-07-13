@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>506957f7-74a9-46f3-a199-cdbbde76c40d</ProjectGuid>
+    <ProjectGuid>{DD979713-796B-4273-A268-784BF53A57E5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Apprenda_AWS.Test</RootNamespace>
-    <AssemblyName>Apprenda_AWS.Test</AssemblyName>
+    <AssemblyName>Apprenda-AWS.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,7 +35,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=3.4.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.4.1\lib\net45\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SaaSGrid.API, Version=6.5.1.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -50,8 +56,46 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="S3TestHarness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Apprenda-AWS-EMR\Amazon EMR AddOn\Apprenda-EMR.csproj">
+      <Project>{df55a13a-863b-4de2-99c4-fe7a0f86c2db}</Project>
+      <Name>Apprenda-EMR</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Apprenda-AWS-Glacier\Amazon Glacier AddOn\Apprenda-Glacier.csproj">
+      <Project>{78545fff-b690-4fc3-b140-970c2e5e8180}</Project>
+      <Name>Apprenda-Glacier</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Apprenda-AWS-RDS\Amazon RDS AddOn\Apprenda-RDS.csproj">
+      <Project>{2a594cb1-d5ef-4d5e-b7d6-205a3e278b2b}</Project>
+      <Name>Apprenda-RDS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Apprenda-AWS-Redshift\Amazon Redshift Addon\Apprenda-Redshift.csproj">
+      <Project>{22a64b89-56d8-445e-86e9-f8a03d11c485}</Project>
+      <Name>Apprenda-Redshift</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Apprenda-AWS-S3\Amazon S3 AddOn\Apprenda-S3.csproj">
+      <Project>{45464494-e0e1-44e2-b3f5-68bd5660b921}</Project>
+      <Name>Apprenda-S3</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Apprenda-AWS-SNS\Amazon SNS AddOn\Apprenda-SNS.csproj">
+      <Project>{028a908d-b002-493c-b0d8-dd8d23741dc8}</Project>
+      <Name>Apprenda-SNS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Apprenda-AWS-SQS\Amazon SQS AddOn\Apprenda-SQS.csproj">
+      <Project>{ed935b62-0b85-4b38-bcf6-b9f9beac8704}</Project>
+      <Name>Apprenda-SQS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Apprenda-EC2-AMI\Apprenda-EC2-AMI.csproj">
+      <Project>{d74d6061-9d55-4c37-aa8b-cea6356d7108}</Project>
+      <Name>Apprenda-EC2-AMI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

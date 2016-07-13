@@ -2,6 +2,7 @@
 <addonManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xmlns="http://schemas.apprenda.com/AddonManifest"
+               xsi:schemaLocation="http://schemas.apprenda.com/AddonManifest http://apprenda.com/schemas/platform/6.0/AddonManifest.xsd"
                name="Amazon S3"
                description="Amazon S3 is storage for the Internet. It is designed to make web-scale computing easier for developers."
                deploymentNotes="Addon is certified to work on Apprenda 6.0.x and is backwards compatible."
@@ -9,12 +10,11 @@
                vendor="Apprenda"
                author="Chris Dutra"
                version="2.0"
-               provisioningUsername=""
-               provisioningPassword=""
-               provisioningLocation=""
+               provisioningUsername="AKIAIMG5ND6ZFBJ4BNTQ"
+               provisioningPassword="jmKOhCVfUOUhtGDZfESab4M31V2KT6DxX1wNOnNC"
+               provisioningLocation="us-east-1"
                manifestVersion="2">
   <properties>
-    <property key="requireDevCredentials" displayName="Require Developer Credentials" description="This value should always be false, as we authenticate via oauth2 keys." value="false" />
     <property key="BucketRegionName" displayName="S3 Bucket Region Name" description="The bucket region locality expressed using the name of the region. When set, this will determine where your data will reside in S3. Valid values: us-east-1, us-west-1, us-west-2, eu-west-1, ap-southeast-1, ap-southeast-2, ap-northeast-1, sa-east-1" value="us-east-1" />
     <property key="CannedACL" displayName="Canned ACL" description="The canned ACL to apply to the bucket. Should be set my Platform Opertator as a default" value="" />
     <property key="Grants" displayName="Grants" description="Gets additional access control lists for requests to this S3 bucket. See documentation for details" value="" />

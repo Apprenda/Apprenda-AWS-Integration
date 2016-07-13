@@ -17,14 +17,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda-SNS", "..\..\Appre
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda-SQS", "..\..\Apprenda-AWS-SQS\Amazon SQS AddOn\Apprenda-SQS.csproj", "{ED935B62-0B85-4B38-BCF6-B9F9BEAC8704}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packaging Scripts", "Packaging Scripts", "{5A0802D2-00E5-45CC-A2A8-3C54F5071039}"
-	ProjectSection(SolutionItems) = preProject
-		Package.bat = Package.bat
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda-EC2-AMI", "..\..\Apprenda-EC2-AMI\Apprenda-EC2-AMI.csproj", "{D74D6061-9D55-4C37-AA8B-CEA6356D7108}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AWS-Utilities", "AWS-Utilities\AWS-Utilities.csproj", "{7672A36C-D531-4FCB-8071-9054B301D087}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda-AWS.Test", "Apprenda-AWS.Test\Apprenda-AWS.Test.csproj", "{DD979713-796B-4273-A268-784BF53A57E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +65,10 @@ Global
 		{7672A36C-D531-4FCB-8071-9054B301D087}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7672A36C-D531-4FCB-8071-9054B301D087}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7672A36C-D531-4FCB-8071-9054B301D087}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD979713-796B-4273-A268-784BF53A57E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD979713-796B-4273-A268-784BF53A57E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD979713-796B-4273-A268-784BF53A57E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD979713-796B-4273-A268-784BF53A57E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
