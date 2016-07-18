@@ -56,6 +56,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="RDSTestHarness.cs" />
     <Compile Include="SQSTestHarness.cs" />
     <Compile Include="S3TestHarness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

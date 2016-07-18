@@ -81,8 +81,8 @@ namespace Apprenda.SaaSGrid.Addons.AWS.SQS
         {
             // i think this is a bug. but I'm going to throw an empty string to it to clear the warning.
             var provisionResult = new ProvisionAddOnResult("");
-            AddonManifest manifest = request.Manifest;
-            SQSDeveloperOptions options = SQSDeveloperOptions.Parse(request.DeveloperParameters);
+            var manifest = request.Manifest;
+            var options = SQSDeveloperOptions.Parse(request.DeveloperParameters);
 
             try
             {

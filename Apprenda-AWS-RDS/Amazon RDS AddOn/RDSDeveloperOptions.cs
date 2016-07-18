@@ -1,23 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Apprenda.SaaSGrid.Addons.AWS.RDS
+﻿namespace Apprenda.SaaSGrid.Addons.AWS.RDS
 {
-    public class RDSDeveloperOptions
+    using System;
+    using System.Collections.Generic;
+    using Apprenda.SaaSGrid.Addons;
+
+    public class RdsDeveloperOptions
     {
-        public bool MultiAz { get; set; }
-
-        public List<Amazon.RDS.Model.Tag> Tags { get; set; }
-
-        public List<string> VpcSecurityGroupIds { get; set; }
-
-        public string DbParameterGroupName { get; set; }
-
-        // Amazon Credentials. Required for IAM.
-        public string AccessKey { get; private set; }
-
-        public string SecretAccessKey { get; private set; }
-
         // Amazon RDS Options required for
         public int AllocatedStorage { get; private set; }
 
@@ -35,39 +23,45 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
 
         public string EngineVersion { get; private set; }
 
-        public string DBAUsername { get; private set; }
+        public string DbaUsername { get; private set; }
 
-        public string DBAPassword { get; private set; }
+        public string DbaPassword { get; private set; }
 
         public string LicenseModel { get; private set; }
 
         public int Port { get; set; }
 
-        public int ProvisionedIOPs { get; set; }
+        public int ProvisionedIoPs { get; set; }
 
-        public List<String> DBSecurityGroups { get; set; }
+        public List<string> DbSecurityGroups { get; set; }
 
-        public String OptionGroup { get; set; }
+        public string OptionGroup { get; set; }
 
-        public String PreferredMXWindow { get; set; }
+        public string PreferredMxWindow { get; set; }
 
-        public String PreferredBackupWindow { get; set; }
+        public string PreferredBackupWindow { get; set; }
 
         private int NumberOfBackups { get; set; }
 
-        public String SubnetGroupName { get; set; }
+        public string SubnetGroupName { get; set; }
 
         public bool PubliclyAccessible { get; set; }
 
-        public String CharacterSet { get; set; }
+        public string CharacterSet { get; set; }
 
         public int BackupRetentionPeriod { get; set; }
 
+        public bool SkipFinalSnapshot { get; set; }
+
         // Method takes in a string and parses it into a DeveloperOptions class.
-        public static RDSDeveloperOptions Parse(IEnumerable<AddonParameter> parameters)
+        public static RdsDeveloperOptions Parse(IEnumerable<AddonParameter> _parameters, AddonManifest _manifest)
         {
-            var options = new RDSDeveloperOptions();
-            foreach (var addonparam in parameters)
+            var options = new RdsDeveloperOptions();
+            foreach (var manifestp in _manifest.Properties)
+            {
+                MapToOption(options, manifestp.Key.ToLowerInvariant(), manifestp.Value);
+            }
+            foreach (var addonparam in _parameters)
             {
                 MapToOption(options, addonparam.Key.ToLowerInvariant(), addonparam.Value);
             }
@@ -75,105 +69,109 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
         }
 
         // Interior method takes in instance of DeveloperOptions (aptly named existingOptions) and maps them to the proper value. In essence, a setter method.
-        private static void MapToOption(RDSDeveloperOptions existingOptions, string key, string value)
+        private static void MapToOption(RdsDeveloperOptions _existingOptions, string _key, string _value)
         {
-            if ("accesskey".Equals(key))
+            if ("availabilityzone".Equals(_key))
             {
-                existingOptions.AccessKey = value;
+                _existingOptions.AvailabilityZone = _value;
                 return;
             }
 
-            if ("secretkey".Equals(key))
+            if ("dbinstanceclass".Equals(_key))
             {
-                existingOptions.SecretAccessKey = value;
+                _existingOptions.DbInstanceClass = _value;
                 return;
             }
 
-            if ("availabilityzone".Equals(key))
+            if ("dbinstanceidentifier".Equals(_key))
             {
-                existingOptions.AvailabilityZone = value;
+                _existingOptions.DbInstanceIdentifier = _value;
                 return;
             }
 
-            if ("dbinstanceclass".Equals(key))
+            if ("dbname".Equals(_key))
             {
-                existingOptions.DbInstanceClass = value;
+                _existingOptions.DbName = _value;
                 return;
             }
 
-            if ("dbinstanceidentifier".Equals(key))
+            if ("engine".Equals(_key))
             {
-                existingOptions.DbInstanceIdentifier = value;
+                _existingOptions.Engine = _value;
                 return;
             }
 
-            if ("dbname".Equals(key))
+            if ("engineversion".Equals(_key))
             {
-                existingOptions.DbName = value;
+                _existingOptions.EngineVersion = _value;
+            }
+
+            if ("licensemodel".Equals(_key))
+            {
+                _existingOptions.LicenseModel = _value;
                 return;
             }
 
-            if ("engine".Equals(key))
+            if ("dbausername".Equals(_key))
             {
-                existingOptions.Engine = value;
+                _existingOptions.DbaUsername = _value;
                 return;
             }
 
-            if ("engineversion".Equals(key))
+            if ("dbapassword".Equals(_key))
             {
-                existingOptions.EngineVersion = value;
-            }
-
-            if ("licensemodel".Equals(key))
-            {
-                existingOptions.LicenseModel = value;
+                _existingOptions.DbaPassword = _value;
                 return;
             }
 
-            if ("dbausername".Equals(key))
-            {
-                existingOptions.DBAUsername = value;
-                return;
-            }
-
-            if ("dbapassword".Equals(key))
-            {
-                existingOptions.DBAPassword = value;
-                return;
-            }
-
-            if ("allocatedstorage".Equals(key))
+            if ("allocatedstorage".Equals(_key))
             {
                 int result;
-                if (!int.TryParse(value, out result))
+                if (!int.TryParse(_value, out result))
                 {
-                    throw new ArgumentException(string.Format("The developer option '{0}' can only have an integer value but '{1}' was used instead.", key, value));
+                    throw new ArgumentException(string.Format("The developer option '{0}' can only have an integer value but '{1}' was used instead.", _key, _value));
                 }
-                existingOptions.AllocatedStorage = result;
+                _existingOptions.AllocatedStorage = result;
                 return;
             }
 
-            if ("autominorversionupgrade".Equals(key))
+            if ("autominorversionupgrade".Equals(_key))
             {
                 bool result;
-                if (!bool.TryParse(value, out result))
+                if (!bool.TryParse(_value, out result))
                 {
-                    throw new ArgumentException(string.Format("The developer option '{0}' can only have a value of true|false but '{1}' was used instead.", key, value));
+                    throw new ArgumentException(string.Format("The developer option '{0}' can only have a value of true|false but '{1}' was used instead.", _key, _value));
                 }
-                existingOptions.AutoMinorVersionUpgrade = result;
+                _existingOptions.AutoMinorVersionUpgrade = result;
                 return;
             }
 
-            if (!"numberofbackups".Equals(key))
-                throw new ArgumentException(
-                    string.Format("The developer option '{0}' was not expected and is not understood.", key));
-            int iresult;
-            if (!int.TryParse(value, out iresult))
+            if ("numberofbackups".Equals(_key))
             {
-                throw new ArgumentException(string.Format("The developer option '{0}' must be an integer, not '{1}'", key, value));
+                int iresult;
+                if (!int.TryParse(_value, out iresult))
+                {
+                    throw new ArgumentException(string.Format("The developer option '{0}' must be an integer, not '{1}'", _key, _value));
+                }
+                _existingOptions.NumberOfBackups = iresult;
+                return;
             }
-            existingOptions.NumberOfBackups = iresult;
-            return;
+            
+            if ("skipfinalsnapshot".Equals(_key))
+            {
+                bool result;
+                if (!bool.TryParse(_value, out result))
+                {
+                    throw new ArgumentException(string.Format("The developer option '{0}' can only have a value of true|false but '{1}' was used instead.", _key, _value));
+                }
+                _existingOptions.SkipFinalSnapshot = result;
+                return;
+            }
+
+            // default behavior - if nothing parses, then throw exception.
+            throw new ArgumentException("The developer option '{0}' did not parse. Please check your configuration.", _key);
+            
         }
+
     }
 }

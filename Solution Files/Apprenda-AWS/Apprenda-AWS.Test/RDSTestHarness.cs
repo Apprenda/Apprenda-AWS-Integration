@@ -3,21 +3,16 @@
     using System.Collections.Generic;
     using System.Configuration;
     using Apprenda.SaaSGrid.Addons;
-    using Apprenda.SaaSGrid.Addons.AWS.SQS;
+    using Apprenda.SaaSGrid.Addons.AWS.S3;
     using NUnit.Framework;
 
     [TestFixture]
-    public class SQSTestHarness
+    // ReSharper disable once InconsistentNaming
+    public class RDSTestHarness
     {
         private AddonProvisionRequest ProvisionRequest { get; set; }
         private AddonDeprovisionRequest DeprovisionRequest { get; set; }
         private AddonTestRequest TestRequest { get; set; }
-
-        [OneTimeSetUp]
-        public void ConfigureS3ForTests()
-        {
-            
-        }
 
         [SetUp]
         public void SetupManifest()
@@ -31,14 +26,14 @@
             this.TestRequest = new AddonTestRequest { Manifest = SetupPropertiesAndParameters() };
         }
 
-        private static IEnumerable<AddonParameter> SetUpParameters()
+        private static List<AddonParameter> SetUpParameters()
         {
             var paramConstructor = new List<AddonParameter>
             {
                 new AddonParameter
                 {
-                    Key = "queuename",
-                    Value = ConfigurationManager.AppSettings["queuename"]
+                    Key = "bucketname",
+                    Value = ConfigurationManager.AppSettings["bucketname"]
                 }
             };
             return paramConstructor;
@@ -77,12 +72,13 @@
                 DeveloperHelp = "",
                 IsEnabled = true,
                 ManifestVersionString = "2.0",
-                Name = "SQS",
+                Name = "RDS",
 
                 // we'll handle parameters below.
                 Parameters = new ParameterList
                 {
                     AllowUserDefinedParameters = "true",
+                    // ReSharper disable once CoVariantArrayConversion
                     Items = plist.ToArray()
                 },
                 Properties = props,
@@ -123,7 +119,7 @@
         public void ProvisionTest()
         {
             this.ProvisionRequest = new AddonProvisionRequest { Manifest = SetupPropertiesAndParameters(), DeveloperParameters = SetUpParameters() };
-            var output = new SQSAddOn().Provision(this.ProvisionRequest);
+            var output = new S3Addon().Provision(this.ProvisionRequest);
             Assert.That(output, Is.TypeOf<ProvisionAddOnResult>());
             Assert.That(output.IsSuccess, Is.EqualTo(true));
             Assert.That(output.ConnectionData.Length, Is.GreaterThan(0));
@@ -132,15 +128,16 @@
         [Test]
         public void DeProvisionTest()
         {
-
+            this.ProvisionRequest = new AddonProvisionRequest { Manifest = SetupPropertiesAndParameters(), DeveloperParameters = SetUpParameters() };
+            var provOutput = new S3Addon().Provision(this.ProvisionRequest);
             this.DeprovisionRequest = new AddonDeprovisionRequest()
             {
                 Manifest = SetupPropertiesAndParameters(),
                 DeveloperParameters = SetUpParameters()
             };
-            this.DeprovisionRequest.ConnectionData =
-                new SQSConnectionInfo() { QueueName = ConfigurationManager.AppSettings["queueName"]}.ToString();
-            var output = new SQSAddOn().Deprovision(this.DeprovisionRequest);
+            // take the connection data from the provisioned request.
+            this.DeprovisionRequest.ConnectionData = provOutput.ConnectionData;
+            var output = new S3Addon().Deprovision(this.DeprovisionRequest);
             Assert.That(output, Is.TypeOf<OperationResult>());
             Assert.That(output.IsSuccess, Is.EqualTo(true));
         }
@@ -153,7 +150,7 @@
                 Manifest = SetupPropertiesAndParameters(),
                 DeveloperParameters = SetUpParameters()
             };
-            var output = new SQSAddOn().Test(this.TestRequest);
+            var output = new S3Addon().Test(this.TestRequest);
             Assert.That(output, Is.TypeOf<OperationResult>());
             Assert.That(output.IsSuccess, Is.EqualTo(true));
         }

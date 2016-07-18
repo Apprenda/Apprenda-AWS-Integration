@@ -1,41 +1,32 @@
-﻿using Amazon;
-using Amazon.RDS;
-using Amazon.RDS.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-
-namespace Apprenda.SaaSGrid.Addons.AWS.RDS
+﻿namespace Apprenda.SaaSGrid.Addons.AWS.RDS
 {
+    using Amazon;
+    using Amazon.RDS;
+    using Amazon.RDS.Model;
+    using System;
+    using System.Linq;
+    using System.Threading;
+
     public class RdsAddOn : AddonBase
     {
         // Deprovision RDS Instance
         // Input: AddonDeprovisionRequest request
         // Output: OperationResult
-        public override OperationResult Deprovision(AddonDeprovisionRequest request)
+        public override OperationResult Deprovision(AddonDeprovisionRequest _request)
         {
-            var connectionData = request.ConnectionData;
+            var connectionData = _request.ConnectionData;
             var deprovisionResult = new ProvisionAddOnResult(connectionData);
-            var manifest = request.Manifest;
-            var devOptions = request.DeveloperParameters;
+            var manifest = _request.Manifest;
+            var devOptions = _request.DeveloperParameters;
             try
             {
-                AmazonRDSClient client;
                 var conInfo = RDSConnectionInfo.Parse(connectionData);
-                var developerOptions = RDSDeveloperOptions.Parse(devOptions);
-
-                var establishClientResult = EstablishClient(manifest, developerOptions, out client);
-                if (!establishClientResult.IsSuccess)
-                {
-                    deprovisionResult.EndUserMessage = establishClientResult.EndUserMessage;
-                    return deprovisionResult;
-                }
-
+                var developerOptions = RdsDeveloperOptions.Parse(devOptions, manifest);
+                var client = EstablishClient(manifest);
                 var response = client.DeleteDBInstance(new DeleteDBInstanceRequest
                         {
                             DBInstanceIdentifier = conInfo.DbInstanceIdentifier,
-                            SkipFinalSnapshot = true
+                            SkipFinalSnapshot = developerOptions.SkipFinalSnapshot
                         });
                 if (response.DBInstance != null)
                 {
@@ -69,32 +60,16 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
         // Provision RDS Instance
         // Input: AddonDeprovisionRequest request
         // Output: ProvisionAddOnResult
-        public override ProvisionAddOnResult Provision(AddonProvisionRequest request)
+        public override ProvisionAddOnResult Provision(AddonProvisionRequest _request)
         {
             var provisionResult = new ProvisionAddOnResult("");
-            var manifest = request.Manifest;
-            var developerOptions = request.DeveloperParameters;
-
+            
             try
             {
-                AmazonRDSClient client;
-                RDSDeveloperOptions devOptions;
-
-                var parseOptionsResult = ParseDevOptions(developerOptions, out devOptions);
-                if (!parseOptionsResult.IsSuccess)
-                {
-                    provisionResult.EndUserMessage = parseOptionsResult.EndUserMessage;
-                    return provisionResult;
-                }
-
-                var establishClientResult = EstablishClient(manifest, devOptions, out client);
-                if (!establishClientResult.IsSuccess)
-                {
-                    provisionResult.EndUserMessage = establishClientResult.EndUserMessage;
-                    return provisionResult;
-                }
-
-                var response = client.CreateDBInstance(CreateDbInstanceRequest(devOptions));
+                var devOptions = RdsDeveloperOptions.Parse(_request.DeveloperParameters, _request.Manifest);
+                var client = EstablishClient(_request.Manifest);
+                
+                var response = client.CreateDBInstance(this.CreateDbInstanceRequest(devOptions));
                 if (response.DBInstance != null)
                 {
                     do
@@ -131,45 +106,27 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
         // Testing Instance
         // Input: AddonTestRequest request
         // Output: OperationResult
-        public override OperationResult Test(AddonTestRequest request)
+        public override OperationResult Test(AddonTestRequest _request)
         {
-            var manifest = request.Manifest;
-            var developerOptions = request.DeveloperParameters;
+            var manifest = _request.Manifest;
             var testResult = new OperationResult { IsSuccess = false };
-            var testProgress = "";
 
             if (manifest.Properties != null && manifest.Properties.Any())
             {
-                RDSDeveloperOptions devOptions;
-
-                testProgress += "Evaluating required manifest properties...\n";
-                if (!ValidateManifest(manifest, out testResult))
+                if (!ValidateManifest(manifest))
                 {
+                    testResult.EndUserMessage = "Manifest failed validation. Check your settings.";
                     return testResult;
                 }
 
-                var parseOptionsResult = ParseDevOptions(developerOptions, out devOptions);
-                if (!parseOptionsResult.IsSuccess)
-                {
-                    return parseOptionsResult;
-                }
-                testProgress += parseOptionsResult.EndUserMessage;
+                //var devOptions = RdsDeveloperOptions.Parse(_request.DeveloperParameters, _request.Manifest);
 
                 try
                 {
-                    testProgress += "Establishing connection to AWS...\n";
-                    AmazonRDSClient client;
-                    var establishClientResult = EstablishClient(manifest, devOptions, out client);
-                    if (!establishClientResult.IsSuccess)
-                    {
-                        return establishClientResult;
-                    }
-                    testProgress += establishClientResult.EndUserMessage;
-
+                    var client = EstablishClient(manifest);
                     client.DescribeDBInstances();
-                    testProgress += "Successfully passed all testing criteria!";
                     testResult.IsSuccess = true;
-                    testResult.EndUserMessage = testProgress;
+                    testResult.EndUserMessage = "Tests completed.";
                 }
                 catch (Exception e)
                 {
@@ -178,150 +135,83 @@ namespace Apprenda.SaaSGrid.Addons.AWS.RDS
             }
             else
             {
-                testResult.EndUserMessage = "Missing required manifest properties (requireDevCredentials)";
+                testResult.EndUserMessage = "Missing required manifest properties. Please check to make sure your settings are valid.";
             }
-
             return testResult;
         }
 
-        private bool ValidateManifest(AddonManifest manifest, out OperationResult testResult)
+        private static bool ValidateManifest(IAddOnDefinition _manifest)
         {
-            testResult = new OperationResult();
-
-            var prop =
-                    manifest.Properties.FirstOrDefault(
-                        p => p.Key.Equals("requireDevCredentials", StringComparison.InvariantCultureIgnoreCase));
-
-            if (prop == null || !prop.HasValue)
-            {
-                testResult.IsSuccess = false;
-                testResult.EndUserMessage = "Missing required property 'requireDevCredentials'. This property needs to be provided as part of the manifest";
-                return false;
-            }
-
-            if (string.IsNullOrWhiteSpace(manifest.ProvisioningUsername) ||
-                string.IsNullOrWhiteSpace(manifest.ProvisioningPassword))
-            {
-                testResult.IsSuccess = false;
-                testResult.EndUserMessage = "Missing credentials 'provisioningUsername' & 'provisioningPassword' . These values needs to be provided as part of the manifest";
-                return false;
-            }
-
-            return true;
+            return !string.IsNullOrWhiteSpace(_manifest.ProvisioningUsername)
+                   && !string.IsNullOrWhiteSpace(_manifest.ProvisioningPassword);
         }
 
-        private bool ValidateDevCreds(RDSDeveloperOptions devOptions)
+        private static AmazonRDSClient EstablishClient(IAddOnDefinition _manifest)
         {
-            return !(string.IsNullOrWhiteSpace(devOptions.AccessKey) || string.IsNullOrWhiteSpace(devOptions.SecretAccessKey));
+            var accessKey = _manifest.ProvisioningUsername;
+            var secretAccessKey = _manifest.ProvisioningPassword;
+            var location = GetLocation(_manifest.ProvisioningLocation) ?? RegionEndpoint.USEast1;
+            var config = new AmazonRDSConfig { RegionEndpoint = location };
+            return new AmazonRDSClient(accessKey, secretAccessKey, config);
         }
 
-        private OperationResult ParseDevOptions(IEnumerable<AddonParameter> developerOptions, out RDSDeveloperOptions devOptions)
+        private static RegionEndpoint GetLocation(string _provisioningLocation = "")
         {
-            var result = new OperationResult { IsSuccess = false };
-            var progress = "";
-            try
+            switch (_provisioningLocation)
             {
-                progress += "Parsing developer options...\n";
-                devOptions = RDSDeveloperOptions.Parse(developerOptions);
-            }
-            catch (ArgumentException e)
-            {
-                result.EndUserMessage = e.Message;
-                devOptions = null;
-                return result;
+                default:
+                    return RegionEndpoint.USEast1;
             }
 
-            result.IsSuccess = true;
-            result.EndUserMessage = progress;
-            return result;
         }
 
-        private OperationResult EstablishClient(AddonManifest manifest, RDSDeveloperOptions devOptions, out AmazonRDSClient client)
-        {
-            OperationResult result;
-
-            bool requireCreds;
-            var manifestProps = manifest.GetProperties().ToDictionary(x => x.Key, x => x.Value);
-            var accessKey = manifestProps["AWSClientKey"];
-            var secretAccessKey = manifestProps["AWSSecretKey"];
-
-            // we *should* be using this...
-            //var regionEndpoint = manifestProps["AWSRegionEndpoint"];
-
-            var prop =
-                manifest.Properties.First(
-                    p => p.Key.Equals("requireDevCredentials", StringComparison.InvariantCultureIgnoreCase));
-
-            if (bool.TryParse(prop.Value, out requireCreds) && requireCreds)
-            {
-                if (!ValidateDevCreds(devOptions))
-                {
-                    client = null;
-                    result = new OperationResult
-                    {
-                        IsSuccess = false,
-                        EndUserMessage =
-                            "The add on requires that developer credentials are specified but none were provided."
-                    };
-                    return result;
-                }
-
-                accessKey = devOptions.AccessKey;
-                secretAccessKey = devOptions.SecretAccessKey;
-            }
-            var config = new AmazonRDSConfig { RegionEndpoint = RegionEndpoint.USEast1 };
-            client = new AmazonRDSClient(accessKey, secretAccessKey, config);
-            result = new OperationResult { IsSuccess = true };
-            return result;
-        }
-
-        private CreateDBInstanceRequest CreateDbInstanceRequest(RDSDeveloperOptions devOptions)
+        private CreateDBInstanceRequest CreateDbInstanceRequest(RdsDeveloperOptions _devOptions)
         {
             var request = new CreateDBInstanceRequest
             {
                 // These are required values.
-                BackupRetentionPeriod = devOptions.BackupRetentionPeriod,
-                DBParameterGroupName = devOptions.DbParameterGroupName,
-                DBSecurityGroups = devOptions.DBSecurityGroups,
-                DBSubnetGroupName = devOptions.SubnetGroupName,
-                DBInstanceClass = devOptions.DbInstanceClass,
-                DBInstanceIdentifier = devOptions.DbInstanceIdentifier,
-                DBName = devOptions.DbName,
-                Engine = devOptions.Engine,
-                EngineVersion = devOptions.EngineVersion,
-                LicenseModel = devOptions.LicenseModel,
-                MasterUsername = devOptions.DBAUsername,
-                MasterUserPassword = devOptions.DBAPassword,
-                Iops = devOptions.ProvisionedIOPs,
-                MultiAZ = devOptions.MultiAz,
-                OptionGroupName = devOptions.OptionGroup,
-                Port = devOptions.Port,
-                PreferredBackupWindow = devOptions.PreferredBackupWindow,
-                PreferredMaintenanceWindow = devOptions.PreferredMXWindow,
-                PubliclyAccessible = devOptions.PubliclyAccessible,
-                Tags = devOptions.Tags,
-                VpcSecurityGroupIds = devOptions.VpcSecurityGroupIds
+                BackupRetentionPeriod = _devOptions.BackupRetentionPeriod,
+                //DBParameterGroupName = devOptions.DbParameterGroupName,
+                DBSecurityGroups = _devOptions.DbSecurityGroups,
+                DBSubnetGroupName = _devOptions.SubnetGroupName,
+                DBInstanceClass = _devOptions.DbInstanceClass,
+                DBInstanceIdentifier = _devOptions.DbInstanceIdentifier,
+                DBName = _devOptions.DbName,
+                Engine = _devOptions.Engine,
+                EngineVersion = _devOptions.EngineVersion,
+                LicenseModel = _devOptions.LicenseModel,
+                MasterUsername = _devOptions.DbaUsername,
+                MasterUserPassword = _devOptions.DbaPassword,
+                Iops = _devOptions.ProvisionedIoPs,
+                //MultiAZ = devOptions.MultiAz,
+                OptionGroupName = _devOptions.OptionGroup,
+                Port = _devOptions.Port,
+                PreferredBackupWindow = _devOptions.PreferredBackupWindow,
+                PreferredMaintenanceWindow = _devOptions.PreferredMxWindow,
+                PubliclyAccessible = _devOptions.PubliclyAccessible,
+                //Tags = devOptions.Tags,
+                //VpcSecurityGroupIds = devOptions.VpcSecurityGroupIds
             };
 
-            if (!devOptions.MultiAz)
-            {
-                request.AvailabilityZone = devOptions.AvailabilityZone;
-            }
+            //if (!devOptions.MultiAz)
+            //{
+                request.AvailabilityZone = _devOptions.AvailabilityZone;
+            //}
 
             // Oracle DB only parameter
-            if (request.Engine.Equals("Oracle") && devOptions.CharacterSet.Length > 0)
+            if (request.Engine.Equals("Oracle") && _devOptions.CharacterSet.Length > 0)
             {
-                request.CharacterSetName = devOptions.CharacterSet;
+                request.CharacterSetName = _devOptions.CharacterSet;
             }
             // default is 0, if specified change it
-            if (devOptions.AllocatedStorage > 0)
+            if (_devOptions.AllocatedStorage > 0)
             {
-                request.AllocatedStorage = devOptions.AllocatedStorage;
+                request.AllocatedStorage = _devOptions.AllocatedStorage;
             }
             // default is false, if true change it
-            if (devOptions.AutoMinorVersionUpgrade)
+            if (_devOptions.AutoMinorVersionUpgrade)
             {
-                request.AutoMinorVersionUpgrade = devOptions.AutoMinorVersionUpgrade;
+                request.AutoMinorVersionUpgrade = _devOptions.AutoMinorVersionUpgrade;
             }
             return request;
         }

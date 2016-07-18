@@ -73,7 +73,7 @@
                 DeveloperHelp = "",
                 IsEnabled = true,
                 ManifestVersionString = "2.0",
-                Name = "MongoDB",
+                Name = "S3",
 
                 // we'll handle parameters below.
                 Parameters = new ParameterList

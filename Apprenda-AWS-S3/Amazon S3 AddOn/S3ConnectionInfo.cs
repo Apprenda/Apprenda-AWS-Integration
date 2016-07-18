@@ -5,13 +5,13 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
 {
     public class S3ConnectionInfo
     {
-        public String BucketName { get; set; }
+        public string BucketName { get; set; }
 
-        public static S3ConnectionInfo Parse(string connectionInfo)
+        public static S3ConnectionInfo Parse(string _connectionInfo)
         {
             try
             {
-                var info = JsonConvert.DeserializeObject<S3ConnectionInfo>(connectionInfo);
+                var info = JsonConvert.DeserializeObject<S3ConnectionInfo>(_connectionInfo);
                 return info;
             }
             catch (Exception)
