@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Configuration;
     using Apprenda.SaaSGrid.Addons;
-    using Apprenda.SaaSGrid.Addons.AWS.S3;
+    using Apprenda.SaaSGrid.Addons.AWS.RDS;
     using NUnit.Framework;
 
     [TestFixture]
@@ -32,9 +32,20 @@
             {
                 new AddonParameter
                 {
-                    Key = "bucketname",
-                    Value = ConfigurationManager.AppSettings["bucketname"]
-                }
+                    Key = "databasename",
+                    Value = ConfigurationManager.AppSettings["databasename"]
+                },
+                new AddonParameter
+                {
+                    Key = "engine",
+                    Value = ConfigurationManager.AppSettings["dbengine"]
+                },
+                new AddonParameter
+                {
+                    Key = "storage",
+                    Value = ConfigurationManager.AppSettings["storage"]
+                },
+
             };
             return paramConstructor;
         }
@@ -42,23 +53,44 @@
         private static AddonManifest SetupPropertiesAndParameters()
         {
             #region developer parameter definitions
-            var plist = new List<DevParameter>();
-            plist.Add(new DevParameter()
-            {
-                Key = "bucketName",
-                DisplayName = "Bucket Name"
-            });
+            var plist = new List<DevParameter>
+                            {
+                                new DevParameter()
+                                    {
+                                        Key = "databasename",
+                                        DisplayName = "Database Name"
+                                    },
+                                new DevParameter()
+                                    {
+                                        Key = "engine",
+                                        DisplayName = "Database Engine"
+                                    },
+                                new DevParameter()
+                                    {
+                                        Key = "storage",
+                                        DisplayName = "Storage Needed"
+                                    }
+                            };
             #endregion
 
             #region addon property definitions
 
             var props = new List<AddonProperty>
                             {
-                                new AddonProperty { Key = "BucketRegionName", Value = "us-east-1" },
-                                new AddonProperty { Key = "RegionEndpoint", Value = "us-east-1" },
-                                new AddonProperty { Key = "Grants", Value = "" },
-                                new AddonProperty { Key = "CannedACL", Value = "" },
-                                new AddonProperty() { Key = "UseClientRegion", Value = "true" }
+                                new AddonProperty { Key = "maxallocatedstorage", Value = "10" },
+                                new AddonProperty { Key = "autominorversionupgrade", Value = "True" },
+                                new AddonProperty { Key = "defaultaz", Value = "us-east-1" },
+                                new AddonProperty { Key = "maxdbinstanceclass", Value = "db.t1.micro" },
+                                new AddonProperty { Key = "oracleengineedition", Value = "se-1" },
+                                new AddonProperty { Key = "sqlserverengineedition", Value = "web" },
+                                new AddonProperty { Key = "multiaz", Value = "False" },
+                                new AddonProperty { Key = "oracledbversion", Value = "" },
+                                new AddonProperty { Key = "mssqldbversion", Value = "" },
+                                new AddonProperty { Key = "mysqldbversion", Value = "" },
+                                new AddonProperty { Key = "overrideport", Value = "False" },
+                                new AddonProperty { Key = "backupretentionperiod", Value = "0" },
+                                new AddonProperty { Key = "skipfinalsnapshot", Value = "True" },
+                            
                             };
 
             #endregion
@@ -119,7 +151,7 @@
         public void ProvisionTest()
         {
             this.ProvisionRequest = new AddonProvisionRequest { Manifest = SetupPropertiesAndParameters(), DeveloperParameters = SetUpParameters() };
-            var output = new S3Addon().Provision(this.ProvisionRequest);
+            var output = new RdsAddOn().Provision(this.ProvisionRequest);
             Assert.That(output, Is.TypeOf<ProvisionAddOnResult>());
             Assert.That(output.IsSuccess, Is.EqualTo(true));
             Assert.That(output.ConnectionData.Length, Is.GreaterThan(0));
@@ -129,15 +161,15 @@
         public void DeProvisionTest()
         {
             this.ProvisionRequest = new AddonProvisionRequest { Manifest = SetupPropertiesAndParameters(), DeveloperParameters = SetUpParameters() };
-            var provOutput = new S3Addon().Provision(this.ProvisionRequest);
-            this.DeprovisionRequest = new AddonDeprovisionRequest()
-            {
-                Manifest = SetupPropertiesAndParameters(),
-                DeveloperParameters = SetUpParameters()
-            };
+            var provOutput = new RdsAddOn().Provision(this.ProvisionRequest);
+            this.DeprovisionRequest = new AddonDeprovisionRequest
+                                          {
+                                              Manifest = SetupPropertiesAndParameters(),
+                                              DeveloperParameters = SetUpParameters(),
+                                              ConnectionData = provOutput.ConnectionData
+                                          };
             // take the connection data from the provisioned request.
-            this.DeprovisionRequest.ConnectionData = provOutput.ConnectionData;
-            var output = new S3Addon().Deprovision(this.DeprovisionRequest);
+            var output = new RdsAddOn().Deprovision(this.DeprovisionRequest);
             Assert.That(output, Is.TypeOf<OperationResult>());
             Assert.That(output.IsSuccess, Is.EqualTo(true));
         }
@@ -150,7 +182,7 @@
                 Manifest = SetupPropertiesAndParameters(),
                 DeveloperParameters = SetUpParameters()
             };
-            var output = new S3Addon().Test(this.TestRequest);
+            var output = new RdsAddOn().Test(this.TestRequest);
             Assert.That(output, Is.TypeOf<OperationResult>());
             Assert.That(output.IsSuccess, Is.EqualTo(true));
         }
