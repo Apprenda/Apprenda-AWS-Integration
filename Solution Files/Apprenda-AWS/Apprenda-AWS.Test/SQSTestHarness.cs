@@ -2,18 +2,22 @@
 {
     using System.Collections.Generic;
     using System.Configuration;
-
     using Apprenda.SaaSGrid.Addons;
-    using Apprenda.SaaSGrid.Addons.AWS.S3;
-
+    using Apprenda.SaaSGrid.Addons.AWS.SQS;
     using NUnit.Framework;
 
     [TestFixture]
-    public class S3TestHarness
+    public class SQSTestHarness
     {
         private AddonProvisionRequest ProvisionRequest { get; set; }
         private AddonDeprovisionRequest DeprovisionRequest { get; set; }
         private AddonTestRequest TestRequest { get; set; }
+
+        [OneTimeSetUp]
+        public void ConfigureS3ForTests()
+        {
+            
+        }
 
         [SetUp]
         public void SetupManifest()
@@ -92,7 +96,7 @@
             return manifest;
         }
 
-        private class DevParameter : IAddOnParameterDefinition
+        public class DevParameter : IAddOnParameterDefinition
         {
             public string Key { get; set; }
 
@@ -119,7 +123,7 @@
         public void ProvisionTest()
         {
             this.ProvisionRequest = new AddonProvisionRequest { Manifest = SetupPropertiesAndParameters(), DeveloperParameters = SetUpParameters() };
-            var output = new S3Addon().Provision(this.ProvisionRequest);
+            var output = new SQSAddOn().Provision(this.ProvisionRequest);
             Assert.That(output, Is.TypeOf<ProvisionAddOnResult>());
             Assert.That(output.IsSuccess, Is.EqualTo(true));
             Assert.That(output.ConnectionData.Length, Is.GreaterThan(0));
@@ -128,16 +132,15 @@
         [Test]
         public void DeProvisionTest()
         {
-            this.ProvisionRequest = new AddonProvisionRequest { Manifest = SetupPropertiesAndParameters(), DeveloperParameters = SetUpParameters() };
-            var prov_output = new S3Addon().Provision(this.ProvisionRequest);
+
             this.DeprovisionRequest = new AddonDeprovisionRequest()
             {
                 Manifest = SetupPropertiesAndParameters(),
                 DeveloperParameters = SetUpParameters()
             };
-            // take the connection data from the provisioned request.
-            this.DeprovisionRequest.ConnectionData = prov_output.ConnectionData;
-            var output = new S3Addon().Deprovision(this.DeprovisionRequest);
+            this.DeprovisionRequest.ConnectionData =
+                new SQSConnectionInfo() { QueueName = ConfigurationManager.AppSettings["queueName"]}.ToString();
+            var output = new SQSAddOn().Deprovision(this.DeprovisionRequest);
             Assert.That(output, Is.TypeOf<OperationResult>());
             Assert.That(output.IsSuccess, Is.EqualTo(true));
         }
@@ -150,7 +153,7 @@
                 Manifest = SetupPropertiesAndParameters(),
                 DeveloperParameters = SetUpParameters()
             };
-            var output = new S3Addon().Test(this.TestRequest);
+            var output = new SQSAddOn().Test(this.TestRequest);
             Assert.That(output, Is.TypeOf<OperationResult>());
             Assert.That(output.IsSuccess, Is.EqualTo(true));
         }

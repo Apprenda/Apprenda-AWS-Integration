@@ -10,15 +10,13 @@
                vendor="Apprenda"
                author="Chris Dutra"
                version="1.0.1"
-               provisioningUsername="chris@dutronlabs.com"
-               provisioningPassword="cyrixm2r"
-               provisioningLocation="RegionEndpoint.USEast1">
+               provisioningUsername=""
+               provisioningPassword=""
+               provisioningLocation="us-east-1">
   <properties>
-    <property key="AWSClientKey" displayName="AWS Client Key" description="Required - please specify the client key of the user who has access to provision Glacier vaults." value=""/>
-    <property key="AWSSecretKey" displayName="AWS Secret Key" description="Required - please specify the secret key of the user who has access to provision Glacier vaults." value=""/>
-    <property key="AWSRegionEndpoint" displayName="AWS Region Endpoint" description="Required-  please specify the region endpoint to log into." value=""/>
-    <property key="requireDevCredentials" displayName="Require Developer Credentials" description="If set to true, each developer will need to provide their own Amazon credentials." value="true"  />
-    <property key="Attributes" displayName="Queue Attributes" description="Sets specific attributes on a queue. You can specify DelaySeconds, MaximumMessageSize, MessageRetentionPeriod, Policy, ReceiveMessageWaitTimeSeconds, and VisibilityTimeout" value=""/>
+    <property key="DelaySeconds" displayName="Delay (In Seconds)" description="This is a global, default value." value="" />
+    <property key="MaximumMessageSize" displayName="Maximum Message Size" description="These is a global, default value." value=""/>
+    <property key="MessageRetentionPeriod" displayName="" description="These is a global, default value."/>
     <property key="QueueName" displayName="Queue Name" description="Default name of the queue if none is specified by the developer." value="queue"/>
   </properties>
 </addonManifest>

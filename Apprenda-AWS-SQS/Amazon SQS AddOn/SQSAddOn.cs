@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Amazon.SQS;
 using Amazon.SQS.Model;
-using Amazon.SQS.Util;
-using Apprenda.SaaSGrid.Addons;
 using System.Threading;
 using Amazon;
 
 
 namespace Apprenda.SaaSGrid.Addons.AWS.SQS
 {
+    using Amazon.EC2.Model;
+
     public class SQSAddOn : AddonBase
     {
         // Deprovision RDS Instance
@@ -20,19 +17,18 @@ namespace Apprenda.SaaSGrid.Addons.AWS.SQS
         // Output: OperationResult
         public override OperationResult Deprovision(AddonDeprovisionRequest request)
         {
-            string connectionData = request.ConnectionData;
+            var connectionData = request.ConnectionData;
             // changing to overloaded constructor - 5/22/14
             var deprovisionResult = new ProvisionAddOnResult(connectionData);
-            AddonManifest manifest = request.Manifest;
-            string devOptions = request.DeveloperOptions;
-
+            var manifest = request.Manifest;
+            //var devOptions = request.DeveloperOptions;
             try
             {
                 AmazonSQSClient client;
-                var conInfo = ConnectionInfo.Parse(connectionData);
-                var developerOptions = DeveloperOptions.Parse(devOptions);
-
-                var establishClientResult = EstablishClient(manifest, developerOptions, out client);
+                var conInfo = SQSConnectionInfo.Parse(connectionData);
+                //var developerOptions = DeveloperOptions.Parse(devOptions);
+                var developerOptions = SQSDeveloperOptions.Parse(request.DeveloperParameters);
+                var establishClientResult = this.EstablishClient(manifest, developerOptions, out client);
                 if (!establishClientResult.IsSuccess)
                 {
                     deprovisionResult.EndUserMessage = establishClientResult.EndUserMessage;
@@ -42,13 +38,13 @@ namespace Apprenda.SaaSGrid.Addons.AWS.SQS
                 var response =
                     client.DeleteQueue(new DeleteQueueRequest()
                     {
-                        QueueUrl = conInfo.queueURL
+                        QueueUrl = conInfo.QueueURL
                     });
 
                 do  {
                         var verificationResponse = client.GetQueueUrl(new GetQueueUrlRequest()
                         {
-                            QueueName = conInfo.queueName,
+                            QueueName = conInfo.QueueName,
                             QueueOwnerAWSAccountId = developerOptions.AccessKey,
                         });
                         // 5/22/14 fixing amazaon aws deprecration
@@ -86,39 +82,21 @@ namespace Apprenda.SaaSGrid.Addons.AWS.SQS
             // i think this is a bug. but I'm going to throw an empty string to it to clear the warning.
             var provisionResult = new ProvisionAddOnResult("");
             AddonManifest manifest = request.Manifest;
-            string developerOptions = request.DeveloperOptions;
+            SQSDeveloperOptions options = SQSDeveloperOptions.Parse(request.DeveloperParameters);
 
             try
             {
                 AmazonSQSClient client;
-                DeveloperOptions devOptions;
-
-                var parseOptionsResult = ParseDevOptions(developerOptions, out devOptions);
-                if (!parseOptionsResult.IsSuccess)
-                {
-                    provisionResult.EndUserMessage = parseOptionsResult.EndUserMessage;
-                    return provisionResult;
-                }
-
-                var establishClientResult = EstablishClient(manifest, DeveloperOptions.Parse(developerOptions), out client);
+                var establishClientResult = this.EstablishClient(manifest, options, out client);
                 if (!establishClientResult.IsSuccess)
                 {
                     provisionResult.EndUserMessage = establishClientResult.EndUserMessage;
                     return provisionResult;
                 }
 
-                var response = client.CreateQueue(CreateQueueRequest(devOptions));
-                // fix 5/22/14 resolves amazon aws deprecation
+                var response = client.CreateQueue(CreateQueueRequest(options));
                 if (response.QueueUrl != null)
                 {
-                    //var conInfo = new ConnectionInfo()
-                    //{
-                    //    DbInstanceIdentifier = devOptions.DbInstanceIndentifier
-                    //};
-                    //provisionResult.IsSuccess = true;
-                    //provisionResult.ConnectionData = conInfo.ToString();
-                    //Thread.Sleep(TimeSpan.FromMinutes(6));
-
                     do
                     {
                         var verificationResponse = client.GetQueueAttributes(new GetQueueAttributesRequest()
@@ -128,10 +106,10 @@ namespace Apprenda.SaaSGrid.Addons.AWS.SQS
                         // fix on next few lines 5/22/14 resolve amazon aws deprecation.
                         if(verificationResponse.Attributes != null)
                         {
-                            var conInfo = new ConnectionInfo()
+                            var conInfo = new SQSConnectionInfo()
                             {
-                                queueName = devOptions.QueueName,
-                                queueURL = response.QueueUrl
+                                QueueName = options.QueueName,
+                                QueueURL = response.QueueUrl
                             };
                             provisionResult.IsSuccess = true;
                             provisionResult.ConnectionData = conInfo.ToString();
@@ -155,43 +133,32 @@ namespace Apprenda.SaaSGrid.Addons.AWS.SQS
         // Output: OperationResult
         public override OperationResult Test(AddonTestRequest request)
         {
-            AddonManifest manifest = request.Manifest;
-            string developerOptions = request.DeveloperOptions;
+            var manifest = request.Manifest;
             var testResult = new OperationResult { IsSuccess = false };
             var testProgress = "";
 
             if (manifest.Properties != null && manifest.Properties.Any())
             {
-                DeveloperOptions devOptions;
-
                 testProgress += "Evaluating required manifest properties...\n";
-                if (!ValidateManifest(manifest, out testResult))
+                if (!this.ValidateManifest(manifest, out testResult))
                 {
                     return testResult;
                 }
-
-                var parseOptionsResult = ParseDevOptions(developerOptions, out devOptions);
-                if (!parseOptionsResult.IsSuccess)
-                {
-                    return parseOptionsResult;
-                }
-                testProgress += parseOptionsResult.EndUserMessage;
-
+                var devOptions = SQSDeveloperOptions.Parse(request.DeveloperParameters);
                 try
                 {
                     testProgress += "Establishing connection to AWS...\n";
                     AmazonSQSClient client;
-                    var establishClientResult = EstablishClient(manifest, devOptions, out client);
+                    var establishClientResult = this.EstablishClient(manifest, devOptions, out client);
                     if (!establishClientResult.IsSuccess)
                     {
                         return establishClientResult;
                     }
                     testProgress += establishClientResult.EndUserMessage;
-
                     var queueResults = client.ListQueues(new ListQueuesRequest()
-                        {
-                            // QueueNamePrefix is optional
-                        });
+                    {
+                        // QueueNamePrefix is optional
+                    });
                     testProgress += "Successfully passed all testing criteria!";
                     testResult.IsSuccess = true;
                     testResult.EndUserMessage = testProgress;
@@ -238,34 +205,12 @@ namespace Apprenda.SaaSGrid.Addons.AWS.SQS
         }
 
         // TODO: We might be able to extend this. 
-        private bool ValidateDevCreds(DeveloperOptions devOptions)
+        private bool ValidateDevCreds(SQSDeveloperOptions devOptions)
         {
             return !(string.IsNullOrWhiteSpace(devOptions.AccessKey) || string.IsNullOrWhiteSpace(devOptions.SecretAccessKey));
         }
 
-        private OperationResult ParseDevOptions(string developerOptions, out DeveloperOptions devOptions)
-        {
-            devOptions = null;
-            var result = new OperationResult() { IsSuccess = false };
-            var progress = "";
-
-            try
-            {
-                progress += "Parsing developer options...\n";
-                devOptions = DeveloperOptions.Parse(developerOptions);
-            }
-            catch (ArgumentException e)
-            {
-                result.EndUserMessage = e.Message;
-                return result;
-            }
-
-            result.IsSuccess = true;
-            result.EndUserMessage = progress;
-            return result;
-        }
-
-        private OperationResult EstablishClient(AddonManifest manifest, DeveloperOptions devOptions, out AmazonSQSClient client)
+        private OperationResult EstablishClient(AddonManifest manifest, SQSDeveloperOptions devOptions, out AmazonSQSClient client)
         {
             OperationResult result;
 
@@ -298,13 +243,13 @@ namespace Apprenda.SaaSGrid.Addons.AWS.SQS
             return result;
         }
 
-        private CreateQueueRequest CreateQueueRequest(DeveloperOptions devOptions)
+        private CreateQueueRequest CreateQueueRequest(SQSDeveloperOptions devOptions)
         {
             var request = new CreateQueueRequest()
             {
                 // TODO - need to determine where defaults are used, and then not create the constructor where value is null (to use default)
                QueueName = devOptions.QueueName,
-               Attributes = devOptions.Attributes,
+               Attributes = devOptions.Attributes.ToDict()
             };
             return request;
         }
