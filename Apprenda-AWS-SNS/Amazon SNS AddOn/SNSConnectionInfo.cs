@@ -3,17 +3,17 @@ using System.Text;
 
 namespace Apprenda.SaaSGrid.Addons.AWS.SNS
 {
-    public class ConnectionInfo
+    public class SnsConnectionInfo
     {
         public string TopicArn { get; set; }
         public string QueueName { get; set; }
-        public static ConnectionInfo Parse(string connectionInfo)
+        public static SnsConnectionInfo Parse(string _connectionInfo)
         {
-            ConnectionInfo info = new ConnectionInfo();
+            SnsConnectionInfo info = new SnsConnectionInfo();
 
-            if (!string.IsNullOrWhiteSpace(connectionInfo))
+            if (!string.IsNullOrWhiteSpace(_connectionInfo))
             {
-                var propertyPairs = connectionInfo.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
+                var propertyPairs = _connectionInfo.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var propertyPair in propertyPairs)
                 {
                     var optionPairParts = propertyPair.Split(new[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
@@ -34,20 +34,20 @@ namespace Apprenda.SaaSGrid.Addons.AWS.SNS
             return info;
         }
 
-        public static void MapToProperty(ConnectionInfo existingInfo, string key, string value)
+        public static void MapToProperty(SnsConnectionInfo _existingInfo, string _key, string _value)
         {
-            if ("TopicArn".Equals(key))
+            if ("TopicArn".Equals(_key))
             {
-                existingInfo.TopicArn = value;
+                _existingInfo.TopicArn = _value;
                 return;
             }
 
-            if ("QueueName".Equals(key))
+            if ("QueueName".Equals(_key))
             {
-                existingInfo.QueueName = value;
+                _existingInfo.QueueName = _value;
                 return;
             }
-            throw new ArgumentException(string.Format("The connection info '{0}' was not expected and is not understood.", key));
+            throw new ArgumentException(string.Format("The connection info '{0}' was not expected and is not understood.", _key));
         }
 
         public override string ToString()

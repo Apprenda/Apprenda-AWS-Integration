@@ -26,7 +26,7 @@
             this.TestRequest = new AddonTestRequest { Manifest = SetupPropertiesAndParameters() };
         }
 
-        private static List<AddonParameter> SetUpParameters()
+        private static IEnumerable<AddonParameter> SetUpParameters()
         {
             var paramConstructor = new List<AddonParameter>
             {
@@ -44,8 +44,7 @@
                 {
                     Key = "storage",
                     Value = ConfigurationManager.AppSettings["storage"]
-                },
-
+                }
             };
             return paramConstructor;
         }

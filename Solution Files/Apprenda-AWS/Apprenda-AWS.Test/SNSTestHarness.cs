@@ -3,21 +3,15 @@
     using System.Collections.Generic;
     using System.Configuration;
     using Apprenda.SaaSGrid.Addons;
-    using Apprenda.SaaSGrid.Addons.AWS.SQS;
+    using Apprenda.SaaSGrid.Addons.AWS.SNS;
     using NUnit.Framework;
 
     [TestFixture]
-    public class SQSTestHarness
+    public class SnsTestHarness
     {
         private AddonProvisionRequest ProvisionRequest { get; set; }
         private AddonDeprovisionRequest DeprovisionRequest { get; set; }
         private AddonTestRequest TestRequest { get; set; }
-
-        [OneTimeSetUp]
-        public void ConfigureS3ForTests()
-        {
-            
-        }
 
         [SetUp]
         public void SetupManifest()
@@ -37,8 +31,8 @@
             {
                 new AddonParameter
                 {
-                    Key = "queuename",
-                    Value = ConfigurationManager.AppSettings["queuename"]
+                    Key = "topicname",
+                    Value = ConfigurationManager.AppSettings["topicname"]
                 }
             };
             return paramConstructor;
@@ -47,25 +41,13 @@
         private static AddonManifest SetupPropertiesAndParameters()
         {
             #region developer parameter definitions
-            var plist = new List<DevParameter>();
-            plist.Add(new DevParameter()
-            {
-                Key = "bucketName",
-                DisplayName = "Bucket Name"
-            });
+
+            var plist = new List<DevParameter> { new DevParameter() { Key = "topicname", DisplayName = "Topic Name" } };
+
             #endregion
 
             #region addon property definitions
-
-            var props = new List<AddonProperty>
-                            {
-                                new AddonProperty { Key = "BucketRegionName", Value = "us-east-1" },
-                                new AddonProperty { Key = "RegionEndpoint", Value = "us-east-1" },
-                                new AddonProperty { Key = "Grants", Value = "" },
-                                new AddonProperty { Key = "CannedACL", Value = "" },
-                                new AddonProperty() { Key = "UseClientRegion", Value = "true" }
-                            };
-
+            var props = new List<AddonProperty>();
             #endregion
             
             var manifest = new AddonManifest
@@ -77,7 +59,7 @@
                 DeveloperHelp = "",
                 IsEnabled = true,
                 ManifestVersionString = "2.0",
-                Name = "SQS",
+                Name = "SNS",
 
                 // we'll handle parameters below.
                 Parameters = new ParameterList
@@ -115,7 +97,7 @@
         }
 
         [Test]
-        public void ParseS3ParametersTest()
+        public void ParseSnsParametersTest()
         {
 
         }
@@ -124,7 +106,7 @@
         public void ProvisionTest()
         {
             this.ProvisionRequest = new AddonProvisionRequest { Manifest = SetupPropertiesAndParameters(), DeveloperParameters = SetUpParameters() };
-            var output = new SQSAddOn().Provision(this.ProvisionRequest);
+            var output = new SnsAddOn().Provision(this.ProvisionRequest);
             Assert.That(output, Is.TypeOf<ProvisionAddOnResult>());
             Assert.That(output.IsSuccess, Is.EqualTo(true));
             Assert.That(output.ConnectionData.Length, Is.GreaterThan(0));
@@ -133,16 +115,21 @@
         [Test]
         public void DeProvisionTest()
         {
-
-            this.DeprovisionRequest = new AddonDeprovisionRequest()
-            {
-                Manifest = SetupPropertiesAndParameters(),
-                DeveloperParameters = SetUpParameters()
-            };
-            this.DeprovisionRequest.ConnectionData =
-                new SQSConnectionInfo() { QueueName = ConfigurationManager.AppSettings["queueName"]}.ToString();
-            var output = new SQSAddOn().Deprovision(this.DeprovisionRequest);
-            Assert.That(output, Is.TypeOf<OperationResult>());
+            this.DeprovisionRequest = new AddonDeprovisionRequest
+                                          {
+                                              Manifest = SetupPropertiesAndParameters(),
+                                              DeveloperParameters = SetUpParameters(),
+                                              ConnectionData =
+                                                  new SnsConnectionInfo()
+                                                      {
+                                                          TopicArn = 
+                                                              ConfigurationManager
+                                                              .AppSettings[
+                                                                  "topicName"]
+                                                      }.ToString()
+                                          };
+            var output = new SnsAddOn().Deprovision(this.DeprovisionRequest);
+            Assert.That(output, Is.TypeOf<ProvisionAddOnResult>());
             Assert.That(output.IsSuccess, Is.EqualTo(true));
         }
 
@@ -154,7 +141,7 @@
                 Manifest = SetupPropertiesAndParameters(),
                 DeveloperParameters = SetUpParameters()
             };
-            var output = new SQSAddOn().Test(this.TestRequest);
+            var output = new SnsAddOn().Test(this.TestRequest);
             Assert.That(output, Is.TypeOf<OperationResult>());
             Assert.That(output.IsSuccess, Is.EqualTo(true));
         }
