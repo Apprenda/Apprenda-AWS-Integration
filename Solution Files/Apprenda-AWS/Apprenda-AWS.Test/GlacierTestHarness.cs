@@ -31,8 +31,8 @@
             {
                 new AddonParameter
                 {
-                    Key = "bucketname",
-                    Value = ConfigurationManager.AppSettings["bucketname"]
+                    Key = "vaultname",
+                    Value = ConfigurationManager.AppSettings["vaultName"]
                 }
             };
             return paramConstructor;
@@ -44,7 +44,7 @@
 
             var plist = new List<DevParameter>
                             {
-                                new DevParameter() { Key = "bucketName", DisplayName = "Bucket Name" }
+                                new DevParameter() { Key = "vaultname", DisplayName = "Vault Name" }
                             };
 
             #endregion
@@ -53,11 +53,7 @@
 
             var props = new List<AddonProperty>
                             {
-                                new AddonProperty { Key = "BucketRegionName", Value = "us-east-1" },
-                                new AddonProperty { Key = "RegionEndpoint", Value = "us-east-1" },
-                                new AddonProperty { Key = "Grants", Value = "" },
-                                new AddonProperty { Key = "CannedACL", Value = "" },
-                                new AddonProperty() { Key = "UseClientRegion", Value = "true" }
+                                new AddonProperty { Key = "AWSAccountID", Value = "071828666816" },
                             };
 
             #endregion
@@ -137,7 +133,7 @@
             // take the connection data from the provisioned request.
             this.DeprovisionRequest.ConnectionData = provOutput.ConnectionData;
             var output = new GlacierAddon().Deprovision(this.DeprovisionRequest);
-            Assert.That(output, Is.TypeOf<OperationResult>());
+            Assert.That(output, Is.TypeOf<ProvisionAddOnResult>());
             Assert.That(output.IsSuccess, Is.EqualTo(true));
         }
 

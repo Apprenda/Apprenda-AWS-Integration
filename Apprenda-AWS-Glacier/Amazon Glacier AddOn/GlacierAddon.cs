@@ -55,7 +55,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
         // Output: ProvisionAddOnResult
         public override ProvisionAddOnResult Provision(AddonProvisionRequest _request)
         {
-            var provisionResult = new ProvisionAddOnResult("");
+            var provisionResult = new ProvisionAddOnResult("", false, "");
             try
             {
                 var devOptions = GlacierDeveloperOptions.Parse(_request.DeveloperParameters, _request.Manifest);

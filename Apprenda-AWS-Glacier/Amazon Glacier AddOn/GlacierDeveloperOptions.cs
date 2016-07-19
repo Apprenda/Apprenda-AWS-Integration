@@ -34,9 +34,10 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
                 _existingOptions.VaultName = _value;
                 return;
             }
-            if ("accountid".Equals(_key))
+            if ("awsaccountid".Equals(_key))
             {
                 _existingOptions.AccountId = _value;
+                return;
             }
             throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", _key));
         }
