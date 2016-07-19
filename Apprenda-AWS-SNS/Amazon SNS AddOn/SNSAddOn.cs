@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Amazon.SimpleNotificationService;
 using Amazon.SimpleNotificationService.Model;
 using Amazon;
@@ -19,7 +18,12 @@ namespace Apprenda.SaaSGrid.Addons.AWS.SNS
                 var conInfo = SnsConnectionInfo.Parse(connectionData);
                 //var developerOptions = SNSDeveloperOptions.Parse(request.DeveloperParameters, request.Manifest);
                 var client = EstablishClient(_request.Manifest);
-                client.DeleteTopic(new DeleteTopicRequest{ TopicArn = conInfo.TopicArn });
+                var req = new DeleteTopicRequest(conInfo.TopicArn);
+                var response = client.DeleteTopic(req);
+                foreach (var x in response.ResponseMetadata.Metadata)
+                {
+                    Console.WriteLine("{0}:{1}", x.Key, x.Value);
+                }
                 do
                 {
                     // ok, to verify deletion, we need to list all of the topics and search for the one we just deleted.
@@ -48,6 +52,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.SNS
             {
                 deprovisionResult.EndUserMessage += "An error occurred during deletion. Your SNS queue may be deleted, but we were unable to verify. Please check your AWS Console."; 
                 deprovisionResult.EndUserMessage += e.Message;
+                deprovisionResult.IsSuccess = false;
             }
             return deprovisionResult;
         }

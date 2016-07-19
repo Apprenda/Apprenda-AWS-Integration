@@ -103,34 +103,42 @@
         }
 
         [Test]
-        public void ProvisionTest()
+        public void ProvisionTestSameInstance()
+        {
+            this.ProvisionRequest = new AddonProvisionRequest { Manifest = SetupPropertiesAndParameters(), DeveloperParameters = SetUpParameters() };
+            var addon = new SnsAddOn();
+            var output = addon.Provision(this.ProvisionRequest);
+            Assert.That(output, Is.TypeOf<ProvisionAddOnResult>());
+            Assert.That(output.IsSuccess, Is.EqualTo(true));
+            Assert.That(output.ConnectionData.Length, Is.GreaterThan(0));
+            this.DeprovisionRequest = new AddonDeprovisionRequest
+                                          {
+                                              Manifest = SetupPropertiesAndParameters(),
+                                              DeveloperParameters = SetUpParameters(),
+                                              ConnectionData = output.ConnectionData
+                                          };
+            var deoutput = addon.Deprovision(this.DeprovisionRequest);
+            Assert.That(deoutput, Is.TypeOf<ProvisionAddOnResult>());
+            Assert.That(deoutput.IsSuccess, Is.EqualTo(true));
+        }
+
+        [Test]
+        public void ProvisionTestMultipleInstances()
         {
             this.ProvisionRequest = new AddonProvisionRequest { Manifest = SetupPropertiesAndParameters(), DeveloperParameters = SetUpParameters() };
             var output = new SnsAddOn().Provision(this.ProvisionRequest);
             Assert.That(output, Is.TypeOf<ProvisionAddOnResult>());
             Assert.That(output.IsSuccess, Is.EqualTo(true));
             Assert.That(output.ConnectionData.Length, Is.GreaterThan(0));
-        }
-
-        [Test]
-        public void DeProvisionTest()
-        {
             this.DeprovisionRequest = new AddonDeprovisionRequest
                                           {
                                               Manifest = SetupPropertiesAndParameters(),
                                               DeveloperParameters = SetUpParameters(),
-                                              ConnectionData =
-                                                  new SnsConnectionInfo()
-                                                      {
-                                                          TopicArn = 
-                                                              ConfigurationManager
-                                                              .AppSettings[
-                                                                  "topicName"]
-                                                      }.ToString()
+                                              ConnectionData = output.ConnectionData
                                           };
-            var output = new SnsAddOn().Deprovision(this.DeprovisionRequest);
-            Assert.That(output, Is.TypeOf<ProvisionAddOnResult>());
-            Assert.That(output.IsSuccess, Is.EqualTo(true));
+            var deoutput = new SnsAddOn().Deprovision(this.DeprovisionRequest);
+            Assert.That(deoutput, Is.TypeOf<ProvisionAddOnResult>());
+            Assert.That(deoutput.IsSuccess, Is.EqualTo(true));
         }
 
         [Test]
