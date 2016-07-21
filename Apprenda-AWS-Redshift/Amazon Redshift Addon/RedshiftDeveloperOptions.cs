@@ -15,9 +15,6 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
 
         public string SecretAccessKey { get; private set; }
 
-        // we need to put RegionEndpoint back in there TODO
-        public string RegionEndpoint { get; set; }
-
         // Amazon Redshift Options
         public int AllocatedStorage { get; private set; }
 
@@ -59,12 +56,15 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
 
         public List<string> VpcSecurityGroupIds { get; set; }
 
-        public static RedshiftDeveloperOptions Parse(IEnumerable<AddonParameter> developerParameters)
+        public static RedshiftDeveloperOptions Parse(IEnumerable<AddonParameter> developerParameters, AddonManifest manifest)
         {
             // we made this so much easier with developer parameters.
 
             var options = new RedshiftDeveloperOptions();
-
+            foreach (var parameter in manifest.Properties)
+            {
+                MapToOption(options, parameter.Key.ToLowerInvariant(), parameter.Value);
+            }
             foreach (var parameter in developerParameters)
             {
                 MapToOption(options, parameter.Key.ToLowerInvariant(), parameter.Value);
@@ -73,207 +73,190 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
         }
 
         // Interior method takes in instance of DeveloperOptions (aptly named existingOptions) and maps them to the proper value. In essence, a setter method.
-        public static void MapToOption(RedshiftDeveloperOptions existingOptions, string key, string value)
+        private static void MapToOption(RedshiftDeveloperOptions _existingOptions, string _key, string _value)
         {
-            if ("accesskey".Equals(key))
+            if ("availabilityzone".Equals(_key))
             {
-                existingOptions.AccessKey = value;
+                _existingOptions.AvailabilityZone = _value;
                 return;
             }
 
-            if ("secretkey".Equals(key))
-            {
-                existingOptions.SecretAccessKey = value;
-                return;
-            }
-
-            if ("regionendpoint".Equals(key))
-            {
-                existingOptions.RegionEndpoint = value;
-            }
-
-            if ("availabilityzone".Equals(key))
-            {
-                existingOptions.AvailabilityZone = value;
-                return;
-            }
-
-            if ("allocatedstorage".Equals(key))
+            if ("allocatedstorage".Equals(_key))
             {
                 int result;
-                if (!int.TryParse(value, out result))
+                if (!int.TryParse(_value, out result))
                 {
-                    throw new ArgumentException(string.Format("The developer option '{0}' can only have an integer value but '{1}' was used instead.", key, value));
+                    throw new ArgumentException(string.Format("The developer option '{0}' can only have an integer value but '{1}' was used instead.", _key, _value));
                 }
-                existingOptions.AllocatedStorage = result;
+                _existingOptions.AllocatedStorage = result;
                 return;
             }
 
-            if ("allowversionupgrade".Equals(key))
+            if ("allowversionupgrade".Equals(_key))
             {
                 bool result;
-                if (!bool.TryParse(value, out result))
+                if (!bool.TryParse(_value, out result))
                 {
-                    throw new ArgumentException(string.Format("The developer option '{0}' must be a boolean value.", key));
+                    throw new ArgumentException(string.Format("The developer option '{0}' must be a boolean value.", _key));
                 }
-                existingOptions.AllowVersionUpgrade = result;
+                _existingOptions.AllowVersionUpgrade = result;
                 return;
             }
 
-            if ("automatedsnapshotretentionperiod".Equals(key))
+            if ("automatedsnapshotretentionperiod".Equals(_key))
             {
                 int result;
-                if (!int.TryParse(value, out result))
+                if (!int.TryParse(_value, out result))
                 {
-                    throw new ArgumentException(string.Format("The developer option '{0}' can only have an integer value but '{1}' was used instead.", key, value));
+                    throw new ArgumentException(string.Format("The developer option '{0}' can only have an integer value but '{1}' was used instead.", _key, _value));
                 }
-                existingOptions.AutomatedSnapshotRetentionPeriod = result;
+                _existingOptions.AutomatedSnapshotRetentionPeriod = result;
                 return;
             }
 
-            if ("clusteridentifier".Equals(key))
+            if ("clusteridentifier".Equals(_key))
             {
-                existingOptions.ClusterIdentifier = value;
+                _existingOptions.ClusterIdentifier = _value;
                 return;
             }
 
-            if ("clusterparametergroupname".Equals(key))
+            if ("clusterparametergroupname".Equals(_key))
             {
-                existingOptions.ClusterParameterGroupName = value;
+                _existingOptions.ClusterParameterGroupName = _value;
                 return;
             }
 
-            if ("clustersecuritygroups".Equals(key))
+            if ("clustersecuritygroups".Equals(_key))
             {
                 if (true)
                 {
-                    existingOptions.ClusterSecurityGroups.Add(value);
+                    _existingOptions.ClusterSecurityGroups.Add(_value);
                 }
                 return;
             }
 
-            if ("clustersubnetgroupname".Equals(key))
+            if ("clustersubnetgroupname".Equals(_key))
             {
-                existingOptions.ClusterSubnetGroupName = value;
+                _existingOptions.ClusterSubnetGroupName = _value;
                 return;
             }
 
-            if ("clustertype".Equals(key))
+            if ("clustertype".Equals(_key))
             {
-                existingOptions.ClusterType = value;
+                _existingOptions.ClusterType = _value;
                 return;
             }
 
-            if ("clusterversion".Equals(key))
+            if ("clusterversion".Equals(_key))
             {
-                existingOptions.ClusterVersion = value;
+                _existingOptions.ClusterVersion = _value;
                 return;
             }
 
-            if ("dbname".Equals(key))
+            if ("dbname".Equals(_key))
             {
-                existingOptions.DbName = value;
+                _existingOptions.DbName = _value;
                 return;
             }
 
-            if ("elasticip".Equals(key))
+            if ("elasticip".Equals(_key))
             {
-                existingOptions.ElasticIp = value;
+                _existingOptions.ElasticIp = _value;
                 return;
             }
 
-            if ("encrypted".Equals(key))
+            if ("encrypted".Equals(_key))
             {
                 bool result;
-                if (!bool.TryParse(value, out result))
+                if (!bool.TryParse(_value, out result))
                 {
-                    throw new ArgumentException(string.Format("The developer option '{0}' must be a boolean value.", key));
+                    throw new ArgumentException(string.Format("The developer option '{0}' must be a boolean value.", _key));
                 }
-                existingOptions.Encrypted = result;
+                _existingOptions.Encrypted = result;
                 return;
             }
 
-            if ("hsmclientcertificateidentifier".Equals(key))
+            if ("hsmclientcertificateidentifier".Equals(_key))
             {
-                existingOptions.HsmClientCertificateIdentifier = value;
+                _existingOptions.HsmClientCertificateIdentifier = _value;
                 return;
             }
 
-            if ("hsmclientconfigurationidentifier".Equals(key))
+            if ("hsmclientconfigurationidentifier".Equals(_key))
             {
-                existingOptions.HsmClientConfigurationIdentifier = value;
+                _existingOptions.HsmClientConfigurationIdentifier = _value;
                 return;
             }
 
-            if ("masterpassword".Equals(key))
+            if ("masterpassword".Equals(_key))
             {
-                existingOptions.MasterPassword = value;
+                _existingOptions.MasterPassword = _value;
                 return;
             }
 
-            if ("masterusername".Equals(key))
+            if ("masterusername".Equals(_key))
             {
-                existingOptions.MasterUserName = value;
+                _existingOptions.MasterUserName = _value;
                 return;
             }
 
-            if ("nodetype".Equals(key))
+            if ("nodetype".Equals(_key))
             {
-                existingOptions.NodeType = value;
+                _existingOptions.NodeType = _value;
                 return;
             }
 
-            if ("numberofnodes".Equals(key))
+            if ("numberofnodes".Equals(_key))
             {
                 int result;
-                if (!int.TryParse(value, out result))
+                if (!int.TryParse(_value, out result))
                 {
-                    throw new ArgumentException(string.Format("The developer option '{0}' must be a boolean value.", key));
+                    throw new ArgumentException(string.Format("The developer option '{0}' must be a boolean value.", _key));
                 }
-                existingOptions.NumberOfNodes = result;
+                _existingOptions.NumberOfNodes = result;
                 return;
             }
 
-            if ("port".Equals(key))
+            if ("port".Equals(_key))
             {
                 int result;
-                if (!int.TryParse(value, out result))
+                if (!int.TryParse(_value, out result))
                 {
-                    throw new ArgumentException(string.Format("The developer option '{0}' must be a boolean value.", key));
+                    throw new ArgumentException(string.Format("The developer option '{0}' must be a boolean value.", _key));
                 }
-                existingOptions.Port = result;
+                _existingOptions.Port = result;
                 return;
             }
 
-            if ("preferredmaintenancewindow".Equals(key))
+            if ("preferredmaintenancewindow".Equals(_key))
             {
-                existingOptions.PreferredMaintenanceWindow = value;
+                _existingOptions.PreferredMaintenanceWindow = _value;
                 return;
             }
 
-            if ("publiclyaccessible".Equals(key))
+            if ("publiclyaccessible".Equals(_key))
             {
                 bool result;
-                if (!bool.TryParse(value, out result))
+                if (!bool.TryParse(_value, out result))
                 {
-                    throw new ArgumentException(string.Format("The developer option '{0}' must be a boolean value.", key));
+                    throw new ArgumentException(string.Format("The developer option '{0}' must be a boolean value.", _key));
                 }
-                existingOptions.PubliclyAccessible = result;
+                _existingOptions.PubliclyAccessible = result;
                 return;
             }
 
-            if ("secretaccesskey".Equals(key))
+            if ("secretaccesskey".Equals(_key))
             {
-                existingOptions.SecretAccessKey = value;
+                _existingOptions.SecretAccessKey = _value;
                 return;
             }
 
-            if ("vpcsecuritygroupids".Equals(key))
+            if ("vpcsecuritygroupids".Equals(_key))
             {
-                existingOptions.VpcSecurityGroupIds.Add(value);
+                _existingOptions.VpcSecurityGroupIds.Add(_value);
                 return;
             }
-            throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", key));
+            throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", _key));
         }
     }
 }

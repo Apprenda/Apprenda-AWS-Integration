@@ -2,7 +2,7 @@
 <addonManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xmlns="http://schemas.apprenda.com/AddonManifest"
-               xsi:schemaLocation="http://schemas.apprenda.com/AddonManifest http://apprenda.com/schemas/platform/5.0/AddonManifest.xsd"
+               xsi:schemaLocation="http://schemas.apprenda.com/AddonManifest http://apprenda.com/schemas/platform/6.0/AddonManifest.xsd"
                name="Amazon Redshift"
                description="Amazon Redshift is a fully managed, easily scalable petabyte-scale data warehouse service that works with your existing business intelligence tools. It delivers fast query performance by using columnar storage technology and by parallelizing queries across multiple nodes."
                deploymentNotes="Updated to reflect changes in Amazon SDK, configured to work on .NET 4.5 runtime, and updated for work in Apprenda 5.0."
@@ -14,18 +14,12 @@
                provisioningPassword=""
                provisioningLocation="">
   <properties>
-    <property key="AWSClientKey" displayName="AWS Client Key" description="Required - please specify the client key of the user who has access to provision Glacier vaults." value=""/>
-    <property key="AWSSecretKey" displayName="AWS Secret Key" description="Required - please specify the secret key of the user who has access to provision Glacier vaults." value="" />
-    <property key="AWSRegionEndpoint" displayName="AWS Region Endpoint" description="Required-  please specify the region endpoint to log into." value=""/>
-    <property key="requireDevCredentials" displayName="Require Developer Credentials" description="If set to true, each developer will need to provide their own Amazon credentials, otherwise the default creds will be used to provision Redshift instances." value="true"  />
     <property key="AllowVersionUpgrade" displayName="Allow Version Upgrades" description="Default: true. Set to false if you wish to not have Redshift perform version upgrades during maintenance windows." value="" />
     <property key="AutomatedSnapshotRetentionPeriod" displayName="Automated Snapshot Retention Period" description="Default: 1. The number of days automated snapshots are retained. If value is 0, snapshots are disabled." value="" />
     <property key="AvailabilityZone" displayName="Availability Zone" description="The EC2 AZ in which you want to run all of your compute resources (to reduce network latency). This is valuable if you plan on running a multi-node cluster. Example: us-east-1d" value="" />
-    <property key="ClusterIdentifier" displayName="Cluster Identifier" description="Unique identifier used for the cluster. This is used for deleting or modifying the cluster later on. Should always be overridden by developer options" value="" />
     <property key="ClusterParameterGroupName" displayName="Cluster Parameter Group Name" description="The name of the cluster parameter group to be associated with the cluster." value="" />
     <property key="ClusterSecurityGroups" displayName="Cluster Security Group" description="A list of AWS security groups associated with the cluster." value="" />
     <property key="ClusterSubnetGroupName" displayName="Cluster Subnet Group Name" description="The name of the cluster subnet group to be associated with this cluster." value="" />
-    <property key="ClusterType" displayName="Cluster Type" description="The type of cluster. Value must be 'single-node' or 'multi-node'" value="single-node" />
     <property key="ClusterVersion" displayName="Cluster Version" description="Currently, the default is 1.0, but future this enables you to run a specified version of the Redshift engine" value="1.0" />
     <property key="DBName" displayName="DBName" description="Name of the first database when the cluster is created. Default is 'dev'." value="apprenda" />
     <property key="ElasticIp" displayName="Elastic IP" description="Sets the elastic IP for this cluster." value="" />
@@ -35,10 +29,16 @@
     <property key="MasterUserName" displayName="Master User Name" description="Encrypted. Master User (service account) Name" value="" isEncrypted="true" />
     <property key="MasterUserPassword" displayName="Master User Password" description="Encrypted. Master User (service account) Password." value="" isEncrypted="true" />
     <property key="NodeType" displayName="Node Type" description="The node type to be provisioned for each cluster. Valid values are: dw1.xlarge, dw1.8xlarge, dw2.large, dw2.8xlarge" value="" />
-    <property key="NumberOfNodes" displayName="Number of Nodes" description="Default:1 This is only set when multi-node is set on the Cluster Type Property. Max: 100" value="1" />
-    <property key="Port" displayName="Port" description="Default: 5439. Enter a value here to override. Must be between 1150-65535" value="5439" />
+    <property key="MaxNumberOfNodes" displayName="Number of Nodes" description="Default:1 This is only set when multi-node is set on the Cluster Type Property. Max: 100" value="1" />
+    <property key="DefaultPort" displayName="Port" description="Default: 5439. Enter a value here to override. Must be between 1150-65535" value="5439" />
     <property key="PreferredMaintenanceWindow" displayName="Perferred Maintenance Window" description="Must be 30 minutes for 1 day of week. Format: 'ddd:hh24:mi-ddd:hh24:mi' Amazon will select a time window as a default (3AM-11AM UTC for US East)." value="" />
     <property key="PubliclyAccessible" displayName="Publicly Accessible" description="If yes, this is available over the public network. Default is true." value="true" />
     <property key="VpcSecurityGroupIds" displayName="VPC Security Group IDs" description="List of VPC security IDs to be associated with this cluster" value="" />   
   </properties>
+  <parameters>
+    <parameter key="ClusterIdentifier" displayName="Cluster Identifier" description="Unique identifier used for the cluster. This is used for deleting or modifying the cluster later on. Should always be overridden by developer options" isRequired="true" />
+    <parameter key="DBName" displayName="DBName" description="Name of the first database when the cluster is created. Default is 'dev'." isRequired="true" />
+    <parameter key="ClusterType" displayName="Cluster Type" description="The type of cluster. Value must be 'single-node' or 'multi-node'" defaultValue="single-node" isRequired="true" />
+    <parameter key="Allocated Storage" displayName="Allocated Storage" description="Amount of storage to allocate for the Redshift instance (in GB)" defaultValue="10" isRequired="true" />
+  </parameters>
 </addonManifest>

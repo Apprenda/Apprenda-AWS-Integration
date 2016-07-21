@@ -7,6 +7,8 @@ using Amazon.Glacier.Model;
 
 namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
 {
+    using Apprenda.SaaSGrid.Addons.AWS.Util;
+
     public class GlacierAddon : AddonBase
     {
         // Deprovision Glacier Instance
@@ -129,8 +131,8 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
         {
             var accessKey = _manifest.ProvisioningUsername;
             var secretAccessKey = _manifest.ProvisioningPassword;
-
-            var config = new AmazonGlacierConfig {RegionEndpoint = RegionEndpoint.USEast1};
+            var location = AwsUtils.ParseRegionEndpoint(_manifest.ProvisioningLocation, true);
+            var config = new AmazonGlacierConfig {RegionEndpoint = location};
             return new AmazonGlacierClient(accessKey, secretAccessKey, config);
         }
 

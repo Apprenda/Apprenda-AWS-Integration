@@ -1,40 +1,32 @@
-﻿using Amazon;
-using Amazon.Redshift;
-using Amazon.Redshift.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-
-namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
+﻿namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
 {
+    using Amazon.Redshift;
+    using Amazon.Redshift.Model;
+    using System;
+    using System.Linq;
+    using System.Threading;
+
+    using Apprenda.SaaSGrid.Addons.AWS.Util;
+
     public class RedhsiftAddOn : AddonBase
     {
         // Deprovision Redshift Instance
         // Input: AddonDeprovisionRequest request
         // Output: OperationResult
-        public override OperationResult Deprovision(AddonDeprovisionRequest request)
+        public override OperationResult Deprovision(AddonDeprovisionRequest _request)
         {
-            var connectionData = request.ConnectionData;
+            var connectionData = _request.ConnectionData;
             var deprovisionResult = new ProvisionAddOnResult(connectionData);
-            var manifest = request.Manifest;
-            var devParams = request.DeveloperParameters;
 
             try
             {
-                AmazonRedshiftClient client;
                 var conInfo = RedshiftConnectionInfo.Parse(connectionData);
-                var developerOptions = RedshiftDeveloperOptions.Parse(devParams);
-                var establishClientResult = EstablishClient(manifest, developerOptions, out client);
-                if (!establishClientResult.IsSuccess)
-                {
-                    deprovisionResult.EndUserMessage = establishClientResult.EndUserMessage;
-                    return deprovisionResult;
-                }
+                //var developerOptions = RedshiftDeveloperOptions.Parse(devParams, request.Manifest);
+                var client = EstablishClient(_request.Manifest);
                 var response =
                     client.DeleteCluster(new DeleteClusterRequest
                     {
-                        ClusterIdentifier = conInfo.ClusterIdentifier,
+                        ClusterIdentifier = conInfo.ClusterIdentifier
                     });
                 if (response.Cluster != null)
                 {
@@ -55,6 +47,8 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
             }
             catch (ClusterNotFoundException)
             {
+                deprovisionResult.EndUserMessage =
+                    "We tried to delete a cluster that no longer existed, resulting in no tranaction being committed.";
                 deprovisionResult.IsSuccess = true;
             }
             catch (Exception e)
@@ -68,28 +62,14 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
         // Provision Redshift Instance
         // Input: AddonDeprovisionRequest request
         // Output: ProvisionAddOnResult
-        public override ProvisionAddOnResult Provision(AddonProvisionRequest request)
+        public override ProvisionAddOnResult Provision(AddonProvisionRequest _request)
         {
             var provisionResult = new ProvisionAddOnResult("") { IsSuccess = false };
-            var manifest = request.Manifest;
-            var developerParameters = request.DeveloperParameters;
-
             try
             {
-                AmazonRedshiftClient client;
-                RedshiftDeveloperOptions devOptions;
-                var parseOptionsResult = ParseDevOptions(developerParameters, out devOptions);
-                if (!parseOptionsResult.IsSuccess)
-                {
-                    provisionResult.EndUserMessage = parseOptionsResult.EndUserMessage;
-                    return provisionResult;
-                }
-                var establishClientResult = EstablishClient(manifest, devOptions, out client);
-                if (!establishClientResult.IsSuccess)
-                {
-                    provisionResult.EndUserMessage = establishClientResult.EndUserMessage;
-                    return provisionResult;
-                }
+                var devOptions = RedshiftDeveloperOptions.Parse(_request.DeveloperParameters, _request.Manifest);
+                var client = EstablishClient(_request.Manifest);
+                
 
                 var response = client.CreateCluster(CreateClusterRequest(devOptions));
                 if (response.Cluster != null)
@@ -128,44 +108,24 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
         // Testing Instance
         // Input: AddonTestRequest request
         // Output: OperationResult
-        public override OperationResult Test(AddonTestRequest request)
+        public override OperationResult Test(AddonTestRequest _request)
         {
-            var manifest = request.Manifest;
-            var developerParameters = request.DeveloperParameters;
+            var manifest = _request.Manifest;
+            //var developerParameters = _request.DeveloperParameters;
             var testResult = new OperationResult { IsSuccess = false };
-            var testProgress = "";
             if (manifest.Properties != null && manifest.Properties.Any())
             {
-                RedshiftDeveloperOptions devOptions;
-
-                testProgress += "Evaluating required manifest properties...\n";
                 if (!ValidateManifest(manifest, out testResult))
                 {
                     return testResult;
                 }
-
-                var parseOptionsResult = ParseDevOptions(developerParameters, out devOptions);
-                if (!parseOptionsResult.IsSuccess)
-                {
-                    return parseOptionsResult;
-                }
-                testProgress += parseOptionsResult.EndUserMessage;
-
+                //var devOptions = RedshiftDeveloperOptions.Parse(developerParameters, _request.Manifest);
                 try
                 {
-                    testProgress += "Establishing connection to AWS...\n";
-                    AmazonRedshiftClient client;
-                    var establishClientResult = EstablishClient(manifest, devOptions, out client);
-                    if (!establishClientResult.IsSuccess)
-                    {
-                        return establishClientResult;
-                    }
-                    testProgress += establishClientResult.EndUserMessage;
-
+                    var client = EstablishClient(manifest);
                     client.DescribeClusters();
-                    testProgress += "Successfully passed all testing criteria!";
                     testResult.IsSuccess = true;
-                    testResult.EndUserMessage = testProgress;
+                    testResult.EndUserMessage = "Tests completed successfully.";
                 }
                 catch (Exception e)
                 {
@@ -176,121 +136,66 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
             {
                 testResult.EndUserMessage = "Missing required manifest properties (requireDevCredentials)";
             }
-
             return testResult;
         }
 
-        /* Begin private methods */
-
-        private static bool ValidateDevCreds(RedshiftDeveloperOptions devOptions)
+        private static AmazonRedshiftClient EstablishClient(IAddOnDefinition _manifest)
         {
-            return !(string.IsNullOrWhiteSpace(devOptions.AccessKey) || string.IsNullOrWhiteSpace(devOptions.SecretAccessKey));
+            var accessKey = _manifest.ProvisioningUsername;
+            var secretAccessKey = _manifest.ProvisioningPassword;
+            var awsRegionEndpoint = AwsUtils.ParseRegionEndpoint(_manifest.ProvisioningLocation);
+            var config = new AmazonRedshiftConfig { RegionEndpoint = awsRegionEndpoint };
+            return new AmazonRedshiftClient(accessKey, secretAccessKey, config);
         }
 
-        private static OperationResult ParseDevOptions(IEnumerable<AddonParameter> developerParameters, out RedshiftDeveloperOptions devOptions)
-        {
-            devOptions = null;
-            var result = new OperationResult { IsSuccess = false };
-            var progress = "";
-
-            try
-            {
-                progress += "Parsing developer options...\n";
-                devOptions = RedshiftDeveloperOptions.Parse(developerParameters);
-            }
-            catch (ArgumentException e)
-            {
-                result.EndUserMessage = e.Message;
-                return result;
-            }
-
-            result.IsSuccess = true;
-            result.EndUserMessage = progress;
-            return result;
-        }
-
-        private static OperationResult EstablishClient(AddonManifest manifest, RedshiftDeveloperOptions devOptions, out AmazonRedshiftClient client)
-        {
-            OperationResult result;
-
-            bool requireCreds;
-            var manifestprops = manifest.GetProperties().ToDictionary(x => x.Key, x => x.Value);
-            var accessKey = manifestprops["AWSClientKey"];
-            var secretAccessKey = manifestprops["AWSSecretKey"];
-            //var AWSRegionEndpoint = manifestprops["AWSRegionEndpoint"];
-
-            var prop =
-                manifest.Properties.First(
-                    p => p.Key.Equals("requireDevCredentials", StringComparison.InvariantCultureIgnoreCase));
-
-            if (bool.TryParse(prop.Value, out requireCreds) && requireCreds)
-            {
-                if (!ValidateDevCreds(devOptions))
-                {
-                    client = null;
-                    result = new OperationResult
-                    {
-                        IsSuccess = false,
-                        EndUserMessage =
-                            "The add on requires that developer credentials are specified but none were provided."
-                    };
-                    return result;
-                }
-            }
-            var config = new AmazonRedshiftConfig { RegionEndpoint = RegionEndpoint.USEast1 };
-            client = new AmazonRedshiftClient(accessKey, secretAccessKey, config);
-            result = new OperationResult { IsSuccess = true };
-            return result;
-        }
-
-        private static CreateClusterRequest CreateClusterRequest(RedshiftDeveloperOptions devOptions)
+        private static CreateClusterRequest CreateClusterRequest(RedshiftDeveloperOptions _devOptions)
         {
             return new CreateClusterRequest
             {
-                AllowVersionUpgrade = devOptions.AllowVersionUpgrade,
-                AutomatedSnapshotRetentionPeriod = devOptions.AutomatedSnapshotRetentionPeriod,
-                AvailabilityZone = devOptions.AvailabilityZone,
-                ClusterIdentifier = devOptions.ClusterIdentifier,
-                ClusterParameterGroupName = devOptions.ClusterParameterGroupName,
-                ClusterSecurityGroups = devOptions.ClusterSecurityGroups,
-                ClusterSubnetGroupName = devOptions.ClusterSubnetGroupName,
-                ClusterType = devOptions.ClusterType,
-                ClusterVersion = devOptions.ClusterVersion,
-                DBName = devOptions.DbName,
-                ElasticIp = devOptions.ElasticIp,
-                Encrypted = devOptions.Encrypted,
-                HsmClientCertificateIdentifier = devOptions.HsmClientCertificateIdentifier,
-                HsmConfigurationIdentifier = devOptions.HsmClientConfigurationIdentifier,
-                MasterUsername = devOptions.MasterUserName,
-                MasterUserPassword = devOptions.MasterPassword,
-                NodeType = devOptions.NodeType,
-                NumberOfNodes = devOptions.NumberOfNodes,
-                Port = devOptions.Port,
-                PreferredMaintenanceWindow = devOptions.PreferredMaintenanceWindow,
-                PubliclyAccessible = devOptions.PubliclyAccessible,
-                VpcSecurityGroupIds = devOptions.VpcSecurityGroupIds
+                AllowVersionUpgrade = _devOptions.AllowVersionUpgrade,
+                AutomatedSnapshotRetentionPeriod = _devOptions.AutomatedSnapshotRetentionPeriod,
+                AvailabilityZone = _devOptions.AvailabilityZone,
+                ClusterIdentifier = _devOptions.ClusterIdentifier,
+                ClusterParameterGroupName = _devOptions.ClusterParameterGroupName,
+                ClusterSecurityGroups = _devOptions.ClusterSecurityGroups,
+                ClusterSubnetGroupName = _devOptions.ClusterSubnetGroupName,
+                ClusterType = _devOptions.ClusterType,
+                ClusterVersion = _devOptions.ClusterVersion,
+                DBName = _devOptions.DbName,
+                ElasticIp = _devOptions.ElasticIp,
+                Encrypted = _devOptions.Encrypted,
+                HsmClientCertificateIdentifier = _devOptions.HsmClientCertificateIdentifier,
+                HsmConfigurationIdentifier = _devOptions.HsmClientConfigurationIdentifier,
+                MasterUsername = _devOptions.MasterUserName,
+                MasterUserPassword = _devOptions.MasterPassword,
+                NodeType = _devOptions.NodeType,
+                NumberOfNodes = _devOptions.NumberOfNodes,
+                Port = _devOptions.Port,
+                PreferredMaintenanceWindow = _devOptions.PreferredMaintenanceWindow,
+                PubliclyAccessible = _devOptions.PubliclyAccessible,
+                VpcSecurityGroupIds = _devOptions.VpcSecurityGroupIds
             };
         }
 
-        private static bool ValidateManifest(AddonManifest manifest, out OperationResult testResult)
+        private static bool ValidateManifest(AddonManifest _manifest, out OperationResult _testResult)
         {
-            testResult = new OperationResult();
+            _testResult = new OperationResult();
 
             var prop =
-                    manifest.Properties.FirstOrDefault(
-                        p => p.Key.Equals("requireDevCredentials", StringComparison.InvariantCultureIgnoreCase));
+                    _manifest.Properties.FirstOrDefault(
+                        _p => _p.Key.Equals("requireDevCredentials", StringComparison.InvariantCultureIgnoreCase));
 
             if (prop == null || !prop.HasValue)
             {
-                testResult.IsSuccess = false;
-                testResult.EndUserMessage = "Missing required property 'requireDevCredentials'. This property needs to be provided as part of the manifest";
+                _testResult.IsSuccess = false;
+                _testResult.EndUserMessage = "Missing required property 'requireDevCredentials'. This property needs to be provided as part of the manifest";
                 return false;
             }
 
-            if (!string.IsNullOrWhiteSpace(manifest.ProvisioningUsername) &&
-                !string.IsNullOrWhiteSpace(manifest.ProvisioningPassword)) return true;
-            testResult.IsSuccess = false;
-            testResult.EndUserMessage = "Missing credentials 'provisioningUsername' & 'provisioningPassword' . These values needs to be provided as part of the manifest";
+            if (!string.IsNullOrWhiteSpace(_manifest.ProvisioningUsername) &&
+                !string.IsNullOrWhiteSpace(_manifest.ProvisioningPassword)) return true;
+            _testResult.IsSuccess = false;
+            _testResult.EndUserMessage = "Missing credentials 'provisioningUsername' & 'provisioningPassword' . These values needs to be provided as part of the manifest";
             return false;
         }
     }

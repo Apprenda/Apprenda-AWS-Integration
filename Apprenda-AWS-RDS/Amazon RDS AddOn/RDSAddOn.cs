@@ -7,6 +7,10 @@
     using System.Linq;
     using System.Threading;
 
+    using Amazon.Util;
+
+    using Apprenda.SaaSGrid.Addons.AWS.Util;
+
     public class RdsAddOn : AddonBase
     {
         // Deprovision RDS Instance
@@ -150,53 +154,39 @@
         {
             var accessKey = _manifest.ProvisioningUsername;
             var secretAccessKey = _manifest.ProvisioningPassword;
-            var location = GetLocation(_manifest.ProvisioningLocation) ?? RegionEndpoint.USEast1;
+            var location = AwsUtils.ParseRegionEndpoint(_manifest.ProvisioningLocation, true);
             var config = new AmazonRDSConfig { RegionEndpoint = location };
             return new AmazonRDSClient(accessKey, secretAccessKey, config);
-        }
-
-        private static RegionEndpoint GetLocation(string _provisioningLocation = "")
-        {
-            switch (_provisioningLocation)
-            {
-                default:
-                    return RegionEndpoint.USEast1;
-            }
-
         }
 
         private CreateDBInstanceRequest CreateDbInstanceRequest(RdsDeveloperOptions _devOptions)
         {
             var request = new CreateDBInstanceRequest
-            {
-                // These are required values.
-                BackupRetentionPeriod = _devOptions.BackupRetentionPeriod,
-                //DBParameterGroupName = devOptions.DbParameterGroupName,
-                DBSecurityGroups = _devOptions.DbSecurityGroups,
-                DBSubnetGroupName = _devOptions.SubnetGroupName,
-                DBInstanceClass = _devOptions.DbInstanceClass,
-                DBInstanceIdentifier = _devOptions.DbInstanceIdentifier,
-                DBName = _devOptions.DbName,
-                Engine = _devOptions.Engine,
-                EngineVersion = _devOptions.EngineVersion,
-                LicenseModel = _devOptions.LicenseModel,
-                MasterUsername = _devOptions.DbaUsername,
-                MasterUserPassword = _devOptions.DbaPassword,
-                Iops = _devOptions.ProvisionedIoPs,
-                //MultiAZ = devOptions.MultiAz,
-                OptionGroupName = _devOptions.OptionGroup,
-                Port = _devOptions.Port,
-                PreferredBackupWindow = _devOptions.PreferredBackupWindow,
-                PreferredMaintenanceWindow = _devOptions.PreferredMxWindow,
-                PubliclyAccessible = _devOptions.PubliclyAccessible,
-                //Tags = devOptions.Tags,
-                //VpcSecurityGroupIds = devOptions.VpcSecurityGroupIds
-            };
-
-            //if (!devOptions.MultiAz)
-            //{
-                request.AvailabilityZone = _devOptions.AvailabilityZone;
-            //}
+                              {
+                                  // These are required values.
+                                  BackupRetentionPeriod = _devOptions.BackupRetentionPeriod,
+                                  //DBParameterGroupName = devOptions.DbParameterGroupName,
+                                  DBSecurityGroups = _devOptions.DbSecurityGroups,
+                                  DBSubnetGroupName = _devOptions.SubnetGroupName,
+                                  DBInstanceClass = _devOptions.DbInstanceClass,
+                                  DBInstanceIdentifier = _devOptions.DbInstanceIdentifier,
+                                  DBName = _devOptions.DbName,
+                                  Engine = _devOptions.Engine,
+                                  EngineVersion = _devOptions.EngineVersion,
+                                  LicenseModel = _devOptions.LicenseModel,
+                                  MasterUsername = _devOptions.DbaUsername,
+                                  MasterUserPassword = _devOptions.DbaPassword,
+                                  Iops = _devOptions.ProvisionedIoPs,
+                                  //MultiAZ = devOptions.MultiAz,
+                                  OptionGroupName = _devOptions.OptionGroup,
+                                  Port = _devOptions.Port,
+                                  PreferredBackupWindow = _devOptions.PreferredBackupWindow,
+                                  PreferredMaintenanceWindow = _devOptions.PreferredMxWindow,
+                                  PubliclyAccessible = _devOptions.PubliclyAccessible,
+                                  AvailabilityZone = _devOptions.AvailabilityZone,
+                                  //Tags = devOptions.Tags,
+                                  //VpcSecurityGroupIds = devOptions.VpcSecurityGroupIds
+                              };
 
             // Oracle DB only parameter
             if (request.Engine.Equals("Oracle") && _devOptions.CharacterSet.Length > 0)

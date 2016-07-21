@@ -124,7 +124,7 @@
         public void ProvisionTest()
         {
             this.ProvisionRequest = new AddonProvisionRequest { Manifest = SetupPropertiesAndParameters(), DeveloperParameters = SetUpParameters() };
-            var output = new SQSAddOn().Provision(this.ProvisionRequest);
+            var output = new SqsAddOn().Provision(this.ProvisionRequest);
             Assert.That(output, Is.TypeOf<ProvisionAddOnResult>());
             Assert.That(output.IsSuccess, Is.EqualTo(true));
             Assert.That(output.ConnectionData.Length, Is.GreaterThan(0));
@@ -141,7 +141,7 @@
             };
             this.DeprovisionRequest.ConnectionData =
                 new SQSConnectionInfo() { QueueName = ConfigurationManager.AppSettings["queueName"]}.ToString();
-            var output = new SQSAddOn().Deprovision(this.DeprovisionRequest);
+            var output = new SqsAddOn().Deprovision(this.DeprovisionRequest);
             Assert.That(output, Is.TypeOf<OperationResult>());
             Assert.That(output.IsSuccess, Is.EqualTo(true));
         }
@@ -154,7 +154,7 @@
                 Manifest = SetupPropertiesAndParameters(),
                 DeveloperParameters = SetUpParameters()
             };
-            var output = new SQSAddOn().Test(this.TestRequest);
+            var output = new SqsAddOn().Test(this.TestRequest);
             Assert.That(output, Is.TypeOf<OperationResult>());
             Assert.That(output.IsSuccess, Is.EqualTo(true));
         }

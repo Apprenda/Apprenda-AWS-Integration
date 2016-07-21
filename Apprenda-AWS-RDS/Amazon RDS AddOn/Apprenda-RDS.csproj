@@ -71,6 +71,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Solution Files\Apprenda-AWS\AWS-Utilities\AWS-Utilities.csproj">
+      <Project>{7672A36C-D531-4FCB-8071-9054B301D087}</Project>
+      <Name>AWS-Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

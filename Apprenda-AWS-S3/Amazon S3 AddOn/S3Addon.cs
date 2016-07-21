@@ -13,6 +13,8 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
+
+    using Amazon;
     using Amazon.S3;
     using Amazon.S3.Model;
     using Apprenda.SaaSGrid.Addons.AWS.Util;
@@ -45,17 +47,10 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
             var devParameters = request.DeveloperParameters;
             try
             {
-                AmazonS3Client client;
                 var conInfo = S3ConnectionInfo.Parse(connectionData);
-                var devOptions = S3DeveloperOptions.ParseWithParameters(devParameters);
+                var devOptions = S3DeveloperOptions.Parse(devParameters);
                 devOptions.BucketName = conInfo.BucketName;
-                var establishClientResult = this.EstablishClient(manifest, devOptions, out client);
-                if (!establishClientResult.IsSuccess)
-                {
-                    deprovisionResult.EndUserMessage = establishClientResult.EndUserMessage;
-                    return deprovisionResult;
-                }
-
+                var client = EstablishClient(manifest);
                 client.DeleteBucket(new DeleteBucketRequest
                 {
                     BucketName = devOptions.BucketName
@@ -88,20 +83,12 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
 
             try
             {
-                AmazonS3Client client;
-                var devOptions = S3DeveloperOptions.ParseWithParameters(developerParameters);
-                var establishClientResult = this.EstablishClient(manifest, devOptions, out client);
-
-                if (!establishClientResult.IsSuccess)
-                {
-                    provisionResult.EndUserMessage = establishClientResult.EndUserMessage;
-                    return provisionResult;
-                }
-
+                var devOptions = S3DeveloperOptions.Parse(developerParameters);
+                var client = EstablishClient(manifest);
                 var response = client.PutBucket(new PutBucketRequest
                 {
                     BucketName = devOptions.BucketName,
-                    BucketRegion = S3Region.US
+                    BucketRegion = TranslateRegionEndpoints(manifest, devOptions)
                 });
 
                 if (response.HttpStatusCode != HttpStatusCode.OK)
@@ -139,10 +126,53 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
             return provisionResult;
         }
 
+
+        #region S3 Region Translation
+
+        // so we need to do this because S3 doesn't use the traditional AWS Region Endpoints. Hopefully this changes in the future.
+
+        private static S3Region TranslateRegionEndpoints(AddonManifest _manifest, S3DeveloperOptions _options)
+        {
+            
+            return Translate(_options.UseClientRegion ? AwsUtils.ParseRegionEndpoint(_manifest.ProvisioningLocation, true) : AwsUtils.ParseRegionEndpoint(_options.BucketRegion, true));
+        }
+
+        private static S3Region Translate(RegionEndpoint _s)
+        {
+            if (_s == RegionEndpoint.USEast1)
+                return S3Region.US;
+            if( _s == RegionEndpoint.APNortheast1)
+                return S3Region.APN1;
+            if (_s == RegionEndpoint.APNortheast2)
+                return S3Region.APN2;
+            if (_s == RegionEndpoint.APSoutheast1)
+                return S3Region.APS1;
+            if (_s == RegionEndpoint.APSoutheast2)
+                return S3Region.APS2;
+            if (_s == RegionEndpoint.CNNorth1)
+                return S3Region.CN1;
+            if (_s == RegionEndpoint.EUCentral1)
+                return S3Region.EUC1;
+            if (_s == RegionEndpoint.EUWest1)
+                return S3Region.EU;
+            if (_s == RegionEndpoint.SAEast1)
+                return S3Region.SAE1;
+            if (_s == RegionEndpoint.USGovCloudWest1)
+                return S3Region.GOVW1;
+            if (_s == RegionEndpoint.USWest1)
+                return S3Region.USW1;
+            if (_s == RegionEndpoint.USWest2)
+                return S3Region.USW2;
+            throw new ArgumentException("Unrecognized Region Endpoint.");
+        }
+
+        #endregion
+
+
         /// <summary>
         /// The test.
         /// </summary>
-        /// <param name="request">
+        /// <param name="_request">
         /// The request.
         /// </param>
         /// <returns>
@@ -150,68 +180,36 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// </exception>
-        public override OperationResult Test(AddonTestRequest request)
+        public override OperationResult Test(AddonTestRequest _request)
         {
-            var provisionRequest = new AddonProvisionRequest { Manifest = request.Manifest, DeveloperParameters = request.DeveloperParameters };
-            var manifest = request.Manifest;
-            var developerParameters = request.DeveloperParameters;
+            var provisionRequest = new AddonProvisionRequest { Manifest = _request.Manifest, DeveloperParameters = _request.DeveloperParameters };
+            var manifest = _request.Manifest;
+            var developerParameters = _request.DeveloperParameters;
             var testResult = new OperationResult { IsSuccess = false };
-            var testProgress = string.Empty;
-
-            if (manifest.Properties != null && manifest.Properties.Any())
             {
                 S3DeveloperOptions devOptions;
-
-                testProgress += "Evaluating required manifest properties...\n";
                 var parseOptionsResult = TestDeveloperParameters(developerParameters, out devOptions);
                 if (!parseOptionsResult.IsSuccess)
                 {
                     return parseOptionsResult;
                 }
-                testProgress += parseOptionsResult.EndUserMessage;
-
                 try
                 {
-                    testProgress += "Establishing connection to AWS...\n";
-                    AmazonS3Client client;
-                    var establishClientResult = this.EstablishClient(manifest, devOptions, out client);
-                    if (!establishClientResult.IsSuccess)
-                    {
-                        return establishClientResult;
-                    }
-                    testProgress += establishClientResult.EndUserMessage;
-
-                    testProgress += "Successfully connected. \n";
-                    testResult.IsSuccess = true;
-                    testResult.EndUserMessage = testProgress;
-
-                    // ok and let let's try provisioning
-
-                    var result = Provision(provisionRequest);
-
-                    testResult.EndUserMessage += result.IsSuccess + "\n";
-                    testResult.EndUserMessage += result.ConnectionData + "\n";
-                    testResult.EndUserMessage += result.EndUserMessage + "\n";
-
-                    var depResult = Deprovision(new AddonDeprovisionRequest { ConnectionData = result.ConnectionData, DeveloperParameters = provisionRequest.DeveloperParameters, Manifest = provisionRequest.Manifest });
+                    EstablishClient(manifest);
+                    var result = this.Provision(provisionRequest);
+                    var depResult = this.Deprovision(new AddonDeprovisionRequest { ConnectionData = result.ConnectionData, DeveloperParameters = provisionRequest.DeveloperParameters, Manifest = provisionRequest.Manifest });
                     if (depResult == null)
                     {
-                        throw new ArgumentNullException("request");
+                        throw new ArgumentNullException("_request");
                     }
-
-                    testResult.EndUserMessage += depResult.IsSuccess + "\n";
-                    testResult.EndUserMessage += depResult.EndUserMessage;
                 }
                 catch (Exception e)
                 {
-                    testResult.EndUserMessage = e.Message + e.StackTrace;
+                    testResult.EndUserMessage = "Error occured during testing. Exception: " + e.Message;
+                    return testResult;
                 }
             }
-            else
-            {
-                testResult.EndUserMessage = "Missing required manifest properties (requireDevCredentials)";
-            }
-
+            
             return testResult;
         }
 
@@ -221,28 +219,16 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
         /// <param name="manifest">
         /// The manifest.
         /// </param>
-        /// <param name="devOptions">
-        /// The dev options.
-        /// </param>
-        /// <param name="client">
-        /// The client.
-        /// </param>
         /// <returns>
         /// The <see cref="OperationResult"/>.
         /// </returns>
-        private OperationResult EstablishClient(AddonManifest manifest, S3DeveloperOptions devOptions, out AmazonS3Client client)
+        private static AmazonS3Client EstablishClient(IAddOnDefinition manifest)
         {
-            OperationResult result;
-
-            bool requireCreds;
-            var manifestprops = manifest.GetProperties().ToDictionary(x => x.Key, x => x.Value);
             var accessKey = manifest.ProvisioningUsername;
             var secretAccessKey = manifest.ProvisioningPassword;
-            var regionEndpoint = AWSUtils.ParseRegionEndpoint(manifest.ProvisioningLocation);
-            var config = new AmazonS3Config { ServiceURL = @"http://s3.amazonaws.com" };
-            client = new AmazonS3Client(accessKey, secretAccessKey, config);
-            result = new OperationResult { IsSuccess = true };
-            return result;
+            var regionEndpoint = AwsUtils.ParseRegionEndpoint(manifest.ProvisioningLocation);
+            var config = new AmazonS3Config { ServiceURL = @"http://s3.amazonaws.com", RegionEndpoint = regionEndpoint};
+            return new AmazonS3Client(accessKey, secretAccessKey, config);
         }
 
         /// <summary>

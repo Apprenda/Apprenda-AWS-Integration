@@ -212,7 +212,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EMR
         {
             var accessKey = manifest.ProvisioningUsername;
             var secretAccessKey = manifest.ProvisioningPassword;
-            var regionEndpoint = AWSUtils.ParseRegionEndpoint(manifest.ProvisioningLocation);
+            var regionEndpoint = AwsUtils.ParseRegionEndpoint(manifest.ProvisioningLocation);
             AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretAccessKey);
             client = AWSClientFactory.CreateAmazonElasticMapReduceClient(credentials, regionEndpoint);
             var result = new OperationResult

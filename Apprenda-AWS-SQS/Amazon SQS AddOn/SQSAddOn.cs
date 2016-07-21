@@ -1,46 +1,33 @@
-﻿using System;
-using System.Linq;
-using Amazon.SQS;
-using Amazon.SQS.Model;
-using System.Threading;
-using Amazon;
-
-
-namespace Apprenda.SaaSGrid.Addons.AWS.SQS
+﻿namespace Apprenda.SaaSGrid.Addons.AWS.SQS
 {
-    using Amazon.EC2.Model;
+    using Apprenda.SaaSGrid.Addons.AWS.Util;
+    using System;
+    using System.Linq;
+    using Amazon.SQS;
+    using Amazon.SQS.Model;
+    using System.Threading;
 
-    public class SQSAddOn : AddonBase
+    public class SqsAddOn : AddonBase
     {
         // Deprovision RDS Instance
         // Input: AddonDeprovisionRequest request
         // Output: OperationResult
-        public override OperationResult Deprovision(AddonDeprovisionRequest request)
+        public override OperationResult Deprovision(AddonDeprovisionRequest _request)
         {
-            var connectionData = request.ConnectionData;
+            var connectionData = _request.ConnectionData;
             // changing to overloaded constructor - 5/22/14
             var deprovisionResult = new ProvisionAddOnResult(connectionData);
-            var manifest = request.Manifest;
+            var manifest = _request.Manifest;
             //var devOptions = request.DeveloperOptions;
             try
             {
-                AmazonSQSClient client;
                 var conInfo = SQSConnectionInfo.Parse(connectionData);
-                //var developerOptions = DeveloperOptions.Parse(devOptions);
-                var developerOptions = SQSDeveloperOptions.Parse(request.DeveloperParameters);
-                var establishClientResult = this.EstablishClient(manifest, developerOptions, out client);
-                if (!establishClientResult.IsSuccess)
-                {
-                    deprovisionResult.EndUserMessage = establishClientResult.EndUserMessage;
-                    return deprovisionResult;
-                }
-
-                var response =
-                    client.DeleteQueue(new DeleteQueueRequest()
-                    {
-                        QueueUrl = conInfo.QueueURL
-                    });
-
+                var developerOptions = SQSDeveloperOptions.Parse(_request.DeveloperParameters);
+                var client = EstablishClient(manifest);
+                client.DeleteQueue(new DeleteQueueRequest()
+                                       {
+                                           QueueUrl = conInfo.QueueURL
+                                       });
                 do  {
                         var verificationResponse = client.GetQueueUrl(new GetQueueUrlRequest()
                         {
@@ -77,23 +64,16 @@ namespace Apprenda.SaaSGrid.Addons.AWS.SQS
         // Provision RDS Instance
         // Input: AddonDeprovisionRequest request
         // Output: ProvisionAddOnResult
-        public override ProvisionAddOnResult Provision(AddonProvisionRequest request)
+        public override ProvisionAddOnResult Provision(AddonProvisionRequest _request)
         {
             // i think this is a bug. but I'm going to throw an empty string to it to clear the warning.
             var provisionResult = new ProvisionAddOnResult("");
-            var manifest = request.Manifest;
-            var options = SQSDeveloperOptions.Parse(request.DeveloperParameters);
+            var manifest = _request.Manifest;
+            var options = SQSDeveloperOptions.Parse(_request.DeveloperParameters);
 
             try
             {
-                AmazonSQSClient client;
-                var establishClientResult = this.EstablishClient(manifest, options, out client);
-                if (!establishClientResult.IsSuccess)
-                {
-                    provisionResult.EndUserMessage = establishClientResult.EndUserMessage;
-                    return provisionResult;
-                }
-
+                var client = EstablishClient(manifest);
                 var response = client.CreateQueue(CreateQueueRequest(options));
                 if (response.QueueUrl != null)
                 {
@@ -103,7 +83,6 @@ namespace Apprenda.SaaSGrid.Addons.AWS.SQS
                             {
                                 QueueUrl = response.QueueUrl
                             });
-                        // fix on next few lines 5/22/14 resolve amazon aws deprecation.
                         if(verificationResponse.Attributes != null)
                         {
                             var conInfo = new SQSConnectionInfo()
@@ -116,7 +95,6 @@ namespace Apprenda.SaaSGrid.Addons.AWS.SQS
                             break;
                         }
                         Thread.Sleep(TimeSpan.FromSeconds(10d));
-
                     } while (true);
                 }
             }
@@ -131,37 +109,28 @@ namespace Apprenda.SaaSGrid.Addons.AWS.SQS
         // Testing Instance
         // Input: AddonTestRequest request
         // Output: OperationResult
-        public override OperationResult Test(AddonTestRequest request)
+        public override OperationResult Test(AddonTestRequest _request)
         {
-            var manifest = request.Manifest;
+            var manifest = _request.Manifest;
             var testResult = new OperationResult { IsSuccess = false };
-            var testProgress = "";
 
             if (manifest.Properties != null && manifest.Properties.Any())
             {
-                testProgress += "Evaluating required manifest properties...\n";
-                if (!this.ValidateManifest(manifest, out testResult))
+                if (!ValidateManifest(manifest))
                 {
+                    testResult.EndUserMessage =
+                        "Manifest validation failed. Check to make sure you have the proper credentials in your addon configuration.";
                     return testResult;
                 }
-                var devOptions = SQSDeveloperOptions.Parse(request.DeveloperParameters);
+                //var devOptions = SQSDeveloperOptions.Parse(request.DeveloperParameters);
                 try
                 {
-                    testProgress += "Establishing connection to AWS...\n";
-                    AmazonSQSClient client;
-                    var establishClientResult = this.EstablishClient(manifest, devOptions, out client);
-                    if (!establishClientResult.IsSuccess)
-                    {
-                        return establishClientResult;
-                    }
-                    testProgress += establishClientResult.EndUserMessage;
-                    var queueResults = client.ListQueues(new ListQueuesRequest()
-                    {
-                        // QueueNamePrefix is optional
-                    });
-                    testProgress += "Successfully passed all testing criteria!";
+                    var client = EstablishClient(manifest);
+                    client.ListQueues(new ListQueuesRequest {
+                                              // QueueNamePrefix is optional
+                                          });
                     testResult.IsSuccess = true;
-                    testResult.EndUserMessage = testProgress;
+                    testResult.EndUserMessage = "Validation succeeded.";
                 }
                 catch (Exception e)
                 {
@@ -172,84 +141,32 @@ namespace Apprenda.SaaSGrid.Addons.AWS.SQS
             {
                 testResult.EndUserMessage = "Missing required manifest properties (requireDevCredentials)";
             }
-
             return testResult;
         }
 
         /* Begin private methods */
 
-        private bool ValidateManifest(AddonManifest manifest, out OperationResult testResult)
+        private static bool ValidateManifest(IAddOnDefinition _manifest)
         {
-            testResult = new OperationResult();
-
-            var prop =
-                    manifest.Properties.FirstOrDefault(
-                        p => p.Key.Equals("requireDevCredentials", StringComparison.InvariantCultureIgnoreCase));
-
-            if (prop == null || !prop.HasValue)
-            {
-                testResult.IsSuccess = false;
-                testResult.EndUserMessage = "Missing required property 'requireDevCredentials'. This property needs to be provided as part of the manifest";
-                return false;
-            }
-
-            if (string.IsNullOrWhiteSpace(manifest.ProvisioningUsername) ||
-                string.IsNullOrWhiteSpace(manifest.ProvisioningPassword))
-            {
-                testResult.IsSuccess = false;
-                testResult.EndUserMessage = "Missing credentials 'provisioningUsername' & 'provisioningPassword' . These values needs to be provided as part of the manifest";
-                return false;
-            }
-
-            return true;
+            return !string.IsNullOrWhiteSpace(_manifest.ProvisioningUsername) && !string.IsNullOrWhiteSpace(_manifest.ProvisioningPassword);
         }
 
-        // TODO: We might be able to extend this. 
-        private bool ValidateDevCreds(SQSDeveloperOptions devOptions)
+        private static AmazonSQSClient EstablishClient(IAddOnDefinition _manifest)
         {
-            return !(string.IsNullOrWhiteSpace(devOptions.AccessKey) || string.IsNullOrWhiteSpace(devOptions.SecretAccessKey));
+            var accessKey = _manifest.ProvisioningUsername;
+            var secretAccessKey = _manifest.ProvisioningPassword;
+            var regionEndpoint = AwsUtils.ParseRegionEndpoint(_manifest.ProvisioningLocation);
+            var config = new AmazonSQSConfig() { RegionEndpoint = regionEndpoint };
+            return new AmazonSQSClient(accessKey, secretAccessKey, config);
         }
 
-        private OperationResult EstablishClient(AddonManifest manifest, SQSDeveloperOptions devOptions, out AmazonSQSClient client)
+        private static CreateQueueRequest CreateQueueRequest(SQSDeveloperOptions _devOptions)
         {
-            OperationResult result;
-
-            bool requireCreds;
-            var manifestprops = manifest.GetProperties().ToDictionary(x=>x.Key, x=>x.Value);
-            var AccessKey = manifestprops["AWSClientKey"];
-            var SecretAccessKey = manifestprops["AWSSecretKey"];
-            var _RegionEndpoint = manifestprops["AWSRegionEndpoint"];
-            var prop =
-                manifest.Properties.First(
-                    p => p.Key.Equals("requireDevCredentials", StringComparison.InvariantCultureIgnoreCase));
-
-            if (bool.TryParse(prop.Value, out requireCreds) && requireCreds)
-            {
-                if (!ValidateDevCreds(devOptions))
-                {
-                    client = null;
-                    result = new OperationResult()
-                    {
-                        IsSuccess = false,
-                        EndUserMessage =
-                            "The add on requires that developer credentials are specified but none were provided."
-                    };
-                    return result;
-                }
-            }
-            AmazonSQSConfig config = new AmazonSQSConfig() { RegionEndpoint = RegionEndpoint.USEast1 };
-            client = new AmazonSQSClient(AccessKey, SecretAccessKey, config);
-            result = new OperationResult { IsSuccess = true };
-            return result;
-        }
-
-        private CreateQueueRequest CreateQueueRequest(SQSDeveloperOptions devOptions)
-        {
-            var request = new CreateQueueRequest()
+            var request = new CreateQueueRequest
             {
                 // TODO - need to determine where defaults are used, and then not create the constructor where value is null (to use default)
-               QueueName = devOptions.QueueName,
-               Attributes = devOptions.Attributes.ToDict()
+               QueueName = _devOptions.QueueName,
+               Attributes = _devOptions.Attributes.ToDict()
             };
             return request;
         }

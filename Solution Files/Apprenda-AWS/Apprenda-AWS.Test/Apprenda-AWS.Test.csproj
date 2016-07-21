@@ -56,6 +56,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="RedshiftTestHarness.cs" />
+    <Compile Include="EMRTestHarness.cs" />
     <Compile Include="RDSTestHarness.cs" />
     <Compile Include="GlacierTestHarness.cs" />
     <Compile Include="SNSTestHarness.cs" />

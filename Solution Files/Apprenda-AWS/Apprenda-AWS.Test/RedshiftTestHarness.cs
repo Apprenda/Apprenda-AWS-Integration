@@ -7,7 +7,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class GlacierTestHarness
+    public class RedshiftTestHarness
     {
         private AddonProvisionRequest ProvisionRequest { get; set; }
         private AddonDeprovisionRequest DeprovisionRequest { get; set; }

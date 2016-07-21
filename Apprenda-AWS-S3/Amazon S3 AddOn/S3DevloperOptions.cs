@@ -10,8 +10,11 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
             this.Grants = _grants;
         }
 
-        internal string BucketName { get; set; }
-
+        public string BucketName { get; set; }
+        public string BucketRegion { get; set; }
+        public string BucketRegionName { get; set; }
+        public string CannedACL { get; set; }
+        public bool UseClientRegion { get; set; }
         private List<string> Grants { get; set; }
 
         private static void MapToOption(S3DeveloperOptions _existingOptions, string _key, string _value)
@@ -47,15 +50,12 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                 _existingOptions.Grants.Add(_value);
                 return;
             }
-            if ("regionendpoint".Equals(_key))
-            {
-            }
             // else option is not found, throw exception
             throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", _key));
         }
 
         // This is the new method. give this a test!
-        public static S3DeveloperOptions ParseWithParameters(IEnumerable<AddonParameter> _developerParameters)
+        public static S3DeveloperOptions Parse(IEnumerable<AddonParameter> _developerParameters)
         {
             // TODO
             // given developerParameters, map the

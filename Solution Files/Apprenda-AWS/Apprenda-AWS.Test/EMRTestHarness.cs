@@ -3,11 +3,11 @@
     using System.Collections.Generic;
     using System.Configuration;
     using Apprenda.SaaSGrid.Addons;
-    using Apprenda.SaaSGrid.Addons.AWS.Glacier;
+    using Apprenda.SaaSGrid.Addons.AWS.EMR;
     using NUnit.Framework;
 
     [TestFixture]
-    public class GlacierTestHarness
+    public class EMRTestHarness
     {
         private AddonProvisionRequest ProvisionRequest { get; set; }
         private AddonDeprovisionRequest DeprovisionRequest { get; set; }
@@ -67,7 +67,7 @@
                 DeveloperHelp = "",
                 IsEnabled = true,
                 ManifestVersionString = "2.0",
-                Name = "Glacier",
+                Name = "EMR",
 
                 // we'll handle parameters below.
                 Parameters = new ParameterList
@@ -105,7 +105,7 @@
         }
 
         [Test]
-        public void ParseS3ParametersTest()
+        public void ParseEMRParametersTest()
         {
 
         }
@@ -114,25 +114,18 @@
         public void ProvisionTest()
         {
             this.ProvisionRequest = new AddonProvisionRequest { Manifest = SetupPropertiesAndParameters(), DeveloperParameters = SetUpParameters() };
-            var output = new GlacierAddon().Provision(this.ProvisionRequest);
-            Assert.That(output, Is.TypeOf<ProvisionAddOnResult>());
-            Assert.That(output.IsSuccess, Is.EqualTo(true));
-            Assert.That(output.ConnectionData.Length, Is.GreaterThan(0));
-        }
-
-        [Test]
-        public void DeProvisionTest()
-        {
-            this.ProvisionRequest = new AddonProvisionRequest { Manifest = SetupPropertiesAndParameters(), DeveloperParameters = SetUpParameters() };
-            var provOutput = new GlacierAddon().Provision(this.ProvisionRequest);
+            var provOutput = new EmrAddOn().Provision(this.ProvisionRequest);
+            Assert.That(provOutput, Is.TypeOf<ProvisionAddOnResult>());
+            Assert.That(provOutput.IsSuccess, Is.EqualTo(true));
+            Assert.That(provOutput.ConnectionData.Length, Is.GreaterThan(0));
             this.DeprovisionRequest = new AddonDeprovisionRequest
-            {
-                Manifest = SetupPropertiesAndParameters(),
-                DeveloperParameters = SetUpParameters()
-            };
+                                          {
+                                              Manifest = SetupPropertiesAndParameters(),
+                                              DeveloperParameters = SetUpParameters(),
+                                              ConnectionData = provOutput.ConnectionData
+                                          };
             // take the connection data from the provisioned request.
-            this.DeprovisionRequest.ConnectionData = provOutput.ConnectionData;
-            var output = new GlacierAddon().Deprovision(this.DeprovisionRequest);
+            var output = new EmrAddOn().Deprovision(this.DeprovisionRequest);
             Assert.That(output, Is.TypeOf<ProvisionAddOnResult>());
             Assert.That(output.IsSuccess, Is.EqualTo(true));
         }
@@ -145,7 +138,7 @@
                 Manifest = SetupPropertiesAndParameters(),
                 DeveloperParameters = SetUpParameters()
             };
-            var output = new GlacierAddon().Test(this.TestRequest);
+            var output = new EmrAddOn().Test(this.TestRequest);
             Assert.That(output, Is.TypeOf<OperationResult>());
             Assert.That(output.IsSuccess, Is.EqualTo(true));
         }
