@@ -1,15 +1,11 @@
 ﻿namespace Apprenda.SaaSGrid.Addons.AWS.RDS
 {
-    using Amazon;
     using Amazon.RDS;
     using Amazon.RDS.Model;
     using System;
     using System.Linq;
     using System.Threading;
-
-    using Amazon.Util;
-
-    using Apprenda.SaaSGrid.Addons.AWS.Util;
+    using Util;
 
     public class RdsAddOn : AddonBase
     {
@@ -19,7 +15,7 @@
         public override OperationResult Deprovision(AddonDeprovisionRequest _request)
         {
             var connectionData = _request.ConnectionData;
-            var deprovisionResult = new ProvisionAddOnResult(connectionData);
+            var deprovisionResult = new OperationResult();
             var manifest = _request.Manifest;
             var devOptions = _request.DeveloperParameters;
             try
@@ -73,7 +69,7 @@
                 var devOptions = RdsDeveloperOptions.Parse(_request.DeveloperParameters, _request.Manifest);
                 var client = EstablishClient(_request.Manifest);
                 
-                var response = client.CreateDBInstance(this.CreateDbInstanceRequest(devOptions));
+                var response = client.CreateDBInstance(CreateDbInstanceRequest(devOptions));
                 if (response.DBInstance != null)
                 {
                     do
@@ -159,49 +155,76 @@
             return new AmazonRDSClient(accessKey, secretAccessKey, config);
         }
 
-        private CreateDBInstanceRequest CreateDbInstanceRequest(RdsDeveloperOptions _devOptions)
+        private static CreateDBInstanceRequest CreateDbInstanceRequest(RdsDeveloperOptions _devOptions)
         {
             var request = new CreateDBInstanceRequest
                               {
                                   // These are required values.
                                   BackupRetentionPeriod = _devOptions.BackupRetentionPeriod,
-                                  //DBParameterGroupName = devOptions.DbParameterGroupName,
-                                  DBSecurityGroups = _devOptions.DbSecurityGroups,
-                                  DBSubnetGroupName = _devOptions.SubnetGroupName,
+                                  AutoMinorVersionUpgrade = _devOptions.AutoMinorVersionUpgrade,
+                                  AllocatedStorage = _devOptions.AllocatedStorage,
                                   DBInstanceClass = _devOptions.DbInstanceClass,
                                   DBInstanceIdentifier = _devOptions.DbInstanceIdentifier,
-                                  DBName = _devOptions.DbName,
-                                  Engine = _devOptions.Engine,
-                                  EngineVersion = _devOptions.EngineVersion,
-                                  LicenseModel = _devOptions.LicenseModel,
                                   MasterUsername = _devOptions.DbaUsername,
                                   MasterUserPassword = _devOptions.DbaPassword,
-                                  Iops = _devOptions.ProvisionedIoPs,
-                                  //MultiAZ = devOptions.MultiAz,
-                                  OptionGroupName = _devOptions.OptionGroup,
                                   Port = _devOptions.Port,
-                                  PreferredBackupWindow = _devOptions.PreferredBackupWindow,
-                                  PreferredMaintenanceWindow = _devOptions.PreferredMxWindow,
                                   PubliclyAccessible = _devOptions.PubliclyAccessible,
-                                  AvailabilityZone = _devOptions.AvailabilityZone,
-                                  //Tags = devOptions.Tags,
-                                  //VpcSecurityGroupIds = devOptions.VpcSecurityGroupIds
                               };
-
             // Oracle DB only parameter
-            if (request.Engine.Equals("Oracle") && _devOptions.CharacterSet.Length > 0)
+            if (_devOptions.Engine.Equals("Oracle") && _devOptions.CharacterSet != null)
             {
                 request.CharacterSetName = _devOptions.CharacterSet;
             }
-            // default is 0, if specified change it
-            if (_devOptions.AllocatedStorage > 0)
+            if (_devOptions.DbSecurityGroups != null)
             {
-                request.AllocatedStorage = _devOptions.AllocatedStorage;
+                request.DBSecurityGroups = _devOptions.DbSecurityGroups;
             }
-            // default is false, if true change it
-            if (_devOptions.AutoMinorVersionUpgrade)
+            if (_devOptions.SubnetGroupName != null)
             {
-                request.AutoMinorVersionUpgrade = _devOptions.AutoMinorVersionUpgrade;
+                request.DBSubnetGroupName = _devOptions.SubnetGroupName;
+            }
+            if (_devOptions.LicenseModel != null)
+            {
+                request.LicenseModel = _devOptions.LicenseModel;
+            }
+            if (!_devOptions.Engine.Equals("sqlserver"))
+            {
+                request.DBName = _devOptions.DbName;
+            }
+            if (_devOptions.MultiAz)
+            {
+                request.MultiAZ = _devOptions.MultiAz;
+            }
+            else
+            {
+                if(request.AvailabilityZone != null) request.AvailabilityZone = _devOptions.AvailabilityZone;
+            }
+            if (_devOptions.OptionGroup != null)
+            {
+                request.OptionGroupName = _devOptions.OptionGroup;
+            }
+            if (_devOptions.Engine.Equals("oracle"))
+            {
+                request.Engine = _devOptions.OracleEngineEdition;
+                request.EngineVersion = _devOptions.OracleDBVersion;
+            }
+            if (_devOptions.Engine.Equals("sqlserver"))
+            {
+                request.Engine = _devOptions.SqlServerEngineEdition;
+                request.EngineVersion = _devOptions.SqlServerDBVersion;
+            }
+            if (_devOptions.Engine.Equals("mysql"))
+            {
+                request.Engine = "MySQL";
+                request.EngineVersion = _devOptions.MySqlDBVersion;
+            }
+            if (_devOptions.PreferredBackupWindow != null)
+            {
+                request.PreferredBackupWindow = _devOptions.PreferredBackupWindow;
+            }
+            if (_devOptions.PreferredMxWindow != null)
+            {
+                request.PreferredMaintenanceWindow = _devOptions.PreferredMxWindow;
             }
             return request;
         }

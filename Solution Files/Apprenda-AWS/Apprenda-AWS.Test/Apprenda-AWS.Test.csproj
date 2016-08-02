@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Apprenda_AWS.Test</RootNamespace>
     <AssemblyName>Apprenda-AWS.Test</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -16,6 +16,7 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,7 +58,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="RedshiftTestHarness.cs" />
-    <Compile Include="EMRTestHarness.cs" />
     <Compile Include="RDSTestHarness.cs" />
     <Compile Include="GlacierTestHarness.cs" />
     <Compile Include="SNSTestHarness.cs" />
@@ -72,10 +72,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Apprenda-AWS-EMR\Amazon EMR AddOn\Apprenda-EMR.csproj">
-      <Project>{df55a13a-863b-4de2-99c4-fe7a0f86c2db}</Project>
-      <Name>Apprenda-EMR</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Apprenda-AWS-Glacier\Amazon Glacier AddOn\Apprenda-Glacier.csproj">
       <Project>{78545fff-b690-4fc3-b140-970c2e5e8180}</Project>
       <Name>Apprenda-Glacier</Name>
@@ -99,10 +95,6 @@
     <ProjectReference Include="..\..\..\Apprenda-AWS-SQS\Amazon SQS AddOn\Apprenda-SQS.csproj">
       <Project>{ed935b62-0b85-4b38-bcf6-b9f9beac8704}</Project>
       <Name>Apprenda-SQS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Apprenda-EC2-AMI\Apprenda-EC2-AMI.csproj">
-      <Project>{d74d6061-9d55-4c37-aa8b-cea6356d7108}</Project>
-      <Name>Apprenda-EC2-AMI</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

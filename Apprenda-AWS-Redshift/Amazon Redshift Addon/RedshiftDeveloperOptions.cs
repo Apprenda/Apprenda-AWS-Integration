@@ -3,58 +3,65 @@ using System.Collections.Generic;
 
 namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
 {
+    using Apprenda.Services.Logging;
     public class RedshiftDeveloperOptions
     {
+        private static readonly ILogger logger = LogManager.Instance().GetLogger(typeof(RedshiftDeveloperOptions));
+        private const bool DefaultAllowVersionUpgrade = true;
+
+        private const uint MaxAutomatedSnapshotPeriod = 35;
+
+        private const uint DefaultAutomatedSnapshotPeriod = 1;
+
+        private const string DefaultClusterType = "multi-node";
+
+        private const bool DefaultEncrypted = false;
+
+        private const uint DefaultNumberOfNodes = 1;
+
+        private static readonly List<string> AllowedNodeTypes = new List<string>
+        { "ds1.xlarge", "ds1.8xlarge", "ds2.xlarge","ds2.8xlarge", "dc1.large", "dc1.8xlarge"};
+
+        private const uint DefaultPort = 5439;
+
+        private const uint DefaultNodeCount = 1;
+
+        public bool SkipFinalSnapshot { get; private set; }
         public string ClusterParameterGroupName { get; private set; }
-
         public string MasterUserName { get; private set; }
-
-        public string MasterPassword { get; private set; }
-
-        public string AccessKey { get; private set; }
-
-        public string SecretAccessKey { get; private set; }
-
-        // Amazon Redshift Options
-        public int AllocatedStorage { get; private set; }
-
-        public string AvailabilityZone { get; private set; }
-
+        public string MasterUserPassword { get; private set; }
+        //public uint AllocatedStorage { get; private set; }
+        //public uint MaxAllocatedStorage { get; private set; }
+        //public string AvailabilityZone { get; private set; }
         public bool AllowVersionUpgrade { get; private set; }
-
-        public int AutomatedSnapshotRetentionPeriod { get; private set; }
-
+        public uint AutomatedSnapshotRetentionPeriod { get; private set; }
         public string ClusterIdentifier { get; private set; }
-
         public List<string> ClusterSecurityGroups { get; set; }
-
         public string ClusterSubnetGroupName { get; private set; }
-
         public string ClusterType { get; private set; }
-
-        public string ClusterVersion { get; private set; }
-
+        //public string ClusterVersion { get; private set; }
         public string DbName { get; private set; }
-
-        public string ElasticIp { get; private set; }
-
+        //public string ElasticIp { get; private set; }
         public bool Encrypted { get; private set; }
-
         public string HsmClientCertificateIdentifier { get; private set; }
-
         public string HsmClientConfigurationIdentifier { get; private set; }
-
         public string NodeType { get; private set; }
-
-        public int NumberOfNodes { get; private set; }
-
-        public int Port { get; private set; }
-
+        public uint NumberOfNodes { get; private set; }
+        public uint MaxNumberOfNodes { get; private set; }
+        public uint Port { get; private set; }
         public string PreferredMaintenanceWindow { get; private set; }
-
         public bool PubliclyAccessible { get; private set; }
-
         public List<string> VpcSecurityGroupIds { get; set; }
+
+        private RedshiftDeveloperOptions()
+        {
+            this.AllowVersionUpgrade = DefaultAllowVersionUpgrade;
+            this.AutomatedSnapshotRetentionPeriod = DefaultAutomatedSnapshotPeriod;
+            this.ClusterType = DefaultClusterType;
+            this.Encrypted = DefaultEncrypted;
+            this.NumberOfNodes = DefaultNumberOfNodes;
+            this.Port = DefaultPort;
+        }
 
         public static RedshiftDeveloperOptions Parse(IEnumerable<AddonParameter> developerParameters, AddonManifest manifest)
         {
@@ -75,23 +82,6 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
         // Interior method takes in instance of DeveloperOptions (aptly named existingOptions) and maps them to the proper value. In essence, a setter method.
         private static void MapToOption(RedshiftDeveloperOptions _existingOptions, string _key, string _value)
         {
-            if ("availabilityzone".Equals(_key))
-            {
-                _existingOptions.AvailabilityZone = _value;
-                return;
-            }
-
-            if ("allocatedstorage".Equals(_key))
-            {
-                int result;
-                if (!int.TryParse(_value, out result))
-                {
-                    throw new ArgumentException(string.Format("The developer option '{0}' can only have an integer value but '{1}' was used instead.", _key, _value));
-                }
-                _existingOptions.AllocatedStorage = result;
-                return;
-            }
-
             if ("allowversionupgrade".Equals(_key))
             {
                 bool result;
@@ -105,10 +95,15 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
 
             if ("automatedsnapshotretentionperiod".Equals(_key))
             {
-                int result;
-                if (!int.TryParse(_value, out result))
+                uint result;
+                if (!uint.TryParse(_value, out result))
                 {
-                    throw new ArgumentException(string.Format("The developer option '{0}' can only have an integer value but '{1}' was used instead.", _key, _value));
+                    logger.WarnFormat("The developer option '{0}' can only have an integer value but '{1}' was used instead. Using default.", _key, _value);
+                    return;
+                }
+                if (result > MaxAutomatedSnapshotPeriod)
+                {
+                    throw new ArgumentOutOfRangeException("Automated Snapshot Retention period should be between 0 and 35.");
                 }
                 _existingOptions.AutomatedSnapshotRetentionPeriod = result;
                 return;
@@ -128,10 +123,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
 
             if ("clustersecuritygroups".Equals(_key))
             {
-                if (true)
-                {
-                    _existingOptions.ClusterSecurityGroups.Add(_value);
-                }
+                _existingOptions.ClusterSecurityGroups.Add(_value);
                 return;
             }
 
@@ -146,25 +138,19 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
                 _existingOptions.ClusterType = _value;
                 return;
             }
-
-            if ("clusterversion".Equals(_key))
-            {
-                _existingOptions.ClusterVersion = _value;
-                return;
-            }
-
             if ("dbname".Equals(_key))
             {
                 _existingOptions.DbName = _value;
                 return;
             }
-
+            /*
+             * Not concerned with VPC
             if ("elasticip".Equals(_key))
             {
                 _existingOptions.ElasticIp = _value;
                 return;
             }
-
+            */
             if ("encrypted".Equals(_key))
             {
                 bool result;
@@ -188,9 +174,9 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
                 return;
             }
 
-            if ("masterpassword".Equals(_key))
+            if ("masteruserpassword".Equals(_key))
             {
-                _existingOptions.MasterPassword = _value;
+                _existingOptions.MasterUserPassword = _value;
                 return;
             }
 
@@ -202,25 +188,40 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
 
             if ("nodetype".Equals(_key))
             {
-                _existingOptions.NodeType = _value;
+                if (AllowedNodeTypes.Contains(_value))
+                {
+                    _existingOptions.NodeType = _value;
+                }
+                else throw new ArgumentException("Nodetype doesn't match list of allowed values.");
                 return;
             }
 
-            if ("numberofnodes".Equals(_key))
+            if ("nodecount".Equals(_key))
             {
-                int result;
-                if (!int.TryParse(_value, out result))
+                uint result;
+                if (!uint.TryParse(_value, out result))
                 {
-                    throw new ArgumentException(string.Format("The developer option '{0}' must be a boolean value.", _key));
+                    logger.WarnFormat("The developer option '{0}' must be a numerical value. Reverting to default node count: {1}", _key, DefaultNodeCount);
                 }
                 _existingOptions.NumberOfNodes = result;
                 return;
             }
 
+            if ("maxnumberofnodes".Equals(_key))
+            {
+                uint result;
+                if (!uint.TryParse(_value, out result))
+                {
+                    throw new ArgumentException(string.Format("The developer option '{0}' must be a numerical value.", _key));
+                }
+                _existingOptions.MaxNumberOfNodes = result;
+                return;
+            }
+
             if ("port".Equals(_key))
             {
-                int result;
-                if (!int.TryParse(_value, out result))
+                uint result;
+                if (!uint.TryParse(_value, out result))
                 {
                     throw new ArgumentException(string.Format("The developer option '{0}' must be a boolean value.", _key));
                 }
@@ -244,18 +245,22 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
                 _existingOptions.PubliclyAccessible = result;
                 return;
             }
-
-            if ("secretaccesskey".Equals(_key))
+            if ("skipfinalsnapshot".Equals(_key))
             {
-                _existingOptions.SecretAccessKey = _value;
+                bool result;
+                if (!bool.TryParse(_value, out result))
+                {
+                    throw new ArgumentException(string.Format("The developer option '{0}' must be a boolean value.", _key));
+                }
+                _existingOptions.SkipFinalSnapshot = result;
                 return;
             }
-
             if ("vpcsecuritygroupids".Equals(_key))
             {
                 _existingOptions.VpcSecurityGroupIds.Add(_value);
                 return;
             }
+
             throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", _key));
         }
     }

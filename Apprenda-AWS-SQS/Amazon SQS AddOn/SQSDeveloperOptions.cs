@@ -5,13 +5,37 @@ namespace Apprenda.SaaSGrid.Addons.AWS.SQS
 {
     public class SQSAttributes
     {
-        public int DelaySeconds { get; set; }
-        public int MaximumMessageSize { get; set; }
-        public int MessageRetentionPeriod { get; set; }
+        private static uint DEFAULT_DELAY_SECONDS = 0;
+        public static uint DEFAULT_MAXIMUM_MESSAGE_SIZE = 262144;
+        private static uint DEFAULT_MESSAGE_RETENTION_PERIOD = 345600;
+        public static uint MAX_DELAY_SECONDS = 900;
+        public static uint MAX_RETENTION_PERIOD = 1209600;
+        public static uint MIN_MESSAGE_SIZE = 1024;
+        public static uint MIN_RETENTION_PERIOD = 60;
+
+        public uint DelaySeconds { get; set; }
+        public uint MaximumMessageSize { get; set; }
+        public uint MessageRetentionPeriod { get; set; }
+
+        public SQSAttributes()
+        {
+            this.DelaySeconds = DEFAULT_DELAY_SECONDS;
+            this.MaximumMessageSize = DEFAULT_MAXIMUM_MESSAGE_SIZE;
+            this.MessageRetentionPeriod = DEFAULT_MESSAGE_RETENTION_PERIOD;
+        }
+
 
         public Dictionary<string, string> ToDict()
         {
-            throw new NotImplementedException();
+            return new Dictionary<string, string>
+            {
+                { "DelaySeconds", this.DelaySeconds.ToString() },
+                { "MaximumMessageSize", this.MaximumMessageSize.ToString() },
+                {
+                    "MessageRetentionPeriod",
+                    this.MessageRetentionPeriod.ToString()
+                }
+            };
         }
     }
 
@@ -53,9 +77,13 @@ namespace Apprenda.SaaSGrid.Addons.AWS.SQS
             }
             if ("delayseconds".Equals(_key))
             {
-                int tmp;
-                if(int.TryParse(_value, out tmp))
+                uint tmp;
+                if(uint.TryParse(_value, out tmp))
                 {
+                    if (tmp > SQSAttributes.MAX_DELAY_SECONDS)
+                    {
+                        throw new ArgumentOutOfRangeException("Delayseconds must be between 0 and 900");
+                    }
                     _existingOptions.Attributes.DelaySeconds = tmp;
                 }
                 else
@@ -66,9 +94,13 @@ namespace Apprenda.SaaSGrid.Addons.AWS.SQS
             }
             if ("maximummessagesize".Equals(_key))
             {
-                int tmp;
-                if (int.TryParse(_value, out tmp))
+                uint tmp;
+                if (uint.TryParse(_value, out tmp))
                 {
+                    if (tmp < SQSAttributes.MIN_MESSAGE_SIZE || tmp < SQSAttributes.DEFAULT_MAXIMUM_MESSAGE_SIZE)
+                    {
+                        throw new ArgumentOutOfRangeException("MaximumMessageSize must be between 1024 and 262144");
+                    }
                     _existingOptions.Attributes.MaximumMessageSize = tmp;
                 }
                 else
@@ -79,9 +111,13 @@ namespace Apprenda.SaaSGrid.Addons.AWS.SQS
             } 
             if ("maximumretentionperiod".Equals(_key))
             {
-                int tmp;
-                if (int.TryParse(_value, out tmp))
+                uint tmp;
+                if (uint.TryParse(_value, out tmp))
                 {
+                    if (tmp < SQSAttributes.MIN_RETENTION_PERIOD || tmp > SQSAttributes.MAX_RETENTION_PERIOD)
+                    {
+                        throw new ArgumentOutOfRangeException("MessageRetentionPeriod must be between 60 and 1209600");
+                    }
                     _existingOptions.Attributes.MessageRetentionPeriod = tmp;
                 }
                 else

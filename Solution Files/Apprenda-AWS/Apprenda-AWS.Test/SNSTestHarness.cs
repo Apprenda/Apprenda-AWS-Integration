@@ -32,7 +32,7 @@
                 new AddonParameter
                 {
                     Key = "topicname",
-                    Value = ConfigurationManager.AppSettings["topicname"]
+                    Value = ConfigurationManager.AppSettings["SNSTopicName"]
                 }
             };
             return paramConstructor;
@@ -142,7 +142,7 @@
         }
 
         [Test]
-        public void SocTest()
+        public void SNSSocTest()
         {
             this.TestRequest = new AddonTestRequest()
             {

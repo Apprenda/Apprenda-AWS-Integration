@@ -39,6 +39,7 @@
     <parameter key="ClusterIdentifier" displayName="Cluster Identifier" description="Unique identifier used for the cluster. This is used for deleting or modifying the cluster later on. Should always be overridden by developer options" isRequired="true" />
     <parameter key="DBName" displayName="DBName" description="Name of the first database when the cluster is created. Default is 'dev'." isRequired="true" />
     <parameter key="ClusterType" displayName="Cluster Type" description="The type of cluster. Value must be 'single-node' or 'multi-node'" defaultValue="single-node" isRequired="true" />
+    <parameter key="NodeCount" displayName="Number of Nodes" description="For multi-node clusters, specify the number of nodes." isRequired="false"/>
     <parameter key="Allocated Storage" displayName="Allocated Storage" description="Amount of storage to allocate for the Redshift instance (in GB)" defaultValue="10" isRequired="true" />
   </parameters>
 </addonManifest>

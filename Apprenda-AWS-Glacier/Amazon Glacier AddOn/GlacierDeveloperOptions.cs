@@ -9,7 +9,12 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
         public string VaultName { get; private set; }
         public string AccountId { get; private set; }
 
-        // Amazon RDS Options required for 
+        private const string DefaultAccountId = "-";
+
+        private GlacierDeveloperOptions()
+        {
+            this.AccountId = DefaultAccountId;
+        }
 
         // Method takes in a string and parses it into a DeveloperOptions class.
         public static GlacierDeveloperOptions Parse(IEnumerable<AddonParameter> _developerParameters, AddonManifest _manifest)

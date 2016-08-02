@@ -38,7 +38,7 @@
                 new AddonParameter
                 {
                     Key = "queuename",
-                    Value = ConfigurationManager.AppSettings["queuename"]
+                    Value = ConfigurationManager.AppSettings["SQSQueueName"]
                 }
             };
             return paramConstructor;
@@ -114,40 +114,28 @@
             public string DefaultValue { get; set; }
         }
 
-        [Test]
-        public void ParseS3ParametersTest()
-        {
-
-        }
 
         [Test]
-        public void ProvisionTest()
+        public void ProvisionSQSTest()
         {
             this.ProvisionRequest = new AddonProvisionRequest { Manifest = SetupPropertiesAndParameters(), DeveloperParameters = SetUpParameters() };
             var output = new SqsAddOn().Provision(this.ProvisionRequest);
             Assert.That(output, Is.TypeOf<ProvisionAddOnResult>());
             Assert.That(output.IsSuccess, Is.EqualTo(true));
             Assert.That(output.ConnectionData.Length, Is.GreaterThan(0));
+            this.DeprovisionRequest = new AddonDeprovisionRequest
+                                          {
+                                              Manifest = SetupPropertiesAndParameters(),
+                                              DeveloperParameters = SetUpParameters(),
+                                              ConnectionData = output.ConnectionData
+                                          };
+            var de_output = new SqsAddOn().Deprovision(this.DeprovisionRequest);
+            Assert.That(de_output, Is.TypeOf<OperationResult>());
+            Assert.That(de_output.IsSuccess, Is.EqualTo(true));
         }
 
         [Test]
-        public void DeProvisionTest()
-        {
-
-            this.DeprovisionRequest = new AddonDeprovisionRequest()
-            {
-                Manifest = SetupPropertiesAndParameters(),
-                DeveloperParameters = SetUpParameters()
-            };
-            this.DeprovisionRequest.ConnectionData =
-                new SQSConnectionInfo() { QueueName = ConfigurationManager.AppSettings["queueName"]}.ToString();
-            var output = new SqsAddOn().Deprovision(this.DeprovisionRequest);
-            Assert.That(output, Is.TypeOf<OperationResult>());
-            Assert.That(output.IsSuccess, Is.EqualTo(true));
-        }
-
-        [Test]
-        public void SocTest()
+        public void SQSSocTest()
         {
             this.TestRequest = new AddonTestRequest()
             {

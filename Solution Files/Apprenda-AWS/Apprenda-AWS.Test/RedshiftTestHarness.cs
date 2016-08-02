@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Configuration;
     using Apprenda.SaaSGrid.Addons;
-    using Apprenda.SaaSGrid.Addons.AWS.Glacier;
+    using Apprenda.SaaSGrid.Addons.AWS.Redshift;
     using NUnit.Framework;
 
     [TestFixture]
@@ -29,11 +29,11 @@
         {
             var paramConstructor = new List<AddonParameter>
             {
-                new AddonParameter
-                {
-                    Key = "vaultname",
-                    Value = ConfigurationManager.AppSettings["vaultName"]
-                }
+                new AddonParameter { Key = "ClusterIdentifier", Value = ConfigurationManager.AppSettings["RedshiftDevClusterIdentifier"]},
+                new AddonParameter { Key = "DBName", Value = ConfigurationManager.AppSettings["RedshiftDevDBName"]},
+                //new AddonParameter { Key = "AllocatedStorage", Value = ConfigurationManager.AppSettings["RedshiftDevAllocatedStorage"]},
+                new AddonParameter { Key = "NodeCount", Value = ConfigurationManager.AppSettings["RedshiftDevNodeCount"]},
+                new AddonParameter { Key = "ClusterType", Value = ConfigurationManager.AppSettings["RedshiftDevClusterType"] }
             };
             return paramConstructor;
         }
@@ -44,7 +44,9 @@
 
             var plist = new List<DevParameter>
                             {
-                                new DevParameter() { Key = "vaultname", DisplayName = "Vault Name" }
+                                new DevParameter() { Key = "ClusterIdentifer"},
+                                new DevParameter() { Key = "DBName"},
+                                new DevParameter() { Key = "ClusterType" }
                             };
 
             #endregion
@@ -53,7 +55,17 @@
 
             var props = new List<AddonProperty>
                             {
-                                new AddonProperty { Key = "AWSAccountID", Value = "071828666816" },
+                                new AddonProperty { Key = "AllowVersionUpgrade", Value = ConfigurationManager.AppSettings["RedshiftAllowVersionUpgrade"] },
+                                new AddonProperty { Key = "AutomatedSnapshotRetentionPeriod", Value = ConfigurationManager.AppSettings["RedshiftAutomatedSnapshotRetentionPeriod"] },
+                                new AddonProperty { Key = "SkipFinalSnapshot", Value=ConfigurationManager.AppSettings["RedshiftSkipFinalSnapshot"] },
+                                new AddonProperty { Key = "DBName", Value = ConfigurationManager.AppSettings["RedshiftDBName"] },
+                                new AddonProperty { Key = "Encrypted", Value = ConfigurationManager.AppSettings["RedshiftEncrypted"] },
+                                new AddonProperty { Key = "MasterUserName", Value = ConfigurationManager.AppSettings["RedshiftMasterUsername"] },
+                                new AddonProperty { Key = "MasterUserPassword", Value = ConfigurationManager.AppSettings["RedshiftMasterUserPassword"] },
+                                new AddonProperty { Key = "NodeType", Value = ConfigurationManager.AppSettings["RedshiftNodeType"] },
+                                new AddonProperty { Key = "MaxNumberOfNodes", Value = ConfigurationManager.AppSettings["RedshiftMaxNumberOfNodes"] },
+                                new AddonProperty { Key = "Port", Value = ConfigurationManager.AppSettings["RedshiftDefaultPort"] },
+                                new AddonProperty { Key = "PubliclyAccessible", Value = ConfigurationManager.AppSettings["RedshiftPubliclyAccessible"] },
                             };
 
             #endregion
@@ -67,7 +79,7 @@
                 DeveloperHelp = "",
                 IsEnabled = true,
                 ManifestVersionString = "2.0",
-                Name = "Glacier",
+                Name = "Redshift",
 
                 // we'll handle parameters below.
                 Parameters = new ParameterList
@@ -105,47 +117,34 @@
         }
 
         [Test]
-        public void ParseS3ParametersTest()
-        {
-
-        }
-
-        [Test]
-        public void ProvisionTest()
+        public void ProvisionRedshiftTest()
         {
             this.ProvisionRequest = new AddonProvisionRequest { Manifest = SetupPropertiesAndParameters(), DeveloperParameters = SetUpParameters() };
-            var output = new GlacierAddon().Provision(this.ProvisionRequest);
+            var output = new RedshiftAddOn().Provision(this.ProvisionRequest);
             Assert.That(output, Is.TypeOf<ProvisionAddOnResult>());
             Assert.That(output.IsSuccess, Is.EqualTo(true));
             Assert.That(output.ConnectionData.Length, Is.GreaterThan(0));
-        }
-
-        [Test]
-        public void DeProvisionTest()
-        {
             this.ProvisionRequest = new AddonProvisionRequest { Manifest = SetupPropertiesAndParameters(), DeveloperParameters = SetUpParameters() };
-            var provOutput = new GlacierAddon().Provision(this.ProvisionRequest);
             this.DeprovisionRequest = new AddonDeprovisionRequest
-            {
-                Manifest = SetupPropertiesAndParameters(),
-                DeveloperParameters = SetUpParameters()
-            };
-            // take the connection data from the provisioned request.
-            this.DeprovisionRequest.ConnectionData = provOutput.ConnectionData;
-            var output = new GlacierAddon().Deprovision(this.DeprovisionRequest);
-            Assert.That(output, Is.TypeOf<ProvisionAddOnResult>());
-            Assert.That(output.IsSuccess, Is.EqualTo(true));
+                                          {
+                                              Manifest = SetupPropertiesAndParameters(),
+                                              DeveloperParameters = SetUpParameters(),
+                                              ConnectionData = output.ConnectionData
+                                          };
+            var deOutput = new RedshiftAddOn().Deprovision(this.DeprovisionRequest);
+            Assert.That(deOutput, Is.TypeOf<ProvisionAddOnResult>());
+            Assert.That(deOutput.IsSuccess, Is.EqualTo(true));
         }
 
         [Test]
-        public void SocTest()
+        public void RedshiftSocTest()
         {
             this.TestRequest = new AddonTestRequest()
             {
                 Manifest = SetupPropertiesAndParameters(),
                 DeveloperParameters = SetUpParameters()
             };
-            var output = new GlacierAddon().Test(this.TestRequest);
+            var output = new RedshiftAddOn().Test(this.TestRequest);
             Assert.That(output, Is.TypeOf<OperationResult>());
             Assert.That(output.IsSuccess, Is.EqualTo(true));
         }

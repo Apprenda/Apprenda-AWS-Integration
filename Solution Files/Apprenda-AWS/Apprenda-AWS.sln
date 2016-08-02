@@ -1,10 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda-EMR", "..\..\Apprenda-AWS-EMR\Amazon EMR AddOn\Apprenda-EMR.csproj", "{DF55A13A-863B-4DE2-99C4-FE7A0F86C2DB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda-Glacier", "..\..\Apprenda-AWS-Glacier\Amazon Glacier AddOn\Apprenda-Glacier.csproj", "{78545FFF-B690-4FC3-B140-970C2E5E8180}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda-RDS", "..\..\Apprenda-AWS-RDS\Amazon RDS AddOn\Apprenda-RDS.csproj", "{2A594CB1-D5EF-4D5E-B7D6-205A3E278B2B}"
@@ -17,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda-SNS", "..\..\Appre
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda-SQS", "..\..\Apprenda-AWS-SQS\Amazon SQS AddOn\Apprenda-SQS.csproj", "{ED935B62-0B85-4B38-BCF6-B9F9BEAC8704}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda-EC2-AMI", "..\..\Apprenda-EC2-AMI\Apprenda-EC2-AMI.csproj", "{D74D6061-9D55-4C37-AA8B-CEA6356D7108}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AWS-Utilities", "AWS-Utilities\AWS-Utilities.csproj", "{7672A36C-D531-4FCB-8071-9054B301D087}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apprenda-AWS.Test", "Apprenda-AWS.Test\Apprenda-AWS.Test.csproj", "{DD979713-796B-4273-A268-784BF53A57E5}"
@@ -29,10 +25,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DF55A13A-863B-4DE2-99C4-FE7A0F86C2DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DF55A13A-863B-4DE2-99C4-FE7A0F86C2DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DF55A13A-863B-4DE2-99C4-FE7A0F86C2DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DF55A13A-863B-4DE2-99C4-FE7A0F86C2DB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{78545FFF-B690-4FC3-B140-970C2E5E8180}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{78545FFF-B690-4FC3-B140-970C2E5E8180}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78545FFF-B690-4FC3-B140-970C2E5E8180}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -57,10 +49,6 @@ Global
 		{ED935B62-0B85-4B38-BCF6-B9F9BEAC8704}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED935B62-0B85-4B38-BCF6-B9F9BEAC8704}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED935B62-0B85-4B38-BCF6-B9F9BEAC8704}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D74D6061-9D55-4C37-AA8B-CEA6356D7108}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D74D6061-9D55-4C37-AA8B-CEA6356D7108}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D74D6061-9D55-4C37-AA8B-CEA6356D7108}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D74D6061-9D55-4C37-AA8B-CEA6356D7108}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7672A36C-D531-4FCB-8071-9054B301D087}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7672A36C-D531-4FCB-8071-9054B301D087}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7672A36C-D531-4FCB-8071-9054B301D087}.Release|Any CPU.ActiveCfg = Release|Any CPU

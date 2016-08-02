@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
-using Amazon;
 using Amazon.Glacier;
 using Amazon.Glacier.Model;
 
 namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
 {
-    using Apprenda.SaaSGrid.Addons.AWS.Util;
+    using Util;
 
     public class GlacierAddon : AddonBase
     {
@@ -17,7 +16,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
         public override OperationResult Deprovision(AddonDeprovisionRequest _request)
         {
             var connectionData = _request.ConnectionData;
-            var deprovisionResult = new ProvisionAddOnResult(connectionData);
+            var deprovisionResult = new OperationResult();
             var manifest = _request.Manifest;
             try
             {
@@ -25,23 +24,8 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
                 var client = EstablishClient(manifest);
                 client.DeleteVault(new DeleteVaultRequest
                 {
-                    AccountId = conInfo.AccountId,
                     VaultName = conInfo.VaultName
                 });
-                do
-                {
-                    var verificationResponse = client.DescribeVault(new DescribeVaultRequest());
-                    if (verificationResponse == null)
-                    {
-                        deprovisionResult.IsSuccess = true;
-                        break;
-                    }
-                    Thread.Sleep(TimeSpan.FromSeconds(10d));
-                } while (true);
-                
-            }
-            catch (ResourceNotFoundException)
-            {
                 deprovisionResult.IsSuccess = true;
             }
             catch (Exception e)
@@ -52,7 +36,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
             return deprovisionResult;
         }
 
-        // Provision RDS Instance
+        // Provision Glacier Instance
         // Input: AddonDeprovisionRequest request
         // Output: ProvisionAddOnResult
         public override ProvisionAddOnResult Provision(AddonProvisionRequest _request)
@@ -92,7 +76,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
         public override OperationResult Test(AddonTestRequest _request)
         {
             var testResult = new OperationResult {IsSuccess = false};
-            if (_request.Manifest.Properties != null && _request.Manifest.Properties.Any())
+            if (_request.Manifest.Properties != null)
             {
                 if (!ValidateManifest(_request.Manifest))
                 {

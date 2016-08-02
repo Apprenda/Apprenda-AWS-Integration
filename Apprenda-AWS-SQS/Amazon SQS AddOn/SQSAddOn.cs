@@ -16,17 +16,16 @@
         {
             var connectionData = _request.ConnectionData;
             // changing to overloaded constructor - 5/22/14
-            var deprovisionResult = new ProvisionAddOnResult(connectionData);
+            var deprovisionResult = new OperationResult();
             var manifest = _request.Manifest;
-            //var devOptions = request.DeveloperOptions;
             try
             {
-                var conInfo = SQSConnectionInfo.Parse(connectionData);
+                var conInfo = SqsConnectionInfo.Parse(connectionData);
                 var developerOptions = SQSDeveloperOptions.Parse(_request.DeveloperParameters);
                 var client = EstablishClient(manifest);
                 client.DeleteQueue(new DeleteQueueRequest()
                                        {
-                                           QueueUrl = conInfo.QueueURL
+                                           QueueUrl = conInfo.QueueUrl
                                        });
                 do  {
                         var verificationResponse = client.GetQueueUrl(new GetQueueUrlRequest()
@@ -66,7 +65,6 @@
         // Output: ProvisionAddOnResult
         public override ProvisionAddOnResult Provision(AddonProvisionRequest _request)
         {
-            // i think this is a bug. but I'm going to throw an empty string to it to clear the warning.
             var provisionResult = new ProvisionAddOnResult("");
             var manifest = _request.Manifest;
             var options = SQSDeveloperOptions.Parse(_request.DeveloperParameters);
@@ -74,7 +72,8 @@
             try
             {
                 var client = EstablishClient(manifest);
-                var response = client.CreateQueue(CreateQueueRequest(options));
+                var request = CreateQueueRequest(options);
+                var response = client.CreateQueue(request);
                 if (response.QueueUrl != null)
                 {
                     do
@@ -85,10 +84,10 @@
                             });
                         if(verificationResponse.Attributes != null)
                         {
-                            var conInfo = new SQSConnectionInfo()
+                            var conInfo = new SqsConnectionInfo()
                             {
                                 QueueName = options.QueueName,
-                                QueueURL = response.QueueUrl
+                                QueueUrl = response.QueueUrl
                             };
                             provisionResult.IsSuccess = true;
                             provisionResult.ConnectionData = conInfo.ToString();

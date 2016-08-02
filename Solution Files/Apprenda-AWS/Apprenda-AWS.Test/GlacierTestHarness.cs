@@ -32,7 +32,7 @@
                 new AddonParameter
                 {
                     Key = "vaultname",
-                    Value = ConfigurationManager.AppSettings["vaultName"]
+                    Value = ConfigurationManager.AppSettings["GlacierVaultName"]
                 }
             };
             return paramConstructor;
@@ -51,10 +51,7 @@
 
             #region addon property definitions
 
-            var props = new List<AddonProperty>
-                            {
-                                new AddonProperty { Key = "AWSAccountID", Value = "071828666816" },
-                            };
+            var props = new List<AddonProperty>();
 
             #endregion
             
@@ -104,41 +101,29 @@
             public string DefaultValue { get; set; }
         }
 
-        [Test]
-        public void ParseS3ParametersTest()
-        {
-
-        }
 
         [Test]
-        public void ProvisionTest()
+        public void ProvisionGlacierTest()
         {
             this.ProvisionRequest = new AddonProvisionRequest { Manifest = SetupPropertiesAndParameters(), DeveloperParameters = SetUpParameters() };
             var output = new GlacierAddon().Provision(this.ProvisionRequest);
             Assert.That(output, Is.TypeOf<ProvisionAddOnResult>());
             Assert.That(output.IsSuccess, Is.EqualTo(true));
             Assert.That(output.ConnectionData.Length, Is.GreaterThan(0));
-        }
-
-        [Test]
-        public void DeProvisionTest()
-        {
-            this.ProvisionRequest = new AddonProvisionRequest { Manifest = SetupPropertiesAndParameters(), DeveloperParameters = SetUpParameters() };
-            var provOutput = new GlacierAddon().Provision(this.ProvisionRequest);
             this.DeprovisionRequest = new AddonDeprovisionRequest
-            {
-                Manifest = SetupPropertiesAndParameters(),
-                DeveloperParameters = SetUpParameters()
-            };
+                                          {
+                                              Manifest = SetupPropertiesAndParameters(),
+                                              DeveloperParameters = SetUpParameters(),
+                                              ConnectionData = output.ConnectionData
+                                          };
             // take the connection data from the provisioned request.
-            this.DeprovisionRequest.ConnectionData = provOutput.ConnectionData;
-            var output = new GlacierAddon().Deprovision(this.DeprovisionRequest);
-            Assert.That(output, Is.TypeOf<ProvisionAddOnResult>());
-            Assert.That(output.IsSuccess, Is.EqualTo(true));
+            var de_output = new GlacierAddon().Deprovision(this.DeprovisionRequest);
+            Assert.That(de_output, Is.TypeOf<OperationResult>());
+            Assert.That(de_output.IsSuccess, Is.EqualTo(true));
         }
 
         [Test]
-        public void SocTest()
+        public void GlacierSocTest()
         {
             this.TestRequest = new AddonTestRequest()
             {

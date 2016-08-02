@@ -105,13 +105,7 @@
         }
 
         [Test]
-        public void ParseEMRParametersTest()
-        {
-
-        }
-
-        [Test]
-        public void ProvisionTest()
+        public void ProvisionEMRTest()
         {
             this.ProvisionRequest = new AddonProvisionRequest { Manifest = SetupPropertiesAndParameters(), DeveloperParameters = SetUpParameters() };
             var provOutput = new EmrAddOn().Provision(this.ProvisionRequest);
@@ -131,7 +125,7 @@
         }
 
         [Test]
-        public void SocTest()
+        public void EMRSocTest()
         {
             this.TestRequest = new AddonTestRequest()
             {

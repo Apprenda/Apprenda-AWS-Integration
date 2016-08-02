@@ -34,7 +34,7 @@
                 new AddonParameter
                 {
                     Key = "bucketname",
-                    Value = ConfigurationManager.AppSettings["bucketname"]
+                    Value = ConfigurationManager.AppSettings["S3BucketName"]
                 }
             };
             return paramConstructor;
@@ -110,40 +110,27 @@
         }
 
         [Test]
-        public void ParseS3ParametersTest()
-        {
-
-        }
-
-        [Test]
-        public void ProvisionTest()
+        public void ProvisionS3Test()
         {
             this.ProvisionRequest = new AddonProvisionRequest { Manifest = SetupPropertiesAndParameters(), DeveloperParameters = SetUpParameters() };
-            var output = new S3Addon().Provision(this.ProvisionRequest);
-            Assert.That(output, Is.TypeOf<ProvisionAddOnResult>());
-            Assert.That(output.IsSuccess, Is.EqualTo(true));
-            Assert.That(output.ConnectionData.Length, Is.GreaterThan(0));
-        }
-
-        [Test]
-        public void DeProvisionTest()
-        {
-            this.ProvisionRequest = new AddonProvisionRequest { Manifest = SetupPropertiesAndParameters(), DeveloperParameters = SetUpParameters() };
-            var prov_output = new S3Addon().Provision(this.ProvisionRequest);
-            this.DeprovisionRequest = new AddonDeprovisionRequest()
-            {
-                Manifest = SetupPropertiesAndParameters(),
-                DeveloperParameters = SetUpParameters()
-            };
+            var prOutput = new S3Addon().Provision(this.ProvisionRequest);
+            Assert.That(prOutput, Is.TypeOf<ProvisionAddOnResult>());
+            Assert.That(prOutput.IsSuccess, Is.EqualTo(true));
+            Assert.That(prOutput.ConnectionData.Length, Is.GreaterThan(0));
+            this.DeprovisionRequest = new AddonDeprovisionRequest
+                                          {
+                                              Manifest = SetupPropertiesAndParameters(),
+                                              DeveloperParameters = SetUpParameters(),
+                                              ConnectionData = prOutput.ConnectionData
+                                          };
             // take the connection data from the provisioned request.
-            this.DeprovisionRequest.ConnectionData = prov_output.ConnectionData;
-            var output = new S3Addon().Deprovision(this.DeprovisionRequest);
-            Assert.That(output, Is.TypeOf<OperationResult>());
-            Assert.That(output.IsSuccess, Is.EqualTo(true));
+            var deOutput = new S3Addon().Deprovision(this.DeprovisionRequest);
+            Assert.That(deOutput, Is.TypeOf<OperationResult>());
+            Assert.That(deOutput.IsSuccess, Is.EqualTo(true));
         }
 
         [Test]
-        public void SocTest()
+        public void S3SocTest()
         {
             this.TestRequest = new AddonTestRequest()
             {

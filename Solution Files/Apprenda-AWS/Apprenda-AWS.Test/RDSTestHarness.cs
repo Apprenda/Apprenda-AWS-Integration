@@ -32,18 +32,33 @@
             {
                 new AddonParameter
                 {
-                    Key = "databasename",
-                    Value = ConfigurationManager.AppSettings["databasename"]
+                    Key = "dbname",
+                    Value = ConfigurationManager.AppSettings["RDSDBName"]
                 },
                 new AddonParameter
                 {
                     Key = "engine",
-                    Value = ConfigurationManager.AppSettings["dbengine"]
+                    Value = ConfigurationManager.AppSettings["RDSEngine"]
                 },
                 new AddonParameter
                 {
-                    Key = "storage",
-                    Value = ConfigurationManager.AppSettings["storage"]
+                    Key = "allocatedstorage",
+                    Value = ConfigurationManager.AppSettings["RDSAllocatedStorage"]
+                },
+                new AddonParameter
+                {
+                    Key = "dbausername",
+                    Value = ConfigurationManager.AppSettings["RDSDBAUsername"]
+                },
+                new AddonParameter
+                {
+                    Key = "dbapassword",
+                    Value = ConfigurationManager.AppSettings["RDSDBAPassword"]
+                },
+                new AddonParameter
+                {
+                    Key = "dbinstanceidentifier",
+                    Value = ConfigurationManager.AppSettings["RDSDBInstanceIdentifier"]
                 }
             };
             return paramConstructor;
@@ -66,8 +81,22 @@
                                     },
                                 new DevParameter()
                                     {
-                                        Key = "storage",
+                                        Key = "allocatedstorage",
                                         DisplayName = "Storage Needed"
+                                    },
+                                new DevParameter()
+                                    {
+                                        Key = "dbausername",
+                                        DisplayName = "DBA Username"
+                                    },
+                                new DevParameter()
+                                    {
+                                        Key = "dbapassword",
+                                        DisplayName = "DBAPassword"
+                                    },
+                                new DevParameter()
+                                    {
+                                        Key = "dbinstanceidentifier",
                                     }
                             };
             #endregion
@@ -76,20 +105,20 @@
 
             var props = new List<AddonProperty>
                             {
-                                new AddonProperty { Key = "maxallocatedstorage", Value = "10" },
-                                new AddonProperty { Key = "autominorversionupgrade", Value = "True" },
-                                new AddonProperty { Key = "defaultaz", Value = "us-east-1" },
-                                new AddonProperty { Key = "maxdbinstanceclass", Value = "db.t1.micro" },
-                                new AddonProperty { Key = "oracleengineedition", Value = "se-1" },
-                                new AddonProperty { Key = "sqlserverengineedition", Value = "web" },
-                                new AddonProperty { Key = "multiaz", Value = "False" },
-                                new AddonProperty { Key = "oracledbversion", Value = "" },
-                                new AddonProperty { Key = "mssqldbversion", Value = "" },
-                                new AddonProperty { Key = "mysqldbversion", Value = "" },
-                                new AddonProperty { Key = "overrideport", Value = "False" },
-                                new AddonProperty { Key = "backupretentionperiod", Value = "0" },
-                                new AddonProperty { Key = "skipfinalsnapshot", Value = "True" },
-                            
+                                new AddonProperty { Key = "maxallocatedstorage", Value = ConfigurationManager.AppSettings["RDSMaxAllocatedStorage"]},
+                                new AddonProperty { Key = "autominorversionupgrade", Value = ConfigurationManager.AppSettings["RDSAutoMinorVersionUpgrade"] },
+                                new AddonProperty { Key = "availabilityzone", Value = ConfigurationManager.AppSettings["RDSAvailabilityZone"] },
+                                new AddonProperty { Key = "maxdbinstanceclass", Value = ConfigurationManager.AppSettings["RDSMaxDBInstanceClass"] },
+                                new AddonProperty { Key = "oracleengineedition", Value = ConfigurationManager.AppSettings["RDSOracleEngineEdition"] },
+                                new AddonProperty { Key = "sqlserverengineedition", Value = ConfigurationManager.AppSettings["RDSSqlServerEngineEdition"] },
+                                new AddonProperty { Key = "multiaz", Value = ConfigurationManager.AppSettings["RDSMultiAZ"] },
+                                new AddonProperty { Key = "oracledbversion", Value = ConfigurationManager.AppSettings["RDSOracleDBVersion"] },
+                                new AddonProperty { Key = "sqlserverdbversion", Value = ConfigurationManager.AppSettings["RDSSqlServerDBVersion"] },
+                                new AddonProperty { Key = "mysqldbversion", Value = ConfigurationManager.AppSettings["RDSMySQLDBVersion"] },
+                                new AddonProperty { Key = "port", Value = ConfigurationManager.AppSettings["RDSPort"] },
+                                new AddonProperty { Key = "backupretentionperiod", Value = ConfigurationManager.AppSettings["RDSBackupRetentionPeriod"] },
+                                new AddonProperty { Key = "skipfinalsnapshot", Value = ConfigurationManager.AppSettings["RDSSkipFinalSnapshot"] },
+                                new AddonProperty { Key = "publiclyaccessible", Value = ConfigurationManager.AppSettings["RDSPubliclyAccessible"] },
                             };
 
             #endregion
@@ -141,40 +170,27 @@
         }
 
         [Test]
-        public void ParseS3ParametersTest()
-        {
-
-        }
-
-        [Test]
-        public void ProvisionTest()
+        public void ProvisionRDSTest()
         {
             this.ProvisionRequest = new AddonProvisionRequest { Manifest = SetupPropertiesAndParameters(), DeveloperParameters = SetUpParameters() };
             var output = new RdsAddOn().Provision(this.ProvisionRequest);
             Assert.That(output, Is.TypeOf<ProvisionAddOnResult>());
             Assert.That(output.IsSuccess, Is.EqualTo(true));
             Assert.That(output.ConnectionData.Length, Is.GreaterThan(0));
-        }
-
-        [Test]
-        public void DeProvisionTest()
-        {
-            this.ProvisionRequest = new AddonProvisionRequest { Manifest = SetupPropertiesAndParameters(), DeveloperParameters = SetUpParameters() };
-            var provOutput = new RdsAddOn().Provision(this.ProvisionRequest);
             this.DeprovisionRequest = new AddonDeprovisionRequest
                                           {
                                               Manifest = SetupPropertiesAndParameters(),
                                               DeveloperParameters = SetUpParameters(),
-                                              ConnectionData = provOutput.ConnectionData
+                                              ConnectionData = output.ConnectionData
                                           };
             // take the connection data from the provisioned request.
-            var output = new RdsAddOn().Deprovision(this.DeprovisionRequest);
-            Assert.That(output, Is.TypeOf<OperationResult>());
-            Assert.That(output.IsSuccess, Is.EqualTo(true));
+            var deOutput = new RdsAddOn().Deprovision(this.DeprovisionRequest);
+            Assert.That(deOutput, Is.TypeOf<OperationResult>());
+            Assert.That(deOutput.IsSuccess, Is.EqualTo(true));
         }
 
         [Test]
-        public void SocTest()
+        public void RDSSocTest()
         {
             this.TestRequest = new AddonTestRequest()
             {
