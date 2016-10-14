@@ -1,4 +1,19 @@
-node('windows'){
-  stage 'Build'
-  git url: "https://github.com/apprenda/Apprenda-AWS-Integration.git"
+node('node') {
+    currentBuild.result = "SUCCESS"
+    try {
+       stage 'Checkout'
+            checkout scm
+       stage 'Test'
+
+       stage 'Build'
+            bat 'nuget restore SolutionName.sln'
+            bat "\"${tool 'MSBuild'}\" SolutionName.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
+
+       stage 'Archive'
+            archive 'ProjectName/bin/Release/**'
+    }
+    catch (err) {
+        currentBuild.result = "FAILURE"
+        throw err
+    }
 }
