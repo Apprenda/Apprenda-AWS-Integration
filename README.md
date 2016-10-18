@@ -5,6 +5,12 @@ This project contains all of the modules necessary to integrate with Amazon Web 
 
 Release Notes
 --------------
+Currently, the following services are supported:
+- S3
+- RDS
+- SQS
+- SNS
+- Redshift
+- Glacier
 
-5.5 is built to work with the Apprenda 5.5 SDK, and will be tested against the 5.5 and 5.0 repositories for backwards compatibility. It will also feature updates from the AWS SDK,
-using the latest stable build.
+This addon supports Apprenda platforms versions 6.0.3 and up.
