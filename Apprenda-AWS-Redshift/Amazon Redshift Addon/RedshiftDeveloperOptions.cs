@@ -260,7 +260,14 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Redshift
                 _existingOptions.VpcSecurityGroupIds.Add(_value);
                 return;
             }
-
+            if ("developerid".Equals(_key))
+            {
+                return;
+            }
+            if ("developeralias".Equals(_key))
+            {
+                return;
+            }
             throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", _key));
         }
     }

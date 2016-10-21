@@ -30,17 +30,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AWSSDK, Version=2.3.55.0, Culture=neutral, PublicKeyToken=9f476d3089b52be3, processorArchitecture=MSIL">
-      <HintPath>..\..\Solution Files\Apprenda-AWS\packages\AWSSDK.2.3.55.0\lib\net45\AWSSDK.dll</HintPath>
+    <Reference Include="AWSSDK, Version=2.3.55.2, Culture=neutral, PublicKeyToken=9f476d3089b52be3, processorArchitecture=MSIL">
+      <HintPath>..\..\Solution Files\Apprenda-AWS\packages\AWSSDK.2.3.55.2\lib\net45\AWSSDK.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\Solution Files\Apprenda-AWS\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SaaSGrid.API, Version=5.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Shared Libraries\SaaSGrid.API.dll</HintPath>
+    <Reference Include="SaaSGrid.API, Version=6.5.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\Solution Files\Apprenda-AWS\packages\SaaSGrid.API.6.5.3\lib\SaaSGrid.API.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="SaaSGrid.API.Remote, Version=5.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

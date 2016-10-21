@@ -10,8 +10,8 @@
                vendor="Apprenda"
                author="Chris Dutra"
                version="2.0"
-               provisioningUsername="AKIAIMG5ND6ZFBJ4BNTQ"
-               provisioningPassword="jmKOhCVfUOUhtGDZfESab4M31V2KT6DxX1wNOnNC"
+               provisioningUsername=""
+               provisioningPassword=""
                provisioningLocation="us-east-1"
                manifestVersion="2">
   <properties>

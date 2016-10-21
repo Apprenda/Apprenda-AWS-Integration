@@ -2,10 +2,8 @@
 {
     using System.Collections.Generic;
     using System.Configuration;
-
     using Apprenda.SaaSGrid.Addons;
     using Apprenda.SaaSGrid.Addons.AWS.S3;
-
     using NUnit.Framework;
 
     [TestFixture]

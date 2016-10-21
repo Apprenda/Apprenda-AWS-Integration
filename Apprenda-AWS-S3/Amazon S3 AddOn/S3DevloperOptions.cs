@@ -50,6 +50,18 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                 _existingOptions.Grants = _value;
                 return;
             }
+            if ("developerid".Equals(_key))
+            {
+                return;
+            }
+            if ("developeralias".Equals(_key))
+            {
+                return;
+            }
+            if ("instancealias".Equals(_key))
+            {
+                return;
+            }
             // else option is not found, throw exception
             throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", _key));
         }

@@ -195,7 +195,8 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                 {
                     EstablishClient(manifest);
                     var result = this.Provision(provisionRequest);
-                    var depResult = this.Deprovision(new AddonDeprovisionRequest { ConnectionData = result.ConnectionData, DeveloperParameters = provisionRequest.DeveloperParameters, Manifest = provisionRequest.Manifest });
+                    var depResult = this.Deprovision(new AddonDeprovisionRequest
+                    { ConnectionData = result.ConnectionData, DeveloperParameters = provisionRequest.DeveloperParameters, Manifest = provisionRequest.Manifest });
                     if (depResult == null)
                     {
                         throw new ArgumentNullException("_request");
