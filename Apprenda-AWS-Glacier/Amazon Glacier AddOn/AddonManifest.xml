@@ -2,19 +2,21 @@
 <addonManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xmlns="http://schemas.apprenda.com/AddonManifest"
-               xsi:schemaLocation="http://schemas.apprenda.com/AddonManifest http://apprenda.com/schemas/platform/4.5/AddonManifest.xsd"
+               xsi:schemaLocation="http://schemas.apprenda.com/AddonManifest http://apprenda.com/schemas/platform/6.0/AddonManifest.xsd"
                name="Amazon Glacier"
                description="Amazon Glacier is an extremely low-cost storage service that provides secure and durable storage for data archiving and backup."
-               deploymentNotes=".NET 4.5, Apprenda 5.0.x"
+               deploymentNotes="Certified for 6.5.1"
                developerHelp="To provision backup, specify the vault name as a custom property during provisioning. \n For example, 'vaultName=TheVault'"
                vendor="Apprenda"
                author="Chris Dutra"
-               version="1.0.0"
+               version="2.0"
                provisioningUsername=""
                provisioningPassword=""
-               provisioningLocation="USEast1">
+               provisioningLocation="RegionEndpoint.USEast1">
   <properties>
-    <property key="requireDevCredentials" displayName="Require Developer Credentials" description="If set to true, each developer will need to provide their own Amazon credentials." value="false"  />
     <property key="AWSAccountID" displayName="AWS Account ID" description="This is your AWS account ID. The AccountId is the AWS Account ID. You can specify either the AWS Account ID or optionally a '-', in which case Amazon Glacier uses the AWS Account ID associated with the credentials used to sign the request. If you specify your Account ID, do not include hyphens in it." value=""/>
   </properties>
+  <parameters>
+    <parameter key="vaultname" displayName="Vault Name" description="The name of the vault you wish to create." isRequired="true" defaultValue="default"/>
+  </parameters>
 </addonManifest>

@@ -7,15 +7,24 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
     {
         // Amazon Credentials. Required for IAM. 
         public string VaultName { get; private set; }
+        public string AccountId { get; private set; }
 
-        // Amazon RDS Options required for 
+        private const string DefaultAccountId = "-";
+
+        private GlacierDeveloperOptions()
+        {
+            this.AccountId = DefaultAccountId;
+        }
 
         // Method takes in a string and parses it into a DeveloperOptions class.
-        public static GlacierDeveloperOptions Parse(IEnumerable<AddonParameter> developerParameters)
+        public static GlacierDeveloperOptions Parse(IEnumerable<AddonParameter> _developerParameters, AddonManifest _manifest)
         {
             var options = new GlacierDeveloperOptions();
-
-            foreach (var parameter in developerParameters)
+            foreach (var x in _manifest.Properties)
+            {
+                MapToOption(options, x.Key.ToLowerInvariant(), x.Value);
+            }
+            foreach (var parameter in _developerParameters)
             {
                 MapToOption(options, parameter.Key.ToLowerInvariant(), parameter.Value);
             }
@@ -23,14 +32,19 @@ namespace Apprenda.SaaSGrid.Addons.AWS.Glacier
         }
 
         // Interior method takes in instance of DeveloperOptions (aptly named existingOptions) and maps them to the proper value. In essence, a setter method.
-        private static void MapToOption(GlacierDeveloperOptions existingOptions, string key, string value)
+        private static void MapToOption(GlacierDeveloperOptions _existingOptions, string _key, string _value)
         {
-            if ("vaultname".Equals(key))
+            if ("vaultname".Equals(_key))
             {
-                existingOptions.VaultName = value;
+                _existingOptions.VaultName = _value;
                 return;
             }
-            throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", key));
+            if ("awsaccountid".Equals(_key))
+            {
+                _existingOptions.AccountId = _value;
+                return;
+            }
+            throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", _key));
         }
     }
 }

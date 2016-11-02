@@ -30,13 +30,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AWSSDK, Version=2.3.32.0, Culture=neutral, PublicKeyToken=9f476d3089b52be3, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solution Files\Apprenda-AWS\packages\AWSSDK.2.3.32.0\lib\net45\AWSSDK.dll</HintPath>
+    <Reference Include="AWSSDK, Version=2.3.55.2, Culture=neutral, PublicKeyToken=9f476d3089b52be3, processorArchitecture=MSIL">
+      <HintPath>..\..\Solution Files\Apprenda-AWS\packages\AWSSDK.2.3.55.2\lib\net45\AWSSDK.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="SaaSGrid.API, Version=5.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Shared Libraries\SaaSGrid.API.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\Solution Files\Apprenda-AWS\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SaaSGrid.API, Version=6.5.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\Solution Files\Apprenda-AWS\packages\SaaSGrid.API.6.5.3\lib\SaaSGrid.API.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="SaaSGrid.API.Remote, Version=5.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -60,17 +64,20 @@
     <Content Include="AddonManifest.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="icon.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Solution Files\Apprenda-AWS\AWS-Utilities\AWS-Utilities.csproj">
+      <Project>{7672A36C-D531-4FCB-8071-9054B301D087}</Project>
+      <Name>AWS-Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"C:\windows\system32\WindowsPowerShell\v1.0\powershell.exe" -file C:/users/cdutra/Documents\github\apprenda-aws\PackageFiles.ps1 "C:\users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Glacier.zip" "C:\users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Glacier"
-"C:\windows\system32\WindowsPowerShell\v1.0\powershell.exe" -file C:/users/cdutra/Documents\github\apprenda-aws\PackageFiles.ps1 "C:\users\cdutra\Dropbox\Apprenda\Amazon\Glacier.zip" "C:\users\cdutra\Documents\GitHub\Apprenda-AWS\Apprenda-AWS-Build\Glacier"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

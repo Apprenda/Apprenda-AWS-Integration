@@ -3,103 +3,80 @@ using System.Collections.Generic;
 
 namespace Apprenda.SaaSGrid.Addons.AWS.S3
 {
+    using Amazon.S3;
+
     public class S3DeveloperOptions
     {
-        internal String BucketName { get; set; }
+        public string BucketName { get; set; }
+        public string RegionEndpoint { get; set; }
+        public string BucketRegionName { get; set; }
+        public string CannedAcl { get; set; }
+        public bool UseClientRegion { get; set; }
+        private string Grants { get; set; }
 
-        internal String BucketRegion { get; set; }
-
-        internal String BucketRegionName { get; set; }
-
-        internal String CannedAcl { get; set; }
-
-        internal List<String> Grants { get; set; }
-
-        internal bool UseClientRegion { get; set; }
-
-        internal String RegionEndpont { get; set; }
-
-        public string AccessKey { get; set; }
-
-        public string SecretAccessKey { get; set; }
-
-        [Obsolete]
-        public static S3DeveloperOptions Parse(string devOptions)
+        private static void MapToOption(S3DeveloperOptions _existingOptions, string _key, string _value)
         {
-            var options = new S3DeveloperOptions();
-
-            if (string.IsNullOrWhiteSpace(devOptions)) return options;
-            var optionPairs = devOptions.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var optionPair in optionPairs)
+            if ("bucketname".Equals(_key))
             {
-                var optionPairParts = optionPair.Split(new[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
-                if (optionPairParts.Length == 2)
-                {
-                    MapToOption(options, optionPairParts[0].Trim().ToLowerInvariant(), optionPairParts[1].Trim());
-                }
-                else
-                {
-                    throw new ArgumentException(
-                        string.Format(
-                            "Unable to parse developer options which should be in the form of 'option=value&nextOption=nextValue'. The option '{0}' was not properly constructed",
-                            optionPair));
-                }
-            }
-            return options;
-        }
-
-        private static void MapToOption(S3DeveloperOptions existingOptions, string key, string value)
-        {
-            if ("bucketname".Equals(key))
-            {
-                existingOptions.BucketName = value;
+                _existingOptions.BucketName = _value;
                 return;
             }
-            if ("bucketregion".Equals(key))
+            if ("bucketregionname".Equals(_key))
             {
-                existingOptions.BucketRegion = value;
+                _existingOptions.BucketRegionName = _value;
                 return;
             }
-            if ("bucketregionname".Equals(key))
+            if ("cannedacl".Equals(_key))
             {
-                existingOptions.BucketRegionName = value;
+                _existingOptions.CannedAcl = _value;
                 return;
             }
-            if ("cannedacl".Equals(key))
-            {
-                existingOptions.CannedAcl = value;
-                return;
-            }
-            if ("useclientregion".Equals(key))
+            if ("useclientregion".Equals(_key))
             {
                 bool result;
-                if (!bool.TryParse(value, out result))
+                if (!bool.TryParse(_value, out result))
                 {
                     throw new Exception("Cannot parse boolean value.");
                 }
-                existingOptions.UseClientRegion = result;
                 return;
             }
-            if ("grants".Equals(key))
+            if ("regionendpoint".Equals(_key))
             {
-                existingOptions.Grants.Add(value);
+                _existingOptions.RegionEndpoint = _value;
                 return;
             }
-            if ("regionendpoint".Equals(key))
+            if ("grants".Equals(_key))
             {
-                existingOptions.RegionEndpont = value;
+                _existingOptions.Grants = _value;
+                return;
+            }
+            if ("developerid".Equals(_key))
+            {
+                return;
+            }
+            if ("developeralias".Equals(_key))
+            {
+                return;
+            }
+            if ("instancealias".Equals(_key))
+            {
+                return;
             }
             // else option is not found, throw exception
-            throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", key));
+            throw new ArgumentException(string.Format("The developer option '{0}' was not expected and is not understood.", _key));
         }
 
         // This is the new method. give this a test!
-        public static S3DeveloperOptions ParseWithParameters(IEnumerable<AddonParameter> developerParameters)
+        public static S3DeveloperOptions Parse(IEnumerable<AddonParameter> _developerParameters, AddonManifest manifest)
         {
             // TODO
             // given developerParameters, map the
             var options = new S3DeveloperOptions();
-            foreach (var parameter in developerParameters)
+            foreach (var parameter in manifest.Properties)
+            {
+                MapToOption(options, parameter.Key.ToLowerInvariant(), parameter.Value);
+            }
+            foreach (var parameter in _developerParameters)
             {
                 MapToOption(options, parameter.Key.ToLowerInvariant(), parameter.Value);
             }
