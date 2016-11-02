@@ -5,52 +5,45 @@ namespace Apprenda.SaaSGrid.Addons.AWS.EC2
 {
     public class ConnectionInfo
     {
-        public String BucketName { get; set; }
+        private string BucketName { get; set; }
 
-        public static ConnectionInfo Parse(string connectionInfo)
+        public static ConnectionInfo Parse(string _connectionInfo)
         {
-            ConnectionInfo info = new ConnectionInfo();
+            var info = new ConnectionInfo();
 
-            if (!string.IsNullOrWhiteSpace(connectionInfo))
+            if (string.IsNullOrWhiteSpace(_connectionInfo)) return info;
+            var propertyPairs = _connectionInfo.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var propertyPair in propertyPairs)
             {
-                var propertyPairs = connectionInfo.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
-                foreach (var propertyPair in propertyPairs)
+                var optionPairParts = propertyPair.Split(new[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
+                if (optionPairParts.Length == 2)
                 {
-                    var optionPairParts = propertyPair.Split(new[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (optionPairParts.Length == 2)
-                    {
-                        MapToProperty(info, optionPairParts[0].Trim().ToLowerInvariant(), optionPairParts[1].Trim());
-                    }
-                    else
-                    {
-                        throw new ArgumentException(
-                            string.Format(
-                                "Unable to parse connection info which should be in the form of 'property=value&nextproperty=nextValue'. The property '{0}' was not properly constructed",
-                                propertyPair));
-                    }
+                    MapToProperty(info, optionPairParts[0].Trim().ToLowerInvariant(), optionPairParts[1].Trim());
+                }
+                else
+                {
+                    throw new ArgumentException(
+                        string.Format(
+                            "Unable to parse connection info which should be in the form of 'property=value&nextproperty=nextValue'. The property '{0}' was not properly constructed",
+                            propertyPair));
                 }
             }
-
             return info;
         }
 
-        public static void MapToProperty(ConnectionInfo existingInfo, string key, string value)
+        private static void MapToProperty(ConnectionInfo _existingInfo, string _key, string _value)
         {
-            if ("bucketname".Equals(key))
-            {
-                existingInfo.BucketName = value;
-                return;
-            }
-
-            throw new ArgumentException(string.Format("The connection info '{0}' was not expected and is not understood.", key));
+            if (!"bucketname".Equals(_key))
+                throw new ArgumentException(
+                    string.Format("The connection info '{0}' was not expected and is not understood.", _key));
+            _existingInfo.BucketName = _value;
         }
 
         public override string ToString()
         {
             var builder = new StringBuilder();
 
-            if (BucketName != null)
-                builder.AppendFormat("BucketName={0}", BucketName);
+            if (this.BucketName != null) builder.AppendFormat("BucketName={0}", this.BucketName);
             return builder.ToString();
         }
     }

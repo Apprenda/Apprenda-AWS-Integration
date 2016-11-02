@@ -31,18 +31,18 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
         /// <summary>
         /// Removes an instance of the add-on, deleting the S3 bucket.
         /// </summary>
-        /// <param name="request">
+        /// <param name="_request">
         /// The request.
         /// </param>
         /// <returns>
         /// The <see cref="OperationResult"/>.
         /// </returns>
-        public override OperationResult Deprovision(AddonDeprovisionRequest request)
+        public override OperationResult Deprovision(AddonDeprovisionRequest _request)
         {
-            var connectionData = request.ConnectionData;
+            var connectionData = _request.ConnectionData;
             var deprovisionResult = new OperationResult();
-            var manifest = request.Manifest;
-            var devParameters = request.DeveloperParameters;
+            var manifest = _request.Manifest;
+            var devParameters = _request.DeveloperParameters;
             try
             {
                 var conInfo = S3ConnectionInfo.Parse(connectionData);
@@ -67,28 +67,28 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
         /// <summary>
         /// The provision.
         /// </summary>
-        /// <param name="request">
+        /// <param name="_request">
         /// The request.
         /// </param>
         /// <returns>
         /// The <see cref="ProvisionAddOnResult"/>.
         /// </returns>
-        public override ProvisionAddOnResult Provision(AddonProvisionRequest request)
+        public override ProvisionAddOnResult Provision(AddonProvisionRequest _request)
         {
             var provisionResult = new ProvisionAddOnResult(string.Empty) { IsSuccess = false };
             try
             {
-                var devOptions = S3DeveloperOptions.Parse(request.DeveloperParameters, request.Manifest);
-                var client = EstablishClient(request.Manifest);
-                var put_request = new PutBucketRequest
+                var devOptions = S3DeveloperOptions.Parse(_request.DeveloperParameters, _request.Manifest);
+                var client = EstablishClient(_request.Manifest);
+                var putRequest = new PutBucketRequest
                                       {
                                           BucketName = devOptions.BucketName,
                                           BucketRegion =
                                               TranslateRegionEndpoints(
-                                                  request.Manifest.ProvisioningLocation,
+                                                  _request.Manifest.ProvisioningLocation,
                                                   devOptions)
                                       };
-                var response = client.PutBucket(put_request);
+                var response = client.PutBucket(putRequest);
 
                 if (response.HttpStatusCode != HttpStatusCode.OK)
                 {
@@ -98,7 +98,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
 
                 var verificationResponse = client.ListBuckets(new ListBucketsRequest());
 
-                var bucket = verificationResponse.Buckets.Find(m => m.BucketName.Equals(devOptions.BucketName));
+                var bucket = verificationResponse.Buckets.Find(_m => _m.BucketName.Equals(devOptions.BucketName));
 
                 if (bucket == null)
                 {
@@ -199,7 +199,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                     { ConnectionData = result.ConnectionData, DeveloperParameters = provisionRequest.DeveloperParameters, Manifest = provisionRequest.Manifest });
                     if (depResult == null)
                     {
-                        throw new ArgumentNullException("_request");
+                        throw new ArgumentNullException(nameof(_request));
                     }
                     testResult.IsSuccess = (result.IsSuccess && depResult.IsSuccess);
                 }
@@ -216,17 +216,17 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
         /// <summary>
         /// The establish client.
         /// </summary>
-        /// <param name="manifest">
+        /// <param name="_manifest">
         /// The manifest.
         /// </param>
         /// <returns>
         /// The <see cref="OperationResult"/>.
         /// </returns>
-        private static AmazonS3Client EstablishClient(IAddOnDefinition manifest)
+        private static AmazonS3Client EstablishClient(IAddOnDefinition _manifest)
         {
-            var accessKey = manifest.ProvisioningUsername;
-            var secretAccessKey = manifest.ProvisioningPassword;
-            var regionEndpoint = AwsUtils.ParseRegionEndpoint(manifest.ProvisioningLocation, true);
+            var accessKey = _manifest.ProvisioningUsername;
+            var secretAccessKey = _manifest.ProvisioningPassword;
+            var regionEndpoint = AwsUtils.ParseRegionEndpoint(_manifest.ProvisioningLocation, true);
             var config = new AmazonS3Config { ServiceURL = @"http://s3.amazonaws.com", RegionEndpoint = regionEndpoint};
             return new AmazonS3Client(accessKey, secretAccessKey, config);
         }
@@ -234,30 +234,24 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
         /// <summary>
         /// The test developer parameters.
         /// </summary>
-        /// <param name="devParams">
+        /// <param name="_devParams">
         /// The dev params.
         /// </param>
-        /// <param name="devOptions">
+        /// <param name="_devOptions">
         /// The dev options.
         /// </param>
         /// <returns>
         /// The <see cref="OperationResult"/>.
         /// </returns>
-        private static OperationResult TestDeveloperParameters(IEnumerable<AddonParameter> devParams, out S3DeveloperOptions devOptions)
+        private static OperationResult TestDeveloperParameters(IEnumerable<AddonParameter> _devParams, out S3DeveloperOptions _devOptions)
         {
-            devOptions = new S3DeveloperOptions();
+            _devOptions = new S3DeveloperOptions();
             var result = new OperationResult();
-            foreach (var param in devParams)
+            foreach (var param in _devParams)
             {
-                if (param.Key.ToLowerInvariant().Equals("bucketname"))
-                {
-                    if (param.Value.Length > 0)
-                    {
-                        // this is all of the required params we need, return true;
-                        result.IsSuccess = true;
-                        devOptions.BucketName = param.Value;
-                    }
-                }
+                if (!param.Key.ToLowerInvariant().Equals("bucketname") || (param.Value.Length <= 0)) continue;
+                result.IsSuccess = true;
+                _devOptions.BucketName = param.Value;
             }
             return result;
         }
