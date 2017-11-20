@@ -16,13 +16,14 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
     using Amazon.S3;
     using Amazon.S3.Model;
     using Util;
-    using Services.Logging;
+    using Services.Logging;    
 
     /// <summary>
     /// The s 3 add-on.
     /// </summary>
     public class S3Addon : AddonBase
     {
+
         /// <summary>
         /// The log.
         /// </summary>
@@ -79,6 +80,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
             try
             {
                 var devOptions = S3DeveloperOptions.Parse(_request.DeveloperParameters, _request.Manifest);
+                Log.Debug(string.Format("AWS S3 AddOn: Provisioning a new bucket {0}", devOptions.BucketName));
                 var client = EstablishClient(_request.Manifest);
                 var putRequest = new PutBucketRequest
                                       {
@@ -127,9 +129,7 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
 
 
         #region S3 Region Translation
-
         // so we need to do this because S3 doesn't use the traditional AWS Region Endpoints. Hopefully this changes in the future.
-
         private static S3Region TranslateRegionEndpoints(string _manifestLocation, S3DeveloperOptions _options)
         {
             return Translate(_options.UseClientRegion ? AwsUtils.ParseRegionEndpoint(_manifestLocation, true) : AwsUtils.ParseRegionEndpoint(_options.BucketRegionName, true));
@@ -163,7 +163,6 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
                 return S3Region.USW2;
             throw new ArgumentException("Unrecognized Region Endpoint.");
         }
-
         #endregion
 
 
@@ -225,8 +224,8 @@ namespace Apprenda.SaaSGrid.Addons.AWS.S3
         private static AmazonS3Client EstablishClient(IAddOnDefinition _manifest)
         {
             var accessKey = _manifest.ProvisioningUsername;
-            var secretAccessKey = _manifest.ProvisioningPassword;
-            var regionEndpoint = AwsUtils.ParseRegionEndpoint(_manifest.ProvisioningLocation, true);
+            var secretAccessKey = _manifest.ProvisioningPassword;            
+            var regionEndpoint = AwsUtils.ParseRegionEndpoint(_manifest.ProvisioningLocation, true);            
             var config = new AmazonS3Config { ServiceURL = @"http://s3.amazonaws.com", RegionEndpoint = regionEndpoint};
             return new AmazonS3Client(accessKey, secretAccessKey, config);
         }
