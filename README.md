@@ -35,11 +35,12 @@ Build From source
 -----------------
 - `git clone`, open .Sln in Visual Studio (or equivalent)
 - `nuget restore` or from the Package Manager in Visual Studio, `Update-Package`
-- If you have a private NuGet repository with the Apprenda SDK (`SaaSGrid.API`) included, then skip to the build step. If you do not:
-  - Install the [Apprenda SDK]() for the version of Cloud Platform you are currently running
+- If you have a private NuGet repository with the Apprenda SDK (`SaaSGrid.API`) included, you can configure it accordingly. If you do not:
+  - Install the [Apprenda SDK](http://docs.apprenda.com/downloads) for the version of the Apprenda Cloud Platform you are currently running
   - Locate `SaaSGrid.API` in your installation folder (Typical installation will have it at `C:\Program Files (x86)\Apprenda\SDK\API Files`)
-  - Use this path to add a new reference to `SaaSGrid.API`
-- Build - upon success, you should have a folder in the root project directory named `Apprenda-AWS-Build` with access to each of the zip files.
+  - Use this path to add a new reference to `SaaSGrid.API` to each of the Visual Studio Projects in this solution
+- Do a Release Build - upon success, you should have a folder in the root project directory named `Apprenda-AWS-Build` with access to each of the zip files.
+- To 
 
 Support
 -------

@@ -40,9 +40,9 @@
       <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SaaSGrid.API, Version=6.5.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SaaSGrid.API.6.5.2\lib\SaaSGrid.API.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="SaaSGrid.API, Version=6.11.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Apprenda\SDK\API Files\SaaSGrid.API.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />

@@ -10,12 +10,6 @@
 
         private const int DefaultBackupRetentionPeriod = 1;
 
-        private const int DefaultMysqlPort = 3306;
-
-        private const int DefaultSqlserverPort = 1433;
-
-        private const int DefaultOraclePort = 1521;
-
         private const bool DefaultPubliclyAccessible = false;
         
         // Amazon RDS Options required for
@@ -82,11 +76,11 @@
                 return;
             }
 
-            if ("dbinstanceclass".Equals(_key))
-            {
-                _existingOptions.DbInstanceClass = _value;
-                return;
-            }
+            //if ("dbinstanceclass".Equals(_key))
+            //{
+            //    _existingOptions.DbInstanceClass = _value;
+            //    return;
+            //}
 
             if ("maxdbinstanceclass".Equals(_key))
             {
@@ -97,14 +91,15 @@
             if ("dbinstanceidentifier".Equals(_key))
             {
                 _existingOptions.DbInstanceIdentifier = _value;
-                return;
-            }
-
-            if ("dbname".Equals(_key))
-            {
                 _existingOptions.DbName = _value;
                 return;
             }
+
+            //if ("dbname".Equals(_key))
+            //{
+            //    _existingOptions.DbName = _value;
+            //    return;
+            //}
 
             if ("engine".Equals(_key))
             {
@@ -134,16 +129,16 @@
                 _existingOptions.DbaPassword = _value;
                 return;
             }
-            if ("port".Equals(_key))
-            {
-                int result;
-                if (!int.TryParse(_value, out result))
-                {
-                    throw new ArgumentException(string.Format("The developer option '{0}' can only have an integer value but '{1}' was used instead.", _key, _value));
-                }
-                _existingOptions.Port = result;
-                return;
-            }
+            //if ("port".Equals(_key))
+            //{
+            //    int result;
+            //    if (!int.TryParse(_value, out result))
+            //    {
+            //        throw new ArgumentException(string.Format("The developer option '{0}' can only have an integer value but '{1}' was used instead.", _key, _value));
+            //    }
+            //    _existingOptions.Port = result;
+            //    return;
+            //}
             if ("backupretentionperiod".Equals(_key))
             {
                 int result;
@@ -154,7 +149,7 @@
                 _existingOptions.BackupRetentionPeriod = result;
                 return;
             }
-            if ("allocatedstorage".Equals(_key))
+            if ("storage".Equals(_key))
             {
                 int result;
                 if (!int.TryParse(_value, out result))
@@ -162,6 +157,11 @@
                     throw new ArgumentException(string.Format("The developer option '{0}' can only have an integer value but '{1}' was used instead.", _key, _value));
                 }
                 _existingOptions.AllocatedStorage = result;
+                if (_existingOptions.MaxAllocatedStorage < _existingOptions.AllocatedStorage)
+                {
+                    throw new ArgumentException(string.Format("The developer-defined storage size ({0} GB) exceeds the maximum storage ({1} GB) set by the Add-On", _existingOptions.AllocatedStorage, _existingOptions.MaxAllocatedStorage));
+                }
+
                 return;
             }
 
@@ -260,11 +260,36 @@
                 _existingOptions.PubliclyAccessible = result;
                 return;
             }
-
+            if ("defaultaz".Equals(_key))
+            {
+                _existingOptions.AvailabilityZone = _value;
+                return;
+            }
+            //if ("databasename".Equals(_key))
+            //{
+            //    _existingOptions.DbName = _value;
+            //    return;
+            //}
+            if ("developerid".Equals(_key))
+            {
+                return;
+            }
+            if ("developeralias".Equals(_key))
+            {
+                return;
+            }
+            if ("instancealias".Equals(_key))
+            {
+                return;
+            }
+            if ("overrideport".Equals(_key))
+            {
+                // TBD: identify how to property set ports for each DB server options
+                return;
+            }
 
             // default behavior - if nothing parses, then throw exception.
-            throw new ArgumentException("The developer option '{0}' did not parse. Please check your configuration.", _key);
-            
+            throw new ArgumentException(string.Format("The developer option '{0}' did not parse. Please check your configuration.", _key));            
         }
 
     }
