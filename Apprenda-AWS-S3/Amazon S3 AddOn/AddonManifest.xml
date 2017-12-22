@@ -9,7 +9,7 @@
                developerHelp="Bucket Name = Set the name for the bucket you wish to provision. Must be a unique name, or the process will fail."
                vendor="Apprenda"
                author="Michael Michael"
-               version="2.1"
+               version="2.2"
                provisioningUsername="Enter your AWS Access Key here"
                provisioningPassword=""
                provisioningLocation="us-east-1"
