@@ -24,22 +24,26 @@
             var devOptions = _request.DeveloperParameters;
             try
             {
-                var conInfo = RDSConnectionInfo.Parse(connectionData);
+                //var conInfo = RDSConnectionInfo.Parse(connectionData);
                 var developerOptions = RdsDeveloperOptions.Parse(devOptions, manifest);
                 var client = EstablishClient(manifest);
-                
-                var response = client.DeleteDBInstance(new DeleteDBInstanceRequest
-                        {
-                            DBInstanceIdentifier = conInfo.DbInstanceIdentifier,
-                            SkipFinalSnapshot = developerOptions.SkipFinalSnapshot
-                        });
+                                
+                DeleteDBInstanceRequest deleteRequest = new DeleteDBInstanceRequest();
+                deleteRequest.DBInstanceIdentifier = developerOptions.DbInstanceIdentifier;
+                deleteRequest.SkipFinalSnapshot = developerOptions.SkipFinalSnapshot;
+                if (!developerOptions.SkipFinalSnapshot)
+                {
+                    deleteRequest.FinalDBSnapshotIdentifier = string.Format("{0}-finalsnapshot", developerOptions.DbInstanceIdentifier);
+                }
+
+                var response = client.DeleteDBInstance(deleteRequest);
                 if (response.DBInstance != null)
                 {
                     do
                     {
                         var verificationResponse = client.DescribeDBInstances(new DescribeDBInstancesRequest
                             {
-                                DBInstanceIdentifier = conInfo.DbInstanceIdentifier
+                                DBInstanceIdentifier = developerOptions.DbInstanceIdentifier
                             });
                         if (!verificationResponse.DBInstances.Any())
                         {
@@ -66,33 +70,36 @@
         // Input: AddonDeprovisionRequest request
         // Output: ProvisionAddOnResult
         public override ProvisionAddOnResult Provision(AddonProvisionRequest _request)
-        {
-            var provisionResult = new ProvisionAddOnResult("");
-            
+        {            
+            var provisionResult = new ProvisionAddOnResult(string.Empty) { IsSuccess = false };
+
             try
             {
                 var devOptions = RdsDeveloperOptions.Parse(_request.DeveloperParameters, _request.Manifest);
                 var client = EstablishClient(_request.Manifest);                
                 Log.Debug("AWS RDS AddOn: Established client connection");
 
-                var response = client.CreateDBInstance(CreateDbInstanceRequest(devOptions));
+                var response = client.CreateDBInstance(CreateDbInstanceRequest(devOptions));                
                 if (response.DBInstance != null)
                 {
                     do
-                    {
+                    {                        
                         var verificationResponse = client.DescribeDBInstances(new DescribeDBInstancesRequest
-                            {
-                                DBInstanceIdentifier = devOptions.DbInstanceIdentifier
-                            });
-                        if (verificationResponse.DBInstances.Any() && verificationResponse.DBInstances[0].DBInstanceStatus == "available")
                         {
+                            DBInstanceIdentifier = devOptions.DbInstanceIdentifier
+                        });                     
+
+                        if (verificationResponse.DBInstances.Any() && verificationResponse.DBInstances[0].DBInstanceStatus == "available")
+                        {                           
                             var dbInstance = verificationResponse.DBInstances[0];
                             var conInfo = new RDSConnectionInfo
-                                {
-                                    DbInstanceIdentifier = devOptions.DbInstanceIdentifier,
-                                    EndpointAddress = dbInstance.Endpoint.Address,
-                                    EndpointPort = dbInstance.Endpoint.Port
-                                };
+                            {
+                                DbInstanceIdentifier = devOptions.DbInstanceIdentifier,
+                                EndpointAddress = dbInstance.Endpoint.Address,
+                                MasterPassword = devOptions.DbaPassword,
+                                MasterUsername = devOptions.DbaUsername
+                            };
+                         
                             provisionResult.IsSuccess = true;
                             provisionResult.ConnectionData = conInfo.ToString();
                             break;
@@ -102,12 +109,19 @@
                 }
                 else
                 {
-                    Log.Debug(string.Format("AWS RDS AddOn: Failed to create database. Response Metadata {0}, HTTP status code {1}", response.ResponseMetadata.ToString(), response.HttpStatusCode));
+                    string message = string.Format("AWS RDS AddOn: Failed to create database. Response Metadata {0}, HTTP status code {1}", response.ResponseMetadata.ToString(), response.HttpStatusCode);
+                    Log.Fatal(message);
+                    provisionResult.EndUserMessage = message;
+                    provisionResult.IsSuccess = false;
+                    provisionResult.ConnectionData = string.Empty;
                 }
             }
             catch (Exception e)
             {
+                Log.Fatal(string.Format("AWS RDS AddOn: Failed to create database with Exception {0}", e.Message));
                 provisionResult.EndUserMessage = e.Message;
+                provisionResult.IsSuccess = false;
+                provisionResult.ConnectionData = string.Empty;
             }
 
             return provisionResult;
@@ -243,9 +257,8 @@
                 request.PreferredMaintenanceWindow = _devOptions.PreferredMxWindow;
             }
 
-
             // Debugging option only - printing all the options before we send them to AWS
-            Log.Debug(string.Format("AllocatedStorage - {0}", request.AllocatedStorage));
+            /*Log.Debug(string.Format("AllocatedStorage - {0}", request.AllocatedStorage));
             Log.Debug(string.Format("AutoMinorVersionUpgrade - {0}", request.AutoMinorVersionUpgrade));
             Log.Debug(string.Format("AvailabilityZone - {0}", request.AvailabilityZone));
             Log.Debug(string.Format("BackupRetentionPeriod - {0}", request.BackupRetentionPeriod));
@@ -278,8 +291,8 @@
             Log.Debug(string.Format("Tags - {0}", request.Tags));
             Log.Debug(string.Format("TdeCredentialArn - {0}", request.TdeCredentialArn));
             Log.Debug(string.Format("TdeCredentialPassword - {0}", request.TdeCredentialPassword));
-            Log.Debug(string.Format("VpcSecurityGroupIds - {0}", request.VpcSecurityGroupIds));            
-
+            Log.Debug(string.Format("VpcSecurityGroupIds - {0}", request.VpcSecurityGroupIds));
+            */
             return request;
         }
     }

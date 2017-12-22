@@ -10,7 +10,7 @@
 
         private const int DefaultBackupRetentionPeriod = 1;
 
-        private const bool DefaultPubliclyAccessible = false;
+        private const bool DefaultPubliclyAccessible = true;
         
         // Amazon RDS Options required for
         public int AllocatedStorage { get; private set; }

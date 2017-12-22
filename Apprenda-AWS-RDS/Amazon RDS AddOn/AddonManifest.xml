@@ -5,11 +5,11 @@
                xsi:schemaLocation="http://schemas.apprenda.com/AddonManifest http://apprenda.com/schemas/platform/6.0/AddonManifest.xsd"
                name="Amazon RDS"
                description="Amazon RDS is a service that allows you to set up, operate and scale a dedicated database server on top of EC2. In addition to standard database features, RDS offers the following functionality: - Automated backups -Point-in-time recovery -Seamless vertical scaling between instance types. The Amazon RDS add-on lets you connect your app to an RDS instance and seamlessly use it in place of the standard, provided SQL database"
-               deploymentNotes="Add-On is certified to work on Apprenda 8.0.0 or later."
+               deploymentNotes="Add-On is certified to work on Apprenda 8.0.0 or later. http://docs.ansible.com/ansible/latest/rds_module.html has documentation about the config options of this Add-On"
                developerHelp=""
                vendor="Apprenda"
                author="Michael Michael"
-               version="2.1"
+               version="2.2"
                provisioningUsername="Enter your AWS Access Key here"
                provisioningPassword=""
                provisioningLocation="us-east-1"
@@ -18,25 +18,22 @@
   <properties>
     <property key="MaxAllocatedStorage" displayName="Max Storage" description="Maximum amount of RDS storage space allowed to be requested (in GB)." value="100" />
     <property key="AutoMinorVersionUpgrade" displayName="Auto Minor Version Upgrade" description="This indicates whether you wish to allow for automatic minor version upgrades on your RDS instace." value="true"/>
-    <property key="DefaultAZ" displayName="Default Availability Zone" description="The EC2 Availability Zone that the database instance will be created in. Default: A random, system-chosen Availability Zone in the endpoint's region. Example: us-east-1d Constraint: The AvailabilityZone parameter cannot be specified if the MultiAZ parameter is set to true. The specified Availability Zone must be in the same region as the current endpoint." value=""/>
+    <property key="DefaultAZ" displayName="Default Availability Zone" description="The EC2 Availability Zone that the database instance will be created in. Default: A random, system-chosen Availability Zone in the endpoint's region. Example: us-east-1 Constraint: The AvailabilityZone parameter cannot be specified if the MultiAZ parameter is set to true. The specified Availability Zone must be in the same region as the current endpoint." value=""/>
     <property key="MaxDBInstanceClass" displayName="Max Resource Class" description="The max compute and memory capacity of the DB instance. Valid Values: db.t1.micro | db.m1.small | db.m1.medium | db.m1.large | db.m1.xlarge | db.m2.xlarge |db.m2.2xlarge | db.m2.4xlarge" value="db.t2.micro"/>
-    <!--<property key="DBName" displayName="Database Name" description="Usually provided during Add-On creation, default value provided here." value=""/>-->
-    <!--<property key="DBInstanceIdentifier" displayName="DB Instance Identifier" description="The instance identifier as seen in AWS Management Console" value=""/>-->
-    <property key="OracleEngineEdition" displayName="Oracle Engine Edition" description="Use this field if you are planning on provisioniong Oracle. This dictates which version of the engine you want to provision (SE-1, EE)" value=""/>
+    <property key="OracleEngineEdition" displayName="Oracle Engine Edition" description="Use this field if you are planning on provisioniong Oracle. This dictates which version of the engine you want to provision (oracle-se, oracle-ee, oracle-se1, etc)" value="oracle-se"/>
     <property key="SQLServerEngineEdition" displayName="SQL Server Edition" description="Use this field if you are planning on provisioning SQL Server. This dictates which version of the engine you want to provision (sqlserver-ex, sqlserver-ee, sqlserver-se, sqlserver-web)" value="sqlserver-ex"/>
     <property key="MultiAZ" displayName="Multi-Availability Zone" description="Specifies if the DB instance is a Multi-AZ deployment. You cannot set the AvailabilityZone parameter if the MultiAZ parameter is set to true." value="false"/>
-    <property key="OracleDBVersion" displayName="Oracle Database Version" description="The version number of the database engine to use. Default value will be the latest version. Example: 11.2.0.2.v2" value=""/>
+    <property key="OracleDBVersion" displayName="Oracle Database Version" description="The version number of the database engine to use. Leave empty to get the latest version. Example: 11.2.0.2.v2" value=""/>
     <property key="SQLServerDBVersion" displayName="SQL Server Database Version" description="The version number of the database engine to use. Default value will be the latest version. Example: 10.50.2789.0.v1" value="14.00.1000.169.v1"/>
-    <property key="MySQLDBVersion" displayName="MySQL Database Version" description="The version number of the database engine to use. Default value will be the latest version. Example: 5.1.42" value=""/>
-    <!--<property key="OverridePort" displayName="Override Database Port" description="Set to true if you wish to not use default ports, one will be created for you. MySQL Default: 3306, Oracle Default: 1521, SQL Server Default: 1433" value=""/>-->
+    <property key="MySQLDBVersion" displayName="MySQL Database Version" description="The version number of the database engine to use. Leave empty to get the latest version. Example: 5.1.42" value=""/>
     <property key="BackupRetentionPeriod" displayName="Backup Retention Period" description="The number of days for which automated backups are retained. Setting this parameter to a positive number enables backups. Setting this parameter to 0 disables automated backups. Default: 1 Constraints: Must be a value from 0 to 35. Cannot be set to 0 if the DB instance is a source to read replicas" value="0"/>
-    <property key="SkipFinalSnapshot" displayName="Skip final snapshot" description="When deleting a database, set to True if you do not want to take a snapshot before deleting." value="False" />
+    <property key="SkipFinalSnapshot" displayName="Skip final snapshot" description="When deleting a database, set to True if you do not want to take a snapshot before deleting." value="True" />
    </properties>
   <parameters>
     <parameter key="dbinstanceidentifier" displayName="Database Name" description="Specify a database name that is unique for all DB instances owned by your AWS account in the current region." isRequired="true" />
-    <parameter key="engine" displayName="Database Engine" description="The engine to use. Values include: mysql, oracle, sqlserver" isRequired="true" defaultValue="sqlserver" />
+    <parameter key="engine" displayName="Database Engine" description="The engine to use. Values include: mysql, oracle, sqlserver" isRequired="true" defaultValue="" />
     <parameter key="storage" displayName="Storage Size" description="The amount of storage to allocate for this instance (in GB)." defaultValue="20"/>
-    <parameter key="dbausername" displayName="Master Username" description="Specify an alphanumeric string that defines the login ID for the master user." isRequired="true" defaultValue="apprendadbadmin" />
-    <parameter key="dbapassword" displayName="Master Password" description="Specify a string that defines the password for the master user. Master Password must be at least eight characters long." isRequired="true" defaultValue="Apprenda1234" isEncrypted="true" />       
+    <parameter key="dbausername" displayName="Master Username" description="Specify an alphanumeric string that defines the login ID for the master user." isRequired="true" defaultValue="" />
+    <parameter key="dbapassword" displayName="Master Password" description="Specify a string that defines the password for the master user. Master Password must be at least eight characters long." isRequired="true" defaultValue="" isEncrypted="true" />
   </parameters>
 </addonManifest>
