@@ -21,7 +21,7 @@
     <property key="UseClientRegion" displayName="Use Client Region"  description="This indicates whether to use the same region as the S3 client was established. Default is true." value="true" />
     <property key="RegionEndpoint" displayName="S3 Client Region Endpoint" description="If use Client Regions is false, a location value must be specified here. Valid values: us-east-1, us-west-1, us-west-2, eu-west-1, ap-southeast-1, ap-southeast-2, ap-northeast-1, sa-east-1 " value="" />
   </properties>
-  <parameters allowUserDefinedParameters="true">
+  <parameters allowUserDefinedParameters="false">
     <parameter key="bucketName" displayName="Bucket Name" isEncrypted="false"></parameter>
   </parameters>
 </addonManifest>

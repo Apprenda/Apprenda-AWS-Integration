@@ -6,9 +6,13 @@
     using System.Linq;
     using System.Threading;
     using Util;
+    using Services.Logging;
 
     public class RdsAddOn : AddonBase
     {
+        // logging variable
+        private static readonly ILogger Log = LogManager.Instance().GetLogger(typeof(RdsAddOn));
+
         // Deprovision RDS Instance
         // Input: AddonDeprovisionRequest request
         // Output: OperationResult
@@ -20,21 +24,26 @@
             var devOptions = _request.DeveloperParameters;
             try
             {
-                var conInfo = RDSConnectionInfo.Parse(connectionData);
+                //var conInfo = RDSConnectionInfo.Parse(connectionData);
                 var developerOptions = RdsDeveloperOptions.Parse(devOptions, manifest);
                 var client = EstablishClient(manifest);
-                var response = client.DeleteDBInstance(new DeleteDBInstanceRequest
-                        {
-                            DBInstanceIdentifier = conInfo.DbInstanceIdentifier,
-                            SkipFinalSnapshot = developerOptions.SkipFinalSnapshot
-                        });
+                                
+                DeleteDBInstanceRequest deleteRequest = new DeleteDBInstanceRequest();
+                deleteRequest.DBInstanceIdentifier = developerOptions.DbInstanceIdentifier;
+                deleteRequest.SkipFinalSnapshot = developerOptions.SkipFinalSnapshot;
+                if (!developerOptions.SkipFinalSnapshot)
+                {
+                    deleteRequest.FinalDBSnapshotIdentifier = string.Format("{0}-finalsnapshot", developerOptions.DbInstanceIdentifier);
+                }
+
+                var response = client.DeleteDBInstance(deleteRequest);
                 if (response.DBInstance != null)
                 {
                     do
                     {
                         var verificationResponse = client.DescribeDBInstances(new DescribeDBInstancesRequest
                             {
-                                DBInstanceIdentifier = conInfo.DbInstanceIdentifier
+                                DBInstanceIdentifier = developerOptions.DbInstanceIdentifier
                             });
                         if (!verificationResponse.DBInstances.Any())
                         {
@@ -61,32 +70,36 @@
         // Input: AddonDeprovisionRequest request
         // Output: ProvisionAddOnResult
         public override ProvisionAddOnResult Provision(AddonProvisionRequest _request)
-        {
-            var provisionResult = new ProvisionAddOnResult("");
-            
+        {            
+            var provisionResult = new ProvisionAddOnResult(string.Empty) { IsSuccess = false };
+
             try
             {
                 var devOptions = RdsDeveloperOptions.Parse(_request.DeveloperParameters, _request.Manifest);
-                var client = EstablishClient(_request.Manifest);
-                
-                var response = client.CreateDBInstance(CreateDbInstanceRequest(devOptions));
+                var client = EstablishClient(_request.Manifest);                
+                Log.Debug("AWS RDS AddOn: Established client connection");
+
+                var response = client.CreateDBInstance(CreateDbInstanceRequest(devOptions));                
                 if (response.DBInstance != null)
                 {
                     do
-                    {
+                    {                        
                         var verificationResponse = client.DescribeDBInstances(new DescribeDBInstancesRequest
-                            {
-                                DBInstanceIdentifier = devOptions.DbInstanceIdentifier
-                            });
-                        if (verificationResponse.DBInstances.Any() && verificationResponse.DBInstances[0].DBInstanceStatus == "available")
                         {
+                            DBInstanceIdentifier = devOptions.DbInstanceIdentifier
+                        });                     
+
+                        if (verificationResponse.DBInstances.Any() && verificationResponse.DBInstances[0].DBInstanceStatus == "available")
+                        {                           
                             var dbInstance = verificationResponse.DBInstances[0];
                             var conInfo = new RDSConnectionInfo
-                                {
-                                    DbInstanceIdentifier = devOptions.DbInstanceIdentifier,
-                                    EndpointAddress = dbInstance.Endpoint.Address,
-                                    EndpointPort = dbInstance.Endpoint.Port
-                                };
+                            {
+                                DbInstanceIdentifier = devOptions.DbInstanceIdentifier,
+                                EndpointAddress = dbInstance.Endpoint.Address,
+                                MasterPassword = devOptions.DbaPassword,
+                                MasterUsername = devOptions.DbaUsername
+                            };
+                         
                             provisionResult.IsSuccess = true;
                             provisionResult.ConnectionData = conInfo.ToString();
                             break;
@@ -94,10 +107,21 @@
                         Thread.Sleep(TimeSpan.FromSeconds(10d));
                     } while (true);
                 }
+                else
+                {
+                    string message = string.Format("AWS RDS AddOn: Failed to create database. Response Metadata {0}, HTTP status code {1}", response.ResponseMetadata.ToString(), response.HttpStatusCode);
+                    Log.Fatal(message);
+                    provisionResult.EndUserMessage = message;
+                    provisionResult.IsSuccess = false;
+                    provisionResult.ConnectionData = string.Empty;
+                }
             }
             catch (Exception e)
             {
+                Log.Fatal(string.Format("AWS RDS AddOn: Failed to create database with Exception {0}", e.Message));
                 provisionResult.EndUserMessage = e.Message;
+                provisionResult.IsSuccess = false;
+                provisionResult.ConnectionData = string.Empty;
             }
 
             return provisionResult;
@@ -197,7 +221,10 @@
             }
             else
             {
-                if(request.AvailabilityZone != null) request.AvailabilityZone = _devOptions.AvailabilityZone;
+                if (request.AvailabilityZone != null)
+                {
+                    request.AvailabilityZone = _devOptions.AvailabilityZone;
+                }
             }
             if (_devOptions.OptionGroup != null)
             {
@@ -207,16 +234,19 @@
             {
                 request.Engine = _devOptions.OracleEngineEdition;
                 request.EngineVersion = _devOptions.OracleDBVersion;
+                request.Port = 1521; // default Oracle port
             }
             if (_devOptions.Engine.Equals("sqlserver"))
             {
                 request.Engine = _devOptions.SqlServerEngineEdition;
                 request.EngineVersion = _devOptions.SqlServerDBVersion;
+                request.Port = 1433; // default SQL Server port
             }
             if (_devOptions.Engine.Equals("mysql"))
             {
                 request.Engine = "MySQL";
                 request.EngineVersion = _devOptions.MySqlDBVersion;
+                request.Port = 3306; // default MySQL port
             }
             if (_devOptions.PreferredBackupWindow != null)
             {
@@ -226,6 +256,43 @@
             {
                 request.PreferredMaintenanceWindow = _devOptions.PreferredMxWindow;
             }
+
+            // Debugging option only - printing all the options before we send them to AWS
+            /*Log.Debug(string.Format("AllocatedStorage - {0}", request.AllocatedStorage));
+            Log.Debug(string.Format("AutoMinorVersionUpgrade - {0}", request.AutoMinorVersionUpgrade));
+            Log.Debug(string.Format("AvailabilityZone - {0}", request.AvailabilityZone));
+            Log.Debug(string.Format("BackupRetentionPeriod - {0}", request.BackupRetentionPeriod));
+            Log.Debug(string.Format("CharacterSetName - {0}", request.CharacterSetName));
+            Log.Debug(string.Format("CopyTagsToSnapshot - {0}", request.CopyTagsToSnapshot));
+            Log.Debug(string.Format("DBClusterIdentifier - {0}", request.DBClusterIdentifier));
+            Log.Debug(string.Format("DBInstanceClass - {0}", request.DBInstanceClass));
+            Log.Debug(string.Format("DBInstanceIdentifier - {0}", request.DBInstanceIdentifier));
+            Log.Debug(string.Format("DBName - {0}", request.DBName));
+            Log.Debug(string.Format("DBParameterGroupName - {0}", request.DBParameterGroupName));
+            Log.Debug(string.Format("DBSecurityGroups - {0}", request.DBSecurityGroups));
+            Log.Debug(string.Format("DBSubnetGroupName - {0}", request.DBSubnetGroupName));
+            Log.Debug(string.Format("Engine - {0}", request.Engine));
+            Log.Debug(string.Format("EngineVersion - {0}", request.EngineVersion));
+            Log.Debug(string.Format("Iops - {0}", request.Iops));
+            Log.Debug(string.Format("KmsKeyId - {0}", request.KmsKeyId));
+            Log.Debug(string.Format("LicenseModel - {0}", request.LicenseModel));
+            Log.Debug(string.Format("MasterUsername - {0}", request.MasterUsername));
+            Log.Debug(string.Format("MasterUserPassword - {0}", request.MasterUserPassword));
+            Log.Debug(string.Format("MonitoringInterval - {0}", request.MonitoringInterval));
+            Log.Debug(string.Format("MonitoringRoleArn - {0}", request.MonitoringRoleArn));
+            Log.Debug(string.Format("MultiAZ - {0}", request.MultiAZ));
+            Log.Debug(string.Format("OptionGroupName - {0}", request.OptionGroupName));
+            Log.Debug(string.Format("Port - {0}", request.Port));
+            Log.Debug(string.Format("PreferredBackupWindow - {0}", request.PreferredBackupWindow));
+            Log.Debug(string.Format("PreferredMaintenanceWindow - {0}", request.PreferredMaintenanceWindow));
+            Log.Debug(string.Format("PubliclyAccessible - {0}", request.PubliclyAccessible));
+            Log.Debug(string.Format("StorageEncrypted - {0}", request.StorageEncrypted));
+            Log.Debug(string.Format("StorageType - {0}", request.StorageType));
+            Log.Debug(string.Format("Tags - {0}", request.Tags));
+            Log.Debug(string.Format("TdeCredentialArn - {0}", request.TdeCredentialArn));
+            Log.Debug(string.Format("TdeCredentialPassword - {0}", request.TdeCredentialPassword));
+            Log.Debug(string.Format("VpcSecurityGroupIds - {0}", request.VpcSecurityGroupIds));
+            */
             return request;
         }
     }
