@@ -7,29 +7,29 @@ This project contains all of the modules necessary to integrate with Amazon Web 
 Release Notes
 --------------
 
-### Support Matrix
-Apprenda Cloud Platform 6.0.3+, 6.5.x
-AWS SDK version is bundled with each stable release.
+## Support Matrix
+- Apprenda Cloud Platform 6.5 or later
+- AWS SDK version is bundled with each stable release.
+- Current fully supported AddOns: Amazon S3 and Amazon RDS
 
 Automatic regression Tests are done against new versions of the AWS SDK, which is released on a more frequent cadence. If you need to use the latest version, build the package from source.
 
 Installation
 ------------
-_For full documentation on how to setup Addons on the Apprenda Cloud Platform, please read [here]()_
-- Download our latest [release]()
-- Upload the zip file for the component you need. For example, if you need S3, then upload the S3.zip file.
-- You should see a screen like this, stating validation was successful.
-
-Configuration
--------------
-_For general documentation on how to setup Addons on the Apprenda Cloud Platform, please read [here]()_
-
-#### To be added
+_For full documentation on how to setup Addons on the Apprenda Cloud Platform, please view the Documentation for AWS AddOns PDF [here](https://apprenda.com/partners/integrations/amazon-web-services/)_
+- Download our latest release from the Releases link at https://github.com/apprenda/Apprenda-AWS-Integration/releases
+- The release will have zip files for each Add-On, which you can use to upload to Apprenda as per the next section
 
 Usage
 -----
+- Upload the Add-Ons to the Apprenda Operator Portal (SOC) using instructions from http://docs.apprenda.com/8-1/addons
+- Once the Add-Ons are uploaded, edit them and configure the following properties
+  - Add the Location, indicating the region of AWS to provision instances of this Add-On (usually this is set to us-east-1)
+  - Add the User; this is your AWS Access Key
+  - Add the Password; this is your AWS Secret Access Key
+  - Visit the Configuration tab of the Add-On and edit the properties to match your desired configuration for this Add-On
+- As a developer, start provisioning and consuming Add-Ons as per the documentation at http://docs.apprenda.com/8-1/addonconsumption
 
-#### To be added
 
 Build From source
 -----------------
@@ -50,4 +50,4 @@ For support regarding Apprenda Cloud platform - please contact your representati
 
 Contributions
 -------------
-Are absolutely welcome, please fork and submit PRs. We run our own internal test suite on each PR, and will let you know the results!
+Are absolutely welcome, please fork and submit PRs.
